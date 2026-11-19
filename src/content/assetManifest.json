@@ -1,0 +1,741 @@
+{
+  "backgrounds": {
+    "world_map": {
+      "path": "assets/backgrounds/world_map.webp",
+      "width": 1448,
+      "height": 1086
+    },
+    "savanna": {
+      "path": "assets/backgrounds/savanna.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "lion_family_portrait": {
+      "path": "assets/backgrounds/lion_family_portrait.webp",
+      "width": 1400,
+      "height": 1050
+    },
+    "africa_waterhole": {
+      "path": "assets/backgrounds/africa_waterhole.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "africa_baobab": {
+      "path": "assets/backgrounds/africa_baobab.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "africa_desert": {
+      "path": "assets/backgrounds/africa_desert.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "africa_canyon": {
+      "path": "assets/backgrounds/africa_canyon.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "africa_plains": {
+      "path": "assets/backgrounds/africa_plains.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "asia_bamboo": {
+      "path": "assets/backgrounds/asia_bamboo.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "asia_pagoda": {
+      "path": "assets/backgrounds/asia_pagoda.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "asia_mountain": {
+      "path": "assets/backgrounds/asia_mountain.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "asia_arch": {
+      "path": "assets/backgrounds/asia_arch.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "asia_garden": {
+      "path": "assets/backgrounds/asia_garden.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_forest": {
+      "path": "assets/backgrounds/europe_forest.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_alps": {
+      "path": "assets/backgrounds/europe_alps.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_coast": {
+      "path": "assets/backgrounds/europe_coast.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_lake": {
+      "path": "assets/backgrounds/europe_lake.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_farm": {
+      "path": "assets/backgrounds/europe_farm.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_redwoods": {
+      "path": "assets/backgrounds/na_redwoods.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_prairie": {
+      "path": "assets/backgrounds/na_prairie.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_lake": {
+      "path": "assets/backgrounds/na_lake.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_desert": {
+      "path": "assets/backgrounds/na_desert.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_coast": {
+      "path": "assets/backgrounds/na_coast.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_jungle": {
+      "path": "assets/backgrounds/sa_jungle.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_waterfall": {
+      "path": "assets/backgrounds/sa_waterfall.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_river": {
+      "path": "assets/backgrounds/sa_river.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_andes": {
+      "path": "assets/backgrounds/sa_andes.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_wetland": {
+      "path": "assets/backgrounds/sa_wetland.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_valley": {
+      "path": "assets/backgrounds/sa_valley.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "oc_waterfall": {
+      "path": "assets/backgrounds/oc_waterfall.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "oc_clearing": {
+      "path": "assets/backgrounds/oc_clearing.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "oc_forest": {
+      "path": "assets/backgrounds/oc_forest.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "oc_lagoon": {
+      "path": "assets/backgrounds/oc_lagoon.webp",
+      "width": 1672,
+      "height": 941
+    }
+  },
+  "characters": {
+    "lion_father": {
+      "path": "assets/characters/lion_father.webp",
+      "width": 527,
+      "height": 720
+    },
+    "lion_mother": {
+      "path": "assets/characters/lion_mother.webp",
+      "width": 477,
+      "height": 720
+    },
+    "lion_boy": {
+      "path": "assets/characters/lion_boy.webp",
+      "width": 555,
+      "height": 720
+    },
+    "lion_girl": {
+      "path": "assets/characters/lion_girl.webp",
+      "width": 487,
+      "height": 720
+    },
+    "elephant_father": {
+      "path": "assets/characters/elephant_father.webp",
+      "width": 465,
+      "height": 448
+    },
+    "elephant_mother": {
+      "path": "assets/characters/elephant_mother.webp",
+      "width": 433,
+      "height": 436
+    },
+    "elephant_boy_newborn": {
+      "path": "assets/characters/elephant_boy_newborn.webp",
+      "width": 168,
+      "height": 161
+    },
+    "elephant_boy_little": {
+      "path": "assets/characters/elephant_boy_little.webp",
+      "width": 201,
+      "height": 188
+    },
+    "elephant_boy_young": {
+      "path": "assets/characters/elephant_boy_young.webp",
+      "width": 224,
+      "height": 227
+    },
+    "elephant_boy_companion": {
+      "path": "assets/characters/elephant_boy_companion.webp",
+      "width": 253,
+      "height": 258
+    },
+    "elephant_girl_newborn": {
+      "path": "assets/characters/elephant_girl_newborn.webp",
+      "width": 166,
+      "height": 180
+    },
+    "elephant_girl_little": {
+      "path": "assets/characters/elephant_girl_little.webp",
+      "width": 202,
+      "height": 203
+    },
+    "elephant_girl_young": {
+      "path": "assets/characters/elephant_girl_young.webp",
+      "width": 229,
+      "height": 237
+    },
+    "elephant_girl_companion": {
+      "path": "assets/characters/elephant_girl_companion.webp",
+      "width": 253,
+      "height": 251
+    },
+    "giraffe_father": {
+      "path": "assets/characters/giraffe_father.webp",
+      "width": 334,
+      "height": 479
+    },
+    "giraffe_mother": {
+      "path": "assets/characters/giraffe_mother.webp",
+      "width": 247,
+      "height": 455
+    },
+    "giraffe_boy_newborn": {
+      "path": "assets/characters/giraffe_boy_newborn.webp",
+      "width": 143,
+      "height": 164
+    },
+    "giraffe_boy_little": {
+      "path": "assets/characters/giraffe_boy_little.webp",
+      "width": 155,
+      "height": 202
+    },
+    "giraffe_boy_young": {
+      "path": "assets/characters/giraffe_boy_young.webp",
+      "width": 188,
+      "height": 263
+    },
+    "giraffe_boy_companion": {
+      "path": "assets/characters/giraffe_boy_companion.webp",
+      "width": 231,
+      "height": 331
+    },
+    "giraffe_girl_newborn": {
+      "path": "assets/characters/giraffe_girl_newborn.webp",
+      "width": 149,
+      "height": 181
+    },
+    "giraffe_girl_little": {
+      "path": "assets/characters/giraffe_girl_little.webp",
+      "width": 164,
+      "height": 246
+    },
+    "giraffe_girl_young": {
+      "path": "assets/characters/giraffe_girl_young.webp",
+      "width": 200,
+      "height": 281
+    },
+    "giraffe_girl_companion": {
+      "path": "assets/characters/giraffe_girl_companion.webp",
+      "width": 235,
+      "height": 295
+    },
+    "giant_panda_father": {
+      "path": "assets/characters/giant_panda_father.webp",
+      "width": 428,
+      "height": 422
+    },
+    "giant_panda_mother": {
+      "path": "assets/characters/giant_panda_mother.webp",
+      "width": 365,
+      "height": 399
+    },
+    "giant_panda_boy_newborn": {
+      "path": "assets/characters/giant_panda_boy_newborn.webp",
+      "width": 186,
+      "height": 183
+    },
+    "giant_panda_boy_little": {
+      "path": "assets/characters/giant_panda_boy_little.webp",
+      "width": 232,
+      "height": 216
+    },
+    "giant_panda_boy_young": {
+      "path": "assets/characters/giant_panda_boy_young.webp",
+      "width": 242,
+      "height": 257
+    },
+    "giant_panda_boy_companion": {
+      "path": "assets/characters/giant_panda_boy_companion.webp",
+      "width": 257,
+      "height": 286
+    },
+    "giant_panda_girl_newborn": {
+      "path": "assets/characters/giant_panda_girl_newborn.webp",
+      "width": 188,
+      "height": 212
+    },
+    "giant_panda_girl_little": {
+      "path": "assets/characters/giant_panda_girl_little.webp",
+      "width": 222,
+      "height": 247
+    },
+    "giant_panda_girl_young": {
+      "path": "assets/characters/giant_panda_girl_young.webp",
+      "width": 253,
+      "height": 281
+    },
+    "giant_panda_girl_companion": {
+      "path": "assets/characters/giant_panda_girl_companion.webp",
+      "width": 254,
+      "height": 309
+    },
+    "tiger_father": {
+      "path": "assets/characters/tiger_father.webp",
+      "width": 532,
+      "height": 408
+    },
+    "tiger_mother": {
+      "path": "assets/characters/tiger_mother.webp",
+      "width": 429,
+      "height": 379
+    },
+    "tiger_boy_newborn": {
+      "path": "assets/characters/tiger_boy_newborn.webp",
+      "width": 200,
+      "height": 195
+    },
+    "tiger_boy_little": {
+      "path": "assets/characters/tiger_boy_little.webp",
+      "width": 234,
+      "height": 219
+    },
+    "tiger_boy_young": {
+      "path": "assets/characters/tiger_boy_young.webp",
+      "width": 277,
+      "height": 258
+    },
+    "tiger_boy_companion": {
+      "path": "assets/characters/tiger_boy_companion.webp",
+      "width": 302,
+      "height": 307
+    },
+    "tiger_girl_newborn": {
+      "path": "assets/characters/tiger_girl_newborn.webp",
+      "width": 187,
+      "height": 223
+    },
+    "tiger_girl_little": {
+      "path": "assets/characters/tiger_girl_little.webp",
+      "width": 225,
+      "height": 258
+    },
+    "tiger_girl_young": {
+      "path": "assets/characters/tiger_girl_young.webp",
+      "width": 276,
+      "height": 301
+    },
+    "tiger_girl_companion": {
+      "path": "assets/characters/tiger_girl_companion.webp",
+      "width": 306,
+      "height": 312
+    },
+    "red_panda_father": {
+      "path": "assets/characters/red_panda_father.webp",
+      "width": 583,
+      "height": 410
+    },
+    "red_panda_mother": {
+      "path": "assets/characters/red_panda_mother.webp",
+      "width": 570,
+      "height": 371
+    },
+    "red_panda_boy_newborn": {
+      "path": "assets/characters/red_panda_boy_newborn.webp",
+      "width": 231,
+      "height": 192
+    },
+    "red_panda_boy_little": {
+      "path": "assets/characters/red_panda_boy_little.webp",
+      "width": 255,
+      "height": 230
+    },
+    "red_panda_boy_young": {
+      "path": "assets/characters/red_panda_boy_young.webp",
+      "width": 303,
+      "height": 263
+    },
+    "red_panda_boy_companion": {
+      "path": "assets/characters/red_panda_boy_companion.webp",
+      "width": 392,
+      "height": 315
+    },
+    "red_panda_girl_newborn": {
+      "path": "assets/characters/red_panda_girl_newborn.webp",
+      "width": 234,
+      "height": 210
+    },
+    "red_panda_girl_little": {
+      "path": "assets/characters/red_panda_girl_little.webp",
+      "width": 258,
+      "height": 249
+    },
+    "red_panda_girl_young": {
+      "path": "assets/characters/red_panda_girl_young.webp",
+      "width": 295,
+      "height": 285
+    },
+    "red_panda_girl_companion": {
+      "path": "assets/characters/red_panda_girl_companion.webp",
+      "width": 390,
+      "height": 308
+    },
+    "fox_father": {
+      "path": "assets/characters/fox_father.webp",
+      "width": 511,
+      "height": 429
+    },
+    "fox_mother": {
+      "path": "assets/characters/fox_mother.webp",
+      "width": 377,
+      "height": 427
+    },
+    "fox_boy_newborn": {
+      "path": "assets/characters/fox_boy_newborn.webp",
+      "width": 206,
+      "height": 218
+    },
+    "fox_boy_little": {
+      "path": "assets/characters/fox_boy_little.webp",
+      "width": 230,
+      "height": 255
+    },
+    "fox_boy_young": {
+      "path": "assets/characters/fox_boy_young.webp",
+      "width": 291,
+      "height": 273
+    },
+    "fox_boy_companion": {
+      "path": "assets/characters/fox_boy_companion.webp",
+      "width": 312,
+      "height": 319
+    },
+    "fox_girl_newborn": {
+      "path": "assets/characters/fox_girl_newborn.webp",
+      "width": 203,
+      "height": 228
+    },
+    "fox_girl_little": {
+      "path": "assets/characters/fox_girl_little.webp",
+      "width": 239,
+      "height": 264
+    },
+    "fox_girl_young": {
+      "path": "assets/characters/fox_girl_young.webp",
+      "width": 285,
+      "height": 296
+    },
+    "fox_girl_companion": {
+      "path": "assets/characters/fox_girl_companion.webp",
+      "width": 314,
+      "height": 304
+    },
+    "bear_father": {
+      "path": "assets/characters/bear_father.webp",
+      "width": 569,
+      "height": 424
+    },
+    "bear_mother": {
+      "path": "assets/characters/bear_mother.webp",
+      "width": 483,
+      "height": 399
+    },
+    "bear_boy_newborn": {
+      "path": "assets/characters/bear_boy_newborn.webp",
+      "width": 216,
+      "height": 238
+    },
+    "bear_boy_little": {
+      "path": "assets/characters/bear_boy_little.webp",
+      "width": 280,
+      "height": 258
+    },
+    "bear_boy_young": {
+      "path": "assets/characters/bear_boy_young.webp",
+      "width": 301,
+      "height": 288
+    },
+    "bear_boy_companion": {
+      "path": "assets/characters/bear_boy_companion.webp",
+      "width": 368,
+      "height": 337
+    },
+    "bear_girl_newborn": {
+      "path": "assets/characters/bear_girl_newborn.webp",
+      "width": 215,
+      "height": 251
+    },
+    "bear_girl_little": {
+      "path": "assets/characters/bear_girl_little.webp",
+      "width": 286,
+      "height": 277
+    },
+    "bear_girl_young": {
+      "path": "assets/characters/bear_girl_young.webp",
+      "width": 305,
+      "height": 297
+    },
+    "bear_girl_companion": {
+      "path": "assets/characters/bear_girl_companion.webp",
+      "width": 362,
+      "height": 326
+    },
+    "bison_father": {
+      "path": "assets/characters/bison_father.webp",
+      "width": 599,
+      "height": 420
+    },
+    "bison_mother": {
+      "path": "assets/characters/bison_mother.webp",
+      "width": 513,
+      "height": 383
+    },
+    "bison_boy_newborn": {
+      "path": "assets/characters/bison_boy_newborn.webp",
+      "width": 219,
+      "height": 230
+    },
+    "bison_boy_little": {
+      "path": "assets/characters/bison_boy_little.webp",
+      "width": 283,
+      "height": 268
+    },
+    "bison_boy_young": {
+      "path": "assets/characters/bison_boy_young.webp",
+      "width": 294,
+      "height": 294
+    },
+    "bison_boy_companion": {
+      "path": "assets/characters/bison_boy_companion.webp",
+      "width": 354,
+      "height": 330
+    },
+    "bison_girl_newborn": {
+      "path": "assets/characters/bison_girl_newborn.webp",
+      "width": 226,
+      "height": 227
+    },
+    "bison_girl_little": {
+      "path": "assets/characters/bison_girl_little.webp",
+      "width": 271,
+      "height": 268
+    },
+    "bison_girl_young": {
+      "path": "assets/characters/bison_girl_young.webp",
+      "width": 285,
+      "height": 295
+    },
+    "bison_girl_companion": {
+      "path": "assets/characters/bison_girl_companion.webp",
+      "width": 341,
+      "height": 309
+    },
+    "beaver_father": {
+      "path": "assets/characters/beaver_father.webp",
+      "width": 536,
+      "height": 413
+    },
+    "beaver_mother": {
+      "path": "assets/characters/beaver_mother.webp",
+      "width": 531,
+      "height": 398
+    },
+    "beaver_boy_newborn": {
+      "path": "assets/characters/beaver_boy_newborn.webp",
+      "width": 250,
+      "height": 234
+    },
+    "beaver_boy_little": {
+      "path": "assets/characters/beaver_boy_little.webp",
+      "width": 286,
+      "height": 250
+    },
+    "beaver_boy_young": {
+      "path": "assets/characters/beaver_boy_young.webp",
+      "width": 339,
+      "height": 278
+    },
+    "beaver_boy_companion": {
+      "path": "assets/characters/beaver_boy_companion.webp",
+      "width": 395,
+      "height": 324
+    },
+    "beaver_girl_newborn": {
+      "path": "assets/characters/beaver_girl_newborn.webp",
+      "width": 259,
+      "height": 264
+    },
+    "beaver_girl_little": {
+      "path": "assets/characters/beaver_girl_little.webp",
+      "width": 291,
+      "height": 277
+    },
+    "beaver_girl_young": {
+      "path": "assets/characters/beaver_girl_young.webp",
+      "width": 340,
+      "height": 305
+    },
+    "beaver_girl_companion": {
+      "path": "assets/characters/beaver_girl_companion.webp",
+      "width": 396,
+      "height": 324
+    },
+    "hedgehog_father": {
+      "path": "assets/characters/hedgehog_father.webp",
+      "width": 486,
+      "height": 398
+    },
+    "hedgehog_mother": {
+      "path": "assets/characters/hedgehog_mother.webp",
+      "width": 409,
+      "height": 373
+    },
+    "hedgehog_boy_newborn": {
+      "path": "assets/characters/hedgehog_boy_newborn.webp",
+      "width": 236,
+      "height": 199
+    },
+    "hedgehog_boy_little": {
+      "path": "assets/characters/hedgehog_boy_little.webp",
+      "width": 274,
+      "height": 246
+    },
+    "hedgehog_boy_young": {
+      "path": "assets/characters/hedgehog_boy_young.webp",
+      "width": 292,
+      "height": 277
+    },
+    "hedgehog_boy_companion": {
+      "path": "assets/characters/hedgehog_boy_companion.webp",
+      "width": 329,
+      "height": 320
+    },
+    "hedgehog_girl_newborn": {
+      "path": "assets/characters/hedgehog_girl_newborn.webp",
+      "width": 242,
+      "height": 213
+    },
+    "hedgehog_girl_little": {
+      "path": "assets/characters/hedgehog_girl_little.webp",
+      "width": 274,
+      "height": 257
+    },
+    "hedgehog_girl_young": {
+      "path": "assets/characters/hedgehog_girl_young.webp",
+      "width": 295,
+      "height": 296
+    },
+    "hedgehog_girl_companion": {
+      "path": "assets/characters/hedgehog_girl_companion.webp",
+      "width": 338,
+      "height": 326
+    },
+    "owl_father": {
+      "path": "assets/characters/owl_father.webp",
+      "width": 431,
+      "height": 401
+    },
+    "owl_mother": {
+      "path": "assets/characters/owl_mother.webp",
+      "width": 357,
+      "height": 393
+    },
+    "owl_boy_newborn": {
+      "path": "assets/characters/owl_boy_newborn.webp",
+      "width": 207,
+      "height": 205
+    },
+    "owl_boy_little": {
+      "path": "assets/characters/owl_boy_little.webp",
+      "width": 232,
+      "height": 247
+    },
+    "owl_boy_young": {
+      "path": "assets/characters/owl_boy_young.webp",
+      "width": 352,
+      "height": 275
+    },
+    "owl_boy_companion": {
+      "path": "assets/characters/owl_boy_companion.webp",
+      "width": 312,
+      "height": 321
+    },
+    "owl_girl_newborn": {
+      "path": "assets/characters/owl_girl_newborn.webp",
+      "width": 211,
+      "height": 228
+    },
+    "owl_girl_little": {
+      "path": "assets/characters/owl_girl_little.webp",
+      "width": 220,
+      "height": 274
+    },
+    "owl_girl_young": {
+      "path": "assets/characters/owl_girl_young.webp",
+      "width": 368,
+      "height": 293
+    },
+    "owl_girl_companion": {
+      "path": "assets/characters/owl_girl_companion.webp",
+      "width": 275,
+      "height": 318
+    }
+  }
+}

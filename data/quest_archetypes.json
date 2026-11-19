@@ -1,0 +1,346 @@
+[
+  {
+    "id": "greeting",
+    "title": "Meet and greet",
+    "skill_ids": [
+      "1.1",
+      "2.1"
+    ],
+    "required_anchors": [],
+    "mechanic": "talk",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "find_water",
+    "title": "Find water",
+    "skill_ids": [
+      "1.7",
+      "2.3",
+      "3.2"
+    ],
+    "required_anchors": [
+      "waterhole"
+    ],
+    "mechanic": "guide",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "find_food",
+    "title": "Find appropriate food",
+    "skill_ids": [
+      "1.6",
+      "2.4"
+    ],
+    "required_anchors": [],
+    "mechanic": "fetch",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "name_object",
+    "title": "Teach a baby a word",
+    "skill_ids": [
+      "1.2",
+      "1.4",
+      "2.1"
+    ],
+    "required_anchors": [],
+    "mechanic": "teach",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "count_objects",
+    "title": "Count nearby objects",
+    "skill_ids": [
+      "1.3"
+    ],
+    "required_anchors": [],
+    "mechanic": "count",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "identify_colors",
+    "title": "Find the color",
+    "skill_ids": [
+      "1.2"
+    ],
+    "required_anchors": [],
+    "mechanic": "identify",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "follow_tracks",
+    "title": "Follow a trail",
+    "skill_ids": [
+      "2.3",
+      "2.6",
+      "3.2"
+    ],
+    "required_anchors": [
+      "path"
+    ],
+    "mechanic": "guide",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "hide_and_seek",
+    "title": "Hide and seek",
+    "skill_ids": [
+      "2.3",
+      "2.6"
+    ],
+    "required_anchors": [],
+    "mechanic": "locate",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "find_family",
+    "title": "Find mum, dad, brother or sister",
+    "skill_ids": [
+      "1.1",
+      "2.1",
+      "2.6"
+    ],
+    "required_anchors": [],
+    "mechanic": "social",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "family_presentation",
+    "title": "Introduce the family",
+    "skill_ids": [
+      "1.1",
+      "2.1"
+    ],
+    "required_anchors": [],
+    "mechanic": "talk",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "build_shelter",
+    "title": "Build a shelter",
+    "skill_ids": [
+      "2.5",
+      "3.2"
+    ],
+    "required_anchors": [],
+    "mechanic": "build",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "prepare_food",
+    "title": "Prepare a suitable meal",
+    "skill_ids": [
+      "1.6",
+      "2.4"
+    ],
+    "required_anchors": [],
+    "mechanic": "sort",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "weather_check",
+    "title": "Describe the weather",
+    "skill_ids": [
+      "1.7",
+      "2.7"
+    ],
+    "required_anchors": [],
+    "mechanic": "identify",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "animal_abilities",
+    "title": "What can animals do?",
+    "skill_ids": [
+      "1.5",
+      "2.2"
+    ],
+    "required_anchors": [],
+    "mechanic": "compare",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "describe_actions",
+    "title": "What is happening?",
+    "skill_ids": [
+      "3.1"
+    ],
+    "required_anchors": [],
+    "mechanic": "observe",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "compare_objects",
+    "title": "Compare sizes and features",
+    "skill_ids": [
+      "1.4",
+      "3.4"
+    ],
+    "required_anchors": [],
+    "mechanic": "compare",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "remember_yesterday",
+    "title": "Remember our adventure",
+    "skill_ids": [
+      "3.5"
+    ],
+    "required_anchors": [],
+    "mechanic": "tell",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "plan_expedition",
+    "title": "Plan an expedition",
+    "skill_ids": [
+      "3.6"
+    ],
+    "required_anchors": [],
+    "mechanic": "plan",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "help_sibling",
+    "title": "Help a sibling",
+    "skill_ids": [
+      "2.1",
+      "2.6"
+    ],
+    "required_anchors": [],
+    "mechanic": "social",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  },
+  {
+    "id": "solve_mystery",
+    "title": "Solve a small mystery",
+    "skill_ids": [
+      "2.8",
+      "3.7",
+      "3.8"
+    ],
+    "required_anchors": [],
+    "mechanic": "puzzle",
+    "dialogue_tiers": [
+      "beginner",
+      "intermediate",
+      "expert"
+    ],
+    "requires_touch_fallback": true,
+    "content_status": "template_needed"
+  }
+]

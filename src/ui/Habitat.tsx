@@ -1,0 +1,616 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { speech, type VoiceRole } from '../audio/speech';
+import { babyVoice } from '../audio/voiceKey';
+import { TREASURES } from '../content/adventures';
+import { FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
+import { PROPS } from '../content/props';
+import { NOUNS, PLACES } from '../content/places';
+import type { BiomeDef, PlaceId, QuestScript, Speaker, SpeciesDef } from '../content/types';
+import { unlockedAt } from '../content/archetypes';
+import { BIGGER_NOW, say } from '../content/utterances';
+import { fillLine, type Vars } from '../engine/dialogue';
+import { applyQuestOutcome, type OutcomeEvents } from '../engine/events';
+import { nextBabySex } from '../engine/family';
+import { findBaby, selectActivities, selectAdventures, type AdventureOffer, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
+import { createRng } from '../engine/rng';
+import type { AnswerRecord } from '../engine/skills';
+import { actorId, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
+import { DialogueBox, Options } from './DialogueBox';
+import { FamilyEvent } from './FamilyEvent';
+import { PropLayer } from './PropLayer';
+import { Puppet } from './Puppet';
+import { rigFor } from '../game/rigs';
+import { depthScale, puppetClip, WALK_MS } from '../game/staging';
+import { assetUrl, background, homePlacement, spriteFor, type Placement } from './scene';
+import { useQuest, type Cast } from './useQuest';
+
+interface Props {
+  state: GameState;
+  setState: (fn: (s: GameState) => GameState) => void;
+  species: SpeciesDef;
+  biome: BiomeDef;
+  /** la famille change de lieu (fin d'une aventure, ou choix d'un autre lieu) */
+  onPlace: (id: PlaceId) => void;
+  /** lieu affiché à l'écran (bandeau du haut), y compris pendant une aventure qui voyage */
+  onWhere?: (id: PlaceId) => void;
+}
+
+/** Ce qui se joue : une activité courte ou une aventure à plusieurs scènes. */
+interface Running {
+  script: QuestScript;
+  title: string;
+  icon: string;
+  mechanic: string;
+  teach?: TeachChoice;
+  choice?: string;
+  actor: ActorRef;
+  key: number;
+}
+
+function actorName(state: GameState, species: SpeciesDef, a: ActorRef): string {
+  if (a.kind === 'adult') return a.role === 'father' ? species.father.name : species.mother.name;
+  return findBaby(state, a)?.name ?? species.babyWord.en;
+}
+
+function voiceOf(state: GameState, a: ActorRef): VoiceRole {
+  return a.kind === 'adult' ? a.role : babyVoice(findBaby(state, a)?.sex ?? 'girl');
+}
+
+/** Personnage de la famille qui tient chaque rôle de la scène. */
+function rolesOf(state: GameState, species: SpeciesDef, actor: ActorRef): Record<Speaker, ActorRef | null> {
+  const babies = getFamily(state, species.id).babies.map((b): ActorRef => ({ speciesId: species.id, kind: 'baby', babyId: b.id }));
+  const isBaby = actor.kind === 'baby';
+  const other = isBaby ? babies.find((b) => b.kind === 'baby' && b.babyId !== actor.babyId) : babies[1];
+  return {
+    actor,
+    father: { speciesId: species.id, kind: 'adult', role: 'father' },
+    mother: { speciesId: species.id, kind: 'adult', role: 'mother' },
+    baby: isBaby ? actor : (babies[0] ?? null),
+    sibling: other ?? null,
+    narrator: null,
+  };
+}
+
+const SPEAKERS: readonly Speaker[] = ['actor', 'father', 'mother', 'baby', 'sibling', 'narrator'];
+
+export function Habitat({ state, setState, species, biome, onPlace, onWhere }: Props) {
+  const family = getFamily(state, species.id);
+  const [menuFor, setMenuFor] = useState<ActorRef | null>(null);
+  const [running, setRunning] = useState<Running | null>(null);
+  const [showFamily, setShowFamily] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [grow, setGrow] = useState<{ name: string; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[] } | null>(null);
+  const [wordBubble, setWordBubble] = useState<{ anchorId: string; text: string } | null>(null);
+  const [seed] = useState(() => Math.floor(Math.random() * 1e9));
+
+  const actors: ActorRef[] = useMemo(
+    () => [
+      { speciesId: species.id, kind: 'adult', role: 'father' },
+      { speciesId: species.id, kind: 'adult', role: 'mother' },
+      ...family.babies.map((b): ActorRef => ({ speciesId: species.id, kind: 'baby', babyId: b.id })),
+    ],
+    [species.id, family.babies],
+  );
+
+  const ctxFor = useCallback(
+    (actor: ActorRef): QuestContext => {
+      const greeted = state.player.history.some((h) => h.speciesId === species.id);
+      const memory = actor.kind === 'adult' ? family.parentMemory[actor.role] : (findBaby(state, actor)?.questMemory ?? []);
+      const need = greeted && !memory.some((m) => m.startsWith('found_water')) ? ('thirsty' as const) : null;
+      return { state, species, biome, actor, rng: createRng(seed + state.player.activityCounter * 31 + actorId(actor).length), need };
+    },
+    [state, species, biome, family.parentMemory, seed],
+  );
+
+  const menu = useMemo(() => {
+    if (!menuFor) return null;
+    const ctx = ctxFor(menuFor);
+    return { activities: selectActivities(ctx), adventures: selectAdventures(ctx) };
+  }, [menuFor, ctxFor]);
+
+  const curious = useMemo(() => {
+    const out = new Set<string>();
+    for (const a of actors) if (a.kind === 'baby' && selectActivities(ctxFor(a)).some((x) => x.archetype.id === 'name_object')) out.add(actorId(a));
+    return out;
+  }, [actors, ctxFor]);
+
+  useEffect(() => {
+    const t = setTimeout(() => void speech.speak(say.biomeWelcome(biome)), 400);
+    return () => clearTimeout(t);
+  }, [biome]);
+
+  // hors aventure, le bandeau montre le lieu de la famille ; pendant une aventure, QuestLayer le tient à jour
+  useEffect(() => {
+    if (!running) onWhere?.(biome.id);
+  }, [running, biome.id, onWhere]);
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 3600);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  const onQuestDone = useCallback(
+    (answers: AnswerRecord[]) => {
+      if (!running) return;
+      const { script, actor } = running;
+      const r = applyQuestOutcome(state, { script, mechanic: running.mechanic, actor, answers, teach: running.teach, continentId: biome.continentId, choice: running.choice });
+      const events: OutcomeEvents = r.events;
+      setState(() => r.state);
+      setRunning(null);
+      const end = script.endPlace ?? script.biomeId;
+      if (end !== biome.id) onPlace(end);
+      const growing = events.grew;
+      const babyName = growing ? (family.babies.find((b) => b.id === growing.babyId)?.name ?? species.babyWord.en) : actorName(state, species, actor);
+      if (growing) {
+        const stage = STAGE_NAMES[growing.to]!;
+        const unlocks = unlockedAt(growing.to).map((x) => ({ icon: x.icon, en: x.titleEn, fr: x.titleFr }));
+        setGrow({ name: babyName, stage: stage.en, stageFr: stage.fr, unlocks });
+        const sex = family.babies.find((b) => b.id === growing.babyId)?.sex ?? 'girl';
+        void speech.speak(say.growUp(babyName, growing.to)).then(() => speech.speak(BIGGER_NOW.en, { role: babyVoice(sex) }));
+      } else if (events.treasure) {
+        const t = TREASURES[events.treasure];
+        if (t) setToast(`${t.icon} ${say.treasure(t.nameEn)}`);
+      } else if (events.retained) {
+        setToast(`💡 ${fillLine(FAMILY_LINES.remembers, { babyName }).en} « ${events.retained} »`);
+      } else if (events.taught) {
+        setToast(`📚 ${fillLine(FAMILY_LINES.learned, { babyName }).en} « ${events.taught} »`);
+      } else if (events.photos?.length) {
+        setToast(`📷 ${events.photos.length === 1 ? 'Nouvelle photo dans l’album !' : `${events.photos.length} nouvelles photos dans l’album !`}`);
+      }
+    },
+    [running, setState, biome, state, species, family.babies, onPlace],
+  );
+
+  const tapAnchorFree = (place: BiomeDef, anchorId: string) => {
+    const a = place.anchors.find((x) => x.id === anchorId);
+    if (!a) return;
+    const text = say.decorWord(NOUNS[a.word], a.word);
+    setWordBubble({ anchorId, text });
+    void speech.speak(text);
+    setTimeout(() => setWordBubble((w) => (w?.anchorId === anchorId ? null : w)), 2200);
+  };
+
+  const canHaveBaby = species.familyReady && nextBabySex(family) !== 'none';
+  const otherPlaces = species.allowedBiomes.filter((p) => p !== biome.id && PLACES[p]);
+
+  if (running) {
+    return (
+      <div className="screen habitat-screen">
+        <QuestLayer key={running.key} running={running} state={state} species={species} actors={actors} onDone={onQuestDone} onQuit={() => setRunning(null)} onWord={tapAnchorFree} wordBubble={wordBubble} onWhere={onWhere} />
+        {toast && <div className="toast">{toast}</div>}
+      </div>
+    );
+  }
+
+  return (
+    <div className="screen habitat-screen">
+      <div className="stage">
+        <SceneBackground place={biome} />
+        {biome.anchors.map((a) => (
+          <button key={a.id} className="anchor" style={rectStyle(a.hit)} aria-label={a.word} onClick={() => tapAnchorFree(biome, a.id)} />
+        ))}
+        {wordBubble && <WordBubble place={biome} anchorId={wordBubble.anchorId} text={wordBubble.text} />}
+        {actors.map((a) => (
+          <Character
+            key={actorId(a)}
+            actor={a}
+            state={state}
+            species={species}
+            place={homePlacement(a, family, biome.groundY)}
+            question={curious.has(actorId(a))}
+            onTap={() => {
+              setMenuFor(a);
+              const b = findBaby(state, a);
+              void speech.speak(b ? say.babyCall(b.name, b.stage) : say.actorCall(actorName(state, species, a)), { role: voiceOf(state, a) });
+            }}
+          />
+        ))}
+        {canHaveBaby && (
+          <button className="family-btn pulse" onClick={() => setShowFamily(true)} aria-label="La famille">
+            💞 <span>{family.babies.length === 0 ? 'Family' : 'Surprise!'}</span>
+          </button>
+        )}
+        {otherPlaces.length > 0 && (
+          <div className="place-strip" aria-label="Autres lieux">
+            {otherPlaces.map((p) => {
+              const place = PLACES[p]!;
+              const bg = background(place.background);
+              const seen = state.player.placesVisited.includes(p);
+              return (
+                <button
+                  key={p}
+                  className="place-chip"
+                  onClick={() => {
+                    void speech.speak(say.placeName(place));
+                    onPlace(p);
+                  }}
+                  aria-label={place.nameEn}
+                >
+                  <span className="place-thumb" style={bg ? { backgroundImage: `url("${assetUrl(bg)}")` } : { background: place.placeholderGradient }} />
+                  <span className="place-name">{place.nameEn}</span>
+                  {seen && <span className="place-seen">✓</span>}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {menuFor && menu && (
+          <ActivityMenu
+            name={actorName(state, species, menuFor)}
+            activities={menu.activities}
+            adventures={menu.adventures}
+            here={biome.id}
+            frenchHelp={state.settings.frenchHelp}
+            onClose={() => setMenuFor(null)}
+            onPickActivity={(a) => {
+              setRunning({ script: a.script, title: a.archetype.titleEn, icon: a.archetype.icon, mechanic: a.archetype.mechanic, teach: a.teach, choice: a.choice, actor: menuFor, key: Date.now() });
+              setMenuFor(null);
+            }}
+            onPickAdventure={(o) => {
+              setRunning({ script: o.script, title: o.adventure.titleEn, icon: o.adventure.icon, mechanic: 'adventure', choice: o.adventure.id, actor: menuFor, key: Date.now() });
+              setMenuFor(null);
+            }}
+          />
+        )}
+
+        {showFamily && (
+          <FamilyEvent
+            species={species}
+            family={family}
+            frenchHelp={state.settings.frenchHelp}
+            slowVoice={state.settings.slowVoice}
+            onDone={(fam) => {
+              if (fam) setState((s) => withFamily(s, fam));
+              setShowFamily(false);
+            }}
+          />
+        )}
+
+        {toast && <div className="toast">{toast}</div>}
+        {grow && (
+          <div className="grow-overlay" onClick={() => setGrow(null)}>
+            <div className="grow-card">
+              <div className="stars">⭐ 🌟 ⭐</div>
+              <p className="en">{grow.name} is growing up!</p>
+              <p>
+                {grow.stage}
+                {state.settings.frenchHelp && <span className="fr"> · {grow.stageFr}</span>}
+              </p>
+              <p className="en">“{BIGGER_NOW.en}”</p>
+              {grow.unlocks.length > 0 && (
+                <div className="grow-unlocks">
+                  <p className="fr">Nouveaux jeux avec {grow.name} :</p>
+                  {grow.unlocks.map((u) => (
+                    <span key={u.en} className="grow-unlock">
+                      {u.icon} {u.en}
+                      {state.settings.frenchHelp && <small> · {u.fr}</small>}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <button className="big next">▶</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const rectStyle = (r: { x: number; y: number; w: number; h: number }) => ({ left: `${r.x}%`, top: `${r.y}%`, width: `${r.w}%`, height: `${r.h}%` });
+
+function SceneBackground({ place }: { place: BiomeDef }) {
+  const bg = background(place.background);
+  return bg ? (
+    <img className="stage-bg" src={assetUrl(bg)} alt="" draggable={false} />
+  ) : (
+    <>
+      <div className="stage-bg" style={{ background: place.placeholderGradient }} />
+      <span className="provisional">Décor provisoire · {place.nameFr}</span>
+    </>
+  );
+}
+
+function WordBubble({ place, anchorId, text }: { place: BiomeDef; anchorId: string; text: string }) {
+  const a = place.anchors.find((x) => x.id === anchorId);
+  if (!a) return null;
+  return (
+    <span className="word-bubble" style={{ left: `${a.hit.x + a.hit.w / 2}%`, top: `${a.hit.y}%` }}>
+      {text}
+    </span>
+  );
+}
+
+// ---------------------------------------------------------------------------
+
+interface CharacterProps {
+  actor: ActorRef;
+  state: GameState;
+  species: SpeciesDef;
+  place: Placement;
+  question?: boolean;
+  action?: string;
+  speaking?: boolean;
+  hidden?: boolean;
+  found?: boolean;
+  onTap?: () => void;
+  /** émojis des habits portés (jeu « Too hot! ») */
+  wearing?: string[];
+}
+
+function Character({ actor, state, species, place, question, action, speaking, hidden, found, onTap, wearing }: CharacterProps) {
+  const baby = findBaby(state, actor);
+  const sprite = actor.kind === 'adult' ? spriteFor(species.id, { role: actor.role }) : baby ? spriteFor(species.id, { sex: baby.sex, stage: baby.stage }) : undefined;
+  const name = actorName(state, species, actor);
+  const rig = rigFor(sprite?.path.split('/').pop()?.replace(/\.\w+$/, ''));
+  const [puppetOk, setPuppetOk] = useState<boolean | null>(null);
+  // marche : le personnage change de place → il marche le temps du trajet, tourné vers où il va
+  const prev = useRef({ x: place.x, y: place.y });
+  const [walk, setWalk] = useState<{ dir: 1 | -1; until: number } | null>(null);
+  const [lastDir, setLastDir] = useState<1 | -1>(1);
+  useEffect(() => {
+    const dx = place.x - prev.current.x, dy = place.y - prev.current.y;
+    prev.current = { x: place.x, y: place.y };
+    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+    const dir: 1 | -1 = dx < 0 ? -1 : 1;
+    setWalk({ dir, until: Date.now() + WALK_MS });
+    setLastDir(dir);
+    const t = window.setTimeout(() => setWalk(null), WALK_MS);
+    return () => window.clearTimeout(t);
+  }, [place.x, place.y]);
+  const clip = puppetClip({ walking: !!walk, action, speaking });
+  const facing: 1 | -1 = walk ? walk.dir : action ? lastDir : 1;
+  const puppet = !!rig && !!sprite && puppetOk !== false && !hidden;
+  return (
+    <button
+      className={`char${action ? ` act-${action}` : ''}${speaking ? ' speaking' : ''}${hidden ? ' hidden' : ''}${found ? ' found' : ''}${puppet && puppetOk ? ' puppeted' : ''}${puppet && walk ? ' walking' : ''}`}
+      style={{ left: `${place.x}%`, top: `${place.y}%`, height: `${place.h}%`, zIndex: Math.round(place.y) }}
+      onClick={onTap}
+      disabled={!onTap}
+      aria-label={name}
+    >
+      {sprite ? <img src={assetUrl(sprite)} alt="" draggable={false} /> : <span className="char-icon" style={{ fontSize: `${place.h * 0.3}cqw` }}>{species.icon}</span>}
+      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={clip} facing={facing} onReady={setPuppetOk} />}
+      {question && <span className="q-bubble">?</span>}
+      {wearing && wearing.length > 0 && <span className="worn">{wearing.join('')}</span>}
+      <span className="char-name">{name}</span>
+      {action === 'drink_trunk' && <span className="splash">💦</span>}
+      {action === 'splash' && <span className="splash">💦</span>}
+      {(action === 'rest' || action === 'sleep') && <span className="zzz">z z</span>}
+      {action === 'eat' && <span className="splash">😋</span>}
+      {action === 'roar' && <span className="splash">💥</span>}
+      {action === 'dance' && <span className="splash">🎵</span>}
+      {action === 'wave' && <span className="splash">👋</span>}
+      {action === 'swim' && <span className="splash">🌊</span>}
+    </button>
+  );
+}
+
+// ---------------------------------------------------------------------------
+
+interface MenuProps {
+  name: string;
+  activities: RankedActivity[];
+  adventures: AdventureOffer[];
+  here: PlaceId;
+  frenchHelp: boolean;
+  onPickActivity: (a: RankedActivity) => void;
+  onPickAdventure: (a: AdventureOffer) => void;
+  onClose: () => void;
+}
+
+function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, onClose }: MenuProps) {
+  return (
+    <div className="activity-menu" role="dialog" aria-label={`Jouer avec ${name}`}>
+      <div className="picker-head">
+        <h2>{name}</h2>
+        <button className="round" onClick={onClose} aria-label="Fermer">✕</button>
+      </div>
+      {adventures.some((o) => o.adventure.start === here) && (
+        <>
+          <h3 className="menu-section">🗺️ Adventure here{frenchHelp && <span className="fr"> · Aventure ici</span>}</h3>
+          <div className="activity-cards adventures">
+            {adventures.filter((o) => o.adventure.start === here).map((o) => {
+              const t = TREASURES[o.adventure.treasure];
+              const away = o.adventure.start !== here ? PLACES[o.adventure.start] : undefined;
+              return (
+                <div className={`option adv${o.done ? ' done' : ''}`} key={o.adventure.id}>
+                  <button className="option-main activity" onClick={() => onPickAdventure(o)}>
+                    <span className="opt-icon">{o.adventure.icon}</span>
+                    <span className="opt-text">{o.adventure.titleEn}</span>
+                    {frenchHelp && <span className="fr">{o.adventure.titleFr}</span>}
+                    <span className="adv-meta">
+                      {away && <span className="adv-away">➜ {away.nameEn}</span>}
+                      {t && <span className={`adv-treasure${o.done ? ' got' : ''}`}>{o.done ? t.icon : '🎁'}</span>}
+                    </span>
+                  </button>
+                  <button className="listen" aria-label="Écouter" onClick={() => void speech.speak(say.cardTitle(o.adventure.titleEn))}>🔊</button>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+      <h3 className="menu-section">🎲 Games{frenchHelp && <span className="fr"> · Jeux</span>}</h3>
+      <div className="activity-cards">
+        {activities.map((a) => (
+          <div className="option" key={a.archetype.id}>
+            <button className="option-main activity" onClick={() => onPickActivity(a)}>
+              <span className="opt-icon">{a.archetype.icon}</span>
+              <span className="opt-text">{a.archetype.titleEn}</span>
+              {frenchHelp && <span className="fr">{a.archetype.titleFr}</span>}
+            </button>
+            <button className="listen" aria-label="Écouter" onClick={() => void speech.speak(say.cardTitle(a.archetype.titleEn))}>🔊</button>
+          </div>
+        ))}
+      </div>
+      {adventures.some((o) => o.adventure.start !== here) && (
+        <>
+          <h3 className="menu-section small">🧭 Adventures in other places{frenchHelp && <span className="fr"> · Aventures ailleurs</span>}</h3>
+          <div className="adv-elsewhere">
+            {adventures.filter((o) => o.adventure.start !== here).map((o) => {
+              const t = TREASURES[o.adventure.treasure];
+              const place = PLACES[o.adventure.start];
+              return (
+                <button key={o.adventure.id} className={`adv-chip${o.done ? ' done' : ''}`} onClick={() => onPickAdventure(o)} aria-label={`${o.adventure.titleEn}, ${place?.nameEn ?? ''}`}>
+                  <span className="opt-icon">{o.adventure.icon}</span>
+                  <span className="chip-txt">
+                    <span className="opt-text">{o.adventure.titleEn}</span>
+                    <span className="adv-away">➜ {place?.nameEn}</span>
+                  </span>
+                  {t && <span className={`adv-treasure${o.done ? ' got' : ''}`}>{o.done ? t.icon : '🎁'}</span>}
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+
+interface QuestLayerProps {
+  running: Running;
+  state: GameState;
+  species: SpeciesDef;
+  actors: ActorRef[];
+  onDone: (answers: AnswerRecord[]) => void;
+  onQuit: () => void;
+  onWord: (place: BiomeDef, anchorId: string) => void;
+  wordBubble: { anchorId: string; text: string } | null;
+  onWhere?: (id: PlaceId) => void;
+}
+
+function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, wordBubble, onWhere }: QuestLayerProps) {
+  const { actor, script } = running;
+  const family = getFamily(state, species.id);
+  // distribution des rôles figée au début de la scène
+  const [roles] = useState(() => rolesOf(state, species, actor));
+  const cast: Cast = useMemo(() => {
+    const c = {} as Cast;
+    for (const sp of SPEAKERS) {
+      const ref = roles[sp];
+      c[sp] = sp === 'narrator' ? { name: '📖', role: 'narrator' } : ref ? { name: actorName(state, species, ref), role: voiceOf(state, ref) } : null;
+    }
+    return c;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roles]);
+  const vars = useCallback(
+    (place: string): Vars => ({
+      actorName: cast.actor?.name ?? '',
+      playerName: state.player.name,
+      babyName: cast.baby?.name ?? '',
+      siblingName: cast.sibling?.name ?? '',
+      placeName: PLACES[place]?.nameEn ?? '',
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [cast],
+  );
+  const q = useQuest(script, vars, cast, state.settings.slowVoice, onDone);
+  const { state: run, step } = q;
+  const place = PLACES[run.place]!;
+  useEffect(() => onWhere?.(run.place), [run.place, onWhere]);
+  const idOf = (sp: Speaker) => (roles[sp] ? actorId(roles[sp]!) : null);
+
+  const glow = step?.kind === 'ask' ? step.pointAt : q.reveal?.anchor;
+  const treasure = run.treasure ? TREASURES[run.treasure] : undefined;
+
+  return (
+    <div className={`stage${run.travels ? ' traveling' : ''}${run.night ? ' night' : ''}`}>
+      <SceneBackground place={place} />
+      <div className="night-sky" aria-hidden />
+      {run.photos.length > 0 && <div key={`flash${run.photos.length}`} className="photo-flash" aria-hidden />}
+      {run.travels > 0 && <div key={run.travels} className="travel-fade" />}
+      {place.anchors.map((a) => (
+        <button
+          key={`${place.id}:${a.id}`}
+          className={`anchor${glow === a.id ? ' glow' : ''}${q.wantsAnchor ? ' wanted' : ''}`}
+          style={rectStyle(a.hit)}
+          aria-label={a.word}
+          onClick={() => (q.wantsAnchor ? q.tapAnchor(a.id) : onWord(place, a.id))}
+        />
+      ))}
+      {wordBubble && !q.wantsAnchor && <WordBubble place={place} anchorId={wordBubble.anchorId} text={wordBubble.text} />}
+      <PropLayer place={place} props={run.props} tapped={run.tapped} reveal={q.reveal?.props} active={q.wantsProp} counting={step?.kind === 'tapProps' && !!step.count} onTap={q.tapProp} />
+      {actors.map((a) => {
+        const id = actorId(a);
+        const home = homePlacement(a, family, place.groundY);
+        const mySpeakers = SPEAKERS.filter((sp) => idOf(sp) === id);
+        const move = mySpeakers.map((sp) => run.moves[sp]).find(Boolean);
+        const hiding = run.hiding && mySpeakers.includes(run.hiding.who) ? run.hiding : null;
+        const anchorAt = (anchorId: string) => place.anchors.find((x) => x.id === anchorId);
+        const target = hiding?.found ? anchorAt(hiding.at) : move ? anchorAt(move.anchor) : undefined;
+        const toY = target ? (target.stand?.y ?? target.hit.y + target.hit.h) : home.y;
+        const pos = target ? { ...home, x: target.stand?.x ?? target.hit.x + target.hit.w / 2, y: toY, h: home.h * depthScale(home.y, toY) } : home;
+        const acting = run.acting && mySpeakers.includes(run.acting.who) ? run.acting.action : undefined;
+        const speaking = !!run.bubble && mySpeakers.includes(run.bubble.who) && !move;
+        const worn = mySpeakers.flatMap((sp) => run.wearing[sp] ?? []).map((k) => PROPS[k]?.emoji ?? '');
+        return <Character key={id} actor={a} state={state} species={species} place={pos} action={acting ?? move?.action} speaking={speaking} hidden={!!hiding && !hiding.found} found={!!hiding?.found} wearing={worn} />;
+      })}
+      <div className="quest-title">
+        {running.icon} {running.title}
+        <span className="quest-progress">
+          <span style={{ width: `${Math.round(((run.index + 1) / script.steps.length) * 100)}%` }} />
+        </span>
+      </div>
+      <button className="quit" onClick={onQuit} aria-label="Arrêter l'activité">✕</button>
+      {run.photos.length > 0 && (
+        <div className="photo-strip" aria-label="Photos">
+          {run.photos.map((anchorId, i) => {
+            const a = place.anchors.find((x) => x.id === anchorId);
+            const bg = background(place.background);
+            if (!a) return null;
+            return (
+              <span key={`${anchorId}${i}`} className="polaroid small">
+                <span className="polaroid-img" style={bg ? { backgroundImage: `url("${assetUrl(bg)}")`, backgroundPosition: `${a.hit.x + a.hit.w / 2}% ${a.hit.y + a.hit.h / 2}%` } : { background: place.placeholderGradient }} />
+                <span className="polaroid-txt">{NOUNS[a.word]?.en ?? a.word}</span>
+              </span>
+            );
+          })}
+        </div>
+      )}
+      {treasure && (
+        <div className="treasure-card" key={treasure.id}>
+          <div className="confetti" aria-hidden>
+            {Array.from({ length: 18 }, (_, i) => (
+              <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 6) * 0.12}s`, background: ['#e53935', '#fdd835', '#43a047', '#1e88e5', '#f06292', '#8e24aa'][i % 6] }} />
+            ))}
+          </div>
+          <span className="treasure-icon">{treasure.icon}</span>
+          <span className="treasure-name">{treasure.nameEn}</span>
+          {state.settings.frenchHelp && <span className="fr">{treasure.nameFr}</span>}
+        </div>
+      )}
+      {q.bubble && step && step.kind !== 'moveTo' && step.kind !== 'moveBack' && step.kind !== 'props' && (
+        <DialogueBox speaker={cast[q.bubble.who]?.name ?? ''} line={q.bubble.line} frenchHelp={state.settings.frenchHelp} onReplay={q.replay} mood={run.feedback}>
+          {step.kind === 'ask' && run.feedback !== 'ok' && <Options options={step.options.map((o) => ({ ...o, line: q.filled(o.line) }))} biome={place} reveal={q.reveal?.option !== undefined} disabled={false} onChoose={q.choose} listen={step.listen} />}
+          {step.kind === 'command' && run.feedback !== 'ok' && (
+            <>
+              <Options options={step.options.map((o) => ({ line: q.filled(o.line), icon: o.icon, correct: !!o.action }))} biome={place} reveal={false} disabled={false} onChoose={q.choose} done={run.tapped.map(Number)} />
+              <p className="hint-tap">
+                <span className="tap-count">{run.tapped.length} / {step.need}</span>
+              </p>
+            </>
+          )}
+          {(step.kind === 'tapAnchor' || step.kind === 'seek') && run.feedback !== 'ok' && <p className="hint-tap">👆</p>}
+          {step.kind === 'tapProps' && run.feedback !== 'ok' && (
+            <p className="hint-tap">
+              👆 {step.targets.length > 1 && <span className="tap-count">{run.tapped.length} / {step.targets.length}</span>}
+            </p>
+          )}
+          {q.canAdvance && !q.finished && <button className="big next" onClick={q.advance} aria-label="Continuer">▶</button>}
+          {q.finished && (
+            <div className="celebrate">
+              <span className="stars">⭐ ⭐ ⭐</span>
+              <button className="big next" onClick={q.finish} aria-label="Terminer">✓</button>
+            </div>
+          )}
+        </DialogueBox>
+      )}
+    </div>
+  );
+}

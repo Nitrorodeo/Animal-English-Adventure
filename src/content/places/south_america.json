@@ -1,0 +1,2059 @@
+{
+  "continentId": "south_america",
+  "places": [
+    {
+      "id": "sa_jungle",
+      "source": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_06-1.png",
+      "background": "sa_jungle",
+      "nameEn": "the jungle clearing",
+      "nameFr": "la clairière de la jungle",
+      "weather": "sunny",
+      "groundY": 76,
+      "anchors": [
+        {
+          "id": "tree",
+          "word": "tree",
+          "wordFr": "l'arbre",
+          "icon": "🌳",
+          "hit": {
+            "x": 8,
+            "y": 12,
+            "w": 30,
+            "h": 44
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 45,
+            "h": 60
+          },
+          "stand": {
+            "x": 30,
+            "y": 62
+          },
+          "tags": [
+            "climb",
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the tree big?",
+              "fr": "Est-ce que l'arbre est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "vine",
+          "word": "vine",
+          "wordFr": "la liane",
+          "icon": "🌿",
+          "hit": {
+            "x": 77,
+            "y": 2,
+            "w": 10,
+            "h": 30
+          },
+          "crop": {
+            "x": 70,
+            "y": 0,
+            "w": 22,
+            "h": 40
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the vine long?",
+              "fr": "Est-ce que la liane est long ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "flower",
+          "word": "flower",
+          "wordFr": "la fleur",
+          "icon": "🌺",
+          "hit": {
+            "x": 1,
+            "y": 73,
+            "w": 17,
+            "h": 22
+          },
+          "crop": {
+            "x": 0,
+            "y": 68,
+            "w": 24,
+            "h": 32
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the flower red?",
+              "fr": "Est-ce que la fleur est rouge ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "leaf",
+          "word": "leaf",
+          "wordFr": "la feuille",
+          "icon": "🍃",
+          "hit": {
+            "x": 0,
+            "y": 26,
+            "w": 11,
+            "h": 18
+          },
+          "crop": {
+            "x": 0,
+            "y": 22,
+            "w": 16,
+            "h": 26
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the leaf blue?",
+              "fr": "Est-ce que la feuille est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 24,
+            "y": 52,
+            "w": 7,
+            "h": 6
+          },
+          "crop": {
+            "x": 20,
+            "y": 47,
+            "w": 16,
+            "h": 16
+          },
+          "stand": {
+            "x": 27,
+            "y": 64
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "root",
+          "word": "root",
+          "wordFr": "la racine",
+          "icon": "🌱",
+          "hit": {
+            "x": 15,
+            "y": 38,
+            "w": 30,
+            "h": 20
+          },
+          "crop": {
+            "x": 15,
+            "y": 28,
+            "w": 36,
+            "h": 36
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the root brown?",
+              "fr": "Est-ce que la racine est brun ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "grass",
+          "word": "grass",
+          "wordFr": "l'herbe",
+          "icon": "🌱",
+          "hit": {
+            "x": 25,
+            "y": 62,
+            "w": 35,
+            "h": 14
+          },
+          "crop": {
+            "x": 25,
+            "y": 58,
+            "w": 30,
+            "h": 30
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the grass pink?",
+              "fr": "Est-ce que l'herbe est rose ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "path",
+          "word": "path",
+          "wordFr": "le chemin",
+          "icon": "🛤️",
+          "hit": {
+            "x": 30,
+            "y": 77,
+            "w": 16,
+            "h": 8
+          },
+          "crop": {
+            "x": 28,
+            "y": 70,
+            "w": 22,
+            "h": 26
+          },
+          "stand": {
+            "x": 38,
+            "y": 84
+          },
+          "tags": [
+            "path"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the path blue?",
+              "fr": "Est-ce que le chemin est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "plant",
+          "word": "plant",
+          "wordFr": "la plante",
+          "icon": "🪴",
+          "hit": {
+            "x": 72,
+            "y": 42,
+            "w": 11,
+            "h": 13
+          },
+          "crop": {
+            "x": 68,
+            "y": 38,
+            "w": 19,
+            "h": 22
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the plant blue?",
+              "fr": "Est-ce que la plante est bleu ?"
+            },
+            "yes": false
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 27,
+          "y": 52
+        },
+        {
+          "x": 34,
+          "y": 58
+        },
+        {
+          "x": 42,
+          "y": 56
+        },
+        {
+          "x": 50,
+          "y": 59
+        },
+        {
+          "x": 57,
+          "y": 57
+        },
+        {
+          "x": 19,
+          "y": 56
+        },
+        {
+          "x": 10,
+          "y": 52
+        },
+        {
+          "x": 45,
+          "y": 50
+        }
+      ]
+    },
+    {
+      "id": "sa_waterfall",
+      "source": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_09-2.png",
+      "background": "sa_waterfall",
+      "nameEn": "the big waterfall",
+      "nameFr": "la grande cascade",
+      "weather": "sunny",
+      "groundY": 72,
+      "anchors": [
+        {
+          "id": "waterfall",
+          "word": "waterfall",
+          "wordFr": "la cascade",
+          "icon": "💦",
+          "hit": {
+            "x": 52,
+            "y": 22,
+            "w": 32,
+            "h": 44
+          },
+          "crop": {
+            "x": 48,
+            "y": 18,
+            "w": 40,
+            "h": 52
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the waterfall big?",
+              "fr": "Est-ce que la cascade est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "water",
+          "word": "water",
+          "wordFr": "l'eau",
+          "icon": "💧",
+          "hit": {
+            "x": 44,
+            "y": 67,
+            "w": 18,
+            "h": 8
+          },
+          "crop": {
+            "x": 32,
+            "y": 64,
+            "w": 30,
+            "h": 30
+          },
+          "stand": {
+            "x": 24,
+            "y": 82
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the water blue?",
+              "fr": "Est-ce que l'eau est bleu ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "⛰️",
+          "hit": {
+            "x": 50,
+            "y": 6,
+            "w": 18,
+            "h": 12
+          },
+          "crop": {
+            "x": 48,
+            "y": 0,
+            "w": 22,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain pink?",
+              "fr": "Est-ce que la montagne est rose ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "ruins",
+          "word": "ruins",
+          "wordFr": "les ruines",
+          "icon": "🏛️",
+          "hit": {
+            "x": 19,
+            "y": 19,
+            "w": 15,
+            "h": 10
+          },
+          "crop": {
+            "x": 15,
+            "y": 12,
+            "w": 25,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the ruins blue?",
+              "fr": "Est-ce que les ruines sont bleus ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "tree",
+          "word": "tree",
+          "wordFr": "l'arbre",
+          "icon": "🌳",
+          "hit": {
+            "x": 0,
+            "y": 5,
+            "w": 12,
+            "h": 45
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 26,
+            "h": 56
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the tree tall?",
+              "fr": "Est-ce que l'arbre est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "flower",
+          "word": "flower",
+          "wordFr": "la fleur",
+          "icon": "🌺",
+          "hit": {
+            "x": 8,
+            "y": 42,
+            "w": 11,
+            "h": 22
+          },
+          "crop": {
+            "x": 5,
+            "y": 38,
+            "w": 20,
+            "h": 32
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the flower red?",
+              "fr": "Est-ce que la fleur est rouge ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 32,
+            "y": 73,
+            "w": 15,
+            "h": 11
+          },
+          "crop": {
+            "x": 29,
+            "y": 69,
+            "w": 22,
+            "h": 22
+          },
+          "stand": {
+            "x": 30,
+            "y": 88
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock big?",
+              "fr": "Est-ce que le rocher est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "stone",
+          "word": "stone",
+          "wordFr": "la pierre",
+          "icon": "🪨",
+          "hit": {
+            "x": 48,
+            "y": 80,
+            "w": 8,
+            "h": 6
+          },
+          "crop": {
+            "x": 44,
+            "y": 75,
+            "w": 16,
+            "h": 16
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the stone red?",
+              "fr": "Est-ce que la pierre est rouge ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 62,
+            "y": 0,
+            "w": 17,
+            "h": 11
+          },
+          "crop": {
+            "x": 62,
+            "y": 0,
+            "w": 18,
+            "h": 16
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud brown?",
+              "fr": "Est-ce que le nuage est brun ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "vine",
+          "word": "vine",
+          "wordFr": "la liane",
+          "icon": "🌿",
+          "hit": {
+            "x": 84,
+            "y": 18,
+            "w": 11,
+            "h": 30
+          },
+          "crop": {
+            "x": 80,
+            "y": 14,
+            "w": 18,
+            "h": 38
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the vine green?",
+              "fr": "Est-ce que la liane est vert ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 33,
+          "y": 60
+        },
+        {
+          "x": 41,
+          "y": 56
+        },
+        {
+          "x": 45,
+          "y": 47
+        },
+        {
+          "x": 38,
+          "y": 54
+        },
+        {
+          "x": 52,
+          "y": 45
+        },
+        {
+          "x": 26,
+          "y": 56
+        },
+        {
+          "x": 14,
+          "y": 48
+        },
+        {
+          "x": 36,
+          "y": 30
+        }
+      ]
+    },
+    {
+      "id": "sa_river",
+      "source": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_10-3.png",
+      "background": "sa_river",
+      "nameEn": "the river and the old stones",
+      "nameFr": "la rivière et les vieilles pierres",
+      "weather": "sunny",
+      "groundY": 80,
+      "anchors": [
+        {
+          "id": "tree",
+          "word": "tree",
+          "wordFr": "l'arbre",
+          "icon": "🌳",
+          "hit": {
+            "x": 5,
+            "y": 3,
+            "w": 30,
+            "h": 50
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 42,
+            "h": 62
+          },
+          "stand": {
+            "x": 28,
+            "y": 62
+          },
+          "tags": [
+            "climb",
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the tree big?",
+              "fr": "Est-ce que l'arbre est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "river",
+          "word": "river",
+          "wordFr": "la rivière",
+          "icon": "🏞️",
+          "hit": {
+            "x": 56,
+            "y": 40,
+            "w": 24,
+            "h": 16
+          },
+          "crop": {
+            "x": 52,
+            "y": 36,
+            "w": 34,
+            "h": 28
+          },
+          "stand": {
+            "x": 44,
+            "y": 66
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the river blue?",
+              "fr": "Est-ce que la rivière est bleu ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "⛰️",
+          "hit": {
+            "x": 64,
+            "y": 6,
+            "w": 20,
+            "h": 16
+          },
+          "crop": {
+            "x": 60,
+            "y": 2,
+            "w": 28,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain pink?",
+              "fr": "Est-ce que la montagne est rose ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "ruins",
+          "word": "ruins",
+          "wordFr": "les ruines",
+          "icon": "🏛️",
+          "hit": {
+            "x": 34,
+            "y": 18,
+            "w": 24,
+            "h": 30
+          },
+          "crop": {
+            "x": 30,
+            "y": 14,
+            "w": 32,
+            "h": 40
+          },
+          "stand": {
+            "x": 46,
+            "y": 56
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the ruins blue?",
+              "fr": "Est-ce que les ruines sont bleus ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "water_lily",
+          "word": "water lily",
+          "wordFr": "le nénuphar",
+          "icon": "🪷",
+          "hit": {
+            "x": 46,
+            "y": 68,
+            "w": 16,
+            "h": 11
+          },
+          "crop": {
+            "x": 44,
+            "y": 62,
+            "w": 22,
+            "h": 24
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the water lily green?",
+              "fr": "Est-ce que le nénuphar est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "flower",
+          "word": "flower",
+          "wordFr": "la fleur",
+          "icon": "🌺",
+          "hit": {
+            "x": 0,
+            "y": 68,
+            "w": 15,
+            "h": 25
+          },
+          "crop": {
+            "x": 0,
+            "y": 64,
+            "w": 22,
+            "h": 32
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the flower blue?",
+              "fr": "Est-ce que la fleur est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 31,
+            "y": 62,
+            "w": 16,
+            "h": 15
+          },
+          "crop": {
+            "x": 28,
+            "y": 58,
+            "w": 24,
+            "h": 24
+          },
+          "stand": {
+            "x": 36,
+            "y": 80
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock big?",
+              "fr": "Est-ce que le rocher est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "path",
+          "word": "path",
+          "wordFr": "le chemin",
+          "icon": "🛤️",
+          "hit": {
+            "x": 18,
+            "y": 86,
+            "w": 22,
+            "h": 10
+          },
+          "crop": {
+            "x": 18,
+            "y": 74,
+            "w": 26,
+            "h": 26
+          },
+          "stand": {
+            "x": 30,
+            "y": 88
+          },
+          "tags": [
+            "path"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the path brown?",
+              "fr": "Est-ce que le chemin est brun ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "leaf",
+          "word": "leaf",
+          "wordFr": "la feuille",
+          "icon": "🍃",
+          "hit": {
+            "x": 82,
+            "y": 12,
+            "w": 16,
+            "h": 22
+          },
+          "crop": {
+            "x": 78,
+            "y": 8,
+            "w": 22,
+            "h": 30
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the leaf blue?",
+              "fr": "Est-ce que la feuille est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 57,
+            "y": 5,
+            "w": 9,
+            "h": 9
+          },
+          "crop": {
+            "x": 54,
+            "y": 2,
+            "w": 16,
+            "h": 16
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud white?",
+              "fr": "Est-ce que le nuage est blanc ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 42,
+          "y": 40
+        },
+        {
+          "x": 52,
+          "y": 41
+        },
+        {
+          "x": 37,
+          "y": 48
+        },
+        {
+          "x": 48,
+          "y": 55
+        },
+        {
+          "x": 57,
+          "y": 52
+        },
+        {
+          "x": 30,
+          "y": 54
+        },
+        {
+          "x": 22,
+          "y": 59
+        },
+        {
+          "x": 10,
+          "y": 50
+        }
+      ]
+    },
+    {
+      "id": "sa_andes",
+      "source": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_13-4.png",
+      "background": "sa_andes",
+      "nameEn": "the high mountains",
+      "nameFr": "les hautes montagnes",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "⛰️",
+          "hit": {
+            "x": 56,
+            "y": 14,
+            "w": 18,
+            "h": 30
+          },
+          "crop": {
+            "x": 50,
+            "y": 4,
+            "w": 28,
+            "h": 42
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the mountain big?",
+              "fr": "Est-ce que la montagne est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "snow",
+          "word": "snow",
+          "wordFr": "la neige",
+          "icon": "❄️",
+          "hit": {
+            "x": 46,
+            "y": 2,
+            "w": 20,
+            "h": 12
+          },
+          "crop": {
+            "x": 44,
+            "y": 0,
+            "w": 24,
+            "h": 22
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the snow white?",
+              "fr": "Est-ce que la neige est blanc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "wall",
+          "word": "wall",
+          "wordFr": "le mur",
+          "icon": "🧱",
+          "hit": {
+            "x": 0,
+            "y": 12,
+            "w": 22,
+            "h": 40
+          },
+          "crop": {
+            "x": 0,
+            "y": 8,
+            "w": 28,
+            "h": 48
+          },
+          "stand": {
+            "x": 20,
+            "y": 58
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the wall tall?",
+              "fr": "Est-ce que le mur est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "ruins",
+          "word": "ruins",
+          "wordFr": "les ruines",
+          "icon": "🏛️",
+          "hit": {
+            "x": 78,
+            "y": 21,
+            "w": 21,
+            "h": 15
+          },
+          "crop": {
+            "x": 76,
+            "y": 16,
+            "w": 24,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the ruins blue?",
+              "fr": "Est-ce que les ruines sont bleus ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 80,
+            "y": 3,
+            "w": 16,
+            "h": 12
+          },
+          "crop": {
+            "x": 77,
+            "y": 0,
+            "w": 22,
+            "h": 18
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud red?",
+              "fr": "Est-ce que le nuage est rouge ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "flower",
+          "word": "flower",
+          "wordFr": "la fleur",
+          "icon": "🌺",
+          "hit": {
+            "x": 1,
+            "y": 77,
+            "w": 12,
+            "h": 12
+          },
+          "crop": {
+            "x": 0,
+            "y": 72,
+            "w": 20,
+            "h": 24
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the flower pink?",
+              "fr": "Est-ce que la fleur est rose ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 27,
+            "y": 87,
+            "w": 11,
+            "h": 8
+          },
+          "crop": {
+            "x": 23,
+            "y": 82,
+            "w": 20,
+            "h": 18
+          },
+          "stand": {
+            "x": 34,
+            "y": 84
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "path",
+          "word": "path",
+          "wordFr": "le chemin",
+          "icon": "🛤️",
+          "hit": {
+            "x": 46,
+            "y": 89,
+            "w": 15,
+            "h": 10
+          },
+          "crop": {
+            "x": 44,
+            "y": 82,
+            "w": 20,
+            "h": 18
+          },
+          "stand": {
+            "x": 54,
+            "y": 92
+          },
+          "tags": [
+            "path"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the path blue?",
+              "fr": "Est-ce que le chemin est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "grass",
+          "word": "grass",
+          "wordFr": "l'herbe",
+          "icon": "🌱",
+          "hit": {
+            "x": 20,
+            "y": 60,
+            "w": 36,
+            "h": 15
+          },
+          "crop": {
+            "x": 25,
+            "y": 58,
+            "w": 30,
+            "h": 32
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the grass brown?",
+              "fr": "Est-ce que l'herbe est brun ?"
+            },
+            "yes": false
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 30,
+          "y": 48
+        },
+        {
+          "x": 20,
+          "y": 55
+        },
+        {
+          "x": 36,
+          "y": 56
+        },
+        {
+          "x": 46,
+          "y": 57
+        },
+        {
+          "x": 55,
+          "y": 57
+        },
+        {
+          "x": 12,
+          "y": 50
+        },
+        {
+          "x": 8,
+          "y": 57
+        },
+        {
+          "x": 44,
+          "y": 50
+        }
+      ]
+    },
+    {
+      "id": "sa_wetland",
+      "source": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_15-5.png",
+      "background": "sa_wetland",
+      "nameEn": "the lily pond",
+      "nameFr": "l'étang aux nénuphars",
+      "weather": "sunny",
+      "groundY": 76,
+      "anchors": [
+        {
+          "id": "lily_pad",
+          "word": "lily pad",
+          "wordFr": "la feuille de nénuphar",
+          "icon": "🟢",
+          "hit": {
+            "x": 16,
+            "y": 55,
+            "w": 26,
+            "h": 10
+          },
+          "crop": {
+            "x": 16,
+            "y": 48,
+            "w": 28,
+            "h": 28
+          },
+          "stand": {
+            "x": 29,
+            "y": 62
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the lily pad big?",
+              "fr": "Est-ce que la feuille de nénuphar est grande ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "water_lily",
+          "word": "water lily",
+          "wordFr": "le nénuphar",
+          "icon": "🪷",
+          "hit": {
+            "x": 31,
+            "y": 64,
+            "w": 9,
+            "h": 10
+          },
+          "crop": {
+            "x": 27,
+            "y": 60,
+            "w": 18,
+            "h": 20
+          },
+          "stand": {
+            "x": 24,
+            "y": 72
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the water lily pink?",
+              "fr": "Est-ce que le nénuphar est rose ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "palm_tree",
+          "word": "palm tree",
+          "wordFr": "le palmier",
+          "icon": "🌴",
+          "hit": {
+            "x": 78,
+            "y": 0,
+            "w": 15,
+            "h": 38
+          },
+          "crop": {
+            "x": 74,
+            "y": 0,
+            "w": 24,
+            "h": 44
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the palm tree tall?",
+              "fr": "Est-ce que le palmier est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "⛰️",
+          "hit": {
+            "x": 58,
+            "y": 17,
+            "w": 16,
+            "h": 10
+          },
+          "crop": {
+            "x": 55,
+            "y": 10,
+            "w": 22,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain blue?",
+              "fr": "Est-ce que la montagne est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "reed",
+          "word": "reed",
+          "wordFr": "le roseau",
+          "icon": "🌾",
+          "hit": {
+            "x": 87,
+            "y": 35,
+            "w": 11,
+            "h": 22
+          },
+          "crop": {
+            "x": 83,
+            "y": 30,
+            "w": 17,
+            "h": 32
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the reed tall?",
+              "fr": "Est-ce que le roseau est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "tree",
+          "word": "tree",
+          "wordFr": "l'arbre",
+          "icon": "🌳",
+          "hit": {
+            "x": 0,
+            "y": 2,
+            "w": 26,
+            "h": 32
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 34,
+            "h": 42
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the tree big?",
+              "fr": "Est-ce que l'arbre est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "flower",
+          "word": "flower",
+          "wordFr": "la fleur",
+          "icon": "🌺",
+          "hit": {
+            "x": 0,
+            "y": 36,
+            "w": 8,
+            "h": 16
+          },
+          "crop": {
+            "x": 0,
+            "y": 32,
+            "w": 14,
+            "h": 26
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the flower blue?",
+              "fr": "Est-ce que la fleur est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 1,
+            "y": 79,
+            "w": 20,
+            "h": 19
+          },
+          "crop": {
+            "x": 0,
+            "y": 74,
+            "w": 28,
+            "h": 26
+          },
+          "stand": {
+            "x": 11,
+            "y": 83
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock pink?",
+              "fr": "Est-ce que le rocher est rose ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 54,
+            "y": 2,
+            "w": 20,
+            "h": 14
+          },
+          "crop": {
+            "x": 52,
+            "y": 0,
+            "w": 26,
+            "h": 22
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud white?",
+              "fr": "Est-ce que le nuage est blanc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "water",
+          "word": "water",
+          "wordFr": "l'eau",
+          "icon": "💧",
+          "hit": {
+            "x": 58,
+            "y": 44,
+            "w": 14,
+            "h": 8
+          },
+          "crop": {
+            "x": 52,
+            "y": 38,
+            "w": 26,
+            "h": 22
+          },
+          "stand": {
+            "x": 57,
+            "y": 74
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the water green?",
+              "fr": "Est-ce que l'eau est vert ?"
+            },
+            "yes": false
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 24,
+          "y": 47
+        },
+        {
+          "x": 39,
+          "y": 52
+        },
+        {
+          "x": 28,
+          "y": 58
+        },
+        {
+          "x": 60,
+          "y": 52
+        },
+        {
+          "x": 36,
+          "y": 41
+        },
+        {
+          "x": 46,
+          "y": 42
+        },
+        {
+          "x": 55,
+          "y": 37
+        },
+        {
+          "x": 14,
+          "y": 52
+        }
+      ]
+    },
+    {
+      "id": "sa_valley",
+      "source": "Continant/Oceanie/Paysage andin avec ruines incas et rivière-3.png",
+      "background": "sa_valley",
+      "nameEn": "the mountain valley",
+      "nameFr": "la vallée de montagne",
+      "weather": "sunny",
+      "groundY": 80,
+      "anchors": [
+        {
+          "id": "ruins",
+          "word": "ruins",
+          "wordFr": "les ruines",
+          "icon": "🏛️",
+          "hit": {
+            "x": 8,
+            "y": 33,
+            "w": 20,
+            "h": 13
+          },
+          "crop": {
+            "x": 5,
+            "y": 28,
+            "w": 30,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the ruins blue?",
+              "fr": "Est-ce que les ruines sont bleus ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "⛰️",
+          "hit": {
+            "x": 48,
+            "y": 10,
+            "w": 30,
+            "h": 25
+          },
+          "crop": {
+            "x": 44,
+            "y": 6,
+            "w": 38,
+            "h": 36
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the mountain big?",
+              "fr": "Est-ce que la montagne est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "river",
+          "word": "river",
+          "wordFr": "la rivière",
+          "icon": "🏞️",
+          "hit": {
+            "x": 58,
+            "y": 58,
+            "w": 12,
+            "h": 8
+          },
+          "crop": {
+            "x": 52,
+            "y": 54,
+            "w": 24,
+            "h": 22
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the river blue?",
+              "fr": "Est-ce que la rivière est bleu ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "path",
+          "word": "path",
+          "wordFr": "le chemin",
+          "icon": "🛤️",
+          "hit": {
+            "x": 25,
+            "y": 77,
+            "w": 22,
+            "h": 13
+          },
+          "crop": {
+            "x": 22,
+            "y": 70,
+            "w": 28,
+            "h": 30
+          },
+          "stand": {
+            "x": 34,
+            "y": 88
+          },
+          "tags": [
+            "path"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the path green?",
+              "fr": "Est-ce que le chemin est vert ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "wall",
+          "word": "wall",
+          "wordFr": "le mur",
+          "icon": "🧱",
+          "hit": {
+            "x": 2,
+            "y": 66,
+            "w": 20,
+            "h": 30
+          },
+          "crop": {
+            "x": 0,
+            "y": 60,
+            "w": 28,
+            "h": 40
+          },
+          "stand": {
+            "x": 26,
+            "y": 80
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the wall blue?",
+              "fr": "Est-ce que le mur est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "flower",
+          "word": "flower",
+          "wordFr": "la fleur",
+          "icon": "🌺",
+          "hit": {
+            "x": 0,
+            "y": 45,
+            "w": 10,
+            "h": 18
+          },
+          "crop": {
+            "x": 0,
+            "y": 40,
+            "w": 16,
+            "h": 28
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the flower red?",
+              "fr": "Est-ce que la fleur est rouge ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "tree",
+          "word": "tree",
+          "wordFr": "l'arbre",
+          "icon": "🌳",
+          "hit": {
+            "x": 35,
+            "y": 62,
+            "w": 18,
+            "h": 14
+          },
+          "crop": {
+            "x": 32,
+            "y": 58,
+            "w": 26,
+            "h": 26
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the tree green?",
+              "fr": "Est-ce que l'arbre est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sun",
+          "word": "sun",
+          "wordFr": "le soleil",
+          "icon": "☀️",
+          "hit": {
+            "x": 86,
+            "y": 1,
+            "w": 8,
+            "h": 11
+          },
+          "crop": {
+            "x": 82,
+            "y": 0,
+            "w": 16,
+            "h": 18
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sun hot?",
+              "fr": "Est-ce que le soleil est chaud ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 37,
+            "y": 7,
+            "w": 17,
+            "h": 11
+          },
+          "crop": {
+            "x": 35,
+            "y": 3,
+            "w": 22,
+            "h": 20
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud pink?",
+              "fr": "Est-ce que le nuage est rose ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 39,
+            "y": 90,
+            "w": 10,
+            "h": 8
+          },
+          "crop": {
+            "x": 35,
+            "y": 84,
+            "w": 20,
+            "h": 16
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 14,
+          "y": 44
+        },
+        {
+          "x": 24,
+          "y": 43
+        },
+        {
+          "x": 19,
+          "y": 51
+        },
+        {
+          "x": 31,
+          "y": 49
+        },
+        {
+          "x": 40,
+          "y": 55
+        },
+        {
+          "x": 48,
+          "y": 50
+        },
+        {
+          "x": 8,
+          "y": 55
+        },
+        {
+          "x": 28,
+          "y": 58
+        }
+      ]
+    }
+  ],
+  "nouns": {
+    "tree": {
+      "en": "A tree",
+      "fr": "Un arbre"
+    },
+    "vine": {
+      "en": "A vine",
+      "fr": "Une liane"
+    },
+    "flower": {
+      "en": "A flower",
+      "fr": "Une fleur"
+    },
+    "leaf": {
+      "en": "A leaf",
+      "fr": "Une feuille"
+    },
+    "rock": {
+      "en": "A rock",
+      "fr": "Un rocher"
+    },
+    "root": {
+      "en": "A root",
+      "fr": "Une racine"
+    },
+    "grass": {
+      "en": "Grass",
+      "fr": "De l'herbe"
+    },
+    "path": {
+      "en": "A path",
+      "fr": "Un chemin"
+    },
+    "plant": {
+      "en": "A plant",
+      "fr": "Une plante"
+    },
+    "waterfall": {
+      "en": "A waterfall",
+      "fr": "Une cascade"
+    },
+    "water": {
+      "en": "Water",
+      "fr": "De l'eau"
+    },
+    "mountain": {
+      "en": "A mountain",
+      "fr": "Une montagne"
+    },
+    "ruins": {
+      "en": "Ruins",
+      "fr": "Des ruines"
+    },
+    "stone": {
+      "en": "A stone",
+      "fr": "Une pierre"
+    },
+    "cloud": {
+      "en": "A cloud",
+      "fr": "Un nuage"
+    },
+    "river": {
+      "en": "A river",
+      "fr": "Une rivière"
+    },
+    "water lily": {
+      "en": "A water lily",
+      "fr": "Un nénuphar"
+    },
+    "snow": {
+      "en": "Snow",
+      "fr": "De la neige"
+    },
+    "wall": {
+      "en": "A wall",
+      "fr": "Un mur"
+    },
+    "lily pad": {
+      "en": "A lily pad",
+      "fr": "Une feuille de nénuphar"
+    },
+    "palm tree": {
+      "en": "A palm tree",
+      "fr": "Un palmier"
+    },
+    "reed": {
+      "en": "A reed",
+      "fr": "Un roseau"
+    },
+    "sun": {
+      "en": "The sun",
+      "fr": "Le soleil"
+    }
+  }
+}

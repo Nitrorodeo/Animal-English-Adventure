@@ -1,0 +1,236 @@
+[
+  {
+    "id": "africa",
+    "name_fr": "Afrique",
+    "lexicon": [
+      "hot",
+      "sun",
+      "dry",
+      "grass",
+      "shade",
+      "water",
+      "thirsty",
+      "tree",
+      "river",
+      "drink"
+    ],
+    "sample_event": "an animal is thirsty and needs to find a watering hole",
+    "biomes": [
+      {
+        "id": "savanna",
+        "anchors": [
+          "waterhole",
+          "acacia",
+          "shade",
+          "tall_grass",
+          "path",
+          "rocks"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "asia",
+    "name_fr": "Asie",
+    "lexicon": [
+      "bamboo",
+      "forest",
+      "green",
+      "leaf",
+      "tree",
+      "mountain",
+      "climb",
+      "stream"
+    ],
+    "sample_event": "a panda cub wants to identify bamboo and find its family",
+    "biomes": [
+      {
+        "id": "bamboo_forest",
+        "anchors": [
+          "bamboo_grove",
+          "forest_path",
+          "stream",
+          "clearing"
+        ]
+      },
+      {
+        "id": "forest",
+        "anchors": [
+          "forest_path",
+          "climbing_tree",
+          "stream",
+          "rocks"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "europe",
+    "name_fr": "Europe",
+    "lexicon": [
+      "leaves",
+      "tree",
+      "rain",
+      "river",
+      "nest",
+      "berries",
+      "path"
+    ],
+    "sample_event": "a hedgehog looks for a lost picnic basket",
+    "biomes": [
+      {
+        "id": "temperate_forest",
+        "anchors": [
+          "oak",
+          "berries",
+          "hollow",
+          "nest",
+          "stream",
+          "path"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "north_america",
+    "name_fr": "Amérique du Nord",
+    "lexicon": [
+      "forest",
+      "mountain",
+      "lake",
+      "wood",
+      "bridge",
+      "river"
+    ],
+    "sample_event": "a beaver needs help assembling a dam",
+    "biomes": [
+      {
+        "id": "river_forest",
+        "anchors": [
+          "lake",
+          "river",
+          "fallen_tree",
+          "logs",
+          "dam",
+          "bridge"
+        ]
+      },
+      {
+        "id": "prairie",
+        "anchors": [
+          "grass",
+          "hill",
+          "trail",
+          "shade"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "south_america",
+    "name_fr": "Amérique du Sud",
+    "lexicon": [
+      "jungle",
+      "rain",
+      "fruit",
+      "waterfall",
+      "wet",
+      "river"
+    ],
+    "sample_event": "a toucan seeks fruit to share",
+    "biomes": [
+      {
+        "id": "rainforest",
+        "anchors": [
+          "fruit_tree",
+          "river",
+          "waterfall",
+          "liana",
+          "path",
+          "canopy"
+        ]
+      },
+      {
+        "id": "rainforest_river",
+        "anchors": [
+          "river",
+          "bank",
+          "fruit_tree",
+          "shade",
+          "mud"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oceania",
+    "name_fr": "Océanie",
+    "lexicon": [
+      "jump",
+      "pouch",
+      "eucalyptus",
+      "tree",
+      "creek",
+      "sunny"
+    ],
+    "sample_event": "a koala is searching for leaves",
+    "biomes": [
+      {
+        "id": "eucalyptus_woodland",
+        "anchors": [
+          "eucalyptus",
+          "creek",
+          "rock",
+          "clearing",
+          "hill",
+          "shade"
+        ]
+      },
+      {
+        "id": "creek",
+        "anchors": [
+          "creek",
+          "stream_bank",
+          "fallen_log",
+          "rocks"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "antarctica",
+    "name_fr": "Antarctique",
+    "lexicon": [
+      "cold",
+      "snow",
+      "ice",
+      "fish",
+      "swim",
+      "windy",
+      "frozen"
+    ],
+    "sample_event": "a penguin chick looks for its family",
+    "biomes": [
+      {
+        "id": "ice_coast",
+        "anchors": [
+          "iceberg",
+          "snow_bank",
+          "coast",
+          "sea",
+          "ice_path",
+          "shelter"
+        ]
+      },
+      {
+        "id": "open_sea",
+        "anchors": [
+          "iceberg",
+          "sea",
+          "fish_school",
+          "floating_ice"
+        ]
+      }
+    ]
+  }
+]

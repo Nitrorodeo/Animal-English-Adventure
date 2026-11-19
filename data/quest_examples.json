@@ -1,0 +1,112 @@
+[
+  {
+    "id": "savanna_thirsty_baby_elephant",
+    "archetype": "find_water",
+    "continent_id": "africa",
+    "biome": "savanna",
+    "species_id": "elephant",
+    "role": "baby",
+    "required_anchors": [
+      "waterhole"
+    ],
+    "learning_goals": [
+      "1.7",
+      "2.3"
+    ],
+    "dialogue": {
+      "beginner": {
+        "en": "I am thirsty! Water, please!",
+        "fr": "J’ai soif ! De l’eau, s’il te plaît !",
+        "response_options": [
+          "Let’s find water!",
+          "Goodbye!"
+        ],
+        "correct_index": 0
+      },
+      "intermediate": {
+        "en": "Where is the water? Can you help me?",
+        "fr": "Où est l’eau ? Peux-tu m’aider ?",
+        "response_options": [
+          "Next to the big tree.",
+          "In the sky."
+        ],
+        "correct_index": 0
+      },
+      "expert": {
+        "en": "It is very hot today. Which path should we take to reach the water?",
+        "fr": "Il fait très chaud aujourd’hui. Quel chemin prendre pour atteindre l’eau ?",
+        "response_options": [
+          "Follow the path by the tree.",
+          "Climb the iceberg."
+        ],
+        "correct_index": 0
+      }
+    },
+    "steps": [
+      "baby_asks",
+      "player_identifies_need",
+      "find_waterhole",
+      "baby_drinks",
+      "followup_and_save"
+    ],
+    "memory_event": "found_waterhole"
+  },
+  {
+    "id": "antarctica_greeting_penguin",
+    "archetype": "greeting",
+    "continent_id": "antarctica",
+    "biome": "ice_coast",
+    "species_id": "penguin",
+    "role": "parent_or_baby",
+    "required_anchors": [],
+    "learning_goals": [
+      "1.1"
+    ],
+    "dialogue": {
+      "beginner": {
+        "en": "Hello! Welcome to the ice!",
+        "fr": "Bonjour ! Bienvenue sur la glace !",
+        "response_options": [
+          "Hello!",
+          "Goodbye!"
+        ],
+        "correct_index": 0
+      }
+    },
+    "steps": [
+      "penguin_greets",
+      "player_replies",
+      "character_reacts"
+    ],
+    "memory_event": "first_penguin_greeting"
+  },
+  {
+    "id": "africa_greeting_lion",
+    "archetype": "greeting",
+    "continent_id": "africa",
+    "biome": "savanna",
+    "species_id": "lion",
+    "role": "parent_or_baby",
+    "required_anchors": [],
+    "learning_goals": [
+      "1.1"
+    ],
+    "dialogue": {
+      "beginner": {
+        "en": "Hello! Welcome to the savanna!",
+        "fr": "Bonjour ! Bienvenue dans la savane !",
+        "response_options": [
+          "Hello!",
+          "Goodbye!"
+        ],
+        "correct_index": 0
+      }
+    },
+    "steps": [
+      "lion_greets",
+      "player_replies",
+      "character_reacts"
+    ],
+    "memory_event": "first_lion_greeting"
+  }
+]

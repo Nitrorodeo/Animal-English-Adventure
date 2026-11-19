@@ -1,0 +1,402 @@
+[
+  {
+    "id": "1.1",
+    "title_en": "Greetings and politeness",
+    "band": 1,
+    "soft_prerequisites": [],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "1.2",
+    "title_en": "Colors",
+    "band": 1,
+    "soft_prerequisites": [],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "1.3",
+    "title_en": "Numbers 1-10",
+    "band": 1,
+    "soft_prerequisites": [],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "1.4",
+    "title_en": "Animals and sizes",
+    "band": 1,
+    "soft_prerequisites": [],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "1.5",
+    "title_en": "Body and actions",
+    "band": 1,
+    "soft_prerequisites": [],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "1.6",
+    "title_en": "Food and preferences",
+    "band": 1,
+    "soft_prerequisites": [
+      "1.1"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "1.7",
+    "title_en": "Weather and feelings",
+    "band": 1,
+    "soft_prerequisites": [
+      "1.1"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "1.8",
+    "title_en": "Beginner synthesis",
+    "band": 1,
+    "soft_prerequisites": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "1.6",
+      "1.7"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.1",
+    "title_en": "Descriptions and family pronouns",
+    "band": 2,
+    "soft_prerequisites": [
+      "1.1",
+      "1.4"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.2",
+    "title_en": "Can and cannot",
+    "band": 2,
+    "soft_prerequisites": [
+      "1.5"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.3",
+    "title_en": "Positions",
+    "band": 2,
+    "soft_prerequisites": [
+      "1.4"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.4",
+    "title_en": "Do you like?",
+    "band": 2,
+    "soft_prerequisites": [
+      "1.6",
+      "1.1"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.5",
+    "title_en": "Have / has",
+    "band": 2,
+    "soft_prerequisites": [
+      "1.1"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.6",
+    "title_en": "What / who / where",
+    "band": 2,
+    "soft_prerequisites": [
+      "1.1",
+      "2.3"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.7",
+    "title_en": "Clothing and instructions",
+    "band": 2,
+    "soft_prerequisites": [
+      "1.7"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "2.8",
+    "title_en": "Intermediate synthesis",
+    "band": 2,
+    "soft_prerequisites": [
+      "2.1",
+      "2.2",
+      "2.3",
+      "2.4",
+      "2.5",
+      "2.6",
+      "2.7"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.1",
+    "title_en": "Present continuous",
+    "band": 3,
+    "soft_prerequisites": [
+      "2.1",
+      "1.5"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.2",
+    "title_en": "Directions",
+    "band": 3,
+    "soft_prerequisites": [
+      "2.3",
+      "2.6"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.3",
+    "title_en": "Daily routine and order",
+    "band": 3,
+    "soft_prerequisites": [
+      "2.1"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.4",
+    "title_en": "Comparatives",
+    "band": 3,
+    "soft_prerequisites": [
+      "1.4",
+      "2.1"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.5",
+    "title_en": "Past events",
+    "band": 3,
+    "soft_prerequisites": [
+      "3.3"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.6",
+    "title_en": "Plans with going to",
+    "band": 3,
+    "soft_prerequisites": [
+      "3.3"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.7",
+    "title_en": "Narrative problem solving",
+    "band": 3,
+    "soft_prerequisites": [
+      "3.1",
+      "3.2",
+      "3.4"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  },
+  {
+    "id": "3.8",
+    "title_en": "Expert synthesis",
+    "band": 3,
+    "soft_prerequisites": [
+      "3.1",
+      "3.2",
+      "3.3",
+      "3.4",
+      "3.5",
+      "3.6",
+      "3.7"
+    ],
+    "geographically_locked": false,
+    "activity_formats": [
+      "discover",
+      "play",
+      "talk",
+      "adventure"
+    ],
+    "content_reference": "docs/PROGRESSION_PEDAGOGIQUE.md"
+  }
+]

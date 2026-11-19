@@ -1,0 +1,26 @@
+# Dépendances et constructions (régénérées)
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Moteur de voix local (gros, réinstallable) et liste des phrases générée
+tools/tts/.venv/
+tools/tts/models/
+tools/tts/lines.json
+__pycache__/
+*.pyc
+
+# Dessins et décors sources (lourds, gardés sur le PC ; le jeu utilise les versions préparées de public/)
+Animaux/
+Continant/
+Decors/
+Nouveau dossier/
+*.zip
+
+# Réglages locaux
+.claude/
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store

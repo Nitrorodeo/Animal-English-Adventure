@@ -1,0 +1,360 @@
+[
+  {
+    "id": "lion",
+    "continent_id": "africa",
+    "natural_biome": "savanna",
+    "diet_tag": "carnivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "savanna"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "elephant",
+    "continent_id": "africa",
+    "natural_biome": "savanna",
+    "diet_tag": "herbivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "savanna"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "giraffe",
+    "continent_id": "africa",
+    "natural_biome": "savanna",
+    "diet_tag": "herbivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "savanna"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "giant_panda",
+    "continent_id": "asia",
+    "natural_biome": "bamboo_forest",
+    "diet_tag": "bamboo",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "bamboo_forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "tiger",
+    "continent_id": "asia",
+    "natural_biome": "forest",
+    "diet_tag": "carnivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "red_panda",
+    "continent_id": "asia",
+    "natural_biome": "forest",
+    "diet_tag": "omnivore",
+    "primary_mobility": "climb",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "fox",
+    "continent_id": "europe",
+    "natural_biome": "temperate_forest",
+    "diet_tag": "omnivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "temperate_forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "owl",
+    "continent_id": "europe",
+    "natural_biome": "temperate_forest",
+    "diet_tag": "carnivore",
+    "primary_mobility": "fly",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "temperate_forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "hedgehog",
+    "continent_id": "europe",
+    "natural_biome": "temperate_forest",
+    "diet_tag": "insectivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "temperate_forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "bear",
+    "continent_id": "north_america",
+    "natural_biome": "river_forest",
+    "diet_tag": "omnivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "river_forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "bison",
+    "continent_id": "north_america",
+    "natural_biome": "prairie",
+    "diet_tag": "herbivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "prairie"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "beaver",
+    "continent_id": "north_america",
+    "natural_biome": "river_forest",
+    "diet_tag": "herbivore",
+    "primary_mobility": "swim",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "river_forest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "jaguar",
+    "continent_id": "south_america",
+    "natural_biome": "rainforest",
+    "diet_tag": "carnivore",
+    "primary_mobility": "walk",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "rainforest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "toucan",
+    "continent_id": "south_america",
+    "natural_biome": "rainforest",
+    "diet_tag": "frugivore",
+    "primary_mobility": "fly",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "rainforest"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "sloth",
+    "continent_id": "south_america",
+    "natural_biome": "rainforest",
+    "diet_tag": "herbivore",
+    "primary_mobility": "climb",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "rainforest",
+      "rainforest_river"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "kangaroo",
+    "continent_id": "oceania",
+    "natural_biome": "eucalyptus_woodland",
+    "diet_tag": "herbivore",
+    "primary_mobility": "jump",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "eucalyptus_woodland"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "koala",
+    "continent_id": "oceania",
+    "natural_biome": "eucalyptus_woodland",
+    "diet_tag": "eucalyptus",
+    "primary_mobility": "climb",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "eucalyptus_woodland"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "platypus",
+    "continent_id": "oceania",
+    "natural_biome": "creek",
+    "diet_tag": "aquatic_invertebrates",
+    "primary_mobility": "swim",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "creek"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "penguin",
+    "continent_id": "antarctica",
+    "natural_biome": "ice_coast",
+    "diet_tag": "fish",
+    "primary_mobility": "walk_swim",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "ice_coast"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "seal",
+    "continent_id": "antarctica",
+    "natural_biome": "ice_coast",
+    "diet_tag": "fish",
+    "primary_mobility": "swim",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "ice_coast"
+    ],
+    "content_status": "planned"
+  },
+  {
+    "id": "orca",
+    "continent_id": "antarctica",
+    "natural_biome": "open_sea",
+    "diet_tag": "fish_marine",
+    "primary_mobility": "swim",
+    "has_family": true,
+    "max_babies": 2,
+    "baby_sexes_required": [
+      "boy",
+      "girl"
+    ],
+    "allowed_biomes": [
+      "open_sea"
+    ],
+    "content_status": "planned"
+  }
+]
