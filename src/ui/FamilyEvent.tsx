@@ -7,7 +7,10 @@ import { NAME_ERRORS, SEX_CHOICE } from '../content/utterances';
 import { fillLine } from '../engine/dialogue';
 import { createBaby, nextBabySex } from '../engine/family';
 import type { Baby, FamilyState } from '../engine/state';
+import { Confetti } from './Confetti';
 import { DialogueBox } from './DialogueBox';
+import { familyMood, familyTalker, floatingHearts, type FamilyPhase } from './fx';
+import { LiveSprite } from './LiveSprite';
 import { assetUrl, spriteFor } from './scene';
 
 interface Props {
@@ -18,7 +21,8 @@ interface Props {
   onDone: (family: FamilyState | null, baby?: Baby) => void;
 }
 
-type Phase = 'intro' | 'surprise' | 'choose' | 'reveal' | 'name' | 'hello' | 'sibling' | 'complete' | 'full';
+type Phase = FamilyPhase;
+const HEARTS = floatingHearts(9);
 
 /**
  * Scène familiale tendre → naissance. Premier bébé : garçon ou fille au choix.
@@ -86,28 +90,40 @@ export function FamilyEvent({ species, family, frenchHelp, slowVoice, onDone }: 
   const babySprite = (s: Sex) => spriteFor(species.id, { sex: s, stage: 'newborn' });
   const shownBaby = sex ? babySprite(sex) : undefined;
   const babyVisible = phase !== 'intro' && phase !== 'full';
+  const talker = familyTalker(phase);
+  const mood = familyMood(phase);
+  const olderBaby = isSecond && sibling ? babySprite(sibling.sex) : undefined;
 
   return (
-    <div className="family-event" role="dialog" aria-label="La famille">
+    <div className={`family-event mood-${mood}`} role="dialog" aria-label="La famille">
       {phase !== 'complete' && phase !== 'full' && phase !== 'hello' && phase !== 'sibling' && (
         <button className="skip" onClick={() => setPhase(sex ? 'name' : 'choose')}>Passer ⏭</button>
       )}
       <div className="family-stage">
-        <div className="hearts" aria-hidden>{phase === 'intro' ? '💕 💗 💕' : '✨'}</div>
-        {father && <img className="fam-parent" src={assetUrl(father)} alt={species.father.name} />}
+        {(mood === 'love' || mood === 'party') && (
+          <div className="float-hearts" aria-hidden>
+            {HEARTS.map((h, i) => (
+              <span key={i} style={{ left: `${h.left}%`, animationDelay: `${h.delay}s`, fontSize: `${h.size * 3.4}cqw` }}>{h.icon}</span>
+            ))}
+          </div>
+        )}
+        {mood === 'reveal' && <div key="burst" className="reveal-burst" aria-hidden />}
+        {(mood === 'reveal' || mood === 'party') && <Confetti key={phase} n={28} wide />}
+        {phase === 'complete' && <PhotoSnap fr={frenchHelp} />}
+        {father && <LiveSprite className="fam-parent" sprite={father} label={species.father.name} />}
         {babyVisible && (
           <div className="fam-babies">
-            {isSecond && sibling && babySprite(sibling.sex) && <img className="fam-baby" src={assetUrl(babySprite(sibling.sex)!)} alt={sibling.name} />}
+            {olderBaby && <LiveSprite key={olderBaby.path} className="fam-baby" sprite={olderBaby} label={sibling!.name} />}
             {phase === 'surprise' || phase === 'choose' ? (
-              <div className="fam-bundle" aria-hidden>❔</div>
+              <div className="fam-bundle" aria-hidden><span>❔</span></div>
             ) : shownBaby ? (
-              <img className="fam-baby new" src={assetUrl(shownBaby)} alt="" />
+              <LiveSprite key={shownBaby.path} className={`fam-baby new${phase === 'reveal' ? ' hop' : ''}`} sprite={shownBaby} clip={talker === 'newBaby' ? 'talk' : 'idle'} label={result?.baby.name} />
             ) : (
               <div className="fam-bundle">{species.icon}</div>
             )}
           </div>
         )}
-        {mother && <img className="fam-parent" src={assetUrl(mother)} alt={species.mother.name} />}
+        {mother && <LiveSprite className="fam-parent" sprite={mother} clip={talker === 'mother' ? 'talk' : 'idle'} label={species.mother.name} />}
       </div>
 
       <DialogueBox speaker={phase === 'hello' || phase === 'sibling' ? result?.baby.name ?? '' : '✨'} line={line} frenchHelp={frenchHelp} onReplay={(slow) => void speech.speak(line.en, { role, slow: slow ?? slowVoice, names: sceneNames })}>
@@ -149,5 +165,15 @@ export function FamilyEvent({ species, family, frenchHelp, slowVoice, onDone }: 
         )}
       </DialogueBox>
     </div>
+  );
+}
+
+/** Clic de l'appareil photo : la scène part dans l'album souvenir du passeport. */
+export function PhotoSnap({ fr }: { fr: boolean }) {
+  return (
+    <>
+      <span className="camera-flash" aria-hidden />
+      <span className="photo-badge">📸{fr && <small> Photo dans l’album !</small>}</span>
+    </>
   );
 }

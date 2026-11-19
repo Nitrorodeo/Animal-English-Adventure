@@ -134,6 +134,14 @@ export function ParentArea({ state, setState, onReset, onClose }: Props) {
         </section>
 
         <section>
+          <h3>Parties sauvegardées</h3>
+          <p className="note">
+            Les parties sont gardées sur cet appareil, et une copie est rangée sur l'ordinateur qui fait tourner le jeu (dossier <code>saves</code> du projet, avec une copie par jour dans <code>saves/historique</code>). Si la tablette ouvre le jeu à une autre adresse, elle reprend toute seule la partie de l'ordinateur.
+          </p>
+          <p className="note">Conseil : réserver une adresse fixe pour l'ordinateur dans la box, et ouvrir le jeu sur la tablette toujours depuis le même favori.</p>
+        </section>
+
+        <section>
           <h3>Jouer sans internet</h3>
           <p className="note offline-state">{offlineLabel(offline)}</p>
           {offline.state === 'downloading' && (

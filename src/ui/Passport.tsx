@@ -8,6 +8,7 @@ import { say } from '../content/utterances';
 import { getSpecies } from '../content/species';
 import { CONTINENTS } from '../content/world';
 import { MECHANIC_LABELS } from '../content/archetypes';
+import { familyAlbum, type AlbumPhoto } from '../engine/album';
 import { favouriteMechanics, growthPercent, growthProgress, nextStageGoal } from '../engine/family';
 import { itemStatus, type ItemStatus } from '../engine/skills';
 import type { GameState } from '../engine/state';
@@ -19,6 +20,7 @@ const STARS: Record<ItemStatus, string> = { new: '☆☆☆', recognised: '★�
 export function Passport({ state, onClose }: { state: GameState; onClose: () => void }) {
   const fr = state.settings.frenchHelp;
   const babies = Object.values(state.families).flatMap((f) => f.babies);
+  const album = familyAlbum(state);
   return (
     <div className="screen panel-screen">
       <div className="panel">
@@ -117,6 +119,15 @@ export function Passport({ state, onClose }: { state: GameState; onClose: () => 
           </section>
         )}
 
+        {album.length > 0 && (
+          <section>
+            <h3>📸 {fr ? 'Album de famille' : 'Family album'} <small>{album.length}</small></h3>
+            <div className="photo-album">
+              {album.map((p) => <MemoryPhoto key={p.key} photo={p} fr={fr} />)}
+            </div>
+          </section>
+        )}
+
         {babies.length > 0 && (
           <section>
             <h3>👶 {fr ? 'Les bébés' : 'Babies'}</h3>
@@ -177,5 +188,28 @@ export function Passport({ state, onClose }: { state: GameState; onClose: () => 
         </section>
       </div>
     </div>
+  );
+}
+
+/** Photo souvenir : la famille dans son décor à la naissance, puis le bébé à chaque nouveau stade. */
+function MemoryPhoto({ photo, fr }: { photo: AlbumPhoto; fr: boolean }) {
+  const sp = getSpecies(photo.speciesId);
+  const place = PLACES[sp.allowedBiomes[0] ?? ''];
+  const bg = place ? background(place.background) : undefined;
+  const baby = spriteFor(sp.id, { sex: photo.sex, stage: photo.stage });
+  const parents = photo.kind === 'born' ? [spriteFor(sp.id, { role: 'father' }), spriteFor(sp.id, { role: 'mother' })] : [];
+  const stage = STAGE_NAMES[photo.stage]!;
+  const text = photo.kind === 'born' ? say.albumBorn(photo.babyName) : say.growUp(photo.babyName, photo.stage);
+  return (
+    <button className={`polaroid memory ${photo.kind}`} onClick={() => void speech.speak(text, { names: [photo.babyName] })}>
+      <span className="memory-img" style={bg ? { backgroundImage: `url("${assetUrl(bg)}")` } : { background: place?.placeholderGradient }}>
+        {parents.map((s, i) => s && <img key={i} className={`memory-parent p${i}`} src={assetUrl(s)} alt="" />)}
+        {baby ? <img className="memory-baby" src={assetUrl(baby)} alt="" /> : <span className="big-icon">{sp.icon}</span>}
+        {photo.kind === 'born' && <span className="memory-heart" aria-hidden>💞</span>}
+      </span>
+      <span className="polaroid-txt">
+        {photo.babyName} · {photo.kind === 'born' ? (fr ? 'naissance' : 'born') : stage.en}
+      </span>
+    </button>
   );
 }

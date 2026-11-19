@@ -5,9 +5,11 @@ import { TREASURES } from '../content/adventures';
 import { FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
 import { PROPS } from '../content/props';
 import { NOUNS, PLACES } from '../content/places';
-import type { BiomeDef, PlaceId, QuestScript, Speaker, SpeciesDef } from '../content/types';
+import type { BiomeDef, GrowthStage, PlaceId, QuestScript, Sex, Speaker, SpeciesDef } from '../content/types';
 import { unlockedAt } from '../content/archetypes';
-import { BIGGER_NOW, say } from '../content/utterances';
+import { BEDTIME, BIGGER_NOW, say, STICKER_OFFER } from '../content/utterances';
+import { bedtimeLines, type BedtimeLine } from '../engine/bedtime';
+import { dayKey, placeSticker, stickerOffer, type StickerDef } from '../engine/stickers';
 import { fillLine, type Vars } from '../engine/dialogue';
 import { applyQuestOutcome, type OutcomeEvents } from '../engine/events';
 import { nextBabySex } from '../engine/family';
@@ -15,8 +17,10 @@ import { findBaby, selectActivities, selectAdventures, type AdventureOffer, type
 import { createRng } from '../engine/rng';
 import type { AnswerRecord } from '../engine/skills';
 import { actorId, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
+import { Confetti } from './Confetti';
 import { DialogueBox, Options } from './DialogueBox';
-import { FamilyEvent } from './FamilyEvent';
+import { FamilyEvent, PhotoSnap } from './FamilyEvent';
+import { LiveSprite } from './LiveSprite';
 import { PropLayer } from './PropLayer';
 import { Puppet } from './Puppet';
 import { rigFor } from '../game/rigs';
@@ -79,9 +83,15 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
   const [running, setRunning] = useState<Running | null>(null);
   const [showFamily, setShowFamily] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
-  const [grow, setGrow] = useState<{ name: string; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[] } | null>(null);
+  const [grow, setGrow] = useState<{ name: string; sex: Sex; to: GrowthStage; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[] } | null>(null);
   const [wordBubble, setWordBubble] = useState<{ anchorId: string; text: string } | null>(null);
   const [seed] = useState(() => Math.floor(Math.random() * 1e9));
+  /** autocollant du jour à choisir (après la première activité de la journée) */
+  const [stickerPick, setStickerPick] = useState<{ offer: StickerDef[]; today: string } | null>(null);
+  /** rituel « Bonne nuit » : qui parle, puis toute la famille dort */
+  const [night, setNight] = useState<{ line: BedtimeLine | null; asleep: boolean } | null>(null);
+  const nightRun = useRef(0);
+  useEffect(() => () => void nightRun.current++, []);
 
   const actors: ActorRef[] = useMemo(
     () => [
@@ -138,6 +148,9 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
       const events: OutcomeEvents = r.events;
       setState(() => r.state);
       setRunning(null);
+      const today = dayKey(new Date());
+      const offer = stickerOffer(r.state, today);
+      if (offer) setStickerPick({ offer, today });
       const end = script.endPlace ?? script.biomeId;
       if (end !== biome.id) onPlace(end);
       const growing = events.grew;
@@ -145,8 +158,8 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
       if (growing) {
         const stage = STAGE_NAMES[growing.to]!;
         const unlocks = unlockedAt(growing.to).map((x) => ({ icon: x.icon, en: x.titleEn, fr: x.titleFr }));
-        setGrow({ name: babyName, stage: stage.en, stageFr: stage.fr, unlocks });
         const sex = family.babies.find((b) => b.id === growing.babyId)?.sex ?? 'girl';
+        setGrow({ name: babyName, sex, to: growing.to, stage: stage.en, stageFr: stage.fr, unlocks });
         void speech.speak(say.growUp(babyName, growing.to)).then(() => speech.speak(BIGGER_NOW.en, { role: babyVoice(sex) }));
       } else if (events.treasure) {
         const t = TREASURES[events.treasure];
@@ -171,6 +184,29 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
     setTimeout(() => setWordBubble((w) => (w?.anchorId === anchorId ? null : w)), 2200);
   };
 
+  const startNight = () => {
+    const run = ++nightRun.current;
+    const lines = bedtimeLines(family, state.player.name);
+    setMenuFor(null);
+    setNight({ line: null, asleep: false });
+    void (async () => {
+      await pause(900); // le ciel s'assombrit
+      for (const line of lines) {
+        if (nightRun.current !== run) return;
+        setNight({ line, asleep: false });
+        await Promise.all([speech.speak(line.en, { role: line.role, slow: state.settings.slowVoice }), pause(1600)]);
+      }
+      if (nightRun.current === run) setNight({ line: null, asleep: true });
+    })();
+  };
+  const wakeUp = () => {
+    nightRun.current++;
+    speech.stop();
+    setNight(null);
+    void speech.speak(BEDTIME.wake.en, { role: 'father', slow: state.settings.slowVoice });
+  };
+  const nightWho = (a: ActorRef) => (a.kind === 'adult' ? a.role : a.babyId);
+
   const canHaveBaby = species.familyReady && nextBabySex(family) !== 'none';
   const otherPlaces = species.allowedBiomes.filter((p) => p !== biome.id && PLACES[p]);
 
@@ -185,8 +221,9 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
 
   return (
     <div className="screen habitat-screen">
-      <div className="stage">
+      <div className={`stage${night ? ' night bedtime' : ''}`}>
         <SceneBackground place={biome} />
+        {night && <BedtimeSky />}
         {biome.anchors.map((a) => (
           <button key={a.id} className="anchor" style={rectStyle(a.hit)} aria-label={a.word} onClick={() => tapAnchorFree(biome, a.id)} />
         ))}
@@ -198,20 +235,40 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             state={state}
             species={species}
             place={homePlacement(a, family, biome.groundY)}
-            question={curious.has(actorId(a))}
-            onTap={() => {
+            question={!night && curious.has(actorId(a))}
+            action={night?.asleep ? 'sleep' : undefined}
+            speaking={!!night?.line && night.line.who === nightWho(a)}
+            onTap={night ? undefined : () => {
               setMenuFor(a);
               const b = findBaby(state, a);
               void speech.speak(b ? say.babyCall(b.name, b.stage) : say.actorCall(actorName(state, species, a)), { role: voiceOf(state, a) });
             }}
           />
         ))}
-        {canHaveBaby && (
+        {!night && (
+          <button className="night-btn" onClick={startNight} aria-label="Good night">
+            🌙
+          </button>
+        )}
+        {night && (
+          <div className="bedtime-ui">
+            {night.line && (
+              <p key={night.line.who} className="night-caption">
+                {night.line.en}
+                {state.settings.frenchHelp && <small>{night.line.fr}</small>}
+              </p>
+            )}
+            <button className="big wake-btn" onClick={wakeUp}>
+              ☀️ <span>Good morning!</span>
+            </button>
+          </div>
+        )}
+        {canHaveBaby && !night && (
           <button className="family-btn pulse" onClick={() => setShowFamily(true)} aria-label="La famille">
             💞 <span>{family.babies.length === 0 ? 'Family' : 'Surprise!'}</span>
           </button>
         )}
-        {otherPlaces.length > 0 && (
+        {otherPlaces.length > 0 && !night && (
           <div className="place-strip" aria-label="Autres lieux">
             {otherPlaces.map((p) => {
               const place = PLACES[p]!;
@@ -269,10 +326,24 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
         )}
 
         {toast && <div className="toast">{toast}</div>}
+        {stickerPick && !grow && (
+          <StickerChoice
+            offer={stickerPick.offer}
+            frenchHelp={state.settings.frenchHelp}
+            onPick={(st) => {
+              void speech.speak(say.sticker(st.en));
+              setState((s) => placeSticker(s, st.id, biome.continentId, stickerPick.today));
+              setStickerPick(null);
+              setToast(`${st.icon} ➜ 🗺️`);
+            }}
+          />
+        )}
         {grow && (
           <div className="grow-overlay" onClick={() => setGrow(null)}>
+            <Confetti n={26} wide />
             <div className="grow-card">
-              <div className="stars">⭐ 🌟 ⭐</div>
+              <PhotoSnap fr={state.settings.frenchHelp} />
+              <GrowPortrait speciesId={species.id} sex={grow.sex} stage={grow.to} />
               <p className="en">{grow.name} is growing up!</p>
               <p>
                 {grow.stage}
@@ -295,6 +366,57 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+const pause = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+
+/** Ciel du coucher : lune et étoiles qui scintillent (seulement pour « Bonne nuit », pas dans les scènes). */
+function BedtimeSky() {
+  return (
+    <div className="night-sky bedtime-sky" aria-hidden>
+      <span className="bedtime-moon">🌙</span>
+      {BEDTIME_STARS.map((st, i) => (
+        <span key={i} className="bedtime-star" style={{ left: `${st.x}%`, top: `${st.y}%`, animationDelay: `${st.d}s`, fontSize: `${st.s}cqw` }}>✦</span>
+      ))}
+    </div>
+  );
+}
+const BEDTIME_STARS = Array.from({ length: 16 }, (_, i) => ({ x: (i * 37 + 11) % 92 + 4, y: ((i * 53) % 34) + 4, d: (i % 5) * 0.4, s: 1.2 + (i % 3) * 0.5 }));
+
+/** Autocollant du jour : trois grands autocollants, un toucher suffit. */
+function StickerChoice({ offer, frenchHelp, onPick }: { offer: StickerDef[]; frenchHelp: boolean; onPick: (s: StickerDef) => void }) {
+  useEffect(() => {
+    const t = setTimeout(() => void speech.speak(STICKER_OFFER.en), 500);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div className="grow-overlay sticker-overlay">
+      <div className="grow-card sticker-card">
+        <p className="en">🎁 {STICKER_OFFER.en}</p>
+        {frenchHelp && <p className="fr">{STICKER_OFFER.fr} Il ira sur la carte du monde.</p>}
+        <div className="sticker-row">
+          {offer.map((st, i) => (
+            <button key={st.id} className="sticker-pick" style={{ animationDelay: `${0.2 + i * 0.15}s` }} onClick={() => onPick(st)} aria-label={st.en}>
+              <span>{st.icon}</span>
+              <small>{st.en}</small>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Le bébé à son nouveau stade, sur fond de rayons de soleil (carte « growing up »). */
+function GrowPortrait({ speciesId, sex, stage }: { speciesId: string; sex: Sex; stage: GrowthStage }) {
+  const sprite = spriteFor(speciesId, { sex, stage });
+  if (!sprite) return null;
+  return (
+    <div className="grow-portrait">
+      <span className="grow-rays" aria-hidden />
+      <LiveSprite key={sprite.path} className="grow-baby" sprite={sprite} clip="talk" />
     </div>
   );
 }
@@ -525,6 +647,12 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
       <div className="night-sky" aria-hidden />
       {run.photos.length > 0 && <div key={`flash${run.photos.length}`} className="photo-flash" aria-hidden />}
       {run.travels > 0 && <div key={run.travels} className="travel-fade" />}
+      {run.travels > 0 && (
+        <div key={`card${run.travels}`} className="travel-card" aria-hidden>
+          🧭 <span>{place.nameEn}</span>
+          {state.settings.frenchHelp && <small>{place.nameFr}</small>}
+        </div>
+      )}
       {place.anchors.map((a) => (
         <button
           key={`${place.id}:${a.id}`}
@@ -575,16 +703,13 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
       )}
       {treasure && (
         <div className="treasure-card" key={treasure.id}>
-          <div className="confetti" aria-hidden>
-            {Array.from({ length: 18 }, (_, i) => (
-              <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 6) * 0.12}s`, background: ['#e53935', '#fdd835', '#43a047', '#1e88e5', '#f06292', '#8e24aa'][i % 6] }} />
-            ))}
-          </div>
+          <Confetti />
           <span className="treasure-icon">{treasure.icon}</span>
           <span className="treasure-name">{treasure.nameEn}</span>
           {state.settings.frenchHelp && <span className="fr">{treasure.nameFr}</span>}
         </div>
       )}
+      {q.finished && <Confetti n={30} wide />}
       {q.bubble && step && step.kind !== 'moveTo' && step.kind !== 'moveBack' && step.kind !== 'props' && (
         <DialogueBox speaker={cast[q.bubble.who]?.name ?? ''} line={q.bubble.line} frenchHelp={state.settings.frenchHelp} onReplay={q.replay} mood={run.feedback}>
           {step.kind === 'ask' && run.feedback !== 'ok' && <Options options={step.options.map((o) => ({ ...o, line: q.filled(o.line) }))} biome={place} reveal={q.reveal?.option !== undefined} disabled={false} onChoose={q.choose} listen={step.listen} />}
@@ -605,7 +730,9 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
           {q.canAdvance && !q.finished && <button className="big next" onClick={q.advance} aria-label="Continuer">▶</button>}
           {q.finished && (
             <div className="celebrate">
-              <span className="stars">⭐ ⭐ ⭐</span>
+              <span className="stars stars-pop" aria-label="Bravo !">
+                {[0, 1, 2].map((i) => <span key={i} style={{ animationDelay: `${0.15 + i * 0.3}s` }}>⭐</span>)}
+              </span>
               <button className="big next" onClick={q.finish} aria-label="Terminer">✓</button>
             </div>
           )}

@@ -2,9 +2,7 @@
 
 Jeu d'aventure pour apprendre l'anglais à partir de 7 ans : on choisit un continent, une famille d'animaux, et on joue avec eux en anglais (aide française facultative). Pas de publicité, pas de compte, pas de collecte de données ; la progression reste sur l'appareil.
 
-**Jouer :** https://nitrorodeo.github.io/Animal-English-Adventure/
-
-Sur tablette : ouvrir le lien, puis « Ajouter à l'écran d'accueil ». Dans l'espace parents (⚙️), la section « Jouer sans internet » indique quand tout le jeu est téléchargé ; il fonctionne ensuite sans connexion.
+**Jouer :** lancer `npm run dev` sur l'ordinateur, puis ouvrir sur la tablette (même Wi-Fi) l'adresse « Network » affichée, port 5173. Les parties restent sur la tablette, avec une copie sur l'ordinateur (`saves/`, non versionné).
 
 ## Développement
 
@@ -15,6 +13,6 @@ npm test
 npm run build    # dist/ + service worker hors-ligne
 ```
 
-Le jeu est publié automatiquement sur GitHub Pages à chaque envoi sur `main` (`.github/workflows/deploy.yml`).
+`.github/workflows/deploy.yml` peut publier le jeu sur GitHub Pages, mais Pages n'est pas activé (dépôt privé).
 
 Documentation : `docs/` (état du projet, cahier des charges, ajout d'un animal).

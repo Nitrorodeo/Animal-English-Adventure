@@ -24,3 +24,6 @@ Nouveau dossier/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# parties copiées sur l'ordinateur (privées)
+saves/

@@ -33,10 +33,28 @@ export const STAGE_OPENERS: Readonly<Record<string, { en: string; fr: string }>>
   companion: { en: 'I have an idea!', fr: 'J’ai une idée !' },
 };
 
+/**
+ * Rituel « Bonne nuit » (bouton 🌙 de l'habitat) : la famille se dit bonne nuit et s'endort.
+ * Le prénom de la joueuse est affiché ; la voix dit « Good night! » (règle de voiceKey.ts).
+ */
+export const BEDTIME = {
+  mother: { en: 'Good night, {playerName}!', fr: 'Bonne nuit, {playerName} !' },
+  baby: { en: 'Good night, Mummy! Good night, Daddy!', fr: 'Bonne nuit, maman ! Bonne nuit, papa !' },
+  father: { en: 'Sweet dreams, everyone!', fr: 'Faites de beaux rêves, tout le monde !' },
+  wake: { en: 'Good morning! The sun is up!', fr: 'Bonjour ! Le soleil est levé !' },
+} as const;
+
+/** Autocollant du jour (fin de la première activité de la journée). */
+export const STICKER_OFFER = { en: 'A sticker for you! Pick one!', fr: 'Un autocollant pour toi ! Choisis-en un !' } as const;
+
 /** Ce que dit le bébé sur la carte « il grandit ». */
 export const BIGGER_NOW = { en: "Look at me! I'm bigger now!", fr: 'Regarde-moi ! Je suis plus grand maintenant !' } as const;
 
 export const say = {
+  /** « a rainbow » → « A rainbow! » (choix et carte des autocollants) */
+  sticker: (en: string) => `${en.charAt(0).toUpperCase()}${en.slice(1)}!`,
+  /** photo de naissance de l'album souvenir */
+  albumBorn: (babyName: string) => fillLine(FAMILY_LINES.welcomeBaby, { babyName }).en,
   title: (playerName: string) => `Hello, ${playerName}! Let's go on an adventure!`,
   biomeWelcome: (biome: Pick<BiomeDef, 'nameEn'>) => `Welcome to ${biome.nameEn}! ${FAMILY_LINES.tapAnimal.en}`,
   actorCall: (actorName: string) => `${actorName}! ${FAMILY_LINES.whoToPlay.en}`,

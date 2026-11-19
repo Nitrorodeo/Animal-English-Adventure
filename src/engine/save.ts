@@ -1,4 +1,4 @@
-import { clampSpeechSpeed, newGameState, SAVE_VERSION, type GameState } from './state';
+import { clampSpeechSpeed, newGameState, SAVE_VERSION, type GameState, type PlacedSticker } from './state';
 
 /** Adaptateur de stockage (localStorage dans le navigateur, mémoire en test). */
 export interface StorageLike {
@@ -25,6 +25,9 @@ export function memoryStorage(initial: Record<string, string> = {}): StorageLike
     },
   };
 }
+
+const isPlacedSticker = (v: unknown): v is PlacedSticker =>
+  isObj(v) && typeof v.id === 'string' && typeof v.continentId === 'string' && typeof v.x === 'number' && typeof v.y === 'number';
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 
@@ -56,6 +59,8 @@ export function migrate(raw: unknown): GameState | null {
       placesVisited: Array.isArray(p.placesVisited) ? (p.placesVisited as GameState['player']['placesVisited']) : [],
       words: isObj(p.words) ? (p.words as GameState['player']['words']) : {},
       photos: Array.isArray(p.photos) ? (p.photos as unknown[]).filter((x): x is string => typeof x === 'string') : [],
+      stickers: Array.isArray(p.stickers) ? (p.stickers as unknown[]).filter(isPlacedSticker) : [],
+      stickerDay: typeof p.stickerDay === 'string' ? p.stickerDay : null,
     },
     families: raw.families as GameState['families'],
     settings: migrateSettings(base.settings, raw.settings),

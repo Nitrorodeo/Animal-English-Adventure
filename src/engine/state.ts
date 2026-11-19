@@ -41,6 +41,18 @@ export interface PlayerState {
   words: Partial<Record<ContinentId, string[]>>;
   /** album photo : « lieu:point du décor » photographiés */
   photos: string[];
+  /** autocollants collés sur la carte du monde (un par jour au plus, voir engine/stickers.ts) */
+  stickers: PlacedSticker[];
+  /** jour (AAAA-MM-JJ, heure de l'appareil) du dernier autocollant reçu ; null = jamais */
+  stickerDay: string | null;
+}
+
+/** Autocollant collé sur la carte : position en % de la carte. */
+export interface PlacedSticker {
+  id: string;
+  continentId: ContinentId;
+  x: number;
+  y: number;
 }
 
 export interface Baby {
@@ -112,7 +124,7 @@ export interface GameState {
 export function newGameState(): GameState {
   return {
     version: SAVE_VERSION,
-    player: { name: 'Explorer', items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, placesVisited: [], words: {}, photos: [] },
+    player: { name: 'Explorer', items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null },
     families: {},
     settings: { muted: false, slowVoice: false, frenchHelp: true, levelOverride: 'auto', speechSpeed: SPEECH_SPEED.default },
     onboarded: false,

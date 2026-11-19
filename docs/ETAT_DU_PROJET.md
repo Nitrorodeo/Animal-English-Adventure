@@ -1,6 +1,10 @@
 # État du projet — Animal English Adventure
 
-*Mis à jour le 2026-11-19 à 17 h 35 — **Publié sur GitHub** : https://github.com/Nitrorodeo/Animal-English-Adventure → jeu en ligne sur https://nitrorodeo.github.io/Animal-English-Adventure/ (section « Publication GitHub » ci-dessous).*
+*Mis à jour le 2026-11-19 à 18 h 45 — **Album de famille, autocollant du jour, bonne nuit** (demande du parent : « fais les 3 idées ») ; les « z z » du sommeil s'affichent enfin. 153 tests.*
+
+*Mis à jour le 2026-11-19 à 18 h 30 — **Cinématiques et finitions** : naissance animée (parents et bébés en marionnettes, cœurs, paquet surprise qui tremble, éclat et confettis), carte « grandit » avec le bébé à son nouveau stade, étoiles une à une et confettis en fin d'activité, carte du lieu pendant les voyages, écran titre soigné. **Parties copiées sur l'ordinateur** et reprises automatiquement par la tablette (section ci-dessous).*
+
+*Mis à jour le 2026-11-19 à 17 h 35 — Code envoyé sur le dépôt GitHub **privé** `Nitrorodeo/Animal-English-Adventure`. **Hébergement en ligne abandonné pour l'instant** (décision du parent : dépôt privé, pas de GitHub Pages). La tablette joue sur le Wi-Fi via l'ordinateur.*
 
 *Mis à jour le 2026-11-19 à 17 h 10 — **Jeu installable et jouable sans internet** (PWA), **bandeau du lieu** qui suit l'aventure, **boutons premium**, **bulle des questions déplaçable**, point d'appui dans la zone humide d'Amérique du Sud.*
 
@@ -19,17 +23,42 @@
 ```bash
 npm install          # une seule fois
 npm run dev          # puis ouvrir http://localhost:5173
-npm test             # 131 tests
+npm test             # 153 tests
 npm run build        # version statique dans dist/ (+ dist/sw.js pour le hors-ligne)
 npx vite preview --port 4173   # sert dist/ : seule version où le hors-ligne est actif
 npm run assets       # après chaque dépôt d'images dans Animaux/
 npm run voices       # après chaque ajout ou changement de phrase anglaise
 ```
 
-## Publication GitHub (2026-11-19, 17 h 35)
+## Album de famille, autocollant du jour, bonne nuit (2026-11-19, 18 h 45)
 
-- Dépôt public `Nitrorodeo/Animal-English-Adventure`, branche `main`. À chaque envoi, `.github/workflows/deploy.yml` installe, lance les tests, construit et publie `dist/` sur GitHub Pages (réglage du dépôt : Settings → Pages → Source « GitHub Actions »).
-- Publier une mise à jour : `git add -A`, `git commit -m "…"`, `git push`. Les tablettes reçoivent la nouvelle version au prochain lancement avec internet ; seuls les fichiers modifiés sont retéléchargés.
+Demande du parent : « fais les 3 idées ». Testé en taille tablette (1024 × 768) avec une partie fictive, ensuite effacée (navigateur et `saves/`).
+
+- **Album de famille** (passeport, section 📸) : une photo à la naissance (papa, maman et le bébé dans le décor de la famille) et une à chaque stade atteint. Rien n'est stocké en plus : l'album se déduit des bébés (`src/engine/album.ts`), donc les parties déjà commencées ont aussi leurs photos. Toucher une photo la fait lire (« Welcome to our family, … » / « … is a little explorer now! »). Flash d'appareil photo et pastille « 📸 Photo dans l'album ! » à la fin de la naissance et sur la carte « grandit ».
+- **Autocollant du jour** (`src/engine/stickers.ts`) : après la **première** activité terminée de la journée (horloge de l'appareil), l'enfant choisit 1 autocollant parmi 3 (16 en tout, les 3 derniers choisis ne reviennent pas). Il est collé sur la carte du monde, sur le continent où elle jouait ; toucher un autocollant le fait remuer et dire son nom. 40 gardés au plus. Aucun compteur de jours, aucune perte si elle ne joue pas. Sauvegarde : `player.stickers` et `player.stickerDay`, remplis par défaut pour les anciennes parties (pas de changement de version).
+- **Bonne nuit** (bouton 🌙 en haut à gauche de l'habitat, `src/engine/bedtime.ts`) : le ciel s'assombrit (lune, étoiles qui scintillent) ; maman dit « Good night, <prénom>! », chaque bébé « Good night, Mummy! Good night, Daddy! », papa « Sweet dreams, everyone! », puis toute la famille dort (« z z »). Le gros bouton ☀️ « Good morning! » réveille la famille à tout moment. Pas de lune ajoutée dans les scènes de nuit des aventures (« Touche la lune ! » resterait sans ambiguïté).
+- **Défaut corrigé** : les « z z » du sommeil restaient invisibles (opacité 0 jamais animée), y compris dans les aventures ; ils montent et s'effacent maintenant.
+- Voix : 18 nouvelles phrases enregistrées (`npm run voices`) ; tests : chaque légende, autocollant et phrase du coucher a son enregistrement.
+
+## Cinématiques, finitions et parties copiées sur l'ordinateur (2026-11-19, 18 h 30)
+
+Demande du parent : « Je serai toujours connecté au Wifi […] faut juste qu'elle puisse y jouer de la tablette et avoir toutes ces parties en mémoire. Je veux juste que tu optimises encore le jeu, refais un tour […] améliorer les cinématiques, les designs […] il faut que ça reste facile pour une enfant de 7 ans ».
+
+- **Naissance** (`src/ui/FamilyEvent.tsx`) : fond opaque (on ne voit plus le décor et les boutons au travers), halo qui tourne lentement ; parents et bébés **animés** par leurs marionnettes (`src/ui/LiveSprite.tsx`, image fixe si WebGL manque) ; la maman parle à l'intro, le bébé quand il dit bonjour ; cœurs qui montent, paquet « ? » qui tremble comme un œuf, **éclat de lumière + confettis** à « It's a boy/girl! », confettis et cœurs à la fin. Décisions dans `src/ui/fx.ts` (testé).
+- **Carte « grandit »** : le bébé à son nouveau stade, animé, sur des rayons de soleil, avec confettis ; les nouveaux jeux en pastilles sur plusieurs colonnes (la carte tient dans l'écran même avec 8 jeux).
+- **Fin d'activité** : les 3 étoiles arrivent une à une, confettis sur toute la scène.
+- **Voyage** : une carte « 🧭 the waterhole · la mare » s'affiche au centre pendant le changement de lieu (vocabulaire du lieu).
+- **Écran titre** : titre doré, un animal par continent qui se balance, bouton Play qui pulse.
+- **Correctif** : la scène (et la naissance) ne peut plus « défiler » quand un décor dépasse (`overflow: clip`) ; avant, un effet qui dépasse pouvait faire remonter la bulle au milieu de l'écran.
+- **Parties copiées sur l'ordinateur** (`src/engine/backup.ts` testé, `tools/save/savePlugin.mjs`, `src/ui/useGame.ts`) : la sauvegarde de la tablette reste dans le navigateur ET une copie est envoyée au PC (`saves/save.json`, + une copie par jour dans `saves/historique/`), 1,5 s après chaque changement. Si la tablette ouvre le jeu sans partie (adresse du PC changée, navigateur vidé), elle **reprend toute seule** la copie du PC (« ✓ Partie retrouvée sur l'ordinateur » sur l'écran titre). « Effacer la partie » range la copie dans l'historique (rien n'est détruit). `saves/` n'est pas envoyé sur GitHub. Sans le serveur du PC, tout échoue en silence.
+  - Limite : une seule copie pour tout le foyer ; si un autre appareil joue aussi, la copie est celle du dernier appareil qui a joué (les copies du jour restent dans l'historique).
+  - Conseil : réserver une adresse fixe pour le PC dans la box et garder le même favori sur la tablette.
+- Vérifié à l'écran (tablette 1024 × 768) : naissance complète (parents et bébé animés, éclat, confettis), aventure « The big thirst » (carte du lieu, étoiles, 30 confettis), carte « grandit » de Kiara (marionnette active, tout tient dans l'écran), copie envoyée puis reprise après effacement du navigateur ; aucune erreur console. Données de test supprimées ensuite (`saves/` vidé).
+
+## Publication GitHub (2026-11-19, 17 h 35) — dépôt privé, hébergement abandonné pour l'instant
+
+- Dépôt **privé** `Nitrorodeo/Animal-English-Adventure`, branche `main` (un seul envoi, le 2026-11-19). GitHub Pages n'est pas disponible pour un dépôt privé en offre gratuite et le parent ne veut pas le rendre public : **pas de jeu en ligne**. `.github/workflows/deploy.yml` reste prêt mais ne sert à rien tant que Pages n'est pas actif.
+- Aucun nouvel envoi sans accord explicite du parent.
 - **Pas dans le dépôt** (`.gitignore`) : `Animaux/`, `Continant/`, `Decors/` (dessins sources, ≈ 210 Mo, gardés sur le PC : le jeu utilise les versions préparées de `public/`), moteur de voix `tools/tts/.venv` et `models/`, `node_modules/`, `dist/`, `.claude/`, l'archive `.zip`. `npm run assets` et `npm run voices` ne fonctionnent donc que sur ce PC.
 - Confidentialité : aucune donnée de l'enfant n'est en ligne (prénoms et progression restent dans l'appareil) ; son prénom a été retiré des tests et le pseudonyme du parent remplacé par « le parent » dans les fichiers publiés.
 - Vérifié avant envoi : copie neuve du dépôt → `npm ci`, 131 tests, construction OK ; servie dans un sous-dossier comme GitHub Pages (sensible aux majuscules) → aucun fichier manquant, 7 608 médias téléchargés, jeu jouable serveur coupé.
@@ -40,7 +69,7 @@ Demande du parent : « 1. oui met en place 2. attends de tous les avoirs 3. amel
 
 - **Hors-ligne installable (PWA)** : `public/manifest.webmanifest` (plein écran, paysage, icônes Leo dans `public/icons/`), service worker sans dépendance généré par `npm run build` (`tools/pwa/build_sw.ts` + `tools/pwa/sw-template.js` → `dist/sw.js`). Les 8 fichiers de démarrage sont mis en cache à l'installation ; les ≈ 7 600 dessins et voix (≈ 175 Mo) se téléchargent en arrière-plan, images d'abord. Chaque fichier porte une empreinte : une mise à jour ne retélécharge que ce qui a changé. Audio servi en 206 (requêtes Range). Avancement visible dans l'espace parents, section « Jouer sans internet ». Logique testée dans `src/pwa/*.test.ts`.
   - Vérifié : `npm run build` puis `npx vite preview`, téléchargement complet, serveur arrêté, page rechargée → jeu, décor, marionnettes et voix fonctionnent.
-  - **Limite** : un service worker n'existe qu'en https ou sur `localhost`. Sur la tablette via l'adresse locale du PC en http (port 5173), le hors-ligne est indisponible ; il faut héberger `dist/` en https (à décider par le parent).
+  - **Limite** : un service worker n'existe qu'en https ou sur `localhost`. Sur la tablette via l'adresse locale du PC en http (port 5173), le hors-ligne est indisponible. Le parent a indiqué le 2026-11-19 que la tablette est toujours sur le Wi-Fi : le hors-ligne n'est pas nécessaire pour l'instant.
 - **Bandeau** : pilule avec vignette du décor + icône de l'espèce, nom anglais du lieu, continent (+ nom français si l'aide française est activée) ; toucher = le nom est lu. Il suit maintenant le lieu de l'aventure en cours (`onWhere` dans `Habitat.tsx`).
 - **Boutons premium** : barre du haut en bois, boutons ronds dorés en relief, boutons d'action dorés (verts pour valider), Family rose, cartes-réponses et vignettes de lieux qui se soulèvent au survol (`src/styles.css`).
 - **Bulle des questions déplaçable** au doigt ou à la souris (`src/ui/drag.ts`, `DialogueBox.tsx`) : poignée en haut, reste toujours entière dans la scène, un simple toucher reste un toucher (seuil 6 px), les réponses se choisissent normalement, la position est gardée d'une réplique à l'autre. Le texte ne se sélectionne pas pendant le glisser. Vérifié dans le navigateur.
@@ -264,5 +293,5 @@ Fonctionnement :
 1. Intégrer les dessins des personnages manquants dès qu'ils arrivent dans `Animaux/` (`npm run assets`).
 2. Écouter les nouvelles voix et corriger les phrases mal prononcées.
 3. Objets dessinés manquants (lune, arc-en-ciel, grenouille, banane) et décors de pluie.
-4. Hébergement https de `dist/` pour que la tablette ait le hors-ligne (publication externe : accord du parent requis).
+4. (Abandonné pour l'instant, décision du parent) Hébergement https de `dist/` pour le hors-ligne.
 5. Queues animées quand tous les dessins seront déposés.

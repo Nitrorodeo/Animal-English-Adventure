@@ -12,7 +12,8 @@ import { chatScript, FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
 import { itemLabel } from '../content/items';
 import { NOUNS, PLACES } from '../content/places';
 import { SPECIES } from '../content/species';
-import { BIGGER_NOW, NAME_ERRORS, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, say } from '../content/utterances';
+import { BEDTIME, BIGGER_NOW, NAME_ERRORS, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, STICKER_OFFER, say } from '../content/utterances';
+import { STICKERS } from '../engine/stickers';
 import { CONTINENTS } from '../content/world';
 import type { QuestScript } from '../content/types';
 import { fill, stepUtterances, type Vars } from '../engine/dialogue';
@@ -114,6 +115,15 @@ export function buildVoiceCatalog(): Catalog {
   add(SPEED_SAMPLE.role, SPEED_SAMPLE.text); // bouton « Écouter » du réglage de vitesse
   for (const s of Object.values(SEX_CHOICE)) add('narrator', s);
   for (const e of Object.values(NAME_ERRORS)) add('narrator', e.en);
+
+  // --- Album souvenir, autocollant du jour, bonne nuit --------------------
+  add('narrator', say.albumBorn(NAME_TOKEN));
+  add('narrator', STICKER_OFFER.en);
+  for (const st of STICKERS) add('narrator', say.sticker(st.en));
+  add('mother', fill(BEDTIME.mother.en, anyName));
+  for (const r of ['girl', 'boy'] as const) add(r, BEDTIME.baby.en);
+  add('father', BEDTIME.father.en);
+  add('father', BEDTIME.wake.en);
 
   return { entries: [...map.values()], unsupported: [...unsupported] };
 }

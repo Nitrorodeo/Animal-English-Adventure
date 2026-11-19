@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { speech } from '../audio/speech';
-import { getSpecies } from '../content/species';
+import { getSpecies, SPECIES } from '../content/species';
 import { say } from '../content/utterances';
 import type { BiomeId, PlaceId } from '../content/types';
 import { getBiome, getContinent } from '../content/world';
@@ -11,10 +11,13 @@ import { assetUrl, background } from './scene';
 import { useGame } from './useGame';
 import { WorldMap } from './WorldMap';
 
+/** un animal par continent, pour l'écran titre */
+const TITLE_ANIMALS = SPECIES.filter((sp, i, all) => all.findIndex((x) => x.continentId === sp.continentId) === i).slice(0, 7);
+
 type Screen = { kind: 'title' } | { kind: 'map' } | { kind: 'habitat'; speciesId: string; biomeId: BiomeId } | { kind: 'passport' } | { kind: 'parents' };
 
 export function App() {
-  const { state, setState, loadStatus, reset } = useGame();
+  const { state, setState, loadStatus, restored, reset } = useGame();
   const [screen, setScreen] = useState<Screen>({ kind: 'title' });
   const [back, setBack] = useState<Screen>({ kind: 'map' });
   /** lieu à l'écran (peut différer du lieu de la famille pendant une aventure) */
@@ -31,6 +34,9 @@ export function App() {
       <div className="screen title-screen" style={portrait ? { backgroundImage: `url("${assetUrl(portrait)}")` } : undefined}>
         <div className="title-card">
           <h1>Animal English Adventure</h1>
+          <div className="title-animals" aria-hidden>
+            {TITLE_ANIMALS.map((sp, i) => <span key={sp.id} style={{ animationDelay: `${i * 0.25}s` }}>{sp.icon}</span>)}
+          </div>
           <button
             className="big play"
             onClick={() => {
@@ -40,7 +46,8 @@ export function App() {
           >
             ▶ Play
           </button>
-          {loadStatus === 'corrupt' && <p className="note">La sauvegarde précédente était illisible : une copie a été gardée, nouvelle partie.</p>}
+          {restored && <p className="title-note">✓ Partie retrouvée sur l'ordinateur.</p>}
+          {loadStatus === 'corrupt' && !restored && <p className="note">La sauvegarde précédente était illisible : une copie a été gardée, nouvelle partie.</p>}
         </div>
       </div>
     );
