@@ -47,19 +47,22 @@ export function newFamilyCode(rand: () => number): string {
   return `${pick(WORDS_A)}-${pick(WORDS_B)}-${digits}`;
 }
 
-/** Code tapé à la main : majuscules, accents, espaces ou soulignés à la place des tirets sont acceptés. */
+/** Code tapé à la main : majuscules, accents, espaces, apostrophes ou soulignés deviennent des tirets. */
 export function normalizeFamilyCode(raw: string): string {
   return raw
     .normalize('NFD')
     .replace(/\p{M}/gu, '')
     .toLowerCase()
     .trim()
-    .replace(/[\s_.]+/g, '-')
-    .replace(/-+/g, '-')
+    .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
 
-export const FAMILY_CODE_PATTERN = /^[a-z]{2,12}-[a-z]{2,12}-\d{4}$/;
+/**
+ * Code proposé (« lion-mango-4271 ») ou choisi par la famille (« famille-dupont », « lion2026 ») :
+ * lettres et chiffres séparés par des tirets, de 4 à 40 caractères. Même règle dans cloud/worker.mjs.
+ */
+export const FAMILY_CODE_PATTERN = /^(?=.{4,40}$)[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export function isFamilyCode(code: string): boolean {
   return FAMILY_CODE_PATTERN.test(code);

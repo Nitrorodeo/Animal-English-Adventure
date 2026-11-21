@@ -14,7 +14,8 @@
  * Testé dans src/engine/cloudWorker.test.ts. Mise en ligne : cloud/LISEZ_MOI.md.
  */
 
-const CODE = /^[a-z]{2,12}-[a-z]{2,12}-\d{4}$/;
+// même règle que FAMILY_CODE_PATTERN (src/engine/cloud.ts) : code proposé ou choisi par la famille
+const CODE = /^(?=.{4,40}$)[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MAX_BYTES = 1_000_000;
 const HISTORY_TTL = 60 * 24 * 3600;
 

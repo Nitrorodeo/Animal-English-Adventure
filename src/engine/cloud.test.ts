@@ -39,8 +39,17 @@ describe('code de famille', () => {
   it('tapé à la main : majuscules, espaces et accents acceptés', () => {
     expect(normalizeFamilyCode('  Lion Mango 4271 ')).toBe('lion-mango-4271');
     expect(normalizeFamilyCode('LION_mangó--4271')).toBe('lion-mango-4271');
-    expect(isFamilyCode(normalizeFamilyCode('lion mango 42'))).toBe(false);
     expect(isFamilyCode('lion-mango-4271')).toBe(true);
+  });
+
+  it('code choisi par la famille : lettres et chiffres, 4 à 40 caractères', () => {
+    expect(normalizeFamilyCode("Famille D'Ours")).toBe('famille-d-ours');
+    expect(isFamilyCode(normalizeFamilyCode('Famille Dupont'))).toBe(true);
+    expect(isFamilyCode('lion2026')).toBe(true);
+    expect(isFamilyCode('abc')).toBe(false);
+    expect(isFamilyCode('a'.repeat(41))).toBe(false);
+    expect(isFamilyCode(normalizeFamilyCode('!!!'))).toBe(false);
+    expect(isFamilyCode('lion--mango')).toBe(false);
   });
 });
 
@@ -163,7 +172,7 @@ describe('service en ligne (cloud/worker.mjs)', () => {
     const e = env();
     expect((await handle(req('GET', { code: 'lion-mango-4271', origin: 'https://ailleurs.example' }), e, T0)).status).toBe(403);
     expect((await handle(req('GET', { code: 'lion-mango-4271', origin: null }), e, T0)).status).toBe(403);
-    expect((await handle(req('GET', { code: 'lion' }), e, T0)).status).toBe(400);
+    expect((await handle(req('GET', { code: 'abc' }), e, T0)).status).toBe(400);
     expect((await handle(req('GET', { code: '../x-y-1234' }), e, T0)).status).toBe(400);
     expect((await handle(req('PUT', { code: 'lion-mango-4271', body: 'pas du json' }), e, T0)).status).toBe(400);
     expect((await handle(req('PUT', { code: 'lion-mango-4271', body: '{"state":{"version":2}}' }), e, T0)).status).toBe(400);

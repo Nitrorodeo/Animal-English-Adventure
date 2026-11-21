@@ -23,6 +23,7 @@ function storage(): StorageLike | null {
 type Step =
   | { kind: 'choose' }
   | { kind: 'created'; code: string }
+  | { kind: 'own'; error: string | null; busy: boolean }
   | { kind: 'join'; error: string | null; busy: boolean }
   | { kind: 'replace'; code: string; remote: RemoteSave; localName: string };
 
@@ -88,7 +89,7 @@ export function FamilyGate({ children }: { children: ReactNode }) {
     e.preventDefault();
     const code = normalizeFamilyCode(typed);
     if (!isFamilyCode(code)) {
-      setStep({ kind: 'join', busy: false, error: 'Le code ressemble à « lion-mango-4271 » : deux mots et quatre chiffres.' });
+      setStep({ kind: 'join', busy: false, error: 'Le code fait au moins 4 lettres ou chiffres, par exemple « lion-mango-4271 ».' });
       return;
     }
     setStep({ kind: 'join', busy: true, error: null });
@@ -109,6 +110,26 @@ export function FamilyGate({ children }: { children: ReactNode }) {
     adopt(code, remote);
   };
 
+  const chooseOwn = async (e: FormEvent) => {
+    e.preventDefault();
+    const code = normalizeFamilyCode(typed);
+    if (!isFamilyCode(code)) {
+      setStep({ kind: 'own', busy: false, error: 'Au moins 4 lettres ou chiffres, par exemple « famille-lion ».' });
+      return;
+    }
+    setStep({ kind: 'own', busy: true, error: null });
+    const remote = await fetchFamily(code);
+    if (remote === 'error') {
+      setStep({ kind: 'own', busy: false, error: 'Pas de connexion au serveur. Vérifie internet puis réessaie.' });
+      return;
+    }
+    if (remote !== null) {
+      setStep({ kind: 'own', busy: false, error: "Ce code a déjà une partie. Si c'est le vôtre, revenez en arrière et prenez « J'ai déjà un code »." });
+      return;
+    }
+    setStep({ kind: 'created', code });
+  };
+
   const solo = () => {
     writeCloudMeta(st, { code: null, syncedAt: 0, dirty: false });
     setOpen(true);
@@ -124,7 +145,13 @@ export function FamilyGate({ children }: { children: ReactNode }) {
             <button className="big ok" onClick={() => void create()}>
               Première fois : créer un code
             </button>
-            <button className="big" onClick={() => setStep({ kind: 'join', error: null, busy: false })}>
+            <button
+              className="big"
+              onClick={() => {
+                setTyped('');
+                setStep({ kind: 'join', error: null, busy: false });
+              }}
+            >
               J'ai déjà un code
             </button>
             <button className="link" onClick={solo}>
@@ -140,7 +167,46 @@ export function FamilyGate({ children }: { children: ReactNode }) {
             <button className="big ok" onClick={() => startNew(step.code)}>
               C'est noté ▶
             </button>
+            <button
+              className="link"
+              onClick={() => {
+                setTyped('');
+                setStep({ kind: 'own', error: null, busy: false });
+              }}
+            >
+              Je préfère choisir mon code
+            </button>
           </>
+        )}
+        {step.kind === 'own' && (
+          <form className="family-form" onSubmit={(e) => void chooseOwn(e)}>
+            <p className="access-hint">Choisissez votre code de famille</p>
+            <input
+              className="access-input"
+              value={typed}
+              onChange={(e) => setTyped(e.target.value)}
+              placeholder="famille-lion"
+              autoComplete="off"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              aria-label="Code de famille choisi"
+              aria-invalid={step.error !== null}
+              autoFocus
+            />
+            <p className="note">Lettres et chiffres, au moins 4. Les espaces deviennent des tirets.</p>
+            {step.error && (
+              <p className="access-wrong" role="alert">
+                {step.error}
+              </p>
+            )}
+            <button className="big ok" type="submit" disabled={step.busy || !typed.trim()}>
+              {step.busy ? '⏳' : 'OK'}
+            </button>
+            <button type="button" className="link" onClick={() => setStep({ kind: 'choose' })}>
+              ← Retour
+            </button>
+          </form>
         )}
         {step.kind === 'join' && (
           <form className="family-form" onSubmit={(e) => void join(e)}>
