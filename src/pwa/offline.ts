@@ -60,10 +60,29 @@ export function offlineLabel(s: OfflineStatus): string {
   }
 }
 
+/** Délai après l'ouverture pendant lequel une nouvelle version publiée recharge le jeu d'elle-même. */
+export const UPDATE_RELOAD_WINDOW_MS = 60_000;
+
+/**
+ * Une nouvelle version vient de prendre la main : recharger la page pour afficher tout de suite les
+ * nouveaux dessins (sinon l'ancienne version reste à l'écran jusqu'à l'ouverture suivante).
+ * Jamais à la toute première visite (pas d'ancienne version), jamais deux fois, jamais en pleine partie.
+ */
+export function shouldReloadForUpdate(hadController: boolean, alreadyReloaded: boolean, msSinceOpen: number): boolean {
+  return hadController && !alreadyReloaded && msSinceOpen >= 0 && msSinceOpen <= UPDATE_RELOAD_WINDOW_MS;
+}
+
 export function registerOffline(): void {
   if (!import.meta.env.PROD || typeof navigator === 'undefined' || !('serviceWorker' in navigator) || !window.isSecureContext) return;
   set({ ...status, state: 'starting' });
   const sw = navigator.serviceWorker;
+  const hadController = sw.controller !== null;
+  let reloaded = false;
+  sw.addEventListener('controllerchange', () => {
+    if (!shouldReloadForUpdate(hadController, reloaded, performance.now())) return;
+    reloaded = true;
+    window.location.reload();
+  });
   sw.addEventListener('message', (e: MessageEvent) => {
     if (e.data?.type === 'offline-progress') set(statusFromProgress(e.data as ProgressMessage));
   });
