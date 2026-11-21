@@ -200,17 +200,83 @@ const rainbowAfterRain = (sp: SpeciesDef): QuestStep[] => {
   ];
 };
 
+// ---------------------------------------------------------------------------
+// 5. Les rochers de la panthère — rochers, cascade, flocons, fleurs (montagne ; tigre et panthère des neiges)
+// ---------------------------------------------------------------------------
+
+const leopardRocks = (sp: SpeciesDef): QuestStep[] => {
+  const climbs = canDo(sp, 'climb');
+  const ab = climbs ? 'climb' : 'run';
+  return [
+    say('narrator', 'High on the mountain, the big grey rocks shine in the mist.', 'Tout en haut de la montagne, les gros rochers gris brillent dans la brume.'),
+    tap('father', 'Look at the rock! Where is the rock?', 'Regarde le rocher ! Où est le rocher ?', 'rock', ['It is big and hard!', "C'est grand et dur !"], ['rock', 'where']),
+    ask('mother', 'Is the rock green?', 'Est-ce que le rocher est vert ?', yesNo(false), ['Look at the rock!', 'Regarde le rocher !'], ['rock', 'green'], { minTier: 'intermediate', pointAt: 'rock', keepOrder: true }),
+    act('actor', ab, climbs ? 'I can climb! Look at me!' : 'I can run! Look at me!', climbs ? 'Je sais grimper ! Regarde-moi !' : 'Je sais courir ! Regarde-moi !', 'actor'),
+    ask('actor', 'What can I do?', 'Qu’est-ce que je sais faire ?', [ok(climbs ? 'I can climb!' : 'I can run!', climbs ? 'Je sais grimper !' : 'Je sais courir !', climbs ? '🧗' : '🏃'), no('I can fly!', 'Je sais voler !', '🪽'), no('I can drive a car!', 'Je sais conduire une voiture !', '🚗')], [climbs ? 'Look! I can climb!' : 'Look! I can run!', climbs ? 'Regarde ! Je sais grimper !' : 'Regarde ! Je sais courir !'], ['can', ab], { minTier: 'intermediate' }),
+    say('baby', 'I like the big rocks!', "J'aime les gros rochers !", { needs: 'baby' }, 'happy'),
+    ...eatScene(sp, [0, 2, 4, 6], 'actor', 'lunch'),
+    say('baby', 'Yum! I like my lunch!', "Miam ! J'aime mon repas !", { needs: 'baby' }, 'happy'),
+    tap('mother', 'Shh! Listen! Where is the waterfall?', 'Chut ! Écoute ! Où est la cascade ?', 'waterfall', ['Water is falling down!', "L'eau tombe d'en haut !"], ['waterfall', 'where']),
+    ask('father', 'Is the waterfall white?', 'Est-ce que la cascade est blanche ?', yesNo(true), ['Look at the waterfall!', 'Regarde la cascade !'], ['waterfall', 'white'], { minTier: 'expert', pointAt: 'waterfall', keepOrder: true }),
+    say('narrator', 'Look! Soft snowflakes are falling on the mountain!', 'Regarde ! De doux flocons tombent sur la montagne !', {}, 'happy'),
+    ...countScene('mother', 'snowflake', [1, 3, 4, 5, 7], { beginner: 3, intermediate: 4, expert: 5 }, 'rocksnow'),
+    say('narrator', 'Look at the flowers between the rocks!', 'Regarde les fleurs entre les rochers !', {}, 'curious'),
+    ...colorHunt('father', 'flower', 'pink', ['yellow', 'white', 'blue'], [0, 2, 5, 6], 'rockflower'),
+    reward('snow_crystal', 'mother', 'A snow crystal! It is our treasure!', 'Un cristal de neige ! C’est notre trésor !'),
+    end('father', 'What a great day on the rocks!', 'Quelle belle journée sur les rochers !'),
+  ];
+};
+
+// ---------------------------------------------------------------------------
+// 6. Le matin à l'arche — soleil, cache-cache, papillons, puis le chemin de montagne
+// ---------------------------------------------------------------------------
+
+const archMorning = (sp: SpeciesDef): QuestStep[] => {
+  const climbs = canDo(sp, 'climb');
+  return [
+    say('narrator', 'Good morning at the stone arch! The sun is up.', 'Bonjour à l’arche de pierre ! Le soleil est levé.'),
+    tap('father', 'Where is the sun? Show me!', 'Où est le soleil ? Montre-moi !', 'sun', ['It is in the sky!', "Il est dans le ciel !"], ['sun', 'where']),
+    ask('mother', 'Is the sun hot?', 'Est-ce que le soleil est chaud ?', yesNo(true), ['Look at the sun!', 'Regarde le soleil !'], ['sun', 'hot'], { minTier: 'intermediate', pointAt: 'sun', keepOrder: true }),
+    tap('mother', 'Where is the arch? Show me!', 'Où est l’arche ? Montre-moi !', 'arch', ['It is big and made of stone!', "Elle est grande et en pierre !"], ['arch', 'big']),
+    ask('father', 'Is the arch big?', 'Est-ce que l’arche est grande ?', yesNo(true), ['Look at the arch!', 'Regarde l’arche !'], ['arch', 'big'], { minTier: 'expert', pointAt: 'arch', keepOrder: true }),
+    ...eatScene(sp, [1, 3, 5, 7], 'actor', 'brunch'),
+    say('baby', 'Yum! I like my brunch!', "Miam ! J'aime mon repas !", { needs: 'baby' }, 'happy'),
+    seek('father', 'sibling', 'tree', {
+      line: ['Oh! Somebody is hiding! Can you find them?', "Oh ! Quelqu'un se cache ! Tu peux le trouver ?"],
+      hint: ['Look at the big tree!', 'Regarde le grand arbre !'],
+      notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
+      found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
+    }, ['hide_and_seek', 'tree'], { needs: 'sibling', minTier: 'intermediate' }),
+    act('actor', climbs ? 'climb' : 'jump', climbs ? 'I can climb the rock! Look at me!' : 'I can jump! Look at me!', climbs ? 'Je sais grimper sur le rocher ! Regarde-moi !' : 'Je sais sauter ! Regarde-moi !', 'actor'),
+    say('narrator', 'Pretty butterflies fly around the arch!', 'De jolis papillons volent autour de l’arche !', {}, 'happy'),
+    ...countScene('mother', 'butterfly', [0, 2, 4, 6, 7], { beginner: 3, intermediate: 4, expert: 5 }, 'morbfly'),
+    go('asia_mountain', 'father', "Let's go up the mountain!", 'Montons à la montagne !'),
+    tap('mother', 'Where is the path? Show me!', 'Où est le chemin ? Montre-moi !', 'path', ['Look down! Find the path!', 'Regarde en bas ! Trouve le chemin !'], ['path', 'follow_the_path']),
+    moveTo('path', 'walk', 'father'),
+    say('father', 'Up, up, up! Step by step!', 'Plus haut, plus haut ! Pas à pas !', {}, 'proud'),
+    back('father'),
+    say('narrator', 'Look at the little flowers on the mountain!', 'Regarde les petites fleurs de la montagne !', {}, 'curious'),
+    ...colorHunt('mother', 'flower', 'yellow', ['pink', 'white', 'blue'], [0, 3, 5, 6], 'mtflower'),
+    reward('golden_pebble', 'father', 'A golden pebble! It is our treasure!', 'Un galet doré ! C’est notre trésor !'),
+    end('mother', 'What a bright morning on the mountain!', 'Quel matin lumineux à la montagne !'),
+  ];
+};
+
 export const ASIA: AdventurePack = {
   adventures: [
-    { id: 'asia_bamboo_morning', continentId: 'asia', titleEn: 'The bamboo morning', titleFr: 'Le matin dans les bambous', icon: '🎋', start: 'asia_bamboo', species: ['giant_panda', 'tiger', 'red_panda'], skillIds: ['1.6', '1.3', '2.2'], steps: bambooMorning, treasure: 'jade_leaf', order: 1 },
-    { id: 'asia_lantern_night', continentId: 'asia', titleEn: 'The lantern night', titleFr: 'La nuit des lanternes', icon: '🏮', start: 'asia_pagoda', species: ['giant_panda', 'red_panda'], skillIds: ['1.2', '1.3', '2.3'], steps: lanternNight, treasure: 'golden_lantern', order: 2 },
-    { id: 'asia_misty_mountain', continentId: 'asia', titleEn: 'The misty mountain', titleFr: 'La montagne dans la brume', icon: '⛰️', start: 'asia_mountain', species: ['giant_panda', 'tiger', 'red_panda'], skillIds: ['1.7', '2.7', '3.2'], steps: mistyMountain, treasure: 'rainbow_stone', order: 3 },
-    { id: 'asia_rainbow_rain', continentId: 'asia', titleEn: 'The rainbow after the rain', titleFr: 'L’arc-en-ciel après la pluie', icon: '🌈', start: 'asia_arch', species: ['giant_panda', 'tiger', 'red_panda'], skillIds: ['1.7', '1.2', '2.7'], steps: rainbowAfterRain, treasure: 'rain_pearl', order: 4 },
+    { id: 'asia_bamboo_morning', continentId: 'asia', titleEn: 'The bamboo morning', titleFr: 'Le matin dans les bambous', icon: '🎋', start: 'asia_bamboo', species: ['giant_panda', 'tiger'], skillIds: ['1.6', '1.3', '2.2'], steps: bambooMorning, treasure: 'jade_leaf', order: 1 },
+    { id: 'asia_lantern_night', continentId: 'asia', titleEn: 'The lantern night', titleFr: 'La nuit des lanternes', icon: '🏮', start: 'asia_pagoda', species: ['giant_panda'], skillIds: ['1.2', '1.3', '2.3'], steps: lanternNight, treasure: 'golden_lantern', order: 2 },
+    { id: 'asia_misty_mountain', continentId: 'asia', titleEn: 'The misty mountain', titleFr: 'La montagne dans la brume', icon: '⛰️', start: 'asia_mountain', species: ['giant_panda', 'tiger', 'snow_leopard'], skillIds: ['1.7', '2.7', '3.2'], steps: mistyMountain, treasure: 'rainbow_stone', order: 3 },
+    { id: 'asia_rainbow_rain', continentId: 'asia', titleEn: 'The rainbow after the rain', titleFr: 'L’arc-en-ciel après la pluie', icon: '🌈', start: 'asia_arch', species: ['giant_panda', 'tiger'], skillIds: ['1.7', '1.2', '2.7'], steps: rainbowAfterRain, treasure: 'rain_pearl', order: 4 },
+    { id: 'asia_leopard_rocks', continentId: 'asia', titleEn: 'The big rocks', titleFr: 'Les gros rochers', icon: '🪨', start: 'asia_mountain', species: ['snow_leopard', 'tiger'], skillIds: ['1.7', '2.2', '1.3'], steps: leopardRocks, treasure: 'snow_crystal', order: 5 },
+    { id: 'asia_arch_morning', continentId: 'asia', titleEn: 'The morning at the arch', titleFr: 'Le matin à l’arche', icon: '🌄', start: 'asia_arch', species: ['snow_leopard', 'tiger'], skillIds: ['1.6', '1.2', '2.7'], steps: archMorning, treasure: 'golden_pebble', order: 6 },
   ],
   treasures: [
     treasure('jade_leaf', 'a jade leaf', 'une feuille de jade', '🍃'),
     treasure('golden_lantern', 'a golden lantern', 'une lanterne dorée', '🏮'),
     treasure('rainbow_stone', 'a rainbow stone', 'une pierre arc-en-ciel', '🌈'),
     treasure('rain_pearl', 'a rain pearl', 'une perle de pluie', '💧'),
+    treasure('snow_crystal', 'a snow crystal', 'un cristal de neige', '❄️'),
+    treasure('golden_pebble', 'a golden pebble', 'un galet doré', '🟡'),
   ],
 };

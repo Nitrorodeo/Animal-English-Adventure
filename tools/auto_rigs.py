@@ -30,8 +30,6 @@ OUT = ROOT / "src" / "game" / "autoRigs.json"
 # relevés à nouveau le 2026-11-20 sur les nouvelles découpes (le lézard, pattes écartées, se dandine). Les autres
 # personnages (assis, de face, bébés) n'ont pas d'os de patte : ils se dandinent en marchant.
 LEGS: dict[str, dict] = {
-    "red_panda_father": {"pivot": 0.68, "x": {"legBL": 0.27, "legBR": 0.43, "legFL": 0.68, "legFR": 0.86}},
-    "red_panda_mother": {"pivot": 0.68, "x": {"legFR": 0.16, "legFL": 0.34, "legBR": 0.53, "legBL": 0.68}},
     "fox_father": {"pivot": 0.72, "x": {"legBL": 0.33, "legBR": 0.56, "legFL": 0.7, "legFR": 0.86}},
     "fox_mother": {"pivot": 0.72, "x": {"legFR": 0.16, "legFL": 0.27, "legBR": 0.4, "legBL": 0.62}},
     "bear_father": {"pivot": 0.68, "x": {"legBL": 0.11, "legBR": 0.3, "legFL": 0.5, "legFR": 0.78}},

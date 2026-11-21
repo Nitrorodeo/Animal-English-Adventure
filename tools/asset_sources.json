@@ -334,36 +334,37 @@
         "src": "Animaux/Asie/Tigres/tigre/bebe_fille_stade_4.png"
       }
     },
-    "red_panda": {
+    "snow_leopard": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/papa_panda_roux.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/papa_panthere.png"
       },
       "mother": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/maman_panda_roux.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/maman_panthere.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_1.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_2.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_3.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_4.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_1.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_2.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_3.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_4.png"
+        "src": "Animaux/Asie/Penthere des neige/panthere/bebe_fille_stade_4.png"
       }
     },
     "fox": {

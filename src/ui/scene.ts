@@ -57,7 +57,7 @@ export interface Placement {
  * Les petits animaux restent assez grands pour être touchés du doigt (≥ 22). */
 const ADULT_HEIGHT: Record<string, number> = {
   elephant: 44, giraffe: 54, lion: 34, tiger: 34, giant_panda: 36, bear: 36, polar_bear: 38, bison: 36,
-  kangaroo: 38, jaguar: 30, koala: 30, fox: 30, red_panda: 29, sloth: 30, penguin: 30, owl: 28, toucan: 28, beaver: 27, seal: 25, frilled_lizard: 24, hedgehog: 22,
+  kangaroo: 38, jaguar: 30, koala: 30, fox: 30, snow_leopard: 31, sloth: 30, penguin: 30, owl: 28, toucan: 28, beaver: 27, seal: 25, frilled_lizard: 24, hedgehog: 22,
 };
 /** Bébés : proportionnels aux parents (ADULT_HEIGHT / 34) sauf réglage dessiné à la main. */
 const BABY_SCALE: Record<string, number> = { elephant: 1.15, giraffe: 1.35 };

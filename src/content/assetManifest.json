@@ -447,55 +447,55 @@
       "width": 320,
       "height": 345
     },
-    "red_panda_father": {
-      "path": "assets/characters/red_panda_father.webp",
-      "width": 583,
-      "height": 410
+    "snow_leopard_father": {
+      "path": "assets/characters/snow_leopard_father.webp",
+      "width": 752,
+      "height": 417
     },
-    "red_panda_mother": {
-      "path": "assets/characters/red_panda_mother.webp",
-      "width": 570,
-      "height": 371
+    "snow_leopard_mother": {
+      "path": "assets/characters/snow_leopard_mother.webp",
+      "width": 706,
+      "height": 382
     },
-    "red_panda_boy_newborn": {
-      "path": "assets/characters/red_panda_boy_newborn.webp",
+    "snow_leopard_boy_newborn": {
+      "path": "assets/characters/snow_leopard_boy_newborn.webp",
       "width": 231,
-      "height": 192
+      "height": 218
     },
-    "red_panda_boy_little": {
-      "path": "assets/characters/red_panda_boy_little.webp",
-      "width": 255,
-      "height": 230
+    "snow_leopard_boy_little": {
+      "path": "assets/characters/snow_leopard_boy_little.webp",
+      "width": 251,
+      "height": 279
     },
-    "red_panda_boy_young": {
-      "path": "assets/characters/red_panda_boy_young.webp",
-      "width": 303,
-      "height": 263
+    "snow_leopard_boy_young": {
+      "path": "assets/characters/snow_leopard_boy_young.webp",
+      "width": 317,
+      "height": 290
     },
-    "red_panda_boy_companion": {
-      "path": "assets/characters/red_panda_boy_companion.webp",
-      "width": 392,
+    "snow_leopard_boy_companion": {
+      "path": "assets/characters/snow_leopard_boy_companion.webp",
+      "width": 353,
       "height": 315
     },
-    "red_panda_girl_newborn": {
-      "path": "assets/characters/red_panda_girl_newborn.webp",
-      "width": 234,
-      "height": 210
+    "snow_leopard_girl_newborn": {
+      "path": "assets/characters/snow_leopard_girl_newborn.webp",
+      "width": 229,
+      "height": 230
     },
-    "red_panda_girl_little": {
-      "path": "assets/characters/red_panda_girl_little.webp",
-      "width": 258,
-      "height": 249
+    "snow_leopard_girl_little": {
+      "path": "assets/characters/snow_leopard_girl_little.webp",
+      "width": 250,
+      "height": 271
     },
-    "red_panda_girl_young": {
-      "path": "assets/characters/red_panda_girl_young.webp",
-      "width": 295,
-      "height": 285
+    "snow_leopard_girl_young": {
+      "path": "assets/characters/snow_leopard_girl_young.webp",
+      "width": 317,
+      "height": 293
     },
-    "red_panda_girl_companion": {
-      "path": "assets/characters/red_panda_girl_companion.webp",
-      "width": 390,
-      "height": 308
+    "snow_leopard_girl_companion": {
+      "path": "assets/characters/snow_leopard_girl_companion.webp",
+      "width": 348,
+      "height": 316
     },
     "fox_father": {
       "path": "assets/characters/fox_father.webp",

@@ -5,7 +5,7 @@ import { itemLabel } from '../content/items';
 import { NOUNS, PLACES } from '../content/places';
 import { SKILLS } from '../content/skills';
 import { say } from '../content/utterances';
-import { getSpecies } from '../content/species';
+import { getSpecies, SPECIES } from '../content/species';
 import { CONTINENTS } from '../content/world';
 import { MECHANIC_LABELS } from '../content/archetypes';
 import { familyAlbum, type AlbumPhoto } from '../engine/album';
@@ -19,7 +19,8 @@ const STARS: Record<ItemStatus, string> = { new: '☆☆☆', recognised: '★�
 /** Passeport d'exploratrice : mots rencontrés, continents, bébés. Aucun score public. */
 export function Passport({ state, onClose }: { state: GameState; onClose: () => void }) {
   const fr = state.settings.frenchHelp;
-  const babies = Object.values(state.families).flatMap((f) => f.babies);
+  // une famille d'une espèce remplacée depuis (panda roux → panthère des neiges, 2026-11-21) reste dans la sauvegarde, sans carte
+  const babies = Object.values(state.families).filter((f) => SPECIES.some((s) => s.id === f.speciesId)).flatMap((f) => f.babies);
   const album = familyAlbum(state);
   return (
     <div className="screen panel-screen">

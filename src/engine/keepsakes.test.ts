@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { clipFor } from '../audio/speech';
+import { SPECIES } from '../content/species';
 import { BEDTIME, say, STICKER_OFFER } from '../content/utterances';
 import { CONTINENTS, OLD_MAP_HITS } from '../content/world';
 import { familyAlbum } from './album';
@@ -38,6 +39,17 @@ describe('album souvenir', () => {
     const lion = s.families.lion!;
     const old: GameState = { ...s, families: { ...s.families, platypus: { ...lion, speciesId: 'platypus' } } };
     expect(familyAlbum(old).map((p) => p.speciesId)).toEqual(familyAlbum(s).map((p) => p.speciesId));
+  });
+
+  it('une sauvegarde avec une famille de pandas roux (remplacés par la panthère des neiges) se charge sans planter', () => {
+    const s = lionFamily();
+    const lion = s.families.lion!;
+    const old: GameState = { ...s, families: { ...s.families, red_panda: { ...lion, speciesId: 'red_panda', babies: lion.babies.map((x) => ({ ...x, familyId: 'red_panda' })) } } };
+    const loaded = migrate(JSON.parse(JSON.stringify(old)));
+    expect(loaded).not.toBeNull();
+    expect(familyAlbum(loaded!).every((p) => p.speciesId !== 'red_panda')).toBe(true);
+    expect(SPECIES.some((x) => x.id === 'red_panda')).toBe(false);
+    expect(SPECIES.find((x) => x.id === 'snow_leopard')?.continentId).toBe('asia');
   });
 
   it('les légendes dites à voix haute sont enregistrées', () => {

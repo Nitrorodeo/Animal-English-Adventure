@@ -85,11 +85,11 @@
     "content_status": "planned"
   },
   {
-    "id": "red_panda",
+    "id": "snow_leopard",
     "continent_id": "asia",
-    "natural_biome": "forest",
-    "diet_tag": "omnivore",
-    "primary_mobility": "climb",
+    "natural_biome": "mountain",
+    "diet_tag": "carnivore",
+    "primary_mobility": "walk",
     "has_family": true,
     "max_babies": 2,
     "baby_sexes_required": [
@@ -97,7 +97,7 @@
       "girl"
     ],
     "allowed_biomes": [
-      "forest"
+      "mountain"
     ],
     "content_status": "planned"
   },

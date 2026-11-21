@@ -6835,510 +6835,6 @@
    }
   ]
  },
- "red_panda_boy_companion": {
-  "sprite": "red_panda_boy_companion",
-  "width": 392,
-  "height": 315,
-  "facing": 1,
-  "mouth": [
-   303.4,
-   96.6
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     119.4,
-     226.8
-    ],
-    "tip": [
-     260.5,
-     217.3
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     247.9,
-     165.9
-    ],
-    "tip": [
-     276.0,
-     35.9
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_boy_little": {
-  "sprite": "red_panda_boy_little",
-  "width": 255,
-  "height": 230,
-  "facing": 1,
-  "mouth": [
-   179.0,
-   73.3
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     71.9,
-     165.6
-    ],
-    "tip": [
-     163.7,
-     158.7
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     148.5,
-     123.9
-    ],
-    "tip": [
-     161.1,
-     22.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_boy_newborn": {
-  "sprite": "red_panda_boy_newborn",
-  "width": 231,
-  "height": 192,
-  "facing": 1,
-  "mouth": [
-   163.5,
-   62.6
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     73.0,
-     138.2
-    ],
-    "tip": [
-     156.2,
-     132.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     138.8,
-     104.9
-    ],
-    "tip": [
-     147.3,
-     27.5
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_boy_young": {
-  "sprite": "red_panda_boy_young",
-  "width": 303,
-  "height": 263,
-  "facing": 1,
-  "mouth": [
-   199.1,
-   83.7
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     82.1,
-     189.4
-    ],
-    "tip": [
-     191.1,
-     181.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     167.5,
-     141.5
-    ],
-    "tip": [
-     177.9,
-     31.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_father": {
-  "sprite": "red_panda_father",
-  "width": 583,
-  "height": 410,
-  "facing": 1,
-  "mouth": [
-   400.1,
-   131.4
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     163.5,
-     237.8
-    ],
-    "tip": [
-     373.4,
-     225.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     334.2,
-     221.6
-    ],
-    "tip": [
-     359.3,
-     27.6
-    ],
-    "strength": 1.6,
-    "layer": 4
-   },
-   {
-    "id": "legBL",
-    "pivot": [
-     157.4,
-     278.8
-    ],
-    "tip": [
-     157.4,
-     389.5
-    ],
-    "strength": 0.9,
-    "layer": 0
-   },
-   {
-    "id": "legBR",
-    "pivot": [
-     250.7,
-     278.8
-    ],
-    "tip": [
-     250.7,
-     389.5
-    ],
-    "strength": 0.9,
-    "layer": 0
-   },
-   {
-    "id": "legFL",
-    "pivot": [
-     396.4,
-     278.8
-    ],
-    "tip": [
-     396.4,
-     389.5
-    ],
-    "strength": 1.0,
-    "layer": 3
-   },
-   {
-    "id": "legFR",
-    "pivot": [
-     501.4,
-     278.8
-    ],
-    "tip": [
-     501.4,
-     389.5
-    ],
-    "strength": 1.0,
-    "layer": 3
-   }
-  ]
- },
- "red_panda_girl_companion": {
-  "sprite": "red_panda_girl_companion",
-  "width": 390,
-  "height": 308,
-  "facing": 1,
-  "mouth": [
-   274.6,
-   96.1
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     117.7,
-     221.8
-    ],
-    "tip": [
-     258.1,
-     212.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     231.1,
-     163.9
-    ],
-    "tip": [
-     247.3,
-     33.5
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_girl_little": {
-  "sprite": "red_panda_girl_little",
-  "width": 258,
-  "height": 249,
-  "facing": 1,
-  "mouth": [
-   187.1,
-   79.4
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     76.2,
-     179.3
-    ],
-    "tip": [
-     169.1,
-     171.8
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     155.1,
-     134.1
-    ],
-    "tip": [
-     169.0,
-     18.9
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_girl_newborn": {
-  "sprite": "red_panda_girl_newborn",
-  "width": 234,
-  "height": 210,
-  "facing": 1,
-  "mouth": [
-   165.8,
-   67.3
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     74.7,
-     151.2
-    ],
-    "tip": [
-     158.9,
-     144.9
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     141.0,
-     113.5
-    ],
-    "tip": [
-     149.4,
-     15.6
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_girl_young": {
-  "sprite": "red_panda_girl_young",
-  "width": 295,
-  "height": 285,
-  "facing": 1,
-  "mouth": [
-   202.7,
-   91.7
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     82.3,
-     205.2
-    ],
-    "tip": [
-     188.5,
-     196.6
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     169.0,
-     154.4
-    ],
-    "tip": [
-     182.0,
-     35.1
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "red_panda_mother": {
-  "sprite": "red_panda_mother",
-  "width": 570,
-  "height": 371,
-  "facing": -1,
-  "mouth": [
-   162.1,
-   118.5
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     400.2,
-     215.2
-    ],
-    "tip": [
-     195.0,
-     204.1
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     229.6,
-     200.1
-    ],
-    "tip": [
-     202.0,
-     30.3
-    ],
-    "strength": 1.6,
-    "layer": 4
-   },
-   {
-    "id": "legFR",
-    "pivot": [
-     91.2,
-     252.3
-    ],
-    "tip": [
-     91.2,
-     352.4
-    ],
-    "strength": 1.0,
-    "layer": 3
-   },
-   {
-    "id": "legFL",
-    "pivot": [
-     193.8,
-     252.3
-    ],
-    "tip": [
-     193.8,
-     352.4
-    ],
-    "strength": 1.0,
-    "layer": 3
-   },
-   {
-    "id": "legBR",
-    "pivot": [
-     302.1,
-     252.3
-    ],
-    "tip": [
-     302.1,
-     352.4
-    ],
-    "strength": 0.9,
-    "layer": 0
-   },
-   {
-    "id": "legBL",
-    "pivot": [
-     387.6,
-     252.3
-    ],
-    "tip": [
-     387.6,
-     352.4
-    ],
-    "strength": 0.9,
-    "layer": 0
-   }
-  ]
- },
  "seal_boy_companion": {
   "sprite": "seal_boy_companion",
   "width": 418,
@@ -8133,6 +7629,406 @@
     "tip": [
      149.4,
      38.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_boy_companion": {
+  "sprite": "snow_leopard_boy_companion",
+  "width": 353,
+  "height": 315,
+  "facing": 1,
+  "mouth": [
+   255.8,
+   103.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     107.6,
+     226.8
+    ],
+    "tip": [
+     234.7,
+     217.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     213.7,
+     172.3
+    ],
+    "tip": [
+     231.1,
+     46.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_boy_little": {
+  "sprite": "snow_leopard_boy_little",
+  "width": 251,
+  "height": 279,
+  "facing": 1,
+  "mouth": [
+   153.7,
+   91.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     138.6,
+     262.3
+    ],
+    "tip": [
+     138.6,
+     153.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     153.7,
+     130.5
+    ],
+    "tip": [
+     153.7,
+     39.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_boy_newborn": {
+  "sprite": "snow_leopard_boy_newborn",
+  "width": 231,
+  "height": 218,
+  "facing": 1,
+  "mouth": [
+   127.1,
+   74.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     120.1,
+     204.9
+    ],
+    "tip": [
+     120.1,
+     119.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     127.1,
+     104.8
+    ],
+    "tip": [
+     127.1,
+     34.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_boy_young": {
+  "sprite": "snow_leopard_boy_young",
+  "width": 317,
+  "height": 290,
+  "facing": 1,
+  "mouth": [
+   224.0,
+   92.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     92.1,
+     208.8
+    ],
+    "tip": [
+     206.2,
+     200.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     186.7,
+     156.4
+    ],
+    "tip": [
+     201.8,
+     29.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_father": {
+  "sprite": "snow_leopard_father",
+  "width": 752,
+  "height": 417,
+  "facing": 1,
+  "mouth": [
+   555.5,
+   135.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     220.3,
+     300.2
+    ],
+    "tip": [
+     491.0,
+     287.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     456.9,
+     226.9
+    ],
+    "tip": [
+     502.8,
+     48.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_girl_companion": {
+  "sprite": "snow_leopard_girl_companion",
+  "width": 348,
+  "height": 316,
+  "facing": 1,
+  "mouth": [
+   250.1,
+   101.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     106.8,
+     227.5
+    ],
+    "tip": [
+     232.1,
+     218.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     209.8,
+     170.6
+    ],
+    "tip": [
+     225.7,
+     25.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_girl_little": {
+  "sprite": "snow_leopard_girl_little",
+  "width": 250,
+  "height": 271,
+  "facing": 1,
+  "mouth": [
+   146.9,
+   85.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     135.8,
+     254.7
+    ],
+    "tip": [
+     135.8,
+     149.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     146.9,
+     123.3
+    ],
+    "tip": [
+     146.9,
+     40.3
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_girl_newborn": {
+  "sprite": "snow_leopard_girl_newborn",
+  "width": 229,
+  "height": 230,
+  "facing": 1,
+  "mouth": [
+   119.8,
+   74.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     118.2,
+     216.2
+    ],
+    "tip": [
+     118.2,
+     126.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     119.8,
+     106.5
+    ],
+    "tip": [
+     119.8,
+     37.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_girl_young": {
+  "sprite": "snow_leopard_girl_young",
+  "width": 317,
+  "height": 293,
+  "facing": 1,
+  "mouth": [
+   220.1,
+   93.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     91.4,
+     211.0
+    ],
+    "tip": [
+     205.6,
+     202.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     184.2,
+     158.4
+    ],
+    "tip": [
+     197.9,
+     35.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "snow_leopard_mother": {
+  "sprite": "snow_leopard_mother",
+  "width": 706,
+  "height": 382,
+  "facing": -1,
+  "mouth": [
+   123.5,
+   117.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     486.4,
+     275.0
+    ],
+    "tip": [
+     232.2,
+     263.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     237.7,
+     201.8
+    ],
+    "tip": [
+     172.9,
+     56.9
     ],
     "strength": 1.6,
     "layer": 4
