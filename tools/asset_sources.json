@@ -115,6 +115,18 @@
       "maxWidth": 1672,
       "flip": true
     },
+    "sa_canopy_branch": {
+      "src": "Animaux/Amerique du Sud/Toucans/Image ChatGPT 21 nov. 2026, 08_22_35-1.png",
+      "maxWidth": 1672
+    },
+    "sa_canopy_treehouse": {
+      "src": "Animaux/Amerique du Sud/Toucans/Image ChatGPT 21 nov. 2026, 08_22_38-2.png",
+      "maxWidth": 1672
+    },
+    "sa_canopy_sunrise": {
+      "src": "Animaux/Amerique du Sud/Toucans/Image ChatGPT 21 nov. 2026, 08_22_41-3.png",
+      "maxWidth": 1672
+    },
     "oc_outback": {
       "src": "Continant/Oceanie/01_Outback_rouge.png",
       "maxWidth": 1672

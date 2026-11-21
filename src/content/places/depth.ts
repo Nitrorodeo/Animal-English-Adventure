@@ -21,6 +21,8 @@ export interface PlaceDepth {
   horizonY: number;
   farY: number | [number, number][];
   perches?: Perch[];
+  /** décor perché : bande de la branche `[x, fond, devant]` ; le seul endroit où se posent les pieds (toucans) */
+  lane?: [number, number, number][];
 }
 
 export const PLACE_DEPTH: Record<string, PlaceDepth> = {
@@ -84,4 +86,17 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   sa_river: { horizonY: 45, farY: 50 },
   sa_andes: { horizonY: 50, farY: 56 },
   sa_wetland: { horizonY: 52, farY: 62 },
+  // canopée (2026-11-21) : le sol est le dessus d'une grosse branche, bord arrière de l'écorce tracé point par point
+  sa_canopy_branch: {
+    horizonY: 38,
+    farY: [[0, 55], [20, 54], [30, 57], [45, 59], [60, 60], [75, 60], [90, 57], [100, 56]],
+    lane: [[20, 56, 66], [30, 57, 68], [40, 59, 69], [50, 60, 69], [60, 60, 69], [70, 60, 68], [80, 58, 66], [90, 57, 63], [96, 56, 61]] },
+  sa_canopy_treehouse: {
+    horizonY: 44,
+    farY: [[0, 70], [30, 68], [38, 66], [45, 65], [60, 64], [68, 63], [80, 62], [90, 60], [100, 58]],
+    lane: [[25, 70, 77], [35, 68, 77], [45, 67, 78], [55, 66, 78], [65, 66, 77], [75, 66, 75], [85, 64, 72], [91, 62, 69]] },
+  sa_canopy_sunrise: {
+    horizonY: 36,
+    farY: [[0, 64], [18, 62], [30, 60], [40, 60], [50, 62], [60, 64], [70, 62], [78, 58], [85, 52], [92, 46], [100, 40]],
+    lane: [[20, 66, 74], [28, 63, 72], [36, 62, 71], [45, 63, 70], [55, 66, 71], [65, 67, 72], [75, 64, 70], [82, 59, 66], [88, 54, 62], [94, 47, 56], [98, 43, 52]] },
 };

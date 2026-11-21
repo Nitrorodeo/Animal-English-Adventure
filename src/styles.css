@@ -585,3 +585,9 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 .access-input { width: 100%; font: inherit; font-size: 26px; text-align: center; padding: 12px 16px; border: 3px solid #f3c46b; border-radius: 18px; background: #fff; color: #3a2410; }
 .access-input:focus { outline: none; border-color: #f39a1d; box-shadow: 0 0 0 4px #f39a1d44; }
 .access-wrong { color: #b3261e; font-weight: bold; margin: 0; }
+/* partie partagée (FamilyGate, espace parents) */
+.family-card { gap: 14px; }
+.family-card .big { width: 100%; font-size: 22px; }
+.family-form { display: flex; flex-direction: column; gap: 14px; align-items: center; width: 100%; }
+.family-code { font-family: ui-monospace, Consolas, monospace; font-size: clamp(26px, 6vw, 38px); font-weight: bold; color: #3a2410; background: #fff; border: 3px dashed #f3c46b; border-radius: 16px; padding: 10px 18px; margin: 0; user-select: all; letter-spacing: 0.02em; }
+.family-code.small { font-size: 18px; padding: 2px 10px; border-width: 2px; border-radius: 10px; }

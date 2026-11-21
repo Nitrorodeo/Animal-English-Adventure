@@ -5,6 +5,7 @@ import { BACKUP_DELAY_MS, BACKUP_PATH, hasProgress, parseBackup, shouldRestore }
 import { loadGame, memoryStorage, resetGame, saveGame, type LoadStatus, type StorageLike } from '../engine/save';
 import { newGameState, variableNames, type GameState } from '../engine/state';
 import { useNameVoices } from './useNameVoices';
+import { useCloudSync } from './useCloudSync';
 
 function browserStorage(): StorageLike {
   try {
@@ -93,5 +94,8 @@ export function useGame() {
   // phrases dites avec le prénom de la joueuse, préparées par l'ordinateur (engine/nameVoice.ts)
   const nameVoice = useNameVoices(state.player.name, state.player.namePron);
 
-  return { state, setState, loadStatus, restored, reset, nameVoice };
+  // version en ligne : même partie sur tous les appareils de la famille (engine/cloud.ts)
+  const cloud = useCloudSync(state, setState, storage.current);
+
+  return { state, setState, loadStatus, restored, reset, nameVoice, cloud };
 }

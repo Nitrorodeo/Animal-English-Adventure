@@ -21,7 +21,7 @@ const TITLE_ANIMALS = SPECIES.filter((sp, i, all) => all.findIndex((x) => x.cont
 type Screen = { kind: 'title' } | { kind: 'name' } | { kind: 'map' } | { kind: 'habitat'; speciesId: string; biomeId: BiomeId } | { kind: 'passport' } | { kind: 'parents' } | { kind: 'sea'; game: SeaGameId };
 
 export function App() {
-  const { state, setState, loadStatus, restored, reset, nameVoice } = useGame();
+  const { state, setState, loadStatus, restored, reset, nameVoice, cloud } = useGame();
   const [screen, setScreen] = useState<Screen>({ kind: 'title' });
   const [back, setBack] = useState<Screen>({ kind: 'map' });
   /** lieu à l'écran (peut différer du lieu de la famille pendant une aventure) */
@@ -117,6 +117,7 @@ export function App() {
           state={state}
           setState={setState}
           nameVoice={nameVoice}
+          cloud={cloud}
           onReset={() => {
             reset();
             setScreen({ kind: 'title' });

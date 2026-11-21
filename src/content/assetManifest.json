@@ -140,6 +140,21 @@
       "width": 1672,
       "height": 941
     },
+    "sa_canopy_branch": {
+      "path": "assets/backgrounds/sa_canopy_branch.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_canopy_treehouse": {
+      "path": "assets/backgrounds/sa_canopy_treehouse.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_canopy_sunrise": {
+      "path": "assets/backgrounds/sa_canopy_sunrise.webp",
+      "width": 1672,
+      "height": 941
+    },
     "oc_outback": {
       "path": "assets/backgrounds/oc_outback.webp",
       "width": 1672,
@@ -934,53 +949,53 @@
     },
     "toucan_father": {
       "path": "assets/characters/toucan_father.webp",
-      "width": 609,
-      "height": 426
+      "width": 498,
+      "height": 417
     },
     "toucan_mother": {
       "path": "assets/characters/toucan_mother.webp",
-      "width": 539,
-      "height": 396
+      "width": 336,
+      "height": 384
     },
     "toucan_boy_newborn": {
       "path": "assets/characters/toucan_boy_newborn.webp",
-      "width": 213,
-      "height": 219
+      "width": 176,
+      "height": 212
     },
     "toucan_boy_little": {
       "path": "assets/characters/toucan_boy_little.webp",
-      "width": 268,
-      "height": 242
+      "width": 208,
+      "height": 251
     },
     "toucan_boy_young": {
       "path": "assets/characters/toucan_boy_young.webp",
-      "width": 315,
-      "height": 268
+      "width": 260,
+      "height": 286
     },
     "toucan_boy_companion": {
       "path": "assets/characters/toucan_boy_companion.webp",
-      "width": 375,
-      "height": 305
+      "width": 337,
+      "height": 332
     },
     "toucan_girl_newborn": {
       "path": "assets/characters/toucan_girl_newborn.webp",
-      "width": 216,
-      "height": 251
+      "width": 185,
+      "height": 230
     },
     "toucan_girl_little": {
       "path": "assets/characters/toucan_girl_little.webp",
-      "width": 268,
-      "height": 276
+      "width": 228,
+      "height": 287
     },
     "toucan_girl_young": {
       "path": "assets/characters/toucan_girl_young.webp",
-      "width": 319,
-      "height": 300
+      "width": 263,
+      "height": 314
     },
     "toucan_girl_companion": {
       "path": "assets/characters/toucan_girl_companion.webp",
-      "width": 367,
-      "height": 318
+      "width": 318,
+      "height": 353
     },
     "kangaroo_father": {
       "path": "assets/characters/kangaroo_father.webp",

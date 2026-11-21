@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CSP } from '../../tools/pwa/csp.mjs';
+import { CSP, cspFor } from '../../tools/pwa/csp.mjs';
 import { ACCESS_HASH, accessToken, hasAccess, isAccessCode, isStaticSite, normalizeCode } from './access';
 import { sanitizeSpelling } from './nameVoice';
 import source from './access.ts?raw';
@@ -50,6 +50,16 @@ describe('pas de référencement, rien venu d’ailleurs', () => {
     expect(CSP).toContain("script-src 'self'");
     expect(CSP).toContain("object-src 'none'");
     expect(CSP).not.toMatch(/https?:|unsafe-eval|\*/);
+  });
+
+  it('en ligne : seul le service de partie partagée s’ajoute, pour les échanges seulement', () => {
+    const c = cspFor('https://aea-saves.abc.workers.dev/v1');
+    expect(c).toContain("connect-src 'self' https://aea-saves.abc.workers.dev;");
+    expect(c.replace("connect-src 'self' https://aea-saves.abc.workers.dev", '')).not.toMatch(/https?:/);
+    expect(cspFor(undefined)).toBe(CSP);
+    expect(cspFor('pas une adresse')).toBe(CSP);
+    expect(cspFor("https://x.dev' 'unsafe-eval")).toBe(CSP);
+    expect(workflow).toMatch(/VITE_CLOUD_URL: \$\{\{ vars.CLOUD_URL \}\}/);
   });
 
   it('une prononciation écrite ne commence jamais par un tiret (argument du script de voix)', () => {

@@ -135,6 +135,21 @@ describe('activités V2', () => {
       }
     }
   });
+  it('le toucan vit dans la canopée : trois branches, jamais au sol, et ses aventures y commencent', () => {
+    const toucan = SPECIES.find((s) => s.id === 'toucan')!;
+    expect([...toucan.allowedBiomes].sort()).toEqual(['sa_canopy_branch', 'sa_canopy_sunrise', 'sa_canopy_treehouse']);
+    for (const id of toucan.allowedBiomes) {
+      const p = PLACES[id as keyof typeof PLACES]!;
+      expect(p.continentId, id).toBe('south_america');
+      expect(p.anchors.some((a) => a.stand), id).toBe(true);
+      expect(p.spots.length, id).toBe(8);
+    }
+    const mine = ADVENTURES.filter((a) => a.species.includes('toucan'));
+    expect(mine.length).toBeGreaterThanOrEqual(3);
+    for (const a of mine) expect(toucan.allowedBiomes, a.id).toContain(a.start);
+    // aucune aventure au sol ne garde le toucan
+    for (const a of ADVENTURES.filter((x) => x.continentId === 'south_america' && !x.id.includes('canopy'))) expect(a.species, a.id).not.toContain('toucan');
+  });
   it('l’étang aux nénuphars a un point d’eau où boire', () => {
     expect(PLACES.sa_wetland!.anchors.find((a) => a.id === 'water')?.stand).toBeDefined();
   });

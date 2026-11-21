@@ -25,7 +25,7 @@ import { LiveSprite } from './LiveSprite';
 import { PropLayer } from './PropLayer';
 import { Puppet } from './Puppet';
 import { rigFor } from '../game/rigs';
-import { depthScale, farthestY, groundScale, horizonOf, perchAt, puppetClip, walkMs, WALK_MS } from '../game/staging';
+import { depthScale, farthestY, groundScale, horizonOf, perchAt, puppetClip, snapToLane, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { dragSpot, isDrag, type Spot } from './drag';
@@ -114,7 +114,11 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
   /** animal en train d'être glissé au doigt ; une fois posé, sa place va dans la partie (gardée le lendemain) */
   const [live, setLive] = useState<{ id: string; spot: Spot } | null>(null);
   const liveRef = useRef(live);
-  const spotOf = (a: ActorRef): Spot | undefined => (live?.id === actorId(a) ? live.spot : state.player.spots[spotKey(biome.id, actorId(a))]);
+  const spotOf = (a: ActorRef): Spot | undefined => {
+    const s = live?.id === actorId(a) ? live.spot : state.player.spots[spotKey(biome.id, actorId(a))];
+    // une place gardée d'avant (hors de la branche) est ramenée sur la branche
+    return s && biome.lane ? { ...s, ...snapToLane(biome.lane, { h: homePlacement(a, family, biome.groundY, biome.lane).h }, s.x, s.y) } : s;
+  };
   useEffect(() => {
     if (!cuddle) return;
     const t = window.setTimeout(() => setCuddle(null), 1800);
@@ -279,16 +283,16 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             actor={a}
             state={state}
             species={species}
-            place={spotOf(a) ?? homePlacement(a, family, biome.groundY)}
-            baseH={homePlacement(a, family, biome.groundY).h}
+            place={spotOf(a) ?? homePlacement(a, family, biome.groundY, biome.lane)}
+            baseH={homePlacement(a, family, biome.groundY, biome.lane).h}
             face={spotOf(a)?.f}
             onDragTo={
               night
                 ? undefined
                 : (pointer, grabDy) => {
-                    const home = homePlacement(a, family, biome.groundY);
+                    const home = homePlacement(a, family, biome.groundY, biome.lane);
                     const hz = horizonOf(biome.groundY, biome.horizonY);
-                    const next = dragSpot(home, pointer, grabDy, (from, to) => groundScale(from, to, hz), (x) => farthestY(home.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y));
+                    const next = dragSpot(home, pointer, grabDy, (from, to) => groundScale(from, to, hz), (x) => farthestY(home.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y), biome.lane);
                     // il regarde vers où on l'emmène, et garde ce sens une fois posé
                     const prev: Spot = (liveRef.current?.id === actorId(a) ? liveRef.current.spot : undefined) ?? spotOf(a) ?? { x: home.x, y: home.y, h: home.h };
                     const dx = next.x - prev.x;
@@ -373,7 +377,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             onClose={() => setMenuFor(null)}
             onTurn={() => {
               const a = menuFor;
-              const home = homePlacement(a, family, biome.groundY);
+              const home = homePlacement(a, family, biome.groundY, biome.lane);
               const spot = spotOf(a) ?? { x: home.x, y: home.y, h: home.h };
               const now = spot.f ?? naturalFacing(state, species, a);
               setState((st) => placeActor(st, biome.id, actorId(a), { ...spot, f: now === 1 ? -1 : 1 }));
@@ -876,14 +880,14 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
       <PropLayer place={place} props={run.props} tapped={run.tapped} reveal={q.reveal?.props} active={q.wantsProp} counting={step?.kind === 'tapProps' && !!step.count} onTap={q.tapProp} />
       {actors.map((a) => {
         const id = actorId(a);
-        const home = homePlacement(a, family, place.groundY);
+        const home = homePlacement(a, family, place.groundY, place.lane);
         const mySpeakers = SPEAKERS.filter((sp) => idOf(sp) === id);
         const move = mySpeakers.map((sp) => run.moves[sp]).find(Boolean);
         const hiding = run.hiding && mySpeakers.includes(run.hiding.who) ? run.hiding : null;
         const anchorAt = (anchorId: string) => place.anchors.find((x) => x.id === anchorId);
         const target = hiding?.found ? anchorAt(hiding.at) : move ? anchorAt(move.anchor) : undefined;
         const toY = target ? (target.stand?.y ?? target.hit.y + target.hit.h) : home.y;
-        const pos = target ? { ...home, x: target.stand?.x ?? target.hit.x + target.hit.w / 2, y: toY, h: home.h * depthScale(home.y, toY) } : home;
+        const pos = target ? { ...home, x: target.stand?.x ?? target.hit.x + target.hit.w / 2, y: toY, h: place.lane ? home.h : home.h * depthScale(home.y, toY) } : home;
         const acting = run.acting && mySpeakers.includes(run.acting.who) ? run.acting.action : undefined;
         const speaking = !!run.bubble && mySpeakers.includes(run.bubble.who) && !move;
         const worn = mySpeakers.flatMap((sp) => run.wearing[sp] ?? []).map((k) => PROPS[k]?.emoji ?? '');

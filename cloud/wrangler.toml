@@ -1,0 +1,14 @@
+# Service de partie partagée (voir worker.mjs et LISEZ_MOI.md).
+name = "aea-saves"
+main = "worker.mjs"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[vars]
+# seul le site du jeu peut l'appeler depuis un navigateur
+ALLOWED_ORIGINS = "https://nitrorodeo.github.io"
+
+[[kv_namespaces]]
+binding = "SAVES"
+# stockage des parties (créé le 2026-11-21 par `npx wrangler kv namespace create SAVES`)
+id = "269df311c59348dbb40e93d98bf30d41"

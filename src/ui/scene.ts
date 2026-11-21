@@ -1,6 +1,7 @@
 import manifest from '../content/assetManifest.json';
 import type { GrowthStage, Rect, Sex } from '../content/types';
 import type { ActorRef, Baby, FamilyState } from '../engine/state';
+import { laneMid, type Lane } from '../game/staging';
 
 export interface AssetInfo {
   path: string;
@@ -65,8 +66,19 @@ const BABY_HEIGHT: Record<GrowthStage, number> = { newborn: 14, little: 18, youn
 /** Sol de référence des positions ci-dessous (savane). */
 export const REF_GROUND = 78;
 
-export function homePlacement(actor: ActorRef, family: FamilyState, groundY = REF_GROUND): Placement {
+/** Sur une branche : où se tient chaque membre de la famille (x), l'un à côté de l'autre le long de la branche. */
+const LANE_X = { father: 44, mother: 60, baby1: 74, baby2: 88 };
+
+export function homePlacement(actor: ActorRef, family: FamilyState, groundY = REF_GROUND, lane?: Lane): Placement {
   const adultH = ADULT_HEIGHT[actor.speciesId] ?? 34;
+  if (lane) {
+    // décor perché : toute la famille est sur la branche, taille normale
+    const baby = actor.kind === 'adult' ? undefined : family.babies.find((b) => b.id === actor.babyId);
+    const x = actor.kind === 'adult' ? (actor.role === 'father' ? LANE_X.father : LANE_X.mother) : baby?.birthOrder === 2 ? LANE_X.baby2 : LANE_X.baby1;
+    const h = actor.kind === 'adult' ? adultH * (actor.role === 'father' ? 1 : 0.94) : BABY_HEIGHT[baby?.stage ?? 'newborn'] * (BABY_SCALE[actor.speciesId] ?? adultH / 34);
+    const mid = laneMid(lane, x);
+    return { x: mid.x, y: mid.y, h };
+  }
   // la famille se tient sur le sol du décor (groundY), sans sortir de la scène
   const dy = Math.max(-8, Math.min(6, groundY - REF_GROUND));
   const at = (p: Placement): Placement => ({ ...p, y: Math.min(98, p.y + dy) });

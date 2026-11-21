@@ -88,6 +88,8 @@ export interface BiomeDef {
   horizonY?: number;
   /** sol le plus au fond où l'on peut poser un animal (%) */
   farY?: number | [number, number][];
+  /** décor perché (toucans) : le seul sol possible est le dessus d'une branche, `[x, fond, devant]` en % (voir places/depth.ts) */
+  lane?: [number, number, number][];
   /** dessus de gros rochers du décor où l'on peut poser un animal ; `base` = pied du rocher */
   perches?: (Rect & { base: number })[];
   /** 8 emplacements pour les petits objets des jeux */

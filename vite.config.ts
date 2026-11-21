@@ -2,13 +2,16 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { savePlugin } from './tools/save/savePlugin.mjs';
 import { namePlugin } from './tools/names/namePlugin.mjs';
-import { CSP } from './tools/pwa/csp.mjs';
+import { cspFor } from './tools/pwa/csp.mjs';
 
-/** Jeu construit (en ligne ou `npm run preview`) : uniquement ses propres fichiers, rien d'extérieur. */
+// variables de construction (VITE_CLOUD_URL, voir .github/workflows/deploy.yml)
+declare const process: { env: Record<string, string | undefined> };
+
+/** Jeu construit (en ligne ou `npm run preview`) : uniquement ses propres fichiers, rien d'extérieur sauf le service de partie partagée. */
 const cspPlugin = () => ({
   name: 'aea-csp',
   apply: 'build' as const,
-  transformIndexHtml: () => [{ tag: 'meta', attrs: { 'http-equiv': 'Content-Security-Policy', content: CSP }, injectTo: 'head-prepend' as const }],
+  transformIndexHtml: () => [{ tag: 'meta', attrs: { 'http-equiv': 'Content-Security-Policy', content: cspFor(process.env.VITE_CLOUD_URL) }, injectTo: 'head-prepend' as const }],
 });
 
 // base './' : le build peut s'ouvrir depuis n'importe quel dossier ou serveur local.

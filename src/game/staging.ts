@@ -66,6 +66,53 @@ export function farAt(far: number | readonly (readonly [number, number])[], x: n
   return pts[pts.length - 1]![1];
 }
 
+/**
+ * Décor perché (demande du parent, 2026-11-21 : « les toucans ne peuvent être déplacés que sur la branche, ils ne
+ * peuvent pas être dans le vide… ils deviennent beaucoup trop petits sur la branche »). Le seul sol est le dessus de
+ * la branche : `[x, fond, devant]` = pour cette abscisse, la bande de la branche où se posent les pieds (en %).
+ * Pas de perspective sur une branche : l'animal garde sa taille (à peine plus petit au fond, plus grand devant).
+ */
+export type Lane = readonly (readonly [number, number, number])[];
+
+/** Les petits écarts de taille entre le bord arrière et le bord avant de la branche. */
+const LANE_SCALE_BACK = 0.94;
+const LANE_SCALE_FRONT = 1.06;
+
+/** Bande de la branche à l'abscisse `x` (bornée aux deux bouts de la branche). */
+export function laneAt(lane: Lane, x: number): { x: number; back: number; front: number } {
+  const pts = [...lane].sort((a, b) => a[0] - b[0]);
+  const cx = Math.max(pts[0]![0], Math.min(pts[pts.length - 1]![0], x));
+  let back = pts[0]![1];
+  let front = pts[0]![2];
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, b0, f0] = pts[i - 1]!;
+    const [x1, b1, f1] = pts[i]!;
+    if (cx <= x1) {
+      const t = x1 === x0 ? 1 : (cx - x0) / (x1 - x0);
+      back = b0 + (b1 - b0) * t;
+      front = f0 + (f1 - f0) * t;
+      break;
+    }
+    back = b1;
+    front = f1;
+  }
+  return { x: cx, back, front };
+}
+
+/** Pose un animal sur la branche : l'abscisse et les pieds sont ramenés sur la bande, la taille suit la profondeur. */
+export function snapToLane(lane: Lane, home: { h: number }, x: number, y: number): { x: number; y: number; h: number } {
+  const L = laneAt(lane, x);
+  const py = Math.max(L.back, Math.min(L.front, y));
+  const t = L.front > L.back ? (py - L.back) / (L.front - L.back) : 0.5;
+  return { x: L.x, y: py, h: home.h * (LANE_SCALE_BACK + (LANE_SCALE_FRONT - LANE_SCALE_BACK) * t) };
+}
+
+/** Milieu de la bande de la branche à l'abscisse `x` : là où se tient la famille au départ. */
+export function laneMid(lane: Lane, x: number): { x: number; y: number } {
+  const L = laneAt(lane, x);
+  return { x: L.x, y: (L.back + L.front) / 2 };
+}
+
 /** Ce qu'il faut du décor pour savoir où un animal peut se poser en hauteur. */
 export interface Perches {
   horizonY?: number;

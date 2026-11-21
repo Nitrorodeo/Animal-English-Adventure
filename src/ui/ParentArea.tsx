@@ -9,6 +9,8 @@ import { offlineLabel, offlineStatus, onOfflineStatus } from '../pwa/offline';
 import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
 import { NameSetup } from './NameSetup';
 import type { NameVoiceState } from './useNameVoices';
+import { CLOUD_URL, type CloudInfo } from './useCloudSync';
+import { resetFamilyChoice } from './FamilyGate';
 
 const PRON_LABEL = { fr: 'à la française', en: 'à l’anglaise', spelled: 'comme écrit' } as const;
 
@@ -18,6 +20,13 @@ function nameVoiceLabel(v: NameVoiceState): string {
   if (v.status === 'unavailable') return 'voix du prénom indisponibles ici (il faut le jeu servi par l’ordinateur) : les animaux disent « Hello! » sans le prénom';
   return 'prononciation pas encore choisie';
 }
+
+const CLOUD_LABEL = {
+  off: '',
+  syncing: '⏳ envoi en cours…',
+  ok: '✓ à jour sur tous les appareils',
+  offline: 'pas de connexion pour l’instant : la partie est gardée ici et partira dès le retour d’internet',
+} as const;
 
 const SPEED_PRESETS = [
   { label: 'Lent', value: 0.7 },
@@ -29,12 +38,13 @@ interface Props {
   state: GameState;
   setState: (fn: (s: GameState) => GameState) => void;
   nameVoice: NameVoiceState;
+  cloud: CloudInfo;
   onReset: () => void;
   onClose: () => void;
 }
 
 /** Espace parents, ouvert directement (pas de verrou : décision du parent du 2026-11-19) : réglages, suivi, remise à zéro. */
-export function ParentArea({ state, setState, nameVoice, onReset, onClose }: Props) {
+export function ParentArea({ state, setState, nameVoice, cloud, onReset, onClose }: Props) {
   const [editName, setEditName] = useState(false);
   const [confirmReset, setConfirmReset] = useState(0);
   const [offline, setOffline] = useState(offlineStatus);
@@ -61,7 +71,7 @@ export function ParentArea({ state, setState, nameVoice, onReset, onClose }: Pro
               Prénom : <strong>{state.player.name === DEFAULT_PLAYER_NAME ? '(pas encore donné)' : state.player.name}</strong>
               {state.player.namePron && <> · dit {PRON_LABEL[state.player.namePron.mode]}{state.player.namePron.spelling ? ` (« ${state.player.namePron.spelling} »)` : ''}</>}
             </span>
-            <span className="note">{nameVoiceLabel(nameVoice)}. Le prénom reste dans la partie (tablette et ordinateur), rien n'est envoyé ailleurs.</span>
+            <span className="note">{nameVoiceLabel(nameVoice)}. {cloud.code ? 'Le prénom reste dans la partie, partagée seulement avec les appareils qui ont le code de famille.' : "Le prénom reste dans la partie (tablette et ordinateur), rien n'est envoyé ailleurs."}</span>
             {editName ? (
               <NameSetup
                 initialName={state.player.name}
@@ -154,6 +164,28 @@ export function ParentArea({ state, setState, nameVoice, onReset, onClose }: Pro
           <p className="note">« Autonome » = 3 réussites sans aide dans 2 aventures différentes. Une réponse tactile n'évalue pas la prononciation.</p>
         </section>
 
+        {CLOUD_URL ? (
+          <section>
+            <h3>Partie partagée</h3>
+            {cloud.code ? (
+              <>
+                <p>
+                  Code de famille : <strong className="family-code small">{cloud.code}</strong>
+                </p>
+                <p className="note">{CLOUD_LABEL[cloud.status]}</p>
+                <p className="note">
+                  Sur un autre appareil (téléphone, tablette, ordinateur) : ouvrir le jeu, taper le code du jeu, puis « J'ai déjà un code » et ce code de famille. La partie s'enregistre toute seule ; le serveur garde aussi la version de la veille pendant 60 jours.
+                </p>
+                <button onClick={resetFamilyChoice}>Changer de code de famille…</button>
+              </>
+            ) : (
+              <>
+                <p className="note">Cet appareil joue seul : la partie est gardée seulement ici.</p>
+                <button onClick={resetFamilyChoice}>Partager la partie avec d'autres appareils…</button>
+              </>
+            )}
+          </section>
+        ) : (
         <section>
           <h3>Parties sauvegardées</h3>
           <p className="note">
@@ -161,6 +193,7 @@ export function ParentArea({ state, setState, nameVoice, onReset, onClose }: Pro
           </p>
           <p className="note">Conseil : réserver une adresse fixe pour l'ordinateur dans la box, et ouvrir le jeu sur la tablette toujours depuis le même favori.</p>
         </section>
+        )}
 
         <section>
           <h3>Jouer sans internet</h3>
@@ -176,7 +209,7 @@ export function ParentArea({ state, setState, nameVoice, onReset, onClose }: Pro
         <section>
           <h3>Remise à zéro</h3>
           <button className="danger" onClick={() => (confirmReset ? (onReset(), setConfirmReset(0)) : setConfirmReset(1))}>
-            {confirmReset ? 'Confirmer : tout effacer (bébés, progrès)' : 'Effacer la partie…'}
+            {confirmReset ? `Confirmer : tout effacer (bébés, progrès)${cloud.code ? ' sur tous les appareils' : ''}` : 'Effacer la partie…'}
           </button>
           {confirmReset > 0 && <button onClick={() => setConfirmReset(0)}>Annuler</button>}
         </section>

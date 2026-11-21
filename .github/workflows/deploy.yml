@@ -32,6 +32,8 @@ jobs:
         env:
           # version en ligne : code d'accès, aucun envoi vers l'ordinateur de la maison (src/engine/access.ts)
           VITE_STATIC_SITE: '1'
+          # partie partagée entre appareils (cloud/LISEZ_MOI.md) ; vide = désactivée
+          VITE_CLOUD_URL: ${{ vars.CLOUD_URL }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

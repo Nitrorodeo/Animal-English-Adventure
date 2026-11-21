@@ -1,3 +1,5 @@
+import { snapToLane, type Lane } from '../game/staging';
+
 /** Déplacement de la bulle de dialogue au doigt ou à la souris (fonctions pures, testées). */
 
 export interface Offset {
@@ -54,7 +56,10 @@ export function dragSpot(
   scaleFor: (fromY: number, toY: number) => number,
   minY: number | ((x: number) => number) = 0,
   perchAt?: (x: number, y: number) => number | undefined,
+  lane?: Lane,
 ): Spot {
+  // décor perché : on ne quitte jamais la branche (règle des toucans), et on garde sa taille
+  if (lane) return snapToLane(lane, home, pointer.x, pointer.y + grabDy);
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
   const x = clamp(pointer.x, 3, 97);
   const settle = (raw: number) => {
