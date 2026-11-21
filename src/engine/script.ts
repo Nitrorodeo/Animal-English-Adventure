@@ -111,6 +111,10 @@ export function walkSteps(script: QuestScript, o: WalkOpts): string[] {
         if (new Set(s.options.map((x) => x.line.en)).size !== s.options.length) err(i, 'deux ordres identiques');
         break;
       }
+      case 'tapActor':
+        if (!['father', 'mother', 'baby', 'sibling'].includes(s.target) || !speakerOk(s.target, o)) err(i, `personnage à toucher absent (${s.target})`);
+        if (!ACT_ACTIONS.includes(s.action)) err(i, `action inconnue (${s.action})`);
+        break;
       case 'moveTo':
         if (!hasAnchor(s.anchor)) err(i, `point du décor absent (${s.anchor})`);
         if (s.who && !speakerOk(s.who, o)) err(i, `personnage absent (${s.who})`);

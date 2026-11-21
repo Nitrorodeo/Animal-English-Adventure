@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { clipFor } from '../audio/speech';
 import { BEDTIME, say, STICKER_OFFER } from '../content/utterances';
-import { CONTINENTS } from '../content/world';
+import { CONTINENTS, OLD_MAP_HITS } from '../content/world';
 import { familyAlbum } from './album';
 import { bedtimeLines } from './bedtime';
 import { createBaby } from './family';
 import { migrate } from './save';
 import { getFamily, newGameState, withFamily, type GameState } from './state';
-import { dayKey, MAX_STICKERS, placeSticker, stickerOffer, STICKERS } from './stickers';
+import { dayKey, MAX_STICKERS, placeSticker, stickerOffer, STICKERS, toWideMap } from './stickers';
 
 function lionFamily(): GameState {
   let s = newGameState();
@@ -31,6 +31,13 @@ describe('album souvenir', () => {
     const photos = familyAlbum(lionFamily());
     expect(photos.map((p) => `${p.babyName}:${p.stage}:${p.kind}`)).toEqual(['Kiara:newborn:born', 'Kiara:little:grew', 'Kiara:young:grew', 'Kovu:newborn:born']);
     expect(new Set(photos.map((p) => p.key)).size).toBe(photos.length);
+  });
+
+  it('une famille d’une espèce retirée du jeu (ornithorynque) ne casse pas l’album', () => {
+    const s = lionFamily();
+    const lion = s.families.lion!;
+    const old: GameState = { ...s, families: { ...s.families, platypus: { ...lion, speciesId: 'platypus' } } };
+    expect(familyAlbum(old).map((p) => p.speciesId)).toEqual(familyAlbum(s).map((p) => p.speciesId));
   });
 
   it('les légendes dites à voix haute sont enregistrées', () => {
@@ -95,8 +102,34 @@ describe('autocollant du jour', () => {
     expect(migrate(old)!.player.stickerDay).toBeNull();
     old.player.stickers = [{ id: 'star', continentId: 'asia', x: 70, y: 20 }, { id: 'star' }, 'x'];
     old.player.stickerDay = '2026-11-19';
-    expect(migrate(old)!.player.stickers).toEqual([{ id: 'star', continentId: 'asia', x: 70, y: 20 }]);
+    // position de l'ancienne carte : recalée sur la carte élargie et recentrée, au même endroit de l'Asie
+    expect(migrate(old)!.player.stickers).toEqual([{ id: 'star', continentId: 'asia', x: 70.1, y: 20, map: 3 }]);
     expect(migrate(old)!.player.stickerDay).toBe('2026-11-19');
+  });
+
+  it("carte élargie : les anciens autocollants restent sur leur continent, les nouveaux ne bougent pas", () => {
+    for (const c of CONTINENTS) {
+      const old = OLD_MAP_HITS[c.id];
+      for (const f of [0.2, 0.5, 0.8]) {
+        const s = toWideMap({ id: 'star', continentId: c.id, x: old.x + old.w * f, y: 50 });
+        expect(s.x).toBeGreaterThanOrEqual(c.mapHit.x);
+        expect(s.x).toBeLessThanOrEqual(c.mapHit.x + c.mapHit.w);
+        expect(toWideMap(s)).toEqual(s); // une seule fois
+      }
+    }
+    const fresh = placeSticker(newGameState(), STICKERS[0]!.id, 'africa', '2026-11-20').player.stickers[0]!;
+    expect(fresh.map).toBe(3);
+    expect(toWideMap(fresh)).toBe(fresh);
+  });
+
+  it('carte recentrée : un autocollant de la carte élargie recule avec le dessin, sur son continent', () => {
+    const s = toWideMap({ id: 'star', continentId: 'africa', x: 50, y: 50, map: 2 });
+    expect(s).toEqual({ id: 'star', continentId: 'africa', x: 43.8, y: 50, map: 3 });
+    expect(toWideMap(s)).toBe(s);
+    for (const c of CONTINENTS) {
+      const t = toWideMap({ id: 'star', continentId: c.id, x: c.mapHit.x + 2, y: 50, map: 2 });
+      expect(t.x).toBeGreaterThanOrEqual(c.mapHit.x); // jamais sorti de sa zone
+    }
   });
 
   it('chaque autocollant et l’annonce ont leur enregistrement', () => {

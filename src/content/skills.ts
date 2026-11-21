@@ -48,6 +48,9 @@ export const ITEMS: Readonly<Record<string, { en: string; fr: string; icon: stri
   elephant: { en: 'elephant', fr: 'éléphant', icon: '🐘' },
   big: { en: 'big', fr: 'grand', icon: '⬆️' },
   small: { en: 'small', fr: 'petit', icon: '⬇️' },
+  little: { en: 'little', fr: 'petit', icon: '🤏' },
+  crab: { en: 'crab', fr: 'crabe', icon: '🦀' },
+  octopus: { en: 'octopus', fr: 'pieuvre', icon: '🐙' },
   hot: { en: 'hot', fr: 'chaud', icon: '🥵' },
   thirsty: { en: 'thirsty', fr: 'avoir soif', icon: '🫗' },
   water: { en: 'water', fr: "l'eau", icon: '💧' },
@@ -138,6 +141,9 @@ export const ITEMS: Readonly<Record<string, { en: string; fr: string; icon: stri
   stars: { en: 'stars', fr: 'étoiles', icon: '✨' },
   wave: { en: 'wave', fr: 'faire coucou', icon: '👋' },
   splash: { en: 'splash', fr: 'éclabousser', icon: '💦' },
+  // jeux « Yes or no? » et « Simon says! » (2026-11-20)
+  yes: { en: 'Yes', fr: 'Oui', icon: '👍' },
+  no: { en: 'No', fr: 'Non', icon: '👎' },
 };
 
 export function skillOfItem(itemId: string): SkillDef | undefined {

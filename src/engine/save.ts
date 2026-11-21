@@ -1,3 +1,6 @@
+import { parseNamePron } from './nameVoice';
+import { parseSpots } from './spots';
+import { toWideMap } from './stickers';
 import { clampSpeechSpeed, newGameState, SAVE_VERSION, type GameState, type PlacedSticker } from './state';
 
 /** Adaptateur de stockage (localStorage dans le navigateur, mémoire en test). */
@@ -50,6 +53,7 @@ export function migrate(raw: unknown): GameState | null {
     version: SAVE_VERSION,
     player: {
       name: typeof p.name === 'string' ? p.name : base.player.name,
+      namePron: parseNamePron(p.namePron),
       items: isObj(p.items) ? (p.items as GameState['player']['items']) : {},
       visitedContinents: Array.isArray(p.visitedContinents) ? (p.visitedContinents as GameState['player']['visitedContinents']) : [],
       history: Array.isArray(p.history) ? (p.history as GameState['player']['history']) : [],
@@ -59,8 +63,9 @@ export function migrate(raw: unknown): GameState | null {
       placesVisited: Array.isArray(p.placesVisited) ? (p.placesVisited as GameState['player']['placesVisited']) : [],
       words: isObj(p.words) ? (p.words as GameState['player']['words']) : {},
       photos: Array.isArray(p.photos) ? (p.photos as unknown[]).filter((x): x is string => typeof x === 'string') : [],
-      stickers: Array.isArray(p.stickers) ? (p.stickers as unknown[]).filter(isPlacedSticker) : [],
+      stickers: Array.isArray(p.stickers) ? (p.stickers as unknown[]).filter(isPlacedSticker).map(toWideMap) : [],
       stickerDay: typeof p.stickerDay === 'string' ? p.stickerDay : null,
+      spots: parseSpots(p.spots),
     },
     families: raw.families as GameState['families'],
     settings: migrateSettings(base.settings, raw.settings),

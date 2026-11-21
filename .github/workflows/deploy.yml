@@ -29,6 +29,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env:
+          # version en ligne : code d'accès, aucun envoi vers l'ordinateur de la maison (src/engine/access.ts)
+          VITE_STATIC_SITE: '1'
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

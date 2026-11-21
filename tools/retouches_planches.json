@@ -1,0 +1,55 @@
+{
+  "_note": "Zones de retouche par planche, en pixels de la planche : [x0, y0, x1, y1] = GrabCut dans la zone ; {\"zone\": [...], \"pale\": true} = seuls les pixels pâles et presque gris retirés (avec \"edge\": n, seulement à moins de n px du vide) ; {\"zone\": [...], \"clear\": true} = tout est retiré. Lu par tools/decoupe_planche.py.",
+  "planche_reference_jaguars.png": [
+    [1265, 345, 1350, 380],
+    {"zone": [1284, 355, 1324, 367], "pale": true},
+    [1280, 640, 1345, 682],
+    {"zone": [814, 928, 842, 948], "pale": true},
+    {"zone": [716, 953, 726, 965], "pale": true},
+    {"zone": [738, 963, 748, 974], "pale": true}
+  ],
+  "planche_reference_bisons.png": [
+    [340, 300, 420, 365],
+    [478, 345, 525, 380],
+    [1205, 370, 1300, 400],
+    [1188, 372, 1206, 398],
+    [1215, 670, 1318, 697],
+    {"zone": [1228, 683, 1310, 700], "pale": true},
+    [1160, 920, 1192, 950],
+    [1240, 930, 1265, 952]
+  ],
+  "planche_reference_castors.png": [
+    {"zone": [1245, 365, 1275, 412], "pale": true}
+  ],
+  "planche_reference_toucans.png": [
+    {"zone": [250, 298, 430, 382], "pale": true},
+    {"zone": [860, 270, 950, 350], "pale": true},
+    {"zone": [462, 305, 506, 324], "pale": true},
+    {"zone": [515, 298, 530, 310], "pale": true},
+    {"zone": [1026, 328, 1056, 342], "pale": true},
+    {"zone": [1100, 336, 1150, 368], "pale": true}
+  ],
+  "planche_reference_ours_bruns.png": [
+    {"zone": [0, 0, 1536, 1024], "pale": true, "edge": 4},
+    {"zone": [1228, 684, 1380, 706], "pale": true},
+    {"zone": [1270, 636, 1286, 660], "pale": true},
+    {"zone": [1270, 926, 1288, 966], "pale": true},
+    {"zone": [962, 317, 982, 357], "pale": true, "edge": 8}
+  ],
+  "planche_reference_herissons.png": [
+    {"zone": [322, 380, 349, 394], "clear": true},
+    {"zone": [349, 391, 545, 400], "clear": true},
+    {"zone": [405, 383, 452, 400], "clear": true},
+    {"zone": [545, 362, 600, 396], "pale": true},
+    {"zone": [549, 372, 600, 400], "clear": true},
+    {"zone": [540, 386, 549, 400], "clear": true},
+    {"zone": [590, 388, 700, 400], "clear": true},
+    {"zone": [665, 372, 720, 392], "pale": true}
+  ],
+  "planche_reference_koalas.png": [
+    {"zone": [459, 1048, 477, 1058], "clear": true},
+    {"zone": [477, 1051, 495, 1058], "clear": true},
+    {"zone": [459, 724, 478, 733], "clear": true},
+    {"zone": [478, 725, 495, 733], "clear": true}
+  ]
+}

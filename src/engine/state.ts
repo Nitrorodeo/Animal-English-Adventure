@@ -1,3 +1,5 @@
+import type { NamePron } from './nameVoice';
+import type { ActorSpot } from './spots';
 import type { ContinentId, GrowthStage, ParentRole, PlaceId, Sex, Tier } from '../content/types';
 
 /** v2 (2026-11-19) : trésors, aventures, lieux visités, mots découverts par continent. */
@@ -25,6 +27,8 @@ export interface HistoryEntry {
 
 export interface PlayerState {
   name: string;
+  /** prononciation du prénom choisie à l'oreille (src/engine/nameVoice.ts) ; null = pas encore choisie */
+  namePron: NamePron | null;
   items: Record<string, ItemProgress>;
   visitedContinents: ContinentId[];
   /** 10 dernières activités (anti-répétition) */
@@ -45,6 +49,8 @@ export interface PlayerState {
   stickers: PlacedSticker[];
   /** jour (AAAA-MM-JJ, heure de l'appareil) du dernier autocollant reçu ; null = jamais */
   stickerDay: string | null;
+  /** animaux posés au doigt dans les décors, « lieu|personnage » → place (voir engine/spots.ts) */
+  spots: Record<string, ActorSpot>;
 }
 
 /** Autocollant collé sur la carte : position en % de la carte. */
@@ -53,6 +59,11 @@ export interface PlacedSticker {
   continentId: ContinentId;
   x: number;
   y: number;
+  /**
+   * 3 = carte élargie puis recentrée (2026-11-20) ; 2 = carte élargie avant recentrage ; absent = ancienne
+   * carte. Les positions anciennes sont recalées au chargement.
+   */
+  map?: 2 | 3;
 }
 
 export interface Baby {
@@ -124,7 +135,7 @@ export interface GameState {
 export function newGameState(): GameState {
   return {
     version: SAVE_VERSION,
-    player: { name: 'Explorer', items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null },
+    player: { name: 'Explorer', namePron: null, items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null, spots: {} },
     families: {},
     settings: { muted: false, slowVoice: false, frenchHelp: true, levelOverride: 'auto', speechSpeed: SPEECH_SPEED.default },
     onboarded: false,

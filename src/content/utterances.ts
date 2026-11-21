@@ -16,6 +16,12 @@ export const NAME_ERRORS: Readonly<Record<string, { fr: string; en: string }>> =
 
 export const SEX_CHOICE = { boy: 'A boy', girl: 'A girl' } as const;
 
+/** Écran du prénom de la joueuse (src/ui/NameSetup.tsx), dit par le narrateur. */
+export const NAME_SCREEN = {
+  ask: { en: "What's your name?", fr: 'Comment tu t’appelles ?' },
+  listen: { en: 'Listen! How do we say your name?', fr: 'Écoute ! Comment on dit ton prénom ?' },
+} as const;
+
 /** Phrase du bouton « Écouter » du réglage de vitesse : l'accueil de Leo, déjà enregistré. */
 export const SPEED_SAMPLE = {
   text: fillLine(GREETING_WELCOMES.lion!.adult, { actorName: 'Leo' }).en,
@@ -44,6 +50,24 @@ export const BEDTIME = {
   wake: { en: 'Good morning! The sun is up!', fr: 'Bonjour ! Le soleil est levé !' },
 } as const;
 
+/**
+ * Chatouilles et câlins (2026-11-20) : un appui long sur un personnage, hors activité.
+ * Les bébés rient, les parents font un câlin. Les phrases tournent, toujours dans le même ordre.
+ */
+export const CUDDLES = {
+  baby: [
+    { en: 'Hee, hee! That tickles!', fr: 'Hi, hi ! Ça chatouille !', icon: '😆' },
+    { en: 'Ha, ha, ha! Again! Again!', fr: 'Ha, ha, ha ! Encore ! Encore !', icon: '🤭' },
+    { en: 'I love you!', fr: 'Je t’aime !', icon: '💕' },
+    { en: 'Stop, stop! Ha, ha!', fr: 'Arrête, arrête ! Ha, ha !', icon: '😂' },
+  ],
+  parent: [
+    { en: 'Aww! A big hug!', fr: 'Oh ! Un gros câlin !', icon: '🤗' },
+    { en: 'I love you too!', fr: 'Moi aussi, je t’aime !', icon: '💕' },
+    { en: 'Mmm, a warm hug! Thank you!', fr: 'Mmm, un câlin tout chaud ! Merci !', icon: '🥰' },
+  ],
+} as const;
+
 /** Autocollant du jour (fin de la première activité de la journée). */
 export const STICKER_OFFER = { en: 'A sticker for you! Pick one!', fr: 'Un autocollant pour toi ! Choisis-en un !' } as const;
 
@@ -56,6 +80,10 @@ export const say = {
   /** photo de naissance de l'album souvenir */
   albumBorn: (babyName: string) => fillLine(FAMILY_LINES.welcomeBaby, { babyName }).en,
   title: (playerName: string) => `Hello, ${playerName}! Let's go on an adventure!`,
+  /** la maman de la famille accueille la joueuse en arrivant dans un lieu */
+  hello: (playerName: string) => `Hello, ${playerName}!`,
+  /** l'animal félicite la joueuse à la fin d'une aventure ou d'une activité */
+  bravo: (playerName: string) => `Well done, ${playerName}! You did it!`,
   biomeWelcome: (biome: Pick<BiomeDef, 'nameEn'>) => `Welcome to ${biome.nameEn}! ${FAMILY_LINES.tapAnimal.en}`,
   actorCall: (actorName: string) => `${actorName}! ${FAMILY_LINES.whoToPlay.en}`,
   /** appel d'un bébé : selon son stade de croissance */

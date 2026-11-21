@@ -8,6 +8,7 @@
  * 3. Sans aucun son, le jeu reste jouable avec les sous-titres et les images.
  */
 import manifest from '../content/voiceManifest.json';
+import { nameClipFor, type NameClips } from '../engine/nameVoice';
 import { clipKey, DEFAULT_PLAYER_NAME, normalizeNames, VOICE_OF_ROLE, type VoiceRole } from './voiceKey';
 
 export type { VoiceRole };
@@ -23,6 +24,8 @@ export interface SpeakOptions {
 export interface AudioService {
   readonly available: boolean;
   speak(text: string, opts?: SpeakOptions): Promise<void>;
+  /** plusieurs répliques à la suite ; s'arrête si une autre phrase est demandée entre-temps */
+  sequence(lines: readonly { text: string; opts?: SpeakOptions }[]): Promise<void>;
   stop(): void;
   setMuted(m: boolean): void;
   /**
@@ -32,6 +35,8 @@ export interface AudioService {
   setSpeed(speed: number): void;
   /** prénoms variables (joueuse, bébés) à reconnaître dans les phrases */
   setNames(names: readonly string[]): void;
+  /** phrases enregistrées avec le prénom de la joueuse (src/engine/nameVoice.ts) ; null = pas encore prêtes */
+  setNameVoice(playerName: string, clips: NameClips | null): void;
 }
 
 const CLIPS: Readonly<Record<string, string>> = manifest.clips;
@@ -74,6 +79,10 @@ export function createSpeech(): AudioService {
   /** la phrase en cours est-elle en voix lente (🐢) ? */
   let currentSlow = false;
   let names: readonly string[] = [];
+  let player = DEFAULT_PLAYER_NAME;
+  let nameClips: NameClips | null = null;
+  /** numéro de la dernière phrase demandée (une suite s'arrête quand il change) */
+  let seq = 0;
   /** termine la lecture en cours (enregistrement ou synthèse) */
   let finishCurrent: (() => void) | undefined;
   if (synth) synth.getVoices(); // déclenche le chargement des voix
@@ -142,19 +151,35 @@ export function createSpeech(): AudioService {
       audio.play().catch(() => done(false));
     });
 
+  const speakOne = async (text: string, opts: SpeakOptions = {}): Promise<number> => {
+    const mine = ++seq;
+    stopAll();
+    if (muted || !text.trim()) return mine;
+    const lang = opts.lang ?? 'en';
+    const slow = !!opts.slow;
+    if (lang === 'en') {
+      // d'abord la phrase dite avec le prénom de la joueuse, sinon la variante sans prénom
+      const named = nameClipFor(text, opts.role, player, nameClips);
+      if (named && (await playClip(named, slow))) return mine;
+      if (mine !== seq) return mine; // coupée pendant l'essai : ne pas enchaîner sur la variante
+      const src = clipFor(text, opts.role, opts.names ? [...names, ...opts.names] : names);
+      if (src && (await playClip(src, slow))) return mine;
+      if (!src && import.meta.env.DEV) console.warn(`[voix] pas d'enregistrement (${opts.role ?? 'narrator'}) : « ${text} » — lancer npm run voices`);
+    }
+    if (mine === seq) await synthesize(text, lang, slow);
+    return mine;
+  };
+
   return {
     available: !!audio || !!synth,
     async speak(text, opts = {}) {
-      stopAll();
-      if (muted || !text.trim()) return;
-      const lang = opts.lang ?? 'en';
-      const slow = !!opts.slow;
-      if (lang === 'en') {
-        const src = clipFor(text, opts.role, opts.names ? [...names, ...opts.names] : names);
-        if (src && (await playClip(src, slow))) return;
-        if (!src && import.meta.env.DEV) console.warn(`[voix] pas d'enregistrement (${opts.role ?? 'narrator'}) : « ${text} » — lancer npm run voices`);
+      await speakOne(text, opts);
+    },
+    async sequence(lines) {
+      for (const l of lines) {
+        const mine = await speakOne(l.text, l.opts);
+        if (mine !== seq) return;
       }
-      await synthesize(text, lang, slow);
     },
     stop: stopAll,
     setMuted(m) {
@@ -169,6 +194,10 @@ export function createSpeech(): AudioService {
     },
     setNames(n) {
       names = n;
+    },
+    setNameVoice(playerName, clips) {
+      player = playerName;
+      nameClips = clips;
     },
   };
 }

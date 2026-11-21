@@ -1,7 +1,8 @@
 """Prépare les images déposées dans Animaux/ pour le jeu.
 
 - découpe les personnages d'une planche (composante connexe autour d'un point 'seed') ;
-- nettoie les bords des détourages (halos colorés) ;
+- nettoie les bords des détourages (halos colorés), sauf pour les espèces marquées "_raw"
+  (images déjà détourées par tools/decoupe_planche.py) ;
 - recadre, redimensionne et exporte en WebP dans public/assets/ ;
 - écrit src/content/assetManifest.json (liste des assets réellement disponibles).
 
@@ -22,6 +23,10 @@ SOURCES = ROOT / "tools" / "asset_sources.json"
 OUT_DIR = ROOT / "public" / "assets"
 MANIFEST = ROOT / "src" / "content" / "assetManifest.json"
 CHAR_MAX_H = 720
+# Images HD (demande du parent, 2026-11-20) mais jeu rapide : qualité 95, indiscernable de la source.
+# Transparence gardée sans perte (bords nets). Le sans-perte complet triplait le poids sans gain visible.
+CHAR_WEBP = {"quality": 95, "alpha_quality": 100, "method": 6}
+BG_WEBP = {"quality": 95, "method": 6}  # ~0,6 Mo par décor
 
 
 def clean_alpha(img: Image.Image) -> Image.Image:
@@ -88,23 +93,48 @@ def fit_height(img: Image.Image, max_h: int) -> Image.Image:
     return img.resize((round(img.width * max_h / img.height), max_h), Image.LANCZOS)
 
 
+def prepare_character(img: Image.Image, raw: bool = False) -> Image.Image:
+    """Recadre et met à la hauteur du jeu. `raw` : image déjà détourée proprement par
+    tools/decoupe_planche.py — on garde son bord doux tel quel (pas de seuil ni d'érosion)."""
+    img = img.convert("RGBA")
+    return fit_height(crop_to_content(img if raw else clean_alpha(img)), CHAR_MAX_H)
+
+
+def prepare_background(img: Image.Image, spec: dict) -> Image.Image:
+    """Fond de décor : RGB, largeur limitée à maxWidth, miroir horizontal si "flip"
+    (pour que la terre ferme tombe à droite, là où se tient la famille)."""
+    img = img.convert("RGB")
+    mw = spec.get("maxWidth", 1920)
+    if img.width > mw:
+        img = img.resize((mw, round(img.height * mw / img.width)), Image.LANCZOS)
+    if spec.get("flip"):
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+    return img
+
+
 def main() -> int:
     cfg = json.loads(SOURCES.read_text(encoding="utf-8"))
     (OUT_DIR / "backgrounds").mkdir(parents=True, exist_ok=True)
     (OUT_DIR / "characters").mkdir(parents=True, exist_ok=True)
     manifest: dict = {"backgrounds": {}, "characters": {}}
+    # source déplacée ou remplacée : on garde l'image déjà convertie plutôt que de la perdre
+    old = json.loads(MANIFEST.read_text(encoding="utf-8")) if MANIFEST.exists() else {"backgrounds": {}, "characters": {}}
+
+    def keep(kind: str, key: str) -> None:
+        entry = old.get(kind, {}).get(key)
+        if entry and (ROOT / "public" / entry["path"]).exists():
+            manifest[kind][key] = entry
+            print(f"[conservé] {key} (image déjà convertie)")
 
     for name, spec in cfg.get("backgrounds", {}).items():
         src = ROOT / spec["src"]
         if not src.exists():
             print(f"[manquant] fond {name}: {src}")
+            keep("backgrounds", name)
             continue
-        img = Image.open(src).convert("RGB")
-        mw = spec.get("maxWidth", 1920)
-        if img.width > mw:
-            img = img.resize((mw, round(img.height * mw / img.width)), Image.LANCZOS)
+        img = prepare_background(Image.open(src), spec)
         rel = f"assets/backgrounds/{name}.webp"
-        img.save(ROOT / "public" / rel, "WEBP", quality=86, method=6)
+        img.save(ROOT / "public" / rel, "WEBP", **BG_WEBP)
         manifest["backgrounds"][name] = {"path": rel, "width": img.width, "height": img.height}
         print(f"[ok] fond {name} {img.size}")
 
@@ -122,6 +152,7 @@ def main() -> int:
                 continue
             if spec.get("sheet"):
                 if sheet is None:
+                    keep("characters", f"{species}_{role}")
                     continue
                 arr = np.asarray(sheet)
                 comp = component_from_seed(arr[:, :, 3], tuple(spec["seed"]))
@@ -132,12 +163,13 @@ def main() -> int:
                 p = ROOT / spec["src"]
                 if not p.exists():
                     print(f"[manquant] {species}/{role}: {p}")
+                    keep("characters", f"{species}_{role}")
                     continue
                 img = Image.open(p).convert("RGBA")
-            img = fit_height(crop_to_content(clean_alpha(img)), CHAR_MAX_H)
+            img = prepare_character(img, raw=bool(roles.get("_raw")))
             key = f"{species}_{role}"
             rel = f"assets/characters/{key}.webp"
-            img.save(ROOT / "public" / rel, "WEBP", quality=88, method=6)
+            img.save(ROOT / "public" / rel, "WEBP", **CHAR_WEBP)
             manifest["characters"][key] = {"path": rel, "width": img.width, "height": img.height}
             print(f"[ok] {key} {img.size}")
 

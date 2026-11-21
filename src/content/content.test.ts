@@ -30,7 +30,7 @@ function check(v: Variant): string[] {
       if (!species.can.includes(s.action as Ability)) errors.push(`${script.id} #${i}: ${species.id} ne sait pas ${s.action}`);
     }
     for (const u of stepUtterances(s)) {
-      if (!voiceOfSpeaker(u.who, config)) errors.push(`${script.id} #${i}: voix absente (${u.who})`);
+      if (!voiceOfSpeaker(u.who, config) && !u.ifPresent) errors.push(`${script.id} #${i}: voix absente (${u.who})`);
       for (const t of [u.line.en, u.line.fr]) {
         if (!t.trim()) errors.push(`${script.id} #${i}: phrase vide`);
         for (const m of t.matchAll(VAR_RE)) if (!(ALLOWED_VARS as readonly string[]).includes(m[1]!)) errors.push(`${script.id} #${i}: variable interdite ${m[0]}`);
@@ -81,10 +81,10 @@ describe('aventures V2', () => {
 });
 
 describe('couverture V2', () => {
-  it('chaque espèce vit au moins 3 aventures de son continent (orque : 2)', () => {
+  it('chaque espèce vit au moins 3 aventures de son continent', () => {
     for (const sp of SPECIES) {
       const n = ADVENTURES.filter((a) => a.continentId === sp.continentId && a.species.includes(sp.id)).length;
-      expect(n, sp.id).toBeGreaterThanOrEqual(sp.id === 'orca' ? 2 : 3);
+      expect(n, sp.id).toBeGreaterThanOrEqual(3);
     }
   });
 

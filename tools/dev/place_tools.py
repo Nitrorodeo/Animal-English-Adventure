@@ -55,6 +55,10 @@ def check(json_path: str, out_dir: str) -> None:
         if not src:
             continue
         img = Image.open(ROOT / src).convert("RGB")
+        # même miroir que le jeu (tools/asset_sources.json, "flip") : les repères du lieu sont lus sur l'image retournée
+        spec = json.loads((ROOT / "tools" / "asset_sources.json").read_text(encoding="utf-8"))["backgrounds"].get(place.get("background"), {})
+        if spec.get("flip"):
+            img = img.transpose(Image.FLIP_LEFT_RIGHT)
         W, H = img.size
         d = ImageDraw.Draw(img, "RGBA")
         f = font(max(16, W // 80))

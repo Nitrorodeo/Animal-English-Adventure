@@ -6,7 +6,7 @@
  * joue pas. Le jour vient de l'horloge de l'appareil (seul usage du temps réel dans le jeu).
  */
 import type { ContinentId } from '../content/types';
-import { CONTINENTS } from '../content/world';
+import { CONTINENTS, OLD_MAP_HITS } from '../content/world';
 import { createRng, hashSeed } from './rng';
 import type { GameState, PlacedSticker } from './state';
 
@@ -70,6 +70,27 @@ export function placeSticker(state: GameState, stickerId: string, continentId: C
   const rng = createRng(hashSeed(`${today}:${stickerId}:${state.player.stickers.length}`));
   const r = c.mapHit;
   const round = (v: number) => Math.round(v * 10) / 10;
-  const placed: PlacedSticker = { id: stickerId, continentId, x: round(r.x + r.w * (0.2 + 0.6 * rng.next())), y: round(r.y + r.h * (0.25 + 0.5 * rng.next())) };
+  const placed: PlacedSticker = { id: stickerId, continentId, x: round(r.x + r.w * (0.2 + 0.6 * rng.next())), y: round(r.y + r.h * (0.25 + 0.5 * rng.next())), map: 3 };
   return { ...state, player: { ...state.player, stickers: [...state.player.stickers, placed].slice(-MAX_STICKERS), stickerDay: today } };
+}
+
+/** Recentrage de la carte élargie (scripts/map_center.py) : tout le dessin a reculé de 135 px sur 2172. */
+export const MAP_CENTER_SHIFT = (135 / 2172) * 100;
+
+/**
+ * Autocollant d'une partie d'avant l'élargissement ou le recentrage de la carte : il garde sa place sur son
+ * continent (ancienne carte : même position relative dans la zone du continent ; carte élargie : décalé
+ * comme le dessin).
+ */
+export function toWideMap(s: PlacedSticker): PlacedSticker {
+  if (s.map === 3) return s;
+  const now = CONTINENTS.find((c) => c.id === s.continentId)?.mapHit;
+  const round = (v: number) => Math.round(v * 10) / 10;
+  if (s.map === 2) {
+    const x = s.x - MAP_CENTER_SHIFT;
+    return { ...s, x: round(now ? Math.min(now.x + now.w, Math.max(now.x, x)) : x), map: 3 };
+  }
+  const old = OLD_MAP_HITS[s.continentId];
+  if (!old || !now) return { ...s, map: 3 };
+  return { ...s, x: round(now.x + ((s.x - old.x) * now.w) / old.w), map: 3 };
 }

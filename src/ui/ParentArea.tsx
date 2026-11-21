@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react';
 import { itemLabel } from '../content/items';
 import type { Tier } from '../content/types';
-import { sanitizeName } from '../engine/family';
 import { itemStatus } from '../engine/skills';
 import { clampSpeechSpeed, SPEECH_SPEED, type GameState, type Settings } from '../engine/state';
 import { speech } from '../audio/speech';
 import { SPEED_SAMPLE } from '../content/utterances';
 import { offlineLabel, offlineStatus, onOfflineStatus } from '../pwa/offline';
+import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
+import { NameSetup } from './NameSetup';
+import type { NameVoiceState } from './useNameVoices';
+
+const PRON_LABEL = { fr: 'à la française', en: 'à l’anglaise', spelled: 'comme écrit' } as const;
+
+function nameVoiceLabel(v: NameVoiceState): string {
+  if (v.status === 'ready') return '✓ les animaux disent son prénom';
+  if (v.status === 'working') return `⏳ l'ordinateur enregistre les phrases avec son prénom (${v.done}/${v.total})`;
+  if (v.status === 'unavailable') return 'voix du prénom indisponibles ici (il faut le jeu servi par l’ordinateur) : les animaux disent « Hello! » sans le prénom';
+  return 'prononciation pas encore choisie';
+}
 
 const SPEED_PRESETS = [
   { label: 'Lent', value: 0.7 },
@@ -17,13 +28,14 @@ const SPEED_PRESETS = [
 interface Props {
   state: GameState;
   setState: (fn: (s: GameState) => GameState) => void;
+  nameVoice: NameVoiceState;
   onReset: () => void;
   onClose: () => void;
 }
 
 /** Espace parents, ouvert directement (pas de verrou : décision du parent du 2026-11-19) : réglages, suivi, remise à zéro. */
-export function ParentArea({ state, setState, onReset, onClose }: Props) {
-  const [name, setName] = useState(state.player.name === 'Explorer' ? '' : state.player.name);
+export function ParentArea({ state, setState, nameVoice, onReset, onClose }: Props) {
+  const [editName, setEditName] = useState(false);
   const [confirmReset, setConfirmReset] = useState(0);
   const [offline, setOffline] = useState(offlineStatus);
   useEffect(() => onOfflineStatus(setOffline), []);
@@ -44,20 +56,29 @@ export function ParentArea({ state, setState, onReset, onClose }: Props) {
         </div>
 
         <section className="settings">
-          <label>
-            Prénom de l'exploratrice (facultatif, reste sur cet appareil)
-            <span className="row">
-              <input value={name} onChange={(e) => setName(e.target.value)} maxLength={40} />
-              <button
-                onClick={() => {
-                  const r = sanitizeName(name);
-                  setState((s) => ({ ...s, player: { ...s.player, name: r.ok ? r.name : 'Explorer' } }));
-                }}
-              >
-                Enregistrer
-              </button>
+          <div className="name-settings">
+            <span>
+              Prénom : <strong>{state.player.name === DEFAULT_PLAYER_NAME ? '(pas encore donné)' : state.player.name}</strong>
+              {state.player.namePron && <> · dit {PRON_LABEL[state.player.namePron.mode]}{state.player.namePron.spelling ? ` (« ${state.player.namePron.spelling} »)` : ''}</>}
             </span>
-          </label>
+            <span className="note">{nameVoiceLabel(nameVoice)}. Le prénom reste dans la partie (tablette et ordinateur), rien n'est envoyé ailleurs.</span>
+            {editName ? (
+              <NameSetup
+                initialName={state.player.name}
+                initialPron={state.player.namePron}
+                speechSpeed={state.settings.speechSpeed}
+                onDone={(name, pron) => {
+                  setState((s) => ({ ...s, player: { ...s.player, name, namePron: pron } }));
+                  setEditName(false);
+                }}
+                onCancel={() => setEditName(false)}
+              />
+            ) : (
+              <span className="row">
+                <button onClick={() => setEditName(true)}>Changer le prénom ou sa prononciation</button>
+              </span>
+            )}
+          </div>
           <label className="check"><input type="checkbox" checked={state.settings.muted} onChange={(e) => set({ muted: e.target.checked })} /> Couper le son</label>
           <div className="speed">
             <label htmlFor="speech-speed">

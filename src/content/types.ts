@@ -84,6 +84,12 @@ export interface BiomeDef {
   weather: Weather;
   /** hauteur (%) du sol sous les pieds de la famille, à droite du décor */
   groundY: number;
+  /** ligne d'horizon mesurée sur le dessin (%) : perspective des animaux posés au doigt (voir places/depth.ts) */
+  horizonY?: number;
+  /** sol le plus au fond où l'on peut poser un animal (%) */
+  farY?: number | [number, number][];
+  /** dessus de gros rochers du décor où l'on peut poser un animal ; `base` = pied du rocher */
+  perches?: (Rect & { base: number })[];
   /** 8 emplacements pour les petits objets des jeux */
   spots: Spot[];
 }
@@ -312,6 +318,22 @@ export type QuestStep = StepGate &
         need: number;
         items: string[];
         onCorrect?: Line;
+      }
+    | {
+        kind: 'tapActor';
+        /** qui donne l'ordre (« Mummy, dance! ») */
+        speaker: Speaker;
+        line: Line;
+        /** membre de la famille à toucher */
+        target: Speaker;
+        /** ce qu'il fait une fois touché */
+        action: ActAction;
+        /** réponse du personnage touché (bonne réponse) */
+        reply: Line;
+        /** dit par un autre personnage touché (« Not me! ») */
+        notMe: Line;
+        hint: Line;
+        items: string[];
       }
     /** passage au jour ou à la nuit (le décor s'assombrit) */
     | { kind: 'scene'; night: boolean }

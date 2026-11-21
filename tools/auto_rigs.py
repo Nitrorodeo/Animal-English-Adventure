@@ -26,18 +26,28 @@ OUT = ROOT / "src" / "game" / "autoRigs.json"
 
 
 # Pattes des parents debout de profil : position de chaque pied (fraction de la largeur) et haut
-# des pattes (fraction de la hauteur). Relevées sur une grille le 2026-11-19. Les autres
+# des pattes (fraction de la hauteur). Relevées sur une grille le 2026-11-19 ; renard, tigre et girafe
+# relevés à nouveau le 2026-11-20 sur les nouvelles découpes (le lézard, pattes écartées, se dandine). Les autres
 # personnages (assis, de face, bébés) n'ont pas d'os de patte : ils se dandinent en marchant.
 LEGS: dict[str, dict] = {
     "red_panda_father": {"pivot": 0.68, "x": {"legBL": 0.27, "legBR": 0.43, "legFL": 0.68, "legFR": 0.86}},
     "red_panda_mother": {"pivot": 0.68, "x": {"legFR": 0.16, "legFL": 0.34, "legBR": 0.53, "legBL": 0.68}},
-    "fox_father": {"pivot": 0.7, "x": {"legBL": 0.27, "legBR": 0.38, "legFL": 0.58, "legFR": 0.68}},
-    "bear_father": {"pivot": 0.68, "x": {"legBL": 0.12, "legBR": 0.33, "legFL": 0.55, "legFR": 0.76}},
-    "bear_mother": {"pivot": 0.7, "x": {"legFR": 0.15, "legFL": 0.38, "legBR": 0.58, "legBL": 0.8}},
-    "bison_father": {"pivot": 0.72, "x": {"legBL": 0.13, "legBR": 0.27, "legFL": 0.52, "legFR": 0.68}},
-    "bison_mother": {"pivot": 0.72, "x": {"legFR": 0.13, "legFL": 0.28, "legBR": 0.53, "legBL": 0.69}},
-    "tiger_father": {"pivot": 0.7, "x": {"legBL": 0.22, "legBR": 0.4, "legFL": 0.56, "legFR": 0.71}},
-    "giraffe_father": {"pivot": 0.68, "x": {"legBL": 0.17, "legBR": 0.3, "legFL": 0.47, "legFR": 0.62}},
+    "fox_father": {"pivot": 0.72, "x": {"legBL": 0.33, "legBR": 0.56, "legFL": 0.7, "legFR": 0.86}},
+    "fox_mother": {"pivot": 0.72, "x": {"legFR": 0.16, "legFL": 0.27, "legBR": 0.4, "legBL": 0.62}},
+    "bear_father": {"pivot": 0.68, "x": {"legBL": 0.11, "legBR": 0.3, "legFL": 0.5, "legFR": 0.78}},
+    "bear_mother": {"pivot": 0.7, "x": {"legFR": 0.16, "legFL": 0.42, "legBR": 0.63, "legBL": 0.85}},
+    "bison_father": {"pivot": 0.72, "x": {"legBL": 0.13, "legBR": 0.29, "legFL": 0.49, "legFR": 0.67}},
+    "bison_mother": {"pivot": 0.72, "x": {"legFR": 0.34, "legFL": 0.46, "legBR": 0.7, "legBL": 0.87}},
+    "tiger_father": {"pivot": 0.7, "x": {"legBL": 0.17, "legBR": 0.42, "legFL": 0.6, "legFR": 0.83}},
+    "giraffe_father": {"pivot": 0.66, "x": {"legBL": 0.19, "legBR": 0.42, "legFL": 0.6, "legFR": 0.78}},
+    # mamans (2026-11-20 : « les femelles par contre n'ont pas d'animation ») et autres animaux debout
+    "lion_mother": {"pivot": 0.62, "x": {"legFR": 0.19, "legFL": 0.41, "legBR": 0.55, "legBL": 0.82}},
+    "tiger_mother": {"pivot": 0.66, "x": {"legFR": 0.13, "legFL": 0.36, "legBR": 0.5, "legBL": 0.69}},
+    "giraffe_mother": {"pivot": 0.68, "x": {"legBL": 0.13, "legBR": 0.35, "legFL": 0.55, "legFR": 0.73}},
+    "elephant_father": {"pivot": 0.7, "x": {"legBL": 0.15, "legBR": 0.27, "legFL": 0.44, "legFR": 0.63}},
+    "elephant_mother": {"pivot": 0.72, "x": {"legFR": 0.42, "legFL": 0.6, "legBR": 0.73, "legBL": 0.83}},
+    "polar_bear_father": {"pivot": 0.66, "x": {"legBL": 0.13, "legBR": 0.3, "legFL": 0.6, "legFR": 0.88}},
+    "polar_bear_mother": {"pivot": 0.68, "x": {"legFR": 0.1, "legFL": 0.36, "legBR": 0.57, "legBL": 0.85}},
 }
 
 

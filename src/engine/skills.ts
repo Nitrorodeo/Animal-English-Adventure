@@ -43,7 +43,7 @@ export function chooseTier(player: PlayerState, scriptFor: (tier: Tier) => Quest
 
 export function scriptItems(script: QuestScript): string[] {
   const set = new Set<string>();
-  for (const s of script.steps) if (s.kind === 'ask' || s.kind === 'tapAnchor' || s.kind === 'tapProps' || s.kind === 'seek') s.items.forEach((i) => set.add(i));
+  for (const s of script.steps) if (s.kind === 'ask' || s.kind === 'tapAnchor' || s.kind === 'tapProps' || s.kind === 'seek' || s.kind === 'tapActor') s.items.forEach((i) => set.add(i));
   return [...set];
 }
 

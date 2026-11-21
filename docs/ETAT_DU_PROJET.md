@@ -1,5 +1,67 @@
 # État du projet — Animal English Adventure
 
+*Mis à jour le 2026-11-20 vers 18 h 30 — **Carte élargie puis recentrée, étiquettes fines, vraie profondeur par décor** (demandes du parent : « il doit pouvoir aller quand même assez loin […] complètement au fond du chemin », « on est trop décalé vers la droite, centre-moi ce décor », « les bulles marchent sur les pingouins […] quelque chose de plus petit, de plus fin, de plus premium ») :*
+*- **Carte du monde** 2172×1086 (2:1). Élargie par `scripts/map_wide.py` : les continents sont écartés, la mer est étirée. Elle est ensuite **recentrée** par `scripts/map_center.py` : 135 px d'océan retirés à gauche et 135 px de mer ajoutés à droite, par coutures dans l'eau. Les continents se décalent d'un bloc, sans déformation. Seule la pointe de la Sibérie, coupée par le bord, est un peu allongée dans l'herbe. L'image d'avant le recentrage est gardée : `world_map_avant_centrage.webp`. Ont été recalés : les zones cliquables et les étiquettes (`world.ts`), la baleine, la tortue et les dauphins (`sea.ts`), et les autocollants déjà collés (`toWideMap`, nouveau repère `map: 3`).*
+*- **Étiquettes des continents** : petites pastilles de verre (fond blanc translucide, ombre douce, police plus petite, compteur 🎁 discret derrière un filet). « Africa » est passée dans la mer, à côté du sud de l'Afrique. « Antarctica » est posée sur la banquise, à gauche des manchots. La bulle de jeu des animaux marins est affinée de la même façon. Contrôlé au navigateur en 1879×940, en tablette 1024×768 et en iPhone couché 844×390.*
+*- **Profondeur par décor** (`src/content/places/depth.ts`) : pour chacun des 36 décors, la ligne d'horizon et le fond du sol sont mesurés sur l'image. Un animal posé tout au fond descend jusqu'à 14 % de sa taille (`FARTHEST`) ; par exemple les lions au bout du chemin de la savane. Sur les plages, le bord de la mer est tracé point par point : un animal lâché au-dessus de l'eau reste sur le sable. Sur les rochers (`perches`, et les ancres de type rocher) l'animal se pose dessus, avec la taille qu'il aurait au pied du rocher ; exemple : le lézard sur la grosse pierre de la plage. Les petits animaux au fond sont plus faciles à attraper (zone de prise agrandie, `--grab`).*
+*- **Limite** : l'eau des lacs et des rivières à l'intérieur d'un décor n'est pas encore interdite ; seul le bord de mer du fond l'est.*
+*- Tests : **227 Vitest** (dont `src/game/depth.test.ts`) et typage OK.*
+
+*Mis à jour le 2026-11-20 vers 17 h 30 — **Restes de découpe des autres familles vérifiés et corrigés** (demande du parent : « vérifie les autres familles pour des restes de découpe ») :*
+*- **Ours brun, hérisson, koala** : franges claires, pieds et éclats repris dans `tools/retouches_planches.json` (nouvelles options `"edge": n` = seulement près du vide, `"clear": true` = tout retirer dans la zone) puis personnages redécoupés ; ombre au sol sous les pattes du hérisson papa et plancher entre les pattes des bébés koala retirés. `stacked_seam` rattache maintenant à l'animal voisin les morceaux détachés.*
+*- **Girafe, paresseux** : propres. **Éléphant, tigre, panda, hibou, manchot, phoque, ours polaire, renard, kangourou, lézard** (anciennes planches à fond vert, non régénérables car retouchées à la main) : reflets olive du fond vert repris **en place sur le contour seulement** (`tools/despill_png.py`, `despill_spots` dans `decoupe_planche.py`) ; le cœur du personnage (yeux, feuilles de la fleur) n'est pas touché. Sauvegardes avant correction dans le dossier temporaire de la session. **Lions non touchés.***
+*- **Passe sur tous les défauts restants** (demande : « tu peux vraiment tout corriger ») : `despill_spots` traite aussi les creux olive au cœur (jamais près d'une pupille, d'une vraie feuille ou d'une fleur rose) ; reflets verts du kangourou (4 bébés + maman, entre-jambe), du renard, du lézard, du tigre bébé garçon 4 repris ; point de mousse du toucan maman laissé (détail du dessin).*
+*- **Éclats clairs de contour** (`pale_fringe` dans `decoupe_planche.py`) : restes de fond crème posés sur un pelage plus foncé retirés sur 182 personnages (tous sauf les lions) ; le pelage naturellement clair et les moustaches sont gardés. Sauvegarde avant passe dans le dossier temporaire de la session.*
+*- WebP du jeu, squelettes (`autoRigs.json`) régénérés. Tests : 226 Vitest, 30 tests Python OK. Le typage signale encore des erreurs dans `src/game/depth.test.ts` (autre chantier, non touché).*
+
+*Mis à jour le 2026-11-20 vers 16 h 50 — **Places gardées, carte sans bandes, sens gauche/droite, perspective, marche des mamans** (demandes du parent : « Oui, garde-les », « je veux qu'elle soit full écran, je ne veux pas tes bords Bleus », « il faut qu'il reste dans le sens où on l'a mis », « le rendre encore plus performant et adapté », « les femelles par contre n'ont pas d'animation ») :*
+*- **Places gardées** : chaque animal posé au doigt reste à sa place dans chaque décor, même le lendemain (`src/engine/spots.ts`, sauvegardé dans la partie, anciennes parties compatibles).*
+*- **Carte en plein écran** sans bandes (`src/ui/mapFit.ts`) : elle couvre tout l'écran ; sur un écran très large elle dépasse en haut et en bas et se fait glisser (doigt ou souris) ; les noms des continents restent à l'écran.*
+*- **Sens gauche/droite** : l'animal regarde vers où on l'emmène et garde ce sens une fois posé (sauvegardé) ; bouton « ⇄ Turn around » dans son menu pour le retourner.*
+*- **Perspective réelle** : il rapetisse nettement vers le fond (jusqu'à 42 %) et grossit au premier plan (jusqu'à 130 %), selon la ligne d'horizon du décor ; il ne peut plus monter dans le ciel.*
+*- **Marche plus fluide** : déplacement par `transform` (carte graphique), durée selon la distance (vitesse constante), plus de clignotement gauche/droite sur un petit écart.*
+*- **Pattes animées** ajoutées (`tools/auto_rigs.py`, LEGS) : lionne, tigresse, girafe maman, et éléphants, ours polaires (papa et maman). Jaguars et pandas sont couchés : ils se dandinent. Leo inchangé.*
+*- Tests : 211 Vitest + typage OK. Contrôle au navigateur : place et sens retrouvés après rechargement, Lola marche.*
+
+*Mis à jour le 2026-11-20 vers 16 h 15 — **Planches sur fond crème découpées, 7 familles en HD, fluidité des jeux** (demande du parent : « continue avec les planches qui manquent Tu mets en place tous les décors et surtout tu regardes la fluidité des animations pour les Jeux ») :*
+*- **Planches sur fond crème ou en dégradé** maintenant acceptées par `tools/decoupe_planche.py` : fond reconstitué, ombre au sol retirée, trous du fond (boucle de queue, entre les pattes) retirés ; ventre clair, dents, joues et oreilles gardés. 10 personnages par planche, contrôlés un à un sur fond clair et sombre.*
+*- **7 familles en HD** (WebP 95, 2,6 Mo au total) : ours brun, bison, castor, hérisson (remplacent les anciennes images), **jaguar, toucan, koala** (remplacent le pictogramme). Tailles par espèce ajoutées (jaguar, koala, toucan) ; pattes des marionnettes recalées pour les parents ours et bison. Contrôlé au navigateur : famille jaguar dans la clairière de la jungle.*
+*- **Décors** : les 35 décors de continent (5 par continent) ont leur image source et sont tous utilisés.*
+*- **Fluidité** : la tortue du jeu bonus nage par `transform` au lieu de `left/top` (animée par la carte graphique, sans recalcul de la page). Toutes les autres animations des jeux n'animent déjà que `transform` et l'opacité. Mesure au navigateur : aucune tâche longue pendant les manches.*
+*- **Restes de découpe du jaguar et du bison corrigés** (vers 16 h 40, demande du parent : « corrige les restes de découpe du jaguar et du bison ») : zones de retouche désignées à la main par planche dans `tools/retouches_planches.json`, appliquées par `decoupe_planche.py` (GrabCut dans la zone, ou retrait des seuls pixels pâles presque gris). Retirés : sol sous les pieds du jaguar garçon stade 4 et de la maman jaguar, lueur autour du papa bison, sol sous les sabots des bisons stade 4, fond entre les pattes de la bisonne stade 4. Pattes, moustaches, cornes claires gardées. Contrôlé sur fond sombre.*
+*- **Castor, toucan et jaguar fille stade 3 corrigés aussi** (vers 16 h 55, demande du parent : « corrige aussi le castor, le toucan et la jaguar stade 3 ») : reflet gris au-dessus de la tête du castor garçon stade 4 ; fond rosé resté entre les pieds, sous la queue et le long de la branche des deux toucans parents, et franges blanches des feuilles de la maman ; coin de sol blanc entre les pattes de la jaguar fille stade 3 (mêmes couleurs que le fond de la planche) et petits éclats sous ses orteils. Zones ajoutées dans `tools/retouches_planches.json` (castors, toucans, jaguars). Plus aucun reste connu sur ces familles.*
+*- Tests : 211 Vitest + typage OK ; Python : 26 (découpe dont retouches, préparation, mer).*
+
+*Mis à jour le 2026-11-20 vers 15 h 40 — **Carte en plein écran, bandeau premium, animaux déplaçables** (demandes du parent : « la MAP propre et mise correctement sur toute la page […] le menu en haut beaucoup plus premium » et « prendre n'importe quel animal et le mettre où je veux ») :*
+*- **Carte du monde** : plus de bandes sombres de chaque côté. Le fond prolonge la mer et les nuages de la carte, flouté (`public/assets/backgrounds/world_map_backdrop.webp`, 6 Ko, produit par `python scripts/map_backdrop.py`). Les bords gauche et droit de la carte se fondent dedans ; vignette légère.*
+*- **Bandeau du haut** : fond brun profond, filet doré lumineux, médaillons à anneau d'or avec icônes dessinées (carte, sac, réglages) à la place des émojis ; titre doré « ✦ World Map ✦ » sur la carte, qui se dit à voix haute quand on le touche.*
+*- **Animaux déplaçables** : dans tous les décors, on attrape n'importe quel personnage (parents, bébés) et on le pose où l'on veut. Il rapetisse en s'éloignant (perspective), ne sort pas du décor, et un simple toucher ouvre toujours le menu d'activités ; l'appui long garde chatouilles et câlins. La place choisie est **sauvegardée avec la partie** (décision du parent : « chaque animal reste à l'endroit où l'enfant l'a laissé, même le lendemain ») : par décor et par personnage, dans `player.spots` (`src/engine/spots.ts`, 3 tests ; anciennes parties lues sans souci). Enregistrée quand on lève le doigt, pas à chaque mouvement, pour rester fluide. Pendant une aventure, les personnages reprennent leur place de quête ; la nuit, ils dorment à leur place. Code : `dragSpot` dans `src/ui/drag.ts` (3 tests), `Habitat.tsx`.*
+*- Tests : 199 Vitest + typage OK. Contrôlé au navigateur (glisser de Frankie dans l'outback, place retrouvée après rechargement de la page, toucher simple sur Frida, carte en 1600×780, 1200×640 et tablette en portrait).*
+
+*Mis à jour le 2026-11-20 vers 15 h 10 — **Ours polaire en Antarctique, orque retirée, images HD** :*
+*- **Ours polaire** dans le jeu en Antarctique (décision du parent) : famille complète de 10 personnages, salutations, les 3 aventures d'Antarctique (passe par la banquise), voix générées.*
+*- **Orque retirée du jeu** (demande du parent : « tu enlèves ça ») : espèce, salutations, aventures et données. Une ancienne partie qui avait une famille d'orques se charge toujours (famille gardée dans la sauvegarde, sans photo). L'Antarctique a 3 espèces : manchot, phoque, ours polaire.*
+*- **Images HD, jeu rapide** (« je veux des images hd de partout » puis « le jeu doit rester rapide ») : export en WebP qualité 95, au lieu de 88 pour les personnages et 86 pour les décors. La transparence est gardée sans perte (`tools/prepare_assets.py`, `CHAR_WEBP` / `BG_WEBP`). Taille en pixels inchangée, donc animation aussi fluide. Les images se chargent scène par scène (~0,7 Mo par décor). Total : décors 25 Mo, personnages 5 Mo. Le sans-perte complet a été essayé puis écarté (3 fois plus lourd, différence invisible).*
+*- **Limite réelle de la netteté** : la taille des dessins fournis (planches de 1536×1024, donc environ 300 à 700 px par personnage ; décors en 1672×941). Les images dont la source a disparu gardent leur ancienne version : lion, panda roux, ours brun, bison, castor, hérisson, et 5 décors. Pour aller plus loin : planches plus grandes (un personnage par image), ou un agrandisseur IA à installer (téléchargement à valider par le parent).*
+*- **Mer en HD** : baleine, dauphins et tortue des jeux bonus refaits à partir des dessins du parent (`Animaux/Ocean map/`), avec `scripts/sea_hd.py` (6 tests) : faux damier retiré sous la baleine ; les deux dauphins séparés, chacun avec son éclaboussure, la flaque en fondu. Sorties : `public/assets/sea/*_hd.webp`. La carte du monde garde ses petites découpes, posées exactement sur sa peinture. Contrôlé au navigateur dans les 3 jeux.*
+*- Tests : 193 Vitest + typage OK ; Python : 9 (découpe des planches), 7 (préparation des images), 6 (mer).*
+
+*Mis à jour le 2026-11-20 (après 14 h 40) — **5 décors par continent, familles posées sur la terre** (demandes du parent : « il faut bien que les animaux soient posés sur la terre et pas au milieu de l'eau » et « Tu as la série de 5 images par continent qui doivent être en place et adaptées au personnage »). Contrôle de tous les décors (7 continents × 5) avec la position réelle des pieds de la famille :*
+*- Amérique du Sud : les deux nouvelles images sont en place — « Cascade tropicale… » = `sa_waterfall`, « Clairière tropicale… » = `sa_wetland` (devenu « l'étang de la jungle »), toutes deux **retournées en miroir** pour que le chemin soit à droite, sous la famille ; repères refaits (cascade, eau, arbre, rocher, fleur, chemin…). `sa_valley` retiré (son image n'existe plus) : 5 lieux. L'aventure de l'étang ne parle plus de nénuphars ni de palmier absents de l'image (cascade, eau, fleur rose, grand arbre, feuille, grenouilles sur les rochers) ; voix régénérées.*
+*- Forêt de fougères (Océanie) : la famille était dans le ruisseau → décor retourné en miroir, repères retournés, objets replacés sur les rochers.*
+*- Rivière (Amérique du Sud) et lac des Rocheuses : sol abaissé (groundY 84), la famille se tient sur la berge et non au bord de l'eau.*
+*- Outils : option `"flip"` dans `tools/asset_sources.json` (testée), suivie par `tools/dev/place_tools.py check`.*
+
+*Mis à jour le 2026-11-20 à 12 h 40 — **Toutes les familles fournies sur fond vert ou transparent sont détourées et dans le jeu** : éléphants, girafes, tigres, pandas, renards, hiboux, lézards à collerette, paresseux, kangourous, manchots, phoques (11 familles, 10 personnages chacune). Manchot, phoque et kangourou n'ont plus de pictogramme. Ombre verte entre les pattes retirée (tigres), pattes des marionnettes recalées (renard, tigre, girafe). 192 tests + 12 tests Python. Ce qui manque encore : section « Bloqué / à décider par le parent ».*
+
+*Mis à jour le 2026-11-20 (après 12 h 10) — **Prénom de l'enfant et sa prononciation** : au premier lancement, l'enfant entre son prénom, choisit à l'oreille comment il se dit, et les animaux l'appellent par son prénom (demande du parent : « quand l'enfant se connecte, ils doivent rentrer son prénom, que les animaux interagissent avec lui directement, mais il faut faire attention à la prononciation »). 191 tests.*
+
+*Mis à jour le 2026-11-20 à 12 h 10 — **Lézard à collerette à la place de l'ornithorynque**, **nouveaux décors d'Australie et d'Antarctique**, **dossier Animaux rangé par continent** (demandes du parent : « australie on remplace lui par un lezard a colerrette , je fais le design de la famille / tu as aussi tous les decors de tous les continents » et « range tout »). 178 tests.*
+
+*Mis à jour le 2026-11-20 à 10 h 45 — **Jeux bonus de la mer** : la baleine, la tortue et les dauphins de la carte sont interactifs et ont chacun leur jeu (demande du parent : « Je veux qu'on se serve de ces 3 animaux marins pour faire des jeux bonus. Ils doivent aussi être interactifs. »). 176 tests.*
+
+*Mis à jour le 2026-11-20 à 10 h 15 — **« Simon says! », « Yes or no? », chatouilles et câlins** (demande du parent : « Les 3 conseillées »). 163 tests.*
+
 *Mis à jour le 2026-11-19 à 18 h 45 — **Album de famille, autocollant du jour, bonne nuit** (demande du parent : « fais les 3 idées ») ; les « z z » du sommeil s'affichent enfin. 153 tests.*
 
 *Mis à jour le 2026-11-19 à 18 h 30 — **Cinématiques et finitions** : naissance animée (parents et bébés en marionnettes, cœurs, paquet surprise qui tremble, éclat et confettis), carte « grandit » avec le bébé à son nouveau stade, étoiles une à une et confettis en fin d'activité, carte du lieu pendant les voyages, écran titre soigné. **Parties copiées sur l'ordinateur** et reprises automatiquement par la tablette (section ci-dessous).*
@@ -23,12 +85,66 @@
 ```bash
 npm install          # une seule fois
 npm run dev          # puis ouvrir http://localhost:5173
-npm test             # 153 tests
+npm test             # 191 tests (+ python -m unittest dans tools/tts)
 npm run build        # version statique dans dist/ (+ dist/sw.js pour le hors-ligne)
 npx vite preview --port 4173   # sert dist/ : seule version où le hors-ligne est actif
 npm run assets       # après chaque dépôt d'images dans Animaux/
 npm run voices       # après chaque ajout ou changement de phrase anglaise
 ```
+
+## Découpage des planches de personnages (2026-11-20, mis à jour à 12 h 40)
+
+- `python tools/decoupe_planche.py <planche.png> <dossier> <espece>` : découpe une planche de famille (Papa et Maman en haut, garçon stades 1→4, fille stades 1→4) en 10 images détourées, aux noms attendus par `tools/asset_sources.json`. Tests : `python -m unittest tools/test_decoupe_planche.py tools/test_prepare_assets.py` (12 tests).
+- Fond accepté : **vert vif uni**, planche déjà transparente, ou **fond crème / dégradé doux** (depuis le 2026-11-20 16 h 15 : fond reconstitué, ombre au sol et trous du fond retirés). Fond bruité refusé. Deux animaux qui se touchent sont séparés au point de contact ; l'ombre verte entre les pattes est rendue transparente (une feuille vert sombre près de la tête est gardée).
+- Familles faites et dans le jeu : éléphant, girafe, tigre, panda géant, renard, hibou, lézard à collerette, paresseux, kangourou, manchot, phoque ; puis ours brun, bison, castor, hérisson, jaguar, toucan, koala (fond crème). Kangourou garçon stade 3 : pied repris de la fille stade 3 (son pied était vert sur la planche).
+- Ces espèces sont marquées `"_raw": true` dans `tools/asset_sources.json` : `npm run assets` garde leur bord doux tel quel (pas de seuil ni d'érosion).
+- Les images dont la source a disparu (lion, panda roux ; 3 anciens décors d'Amérique du Sud ; carte du monde, savane, portrait des lions) restent dans le jeu : `npm run assets` garde l'image déjà convertie.
+- Une posture ne change jamais : un animal dessiné couché reste couché (la marionnette respire, parle, se dandine). Phoques couchés, paresseux et castors assis, bébés assis au stade 1 : normal.
+
+## Prénom de l'enfant et sa prononciation (2026-11-20)
+
+- **Premier lancement** : « Play » ouvre l'écran « What's your name? » (dit en anglais, aide française). L'enfant tape son prénom avec le parent, puis écoute « Hello, <prénom>! » de trois façons : 🇫🇷 à la française, 🇬🇧 à l'anglaise, ✏️ comme je l'écris (ex. « Ma-é-la », lu à la française). On garde celle qui sonne juste, puis « C'est parti ! ».
+- **Les animaux l'appellent par son prénom** : titre « Hello, <prénom>! », Maman qui accueille à l'arrivée dans un lieu, « Well done, <prénom>! » du personnage en fin d'aventure, bonne nuit, merci… (27 phrases).
+- **Comment** : l'ordinateur qui sert le jeu enregistre ces 27 phrases avec le prénom (≈ 40 s, en arrière-plan) : la phrase anglaise est convertie en sons, les sons du prénom (prononciation choisie) y sont insérés, puis la voix Kokoro dit le tout. Rangé dans `prenoms/<id>/` (privé, ignoré par git). Essai d'écoute ≈ 6 s.
+- **Sans l'ordinateur** (jeu copié ailleurs, voix pas encore prêtes) : rien ne casse, les animaux disent les phrases sans prénom, comme avant.
+- **Espace parents** : prénom, prononciation, état des voix, bouton « Changer le prénom ou sa prononciation ». Aucun verrou.
+- Code : `src/engine/nameVoice.ts` (décisions testées), `src/ui/NameSetup.tsx`, `src/ui/useNameVoices.ts`, `src/audio/speech.ts` (`setNameVoice`, `sequence`), `tools/names/namePlugin.mjs` (serveur), `tools/tts/name_voices.py` (voix). Tests : `src/engine/nameVoice.test.ts`, `src/audio/speech.test.ts`, `tools/tts/test_name_voices.py`.
+- Vérifié au navigateur avec un prénom d'essai (« Chloé ») : écran du prénom, trois essais d'écoute, choix sauvegardé, 27 phrases prêtes, titre dit avec le prénom après rechargement. Partie d'essai effacée ensuite.
+- Limite : la prononciation « à l'anglaise » ou « à la française » vient d'un convertisseur automatique ; pour un prénom rare, la carte « Comme je l'écris » est la solution.
+
+## Lézard à collerette, décors d'Australie et d'Antarctique, dossier Animaux rangé (2026-11-20, 12 h 10)
+
+- **Dossier `Animaux/` rangé** : un dossier par continent, une famille par sous-dossier (`tools/asset_sources.json` suit les nouveaux chemins).
+- **Lézard à collerette** (`frilled_lizard`, Frankie et Frida, 🦎) remplace l'ornithorynque en Océanie : 10 dessins du parent (parents + 4 stades fille et garçon), squelettes animés (4 pattes), salutations. Une ancienne sauvegarde qui contiendrait une famille d'ornithorynques ne casse pas l'album (test).
+- **Australie : 5 vrais décors** (`Continant/Oceanie/01…05`) : outback rouge, forêt d'eucalyptus, gorges rouges, plage ensoleillée, forêt de fougères de Tasmanie. Les 4 anciens lieux `oc_*` (images d'Amérique du Sud) sont retirés du jeu ; leurs webp restent sur le disque.
+  - Kangourou : les 5 lieux. Koala : eucalyptus et plage (pas de koala en Tasmanie). Lézard : outback, eucalyptus, gorges, plage.
+  - Aventures adaptées : les étoiles (forêt d'eucalyptus), **le coquillage doré** (plage, remplace la noix de coco : pas de cocotier dans le décor), la cascade arc-en-ciel (eucalyptus ; le kangourou continue en forêt de fougères), l'outback rouge (kangourou et lézard, puis on boit aux gorges). Les identifiants internes des aventures sont gardés pour les sauvegardes ; l'ancien trésor « noix de coco dorée » reste reconnu.
+- **Antarctique : 5 vrais décors** (`Continant/Antartic/`) : banquise, grotte de glace, plaine enneigée, mer froide, banquise du soir. Fin du décor provisoire en dégradé. Le bateau, l'igloo et la vague (absents des images) sont remplacés par la falaise, le rocher, la glace ; l'oiseau vole désormais comme objet dans le ciel ; le manchot rentre dans la grotte de glace.
+- Contrôlé au navigateur (1024 × 768) : Océanie → lézard dans l'outback, Antarctique → manchots sur la banquise, décors chargés.
+- **Non intégrés pour l'instant** : les packs Jaguars, Toucans, Paresseux, Kangourous et Koalas présents dans `Animaux/` ne sont pas encore câblés comme personnages ; manchot, phoque et orque n'ont pas encore de dessins (pictogrammes).
+- ~~À voir avec le parent~~ réglé le 20/11 après 14 h 40 : les deux nouvelles images d'Amérique du Sud sont câblées, `sa_valley` retiré.
+
+## Jeux bonus de la mer (2026-11-20, 10 h 45)
+
+Demande du parent : « Je veux qu'on se serve de ces 3 animaux marins pour faire des jeux bonus. Ils doivent aussi être interactifs. » Testé au navigateur en taille tablette (1024 × 768) ; partie de test effacée ensuite.
+
+- **Sur la carte** : la baleine, la tortue et les deux dauphins peints sur la carte sont recouverts de leur découpe exacte (`public/assets/sea/*.webp`, fabriquées par `python scripts/sea_sprites.py public/assets/backgrounds/world_map.webp public/assets/sea`). Au toucher, l'animal grossit et se dandine, dit bonjour avec sa voix (« Splash! I'm a big blue whale! Let's play! ») et une bulle ▶ propose son jeu. Pas de verrou ni d'ordre imposé.
+- **Baleine, « Count my splashes! »** : elle souffle 1 à 5 jets d'eau, qui restent affichés pour qu'on puisse les compter, puis l'enfant touche la bonne carte (chiffre + mot). Erreur : « Oops! Watch again! », puis elle compte avec l'enfant (« One, Two, Three! ») et la bonne carte brille. Toucher la baleine relance les jets.
+- **Tortue, « Find it! »** : trouver le poisson, le crabe, le coquillage ou la pieuvre dans des bulles ; la tortue nage jusqu'à la bonne. Toucher la tortue redit la consigne.
+- **Dauphins, « Big or little? »** : « Big dolphin, jump! » ; on touche le bon dauphin, qui saute, nage ou éclabousse. Le mauvais répond « Not me! I'm the little dolphin! » ; à la 2e erreur, l'indice est dit et le bon dauphin brille.
+- Fin : étoiles, confettis, retour à la carte ; les mots joués (nombres, fish, crab, shell, octopus, big, little, jump, swim, splash) arrivent au passeport (`seaReward`).
+- Code : `src/content/sea.ts` (textes), `src/engine/sea.ts` (lecteur pur, déterministe), `src/ui/SeaBonus.tsx`, `src/ui/WorldMap.tsx`, écran `sea` dans `App.tsx`. Nouveaux mots `little`, `crab`, `octopus`. Voix : 48 enregistrements. Tests : `src/engine/sea.test.ts` (13 tests).
+- Limite : les découpes gardent un léger halo de l'eau de la carte ; il se fond bien dans la mer de l'écran bonus.
+
+## Simon says, Yes or no, chatouilles et câlins (2026-11-20, 10 h 15)
+
+Demande du parent : « Les 3 conseillées ». Testé en taille tablette (1024 × 768) avec une partie fictive de lions (2 bébés), effacée ensuite (navigateur et `saves/`).
+
+- **« Simon says! »** (`family_orders`, `src/content/activities/play.ts`, menu de tous les personnages) : la voix dit « Daddy, jump! », « Baby girl, dance! »… ; l'enfant touche le bon membre de la famille, qui le fait aussitôt. Mauvais personnage : il répond « Not me! Find … ! » ; à la 2e erreur, l'indice est dit et le bon personnage brille. Papa et Maman au niveau débutant, + le bébé au niveau intermédiaire, + le 2e bébé au niveau expert. Un geste différent par personnage (seulement ceux que l'espèce sait faire ; le panda n'en a que 3 pour 4, une répétition est alors possible). Nouvelle étape `tapActor` (types, lecteur, voix, validation).
+- **« Yes or no? »** (`yes_or_no`) : questions rigolotes à la première personne (« Can I fly? », « Do I eat bamboo? ») et générales (« Is the sun cold? », « Do cats say woof? ») ; réponse 👍 / 👎 sans lire. Les questions sur l'animal viennent de ses vraies capacités et de sa vraie nourriture. 3 questions (débutant), 5, puis 6 (expert). Classé « talk » pour ne pas prendre, au canyon, la place du jeu de l'écho.
+- **Chatouilles et câlins** (`src/engine/cuddles.ts`) : **appui long** (un peu plus d'une demi-seconde) sur un bébé → il rit (« Hee, hee! That tickles! », « I love you! »…) ; sur un parent → câlin (« Aww! A big hug! »). Cœurs qui montent. Un simple toucher ouvre toujours le menu. Désactivé pendant la nuit.
+- **Défaut corrigé** : les mots des étapes « toucher le bon personnage » n'étaient pas comptés (`scriptItems`) : ils manquaient au passeport et le jeu restait en bas du classement du menu.
+- Voix : 457 nouveaux enregistrements (`npm run voices`). Tests : `src/engine/play.test.ts` (10 tests).
 
 ## Album de famille, autocollant du jour, bonne nuit (2026-11-19, 18 h 45)
 
@@ -157,7 +273,7 @@ Constaté dans le navigateur (savane, lion) : Papa propose empreintes / course /
 
 | Domaine | Ce qui marche | Vérifié |
 |---|---|---|
-| **Aventures** (27) | Histoires en plusieurs scènes propres à chaque continent, avec un trésor à gagner : Afrique 4, Asie 4, Europe 4, Amérique du Nord 4, Amérique du Sud 4, Océanie 4, Antarctique 3. Chaque espèce en vit au moins 3 (orque : 2). Données : `src/content/adventures/<continent>.ts` | tests + navigateur (Afrique, Asie) |
+| **Aventures** (27) | Histoires en plusieurs scènes propres à chaque continent, avec un trésor à gagner : Afrique 4, Asie 4, Europe 4, Amérique du Nord 4, Amérique du Sud 4, Océanie 4, Antarctique 3. Chaque espèce en vit au moins 3 (l'orque, qui en avait 2, a été retirée le 2026-11-20). Données : `src/content/adventures/<continent>.ts` | tests + navigateur (Afrique, Asie) |
 | **Vocabulaire par continent** | Chaque aventure travaille les mots de son décor (bambou, brume, arche, cascade, érable, banquise…) ; le passeport range les mots appris par continent | tests + navigateur |
 | **Voyages** | Une aventure peut emmener la famille d'un lieu à l'autre **du même continent** (fondu enchaîné, nouveau décor) ; la famille reste au lieu d'arrivée ; une bande de vignettes permet de changer de lieu à tout moment | navigateur |
 | **15 jeux** (activités courtes) | Dire bonjour, présenter la famille, trouver de l'eau, trouver à manger, apprendre un mot au bébé, se souvenir d'hier, aider frère/sœur, compter, couleurs, cache-cache, météo, ce que l'animal sait faire, comparer, que se passe-t-il, où est-ce | tests (198 192 variantes jouées) + navigateur |
@@ -212,7 +328,7 @@ Constaté dans le navigateur (savane, lion) : Papa propose empreintes / course /
 - Après une mise à jour pendant que le jeu est ouvert, une page blanche peut apparaître (cache du navigateur) : recharger avec Ctrl + F5.
 
 - **Dessins manquants** (le parent les fournira) : lion, éléphant, girafe, panda géant, tigre, panda roux, renard, ours, bison, castor, hibou et hérisson ont des sprites (paresseux, jaguar, toucan, kangourou, koala, ornithorynque, manchot, phoque, orque : pictogramme) ; les autres espèces ont un pictogramme. Décors de l'Antarctique provisoires (dégradés), sans point d'eau.
-- Décors : l'image de `sa_valley` vient du dossier Océanie ; `sa_andes` et `sa_valley` ne servent à aucune aventure (seul le toucan y va) ; quelques points du décor sont dans la zone de la famille.
+- Décors : `sa_andes` ne sert à aucune aventure (seul le toucan y va) ; quelques points du décor sont dans la zone de la famille.
 - Objets : pas encore de perle, arc-en-ciel, grenouille ou banane en objets à toucher ; la pluie est racontée sur des décors ensoleillés ; certaines vérifications de couleur sont approximatives (stone / rock presque doublons).
 - Le hibou n'a pas d'animation de vol pour se déplacer (il se dandine).
 - Prénoms : les voix enregistrées ne prononcent pas les prénoms libres (la bulle les affiche).
@@ -259,6 +375,11 @@ Fonctionnement :
 
 ## Bloqué / à décider par le parent
 
+- ~~Planches à refaire sur fond vert~~ : fait le 2026-11-20 (16 h 15), les planches sur fond crème sont découpées directement (bisons, castors, ours bruns, jaguars, toucans, hérissons, koalas).
+- **Parents couchés à refaire debout** sur fond vert : jaguars, pandas géants (les pandas actuels, parents couchés, restent dans le jeu en attendant), panthères des neiges (pas encore dans le jeu).
+- **Panda roux** : dossier supprimé à la demande du parent ; l'espèce reste jouable avec ses anciennes images. À confirmer : la garder ou la retirer (la panthère des neiges la remplacerait en Asie).
+- **Deux nouveaux décors d'Amérique du Sud** (« Cascade tropicale… », « Clairière tropicale… ») pas encore utilisés : les anciens décors cascade, zone humide et vallée, déjà réglés (points touchables), restent en place.
+- Fichiers en vrac laissés tels quels : 10 PNG à la racine de `Animaux/Amerique du Sud/Paresseux/`, 4 PNG à la racine de `Animaux/Oceanie/Kangourous/`, et les zips (Antarctique, Girafes, Paresseux).
 - **Voyage accompagné d'animaux entre continents** : proposé, **non validé** — non implémenté. Les voyages de la V2 restent **à l'intérieur d'un continent**.
 - Style des lions : voir la note de droits dans `docs/INVENTAIRE_ASSETS.md`.
 
@@ -269,6 +390,7 @@ Fonctionnement :
 | Pas de Phaser : scène en couches DOM/CSS en pourcentages | Scènes de dialogue et de toucher, pas de physique ; plus léger, accessible, testable ; Phaser pourra être ajouté pour des mini-jeux |
 | Sauvegarde `localStorage` versionnée plutôt qu'IndexedDB | Volume minuscule, synchrone, testable ; migration prévue |
 | Versions figées (React 19.3.1, Vite 7.3.8, TypeScript 5.9.3, Vitest 3.2.7) | Reproductibilité |
+| Chaque espèce n'a que les décors de son continent où elle est plausible (`allowedBiomes` dans `src/content/species.ts`, de 2 à 6 décors), pas les 5 pour tout le monde | Cohérence habitat/espèce (cahier des charges §47). Expliqué au parent le 2026-11-20, qui l'approuve (« c'est une bonne idée »). Règle ajoutée par le parent le même jour : **au minimum 3 décors par animal** ; il verra lui-même ce qui manque. Sous ce seuil aujourd'hui : **castor** (2 : lac, séquoias) et **koala** (2 : eucalyptus, plage) |
 | Pas de polices Google | Hors-ligne et aucune requête externe |
 | Dialogues = bibliothèque de répliques validées + variables `{actorName}`… | Exigence « dialogues contrôlés, pas d'IA générative » |
 | Images préparées par `tools/prepare_assets.py` (détourage, WebP) | L'utilisatrice dépose ses dessins dans `Animaux/` sans retouche manuelle |

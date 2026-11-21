@@ -54,6 +54,13 @@ function play(script: QuestScript, mistakes: number): string[] {
         if (!rv || rv.length !== 1 || rv[0] !== step.targets[0]) errors.push(`${script.id} #${s.index}: aide de l'ordre absente`);
       }
       for (const t of step.targets) act({ type: 'tapProp', prop: t });
+    } else if (step.kind === 'tapActor') {
+      // un autre membre de la famille d'abord (« Not me! »), puis le bon
+      const wrongWho = step.target === 'father' ? 'mother' : 'father';
+      for (let m = 0; m < mistakes; m++) act({ type: 'tapActor', who: [wrongWho] });
+      if (mistakes >= 2 && revealTarget(script, r.state)?.actor !== step.target) errors.push(`${script.id} #${s.index}: aide absente`);
+      act({ type: 'tapActor', who: ['actor', step.target] });
+      if (r.state.acting?.who !== step.target) errors.push(`${script.id} #${s.index}: le personnage touché ne bouge pas`);
     } else if (step.kind === 'command') {
       // « Fly! » d'abord (réponse drôle, sans progrès), puis les ordres faisables jusqu'au compte
       const silly = step.options.findIndex((o) => !o.action);

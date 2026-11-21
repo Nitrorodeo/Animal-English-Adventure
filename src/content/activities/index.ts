@@ -3,6 +3,7 @@ import type { ActivityDef } from '../types';
 import { findFood, findObject, findWater, greeting, nameObject } from './basic';
 import { familyPresentation, helpSibling, rememberYesterday } from './family';
 import { AFRICA_ACTIVITIES } from './africa';
+import { familyOrders, yesOrNo } from './play';
 import { animalAbilities, compareObjects, countObjects, describeActions, hideAndSeek, identifyColors, weatherCheck } from './games';
 
 export const ACTIVITIES: readonly ActivityDef[] = [
@@ -21,6 +22,8 @@ export const ACTIVITIES: readonly ActivityDef[] = [
   familyPresentation,
   rememberYesterday,
   helpSibling,
+  familyOrders,
+  yesOrNo,
   ...AFRICA_ACTIVITIES,
 ];
 

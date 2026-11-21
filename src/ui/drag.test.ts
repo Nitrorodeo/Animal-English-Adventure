@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { clampOffset, isDrag } from './drag';
+import { clampOffset, dragSpot, isDrag } from './drag';
+import { depthScale } from '../game/staging';
 
 const stage = { left: 0, top: 0, right: 1000, bottom: 560 };
 // bulle à sa place d'origine : en bas à gauche
@@ -23,5 +24,34 @@ describe('bulle de dialogue déplaçable', () => {
   it('un petit tremblement reste un toucher', () => {
     expect(isDrag({ x: 2, y: 3 })).toBe(false);
     expect(isDrag({ x: 8, y: 0 })).toBe(true);
+  });
+});
+
+describe('animal déplacé dans le décor', () => {
+  const home = { x: 70, y: 80, h: 34 };
+  const flat = () => 1;
+  it('suit le doigt, pieds sous le doigt décalés de la prise', () => {
+    expect(dragSpot(home, { x: 20, y: 60 }, 5, flat)).toEqual({ x: 20, y: 65, h: 34 });
+  });
+  it('rapetisse en partant au fond, grandit en revenant', () => {
+    expect(dragSpot(home, { x: 50, y: 60 }, 0, depthScale).h).toBeLessThan(34);
+    expect(dragSpot(home, { x: 50, y: 95 }, 0, depthScale).h).toBeGreaterThan(34);
+  });
+  it('reste entier dans la scène', () => {
+    const top = dragSpot(home, { x: -50, y: -40 }, 0, depthScale);
+    expect(top.x).toBe(3);
+    expect(top.y - top.h).toBeGreaterThanOrEqual(1);
+    const low = dragSpot(home, { x: 500, y: 300 }, 0, depthScale);
+    expect(low.x).toBe(97);
+    expect(low.y).toBe(99.5);
+  });
+  it('ne monte pas dans le ciel : pas plus au fond que le sol permis', () => {
+    expect(dragSpot(home, { x: 50, y: 20 }, 0, flat, 64).y).toBe(64);
+  });
+  it('sur un rocher, il peut être plus haut que le sol permis, à la taille du pied du rocher', () => {
+    const rock = (x: number, y: number) => (x > 10 && x < 30 && y > 30 && y < 40 ? 70 : undefined);
+    const scale = (_from: number, to: number) => to / 100;
+    expect(dragSpot(home, { x: 20, y: 35 }, 0, scale, 64, rock)).toEqual({ x: 20, y: 35, h: 34 * 0.7 });
+    expect(dragSpot(home, { x: 50, y: 35 }, 0, scale, 64, rock)).toEqual({ x: 50, y: 64, h: 34 * 0.64 }); // pas de rocher : sol
   });
 });

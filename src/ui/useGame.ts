@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { speech } from '../audio/speech';
+import { isStaticSite } from '../engine/access';
 import { BACKUP_DELAY_MS, BACKUP_PATH, hasProgress, parseBackup, shouldRestore } from '../engine/backup';
 import { loadGame, memoryStorage, resetGame, saveGame, type LoadStatus, type StorageLike } from '../engine/save';
 import { newGameState, variableNames, type GameState } from '../engine/state';
+import { useNameVoices } from './useNameVoices';
 
 function browserStorage(): StorageLike {
   try {
@@ -17,8 +19,11 @@ function browserStorage(): StorageLike {
 
 /** Copie de la partie sur l'ordinateur qui sert le jeu (voir engine/backup.ts) : échoue en silence sans lui. */
 const backupUrl = () => `${import.meta.env.BASE_URL}${BACKUP_PATH}`;
+/** version en ligne : pas d'ordinateur derrière, la partie n'est envoyée nulle part */
+const PC_SERVER = !isStaticSite(import.meta.env);
 
 async function fetchBackup(): Promise<GameState | null> {
+  if (!PC_SERVER) return null;
   try {
     const r = await fetch(backupUrl(), { cache: 'no-store' });
     return r.status === 200 ? parseBackup(await r.text()) : null;
@@ -28,6 +33,7 @@ async function fetchBackup(): Promise<GameState | null> {
 }
 
 function sendBackup(method: 'PUT' | 'DELETE', state?: GameState): void {
+  if (!PC_SERVER) return;
   try {
     void fetch(backupUrl(), { method, keepalive: true, headers: { 'Content-Type': 'application/json' }, body: state ? JSON.stringify(state) : undefined }).catch(() => undefined);
   } catch {
@@ -84,5 +90,8 @@ export function useGame() {
     setState(newGameState());
   }, []);
 
-  return { state, setState, loadStatus, restored, reset };
+  // phrases dites avec le prénom de la joueuse, préparées par l'ordinateur (engine/nameVoice.ts)
+  const nameVoice = useNameVoices(state.player.name, state.player.namePron);
+
+  return { state, setState, loadStatus, restored, reset, nameVoice };
 }

@@ -2,15 +2,15 @@
   "_comment": "Correspondance entre les images déposées dans Animaux/ et les assets du jeu. Relancer `npm run assets` après chaque ajout. Les coordonnées 'seed' (x, y en pixels de l'image source) désignent un point à l'intérieur du personnage à extraire d'une planche.",
   "backgrounds": {
     "world_map": {
-      "src": "Animaux/Lion/Image ChatGPT 18 nov. 2026, 10_50_11-2.png",
+      "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_11-2.png",
       "maxWidth": 1920
     },
     "savanna": {
-      "src": "Animaux/Lion/Image ChatGPT 18 nov. 2026, 10_50_14-3.png",
+      "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_14-3.png",
       "maxWidth": 1920
     },
     "lion_family_portrait": {
-      "src": "Animaux/Lion/Image ChatGPT 18 nov. 2026, 10_50_09-1.png",
+      "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_09-1.png",
       "maxWidth": 1400
     },
     "africa_waterhole": {
@@ -98,8 +98,9 @@
       "maxWidth": 1672
     },
     "sa_waterfall": {
-      "src": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_09-2.png",
-      "maxWidth": 1672
+      "src": "Continant/Amerique du sud/Cascade tropicale dans la jungle luxuriante-2.png",
+      "maxWidth": 1672,
+      "flip": true
     },
     "sa_river": {
       "src": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_10-3.png",
@@ -110,436 +111,742 @@
       "maxWidth": 1672
     },
     "sa_wetland": {
-      "src": "Continant/Amerique du sud/Image ChatGPT 19 nov. 2026, 09_03_15-5.png",
+      "src": "Continant/Amerique du sud/Clairière tropicale et cascade enchantée-1.png",
+      "maxWidth": 1672,
+      "flip": true
+    },
+    "oc_outback": {
+      "src": "Continant/Oceanie/01_Outback_rouge.png",
       "maxWidth": 1672
     },
-    "sa_valley": {
-      "src": "Continant/Oceanie/Paysage andin avec ruines incas et rivière-3.png",
+    "oc_eucalyptus": {
+      "src": "Continant/Oceanie/02_Foret_eucalyptus.png",
       "maxWidth": 1672
     },
-    "oc_waterfall": {
-      "src": "Continant/Oceanie/Cascade tropicale dans la jungle luxuriante-2.png",
+    "oc_gorge": {
+      "src": "Continant/Oceanie/03_Gorges_Kimberley.png",
       "maxWidth": 1672
     },
-    "oc_clearing": {
-      "src": "Continant/Oceanie/Clairière tropicale et cascade enchantée-1.png",
+    "oc_beach": {
+      "src": "Continant/Oceanie/04_Cote_tropicale.png",
       "maxWidth": 1672
     },
-    "oc_forest": {
-      "src": "Continant/Oceanie/Forêt tropicale et cascades scintillantes-5.png",
+    "oc_fern_forest": {
+      "src": "Continant/Oceanie/05_Foret_fougeres_Tasmanie.png",
+      "maxWidth": 1672,
+      "flip": true
+    },
+    "ice_coast": {
+      "src": "Continant/Antartic/Image ChatGPT 20 nov. 2026, 09_50_12-1.png",
       "maxWidth": 1672
     },
-    "oc_lagoon": {
-      "src": "Continant/Oceanie/Jungle tropicale enchantée aux nénuphars-4.png",
+    "an_ice_cave": {
+      "src": "Continant/Antartic/Image ChatGPT 20 nov. 2026, 09_50_14-2.png",
       "maxWidth": 1672
+    },
+    "an_snowfield": {
+      "src": "Continant/Antartic/Image ChatGPT 20 nov. 2026, 09_50_16-3.png",
+      "maxWidth": 1672
+    },
+    "open_sea": {
+      "src": "Continant/Antartic/Image ChatGPT 20 nov. 2026, 09_50_19-4.png",
+      "maxWidth": 1672
+    },
+    "an_aurora": {
+      "src": "Continant/Antartic/Image ChatGPT 20 nov. 2026, 09_50_21-5.png",
+      "maxWidth": 1672
+    },
+    "na_beaver_pond": {
+      "src": "Animaux/Amerique du Nord/Castors/Image ChatGPT 21 nov. 2026, 07_56_29-1.png",
+      "maxWidth": 1672,
+      "flip": true
+    },
+    "na_redwood_trail": {
+      "src": "Animaux/Amerique du Nord/Castors/Image ChatGPT 21 nov. 2026, 07_56_34-2.png",
+      "maxWidth": 1672
+    },
+    "oc_gum_woodland": {
+      "src": "Animaux/Oceanie/Koalas/Image ChatGPT 21 nov. 2026, 07_56_37-3.png",
+      "maxWidth": 1672
+    },
+    "oc_rocky_cove": {
+      "src": "Animaux/Oceanie/Koalas/Image ChatGPT 21 nov. 2026, 07_56_41-4.png",
+      "maxWidth": 1672,
+      "flip": true
     }
   },
   "characters": {
     "lion": {
       "father": {
-        "src": "Animaux/Lion/Image ChatGPT 18 nov. 2026, 10_50_16-4.png"
+        "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_16-4.png"
       },
       "mother": {
-        "src": "Animaux/Lion/Image ChatGPT 18 nov. 2026, 10_50_19-5.png"
+        "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_19-5.png"
       },
       "boy": {
-        "src": "Animaux/Lion/Image ChatGPT 18 nov. 2026, 10_50_21-6.png"
+        "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_21-6.png"
       },
       "girl": {
-        "src": "Animaux/Lion/Image ChatGPT 18 nov. 2026, 10_50_23-7.png"
+        "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_23-7.png"
       }
     },
     "elephant": {
-      "_sheet": "Animaux/elephant/Famille Éléphant et étapes de croissance.png",
+      "_raw": true,
       "father": {
-        "sheet": true,
-        "seed": [
-          400,
-          220
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/papa_elephant.png"
       },
       "mother": {
-        "sheet": true,
-        "seed": [
-          980,
-          230
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/maman_elephant.png"
       },
       "boy_newborn": {
-        "sheet": true,
-        "seed": [
-          300,
-          600
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "sheet": true,
-        "seed": [
-          580,
-          600
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "sheet": true,
-        "seed": [
-          880,
-          590
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "sheet": true,
-        "seed": [
-          1250,
-          600
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "sheet": true,
-        "seed": [
-          310,
-          880
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "sheet": true,
-        "seed": [
-          580,
-          880
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "sheet": true,
-        "seed": [
-          880,
-          880
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "sheet": true,
-        "seed": [
-          1250,
-          880
-        ]
+        "src": "Animaux/Afrique/Elephants/elephant/bebe_fille_stade_4.png"
       }
     },
     "giraffe": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Girafes/girafe/papa_girafe.png"
+        "src": "Animaux/Afrique/Girafes/girafe/papa_girafe.png"
       },
       "mother": {
-        "src": "Animaux/Girafes/girafe/maman_girafe.png"
+        "src": "Animaux/Afrique/Girafes/girafe/maman_girafe.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Girafes/girafe/bebe_garcon_stade_1.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Girafes/girafe/bebe_garcon_stade_2.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Girafes/girafe/bebe_garcon_stade_3.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Girafes/girafe/bebe_garcon_stade_4.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Girafes/girafe/bebe_fille_stade_1.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Girafes/girafe/bebe_fille_stade_2.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Girafes/girafe/bebe_fille_stade_3.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Girafes/girafe/bebe_fille_stade_4.png"
+        "src": "Animaux/Afrique/Girafes/girafe/bebe_fille_stade_4.png"
       }
     },
     "giant_panda": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Pandas/panda/papa_panda.png"
+        "src": "Animaux/Asie/Pandas/panda/papa_panda.png"
       },
       "mother": {
-        "src": "Animaux/Pandas/panda/maman_panda.png"
+        "src": "Animaux/Asie/Pandas/panda/maman_panda.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Pandas/panda/bebe_garcon_stade_1.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Pandas/panda/bebe_garcon_stade_2.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Pandas/panda/bebe_garcon_stade_3.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Pandas/panda/bebe_garcon_stade_4.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Pandas/panda/bebe_fille_stade_1.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Pandas/panda/bebe_fille_stade_2.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Pandas/panda/bebe_fille_stade_3.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Pandas/panda/bebe_fille_stade_4.png"
+        "src": "Animaux/Asie/Pandas/panda/bebe_fille_stade_4.png"
       }
     },
     "tiger": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Tigres/tigre/papa_tigre.png"
+        "src": "Animaux/Asie/Tigres/tigre/papa_tigre.png"
       },
       "mother": {
-        "src": "Animaux/Tigres/tigre/maman_tigre.png"
+        "src": "Animaux/Asie/Tigres/tigre/maman_tigre.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Tigres/tigre/bebe_garcon_stade_1.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Tigres/tigre/bebe_garcon_stade_2.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Tigres/tigre/bebe_garcon_stade_3.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Tigres/tigre/bebe_garcon_stade_4.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Tigres/tigre/bebe_fille_stade_1.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Tigres/tigre/bebe_fille_stade_2.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Tigres/tigre/bebe_fille_stade_3.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Tigres/tigre/bebe_fille_stade_4.png"
+        "src": "Animaux/Asie/Tigres/tigre/bebe_fille_stade_4.png"
       }
     },
     "red_panda": {
       "father": {
-        "src": "Animaux/panda roux/panda_roux/papa_panda_roux.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/papa_panda_roux.png"
       },
       "mother": {
-        "src": "Animaux/panda roux/panda_roux/maman_panda_roux.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/maman_panda_roux.png"
       },
       "boy_newborn": {
-        "src": "Animaux/panda roux/panda_roux/bebe_garcon_stade_1.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/panda roux/panda_roux/bebe_garcon_stade_2.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/panda roux/panda_roux/bebe_garcon_stade_3.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/panda roux/panda_roux/bebe_garcon_stade_4.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/panda roux/panda_roux/bebe_fille_stade_1.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/panda roux/panda_roux/bebe_fille_stade_2.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/panda roux/panda_roux/bebe_fille_stade_3.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/panda roux/panda_roux/bebe_fille_stade_4.png"
+        "src": "Animaux/Asie/Pandas_Roux/panda_roux/bebe_fille_stade_4.png"
       }
     },
     "fox": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Renards/renards/papa_renard.png"
+        "src": "Animaux/Europe/Renards/renard/papa_renard.png"
       },
       "mother": {
-        "src": "Animaux/Renards/renards/maman_renarde.png"
+        "src": "Animaux/Europe/Renards/renard/maman_renard.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Renards/renards/bebe_garcon_stade_1.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Renards/renards/bebe_garcon_stade_2.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Renards/renards/bebe_garcon_stade_3.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Renards/renards/bebe_garcon_stade_4.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Renards/renards/bebe_fille_stade_1.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Renards/renards/bebe_fille_stade_2.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Renards/renards/bebe_fille_stade_3.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Renards/renards/bebe_fille_stade_4.png"
+        "src": "Animaux/Europe/Renards/renard/bebe_fille_stade_4.png"
       }
     },
     "bear": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Ours_Bruns/ours/papa_ours.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/papa_ours.png"
       },
       "mother": {
-        "src": "Animaux/Ours_Bruns/ours/maman_ourse.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/maman_ours.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_garcon_stade_1.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_garcon_stade_2.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_garcon_stade_3.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_garcon_stade_4.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_fille_stade_1.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_fille_stade_2.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_fille_stade_3.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Ours_Bruns/ours/bebe_fille_stade_4.png"
+        "src": "Animaux/Amerique du Nord/Ours_Bruns/ours/bebe_fille_stade_4.png"
       }
     },
     "bison": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/papa_bison.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/papa_bison.png"
       },
       "mother": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/maman_bison.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/maman_bison.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_garcon_stade_1.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_garcon_stade_2.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_garcon_stade_3.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_garcon_stade_4.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_fille_stade_1.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_fille_stade_2.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_fille_stade_3.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Bisons/Pack_Bisons_10_Personnages/bebe_fille_stade_4.png"
+        "src": "Animaux/Amerique du Nord/Bisons/bison/bebe_fille_stade_4.png"
       }
     },
     "beaver": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/papa_castor.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/papa_castor.png"
       },
       "mother": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/maman_castor.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/maman_castor.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_garcon_stade_1.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_garcon_stade_2.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_garcon_stade_3.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_garcon_stade_4.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_fille_stade_1.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_fille_stade_2.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_fille_stade_3.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Castors/Pack_Castors_10_Personnages/bebe_fille_stade_4.png"
+        "src": "Animaux/Amerique du Nord/Castors/castor/bebe_fille_stade_4.png"
       }
     },
     "hedgehog": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/papa_herisson.png"
+        "src": "Animaux/Europe/Herissons/herisson/papa_herisson.png"
       },
       "mother": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/maman_herisson.png"
+        "src": "Animaux/Europe/Herissons/herisson/maman_herisson.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_garcon_stade_1.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_garcon_stade_2.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_garcon_stade_3.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_garcon_stade_4.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_fille_stade_1.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_fille_stade_2.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_fille_stade_3.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Herissons/Pack_Herissons_10_Personnages/bebe_fille_stade_4.png"
+        "src": "Animaux/Europe/Herissons/herisson/bebe_fille_stade_4.png"
       }
     },
     "owl": {
+      "_raw": true,
       "father": {
-        "src": "Animaux/Hiboux/hiboux/papa_hibou.png"
+        "src": "Animaux/Europe/Hiboux/hibou/papa_hibou.png"
       },
       "mother": {
-        "src": "Animaux/Hiboux/hiboux/maman_hibou.png"
+        "src": "Animaux/Europe/Hiboux/hibou/maman_hibou.png"
       },
       "boy_newborn": {
-        "src": "Animaux/Hiboux/hiboux/bebe_garcon_stade_1.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_garcon_stade_1.png"
       },
       "boy_little": {
-        "src": "Animaux/Hiboux/hiboux/bebe_garcon_stade_2.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_garcon_stade_2.png"
       },
       "boy_young": {
-        "src": "Animaux/Hiboux/hiboux/bebe_garcon_stade_3.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_garcon_stade_3.png"
       },
       "boy_companion": {
-        "src": "Animaux/Hiboux/hiboux/bebe_garcon_stade_4.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_garcon_stade_4.png"
       },
       "girl_newborn": {
-        "src": "Animaux/Hiboux/hiboux/bebe_fille_stade_1.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_fille_stade_1.png"
       },
       "girl_little": {
-        "src": "Animaux/Hiboux/hiboux/bebe_fille_stade_2.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_fille_stade_2.png"
       },
       "girl_young": {
-        "src": "Animaux/Hiboux/hiboux/bebe_fille_stade_3.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_fille_stade_3.png"
       },
       "girl_companion": {
-        "src": "Animaux/Hiboux/hiboux/bebe_fille_stade_4.png"
+        "src": "Animaux/Europe/Hiboux/hibou/bebe_fille_stade_4.png"
+      }
+    },
+    "frilled_lizard": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/papa_lezard_a_collerette.png"
+      },
+      "mother": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/maman_lezard_a_collerette.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Oceanie/Lezards_A_Collerette/lezard_a_collerette/bebe_fille_stade_4.png"
+      }
+    },
+    "sloth": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/papa_paresseux.png"
+      },
+      "mother": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/maman_paresseux.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Amerique du Sud/Paresseux/paresseux/bebe_fille_stade_4.png"
+      }
+    },
+    "jaguar": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/papa_jaguar.png"
+      },
+      "mother": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/maman_jaguar.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Amerique du Sud/Jaguars/jaguar/bebe_fille_stade_4.png"
+      }
+    },
+    "toucan": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/papa_toucan.png"
+      },
+      "mother": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/maman_toucan.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Amerique du Sud/Toucans/toucan/bebe_fille_stade_4.png"
+      }
+    },
+    "kangaroo": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/papa_kangourou.png"
+      },
+      "mother": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/maman_kangourou.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Oceanie/Kangourous/kangourou/bebe_fille_stade_4.png"
+      }
+    },
+    "koala": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Oceanie/Koalas/koala/papa_koala.png"
+      },
+      "mother": {
+        "src": "Animaux/Oceanie/Koalas/koala/maman_koala.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Oceanie/Koalas/koala/bebe_fille_stade_4.png"
+      }
+    },
+    "penguin": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/papa_manchot.png"
+      },
+      "mother": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/maman_manchot.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Antarctique/Pingoin/manchot/bebe_fille_stade_4.png"
+      }
+    },
+    "seal": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Antarctique/Phoque/phoque/papa_phoque.png"
+      },
+      "mother": {
+        "src": "Animaux/Antarctique/Phoque/phoque/maman_phoque.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Antarctique/Phoque/phoque/bebe_fille_stade_4.png"
+      }
+    },
+    "polar_bear": {
+      "_raw": true,
+      "father": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/papa_ours_polaire.png"
+      },
+      "mother": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/maman_ours_polaire.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_garcon_stade_1.png"
+      },
+      "boy_little": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_garcon_stade_2.png"
+      },
+      "boy_young": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_garcon_stade_3.png"
+      },
+      "boy_companion": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_garcon_stade_4.png"
+      },
+      "girl_newborn": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_fille_stade_1.png"
+      },
+      "girl_little": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_fille_stade_2.png"
+      },
+      "girl_young": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_fille_stade_3.png"
+      },
+      "girl_companion": {
+        "src": "Animaux/Antarctique/Ours/ours_polaire/bebe_fille_stade_4.png"
       }
     }
   }

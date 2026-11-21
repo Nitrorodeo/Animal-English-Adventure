@@ -1,15 +1,17 @@
 /**
  * Tous les lieux du jeu (un lieu = un décor). Les décors illustrés sont décrits dans les fichiers
- * JSON de ce dossier (un par continent : objets à toucher, emplacements, météo, sol) ; la savane
- * historique et l'Antarctique (décor provisoire, pas encore d'image) sont décrits ici.
+ * JSON de ce dossier (un par continent : objets à toucher, emplacements, météo, sol) ; seule la
+ * savane historique est décrite ici.
  */
 import type { Anchor, AnchorTag, BiomeDef, ContinentId, Line, PlaceId, Spot, Weather } from '../types';
 import africa from './africa.json';
+import antarctica from './antarctica.json';
 import asia from './asia.json';
 import europe from './europe.json';
 import northAmerica from './north_america.json';
 import oceania from './oceania.json';
 import southAmerica from './south_america.json';
+import { PLACE_DEPTH } from './depth';
 
 interface RawAnchor {
   id: string;
@@ -91,55 +93,10 @@ const SAVANNA: BiomeDef = {
   ],
 };
 
-/**
- * Antarctique : pas encore d'image. Décor provisoire (dégradé) où les objets sont dessinés par
- * leur pictogramme, à l'endroit de leur zone tactile.
- */
-const ICE_COAST: BiomeDef = {
-  id: 'ice_coast',
-  continentId: 'antarctica',
-  nameEn: 'the ice',
-  nameFr: 'la banquise',
-  placeholderGradient: 'linear-gradient(#bfe6ff 0%, #e8f7ff 38%, #ffffff 39%, #eaf6fb 70%, #cdeaf5 100%)',
-  weather: 'cold',
-  groundY: 80,
-  spots: [{ x: 8, y: 52 }, { x: 16, y: 44 }, { x: 24, y: 55 }, { x: 31, y: 46 }, { x: 38, y: 56 }, { x: 45, y: 47 }, { x: 52, y: 56 }, { x: 58, y: 45 }],
-  anchors: [
-    { id: 'iceberg', word: 'iceberg', wordFr: "l'iceberg", icon: '🧊', hit: { x: 6, y: 14, w: 16, h: 22 }, stand: { x: 16, y: 62 }, tags: ['hide', 'climb'], check: { q: L('Is the iceberg white?', "Est-ce que l'iceberg est blanc ?"), yes: true } },
-    { id: 'sea', word: 'sea', wordFr: 'la mer', icon: '🌊', hit: { x: 28, y: 24, w: 22, h: 12 }, tags: ['sea'], check: { q: L('Is the sea hot?', 'Est-ce que la mer est chaude ?'), yes: false } },
-    { id: 'snow', word: 'snow', wordFr: 'la neige', icon: '❄️', hit: { x: 30, y: 62, w: 14, h: 14 }, stand: { x: 36, y: 80 }, tags: [], check: { q: L('Is the snow cold?', 'Est-ce que la neige est froide ?'), yes: true } },
-    { id: 'sun', word: 'sun', wordFr: 'le soleil', icon: '☀️', hit: { x: 84, y: 2, w: 12, h: 16 }, tags: ['sky'], check: { q: L('Is the sun blue?', 'Est-ce que le soleil est bleu ?'), yes: false } },
-    { id: 'cloud', word: 'cloud', wordFr: 'le nuage', icon: '☁️', hit: { x: 56, y: 4, w: 16, h: 12 }, tags: ['sky'], check: { q: L('Is the cloud white?', 'Est-ce que le nuage est blanc ?'), yes: true } },
-    { id: 'rock', word: 'rock', wordFr: 'le rocher', icon: '🪨', hit: { x: 4, y: 64, w: 12, h: 14 }, stand: { x: 12, y: 84 }, tags: ['hide'], check: { q: L('Is the rock grey?', 'Est-ce que le rocher est gris ?'), yes: true } },
-    { id: 'mountain', word: 'mountain', wordFr: 'la montagne', icon: '🏔️', hit: { x: 64, y: 16, w: 22, h: 22 }, tags: [], check: { q: L('Is the mountain small?', 'Est-ce que la montagne est petite ?'), yes: false } },
-    { id: 'igloo', word: 'ice cave', wordFr: 'la grotte de glace', icon: '🕳️', hit: { x: 48, y: 62, w: 12, h: 14 }, stand: { x: 54, y: 82 }, tags: ['hide'], check: { q: L('Is the ice cave cold?', 'Est-ce que la grotte de glace est froide ?'), yes: true } },
-  ],
-};
+const FILES = [africa, asia, europe, northAmerica, southAmerica, oceania, antarctica] as unknown as RawFile[];
 
-const OPEN_SEA: BiomeDef = {
-  id: 'open_sea',
-  continentId: 'antarctica',
-  nameEn: 'the sea',
-  nameFr: 'la mer',
-  placeholderGradient: 'linear-gradient(#d9f3ff 0%, #b5e2fa 30%, #4fa3d1 31%, #2f7fb5 65%, #1b5e8c 100%)',
-  weather: 'windy',
-  groundY: 80,
-  spots: [{ x: 8, y: 48 }, { x: 16, y: 56 }, { x: 24, y: 46 }, { x: 32, y: 57 }, { x: 40, y: 47 }, { x: 48, y: 56 }, { x: 55, y: 45 }, { x: 59, y: 56 }],
-  anchors: [
-    { id: 'iceberg', word: 'iceberg', wordFr: "l'iceberg", icon: '🧊', hit: { x: 8, y: 12, w: 18, h: 22 }, stand: { x: 18, y: 66 }, tags: ['hide'], check: { q: L('Is the iceberg big?', "Est-ce que l'iceberg est grand ?"), yes: true } },
-    { id: 'sea', word: 'sea', wordFr: 'la mer', icon: '🌊', hit: { x: 30, y: 62, w: 24, h: 14 }, tags: ['sea'], check: { q: L('Is the sea blue?', 'Est-ce que la mer est bleue ?'), yes: true } },
-    { id: 'wave', word: 'wave', wordFr: 'la vague', icon: '🌊', hit: { x: 4, y: 64, w: 14, h: 12 }, tags: [], check: { q: L('Is the wave white?', 'Est-ce que la vague est blanche ?'), yes: true } },
-    { id: 'ice', word: 'ice', wordFr: 'la glace', icon: '🧊', hit: { x: 34, y: 22, w: 14, h: 10 }, stand: { x: 40, y: 66 }, tags: ['climb'], check: { q: L('Is the ice hot?', 'Est-ce que la glace est chaude ?'), yes: false } },
-    { id: 'sun', word: 'sun', wordFr: 'le soleil', icon: '🌤️', hit: { x: 84, y: 2, w: 12, h: 16 }, tags: ['sky'], check: { q: L('Is the sun yellow?', 'Est-ce que le soleil est jaune ?'), yes: true } },
-    { id: 'cloud', word: 'cloud', wordFr: 'le nuage', icon: '☁️', hit: { x: 56, y: 4, w: 16, h: 12 }, tags: ['sky'], check: { q: L('Is the cloud green?', 'Est-ce que le nuage est vert ?'), yes: false } },
-    { id: 'boat', word: 'boat', wordFr: 'le bateau', icon: '⛵', hit: { x: 62, y: 16, w: 12, h: 14 }, tags: [], check: { q: L('Is the boat small?', 'Est-ce que le bateau est petit ?'), yes: true } },
-    { id: 'bird', word: 'bird', wordFr: "l'oiseau", icon: '🕊️', hit: { x: 30, y: 6, w: 10, h: 10 }, tags: ['sky'], check: { q: L('Is the bird white?', "Est-ce que l'oiseau est blanc ?"), yes: true } },
-  ],
-};
-
-const FILES = [africa, asia, europe, northAmerica, southAmerica, oceania] as unknown as RawFile[];
-
-const LIST: BiomeDef[] = [SAVANNA, ...FILES.flatMap(fromFile), ICE_COAST, OPEN_SEA];
+// horizon, fond et rochers mesurés sur chaque décor (perspective des animaux posés au doigt)
+const LIST: BiomeDef[] = [SAVANNA, ...FILES.flatMap(fromFile)].map((p) => ({ ...p, ...PLACE_DEPTH[p.id] }));
 
 export const PLACES: Readonly<Record<PlaceId, BiomeDef>> = Object.fromEntries(LIST.map((p) => [p.id, p]));
 

@@ -79,7 +79,7 @@ export const COUNTABLES: Readonly<Record<ContinentId, string[]>> = {
   europe: ['mushroom', 'acorn', 'apple', 'leaf', 'butterfly'],
   north_america: ['maple_leaf', 'pinecone', 'feather', 'pebble', 'berries'],
   south_america: ['banana', 'butterfly', 'frog', 'feather', 'flower'],
-  oceania: ['shell', 'coconut', 'flower', 'butterfly', 'star'],
+  oceania: ['shell', 'pebble', 'flower', 'butterfly', 'star'],
   antarctica: ['fish', 'snowflake', 'pebble', 'ice', 'feather'],
 };
 

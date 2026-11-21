@@ -90,9 +90,12 @@ export function useQuest(script: QuestScript, vars: (place: string) => Vars, cas
     choose: (option: number) => act({ type: 'choose', option }),
     tapAnchor: (anchor: string) => act({ type: 'tapAnchor', anchor }),
     tapProp: (prop: string) => act({ type: 'tapProp', prop }),
+    tapActor: (who: Speaker[]) => act({ type: 'tapActor', who }),
     /** l'étape attend un toucher sur le décor */
     wantsAnchor: !!step && (step.kind === 'tapAnchor' || step.kind === 'seek') && state.feedback !== 'ok',
     wantsProp: !!step && step.kind === 'tapProps' && state.feedback !== 'ok',
+    /** l'étape attend un toucher sur un membre de la famille (« Simon says! ») */
+    wantsActor: !!step && step.kind === 'tapActor' && state.feedback !== 'ok',
     replay,
     finish,
     filled: (l: Line) => fillLine(l, v),

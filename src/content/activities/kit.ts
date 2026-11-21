@@ -83,6 +83,11 @@ export function command(speaker: Speaker, en: string, fr: string, options: Comma
   return { kind: 'command', speaker, line: L(en, fr), options, need, items, ...(onCorrect ? { onCorrect: line(onCorrect) } : {}), ...gate };
 }
 
+/** Jeu d'écoute : on entend « Mummy, dance! » et la joueuse touche le bon membre de la famille. */
+export function tapActor(speaker: Speaker, order: Line, target: Speaker, action: ActAction, reply: Line, notMe: Line, hint: Line, items: string[], gate: StepGate = {}): QuestStep {
+  return { kind: 'tapActor', speaker, line: order, target, action, reply, notMe, hint, items, ...gate };
+}
+
 /** Passage à la nuit (true) ou au jour (false). */
 export const scene = (night: boolean, gate: StepGate = {}): QuestStep => ({ kind: 'scene', night, ...gate });
 

@@ -29,6 +29,9 @@ export const ARCHETYPES: readonly QuestArchetype[] = [
   a({ roles: ['mother', 'baby'], minStage: 'companion', id: 'remember_yesterday', titleEn: 'Remember our adventure', titleFr: 'Se souvenir', icon: '💭', skillIds: ['3.5'], mechanic: 'tell', requiredAnchors: [], implemented: true }),
   a({ id: 'plan_expedition', titleEn: 'Plan a trip', titleFr: 'Préparer une expédition', icon: '🗺️', skillIds: ['3.6'], mechanic: 'plan', requiredAnchors: [] }),
   a({ roles: ['baby'], minStage: 'young', id: 'help_sibling', titleEn: 'Help my brother or sister', titleFr: 'Aider un frère ou une sœur', icon: '🤝', skillIds: ['2.1', '2.6'], mechanic: 'social', requiredAnchors: [], actorKinds: ['baby'], minBabies: 2, implemented: true }),
+  // --- Jeux pour rire, partout (2026-11-20) ---
+  a({ roles: ALL, id: 'family_orders', titleEn: 'Simon says!', titleFr: 'Jacques a dit !', icon: '👂', skillIds: ['1.5', '2.1'], mechanic: 'plan', requiredAnchors: [], implemented: true }),
+  a({ roles: ALL, id: 'yes_or_no', titleEn: 'Yes or no?', titleFr: 'Oui ou non ?', icon: '🤪', skillIds: ['2.2', '1.6'], mechanic: 'talk', requiredAnchors: [], implemented: true }),
   // --- Pilote Afrique : jeux propres aux décors et aux personnages (2026-11-19) ---
   a({ id: 'who_in_water', titleEn: 'Who lives in the water?', titleFr: "Qui vit dans l'eau ?", icon: '🦆', skillIds: ['env', '2.3'], mechanic: 'identify', requiredAnchors: [], allowedBiomes: ['africa_waterhole', 'savanna'], roles: ['mother', 'baby'], minStage: 'little', implemented: true }),
   a({ id: 'windy_baobab', titleEn: 'Catch the leaves!', titleFr: 'Attrape les feuilles !', icon: '🍃', skillIds: ['2.3', '1.3'], mechanic: 'identify', requiredAnchors: ['baobab'], allowedBiomes: ['africa_baobab'], roles: ['father', 'baby'], minStage: 'little', implemented: true }),

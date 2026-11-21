@@ -2,23 +2,23 @@
  "bear_boy_companion": {
   "sprite": "bear_boy_companion",
   "width": 368,
-  "height": 337,
+  "height": 341,
   "facing": 1,
   "mouth": [
-   272.1,
-   109.0
+   271.3,
+   109.3
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     102.0,
-     242.6
+     102.9,
+     245.5
     ],
     "tip": [
-     234.4,
-     232.5
+     235.4,
+     235.3
     ],
     "strength": 1.1,
     "layer": 2
@@ -28,11 +28,11 @@
     "parent": "body",
     "pivot": [
      221.1,
-     183.2
+     184.3
     ],
     "tip": [
-     246.3,
-     36.2
+     245.5,
+     36.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -41,24 +41,24 @@
  },
  "bear_boy_little": {
   "sprite": "bear_boy_little",
-  "width": 280,
-  "height": 258,
+  "width": 277,
+  "height": 256,
   "facing": 1,
   "mouth": [
-   198.4,
-   84.1
+   194.8,
+   83.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     78.2,
-     185.8
+     76.7,
+     184.3
     ],
     "tip": [
-     179.0,
-     178.0
+     176.4,
+     176.6
     ],
     "strength": 1.1,
     "layer": 2
@@ -67,12 +67,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     163.8,
-     140.8
+     160.9,
+     139.5
     ],
     "tip": [
-     178.8,
-     34.5
+     175.5,
+     33.4
     ],
     "strength": 1.6,
     "layer": 4
@@ -81,24 +81,24 @@
  },
  "bear_boy_newborn": {
   "sprite": "bear_boy_newborn",
-  "width": 216,
-  "height": 238,
+  "width": 214,
+  "height": 236,
   "facing": -1,
   "mouth": [
-   105.1,
-   79.7
+   103.9,
+   78.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     106.8,
-     223.7
+     106.1,
+     221.8
     ],
     "tip": [
-     106.8,
-     130.9
+     106.1,
+     129.8
     ],
     "strength": 1.1,
     "layer": 2
@@ -107,12 +107,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     105.1,
-     113.0
+     103.9,
+     111.6
     ],
     "tip": [
-     105.1,
-     34.3
+     103.9,
+     33.2
     ],
     "strength": 1.6,
     "layer": 4
@@ -122,23 +122,23 @@
  "bear_boy_young": {
   "sprite": "bear_boy_young",
   "width": 301,
-  "height": 288,
+  "height": 287,
   "facing": 1,
   "mouth": [
-   201.4,
-   91.3
+   202.1,
+   91.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     78.0,
-     207.4
+     79.6,
+     206.6
     ],
     "tip": [
-     186.3,
-     198.7
+     188.0,
+     198.0
     ],
     "strength": 1.1,
     "layer": 2
@@ -147,12 +147,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     166.8,
-     154.6
+     167.9,
+     154.7
     ],
     "tip": [
-     180.3,
-     37.3
+     181.0,
+     33.2
     ],
     "strength": 1.6,
     "layer": 4
@@ -161,23 +161,23 @@
  },
  "bear_father": {
   "sprite": "bear_father",
-  "width": 569,
+  "width": 559,
   "height": 424,
   "facing": 1,
   "mouth": [
-   380.3,
-   132.9
+   368.9,
+   133.3
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     153.1,
+     146.7,
      245.9
     ],
     "tip": [
-     358.0,
+     347.9,
      233.2
     ],
     "strength": 1.1,
@@ -187,11 +187,11 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     317.6,
-     226.2
+     307.7,
+     226.6
     ],
     "tip": [
-     340.5,
+     329.8,
      52.4
     ],
     "strength": 1.6,
@@ -200,11 +200,11 @@
    {
     "id": "legBL",
     "pivot": [
-     68.3,
+     61.5,
      288.3
     ],
     "tip": [
-     68.3,
+     61.5,
      402.8
     ],
     "strength": 0.9,
@@ -213,11 +213,11 @@
    {
     "id": "legBR",
     "pivot": [
-     187.8,
+     167.7,
      288.3
     ],
     "tip": [
-     187.8,
+     167.7,
      402.8
     ],
     "strength": 0.9,
@@ -226,11 +226,11 @@
    {
     "id": "legFL",
     "pivot": [
-     313.0,
+     279.5,
      288.3
     ],
     "tip": [
-     313.0,
+     279.5,
      402.8
     ],
     "strength": 1.0,
@@ -239,11 +239,11 @@
    {
     "id": "legFR",
     "pivot": [
-     432.4,
+     436.0,
      288.3
     ],
     "tip": [
-     432.4,
+     436.0,
      402.8
     ],
     "strength": 1.0,
@@ -254,23 +254,23 @@
  "bear_girl_companion": {
   "sprite": "bear_girl_companion",
   "width": 362,
-  "height": 326,
+  "height": 327,
   "facing": 1,
   "mouth": [
-   258.1,
-   106.6
+   257.8,
+   105.4
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     100.2,
-     234.7
+     99.6,
+     235.4
     ],
     "tip": [
-     230.5,
-     224.9
+     229.9,
+     225.6
     ],
     "strength": 1.1,
     "layer": 2
@@ -279,12 +279,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     212.2,
-     178.4
+     211.8,
+     177.3
     ],
     "tip": [
-     232.7,
-     42.6
+     232.5,
+     41.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -293,24 +293,24 @@
  },
  "bear_girl_little": {
   "sprite": "bear_girl_little",
-  "width": 286,
-  "height": 277,
+  "width": 284,
+  "height": 276,
   "facing": 1,
   "mouth": [
-   203.5,
-   89.5
+   200.4,
+   88.4
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     79.2,
-     199.4
+     78.3,
+     198.7
     ],
     "tip": [
-     182.1,
-     191.1
+     180.5,
+     190.4
     ],
     "strength": 1.1,
     "layer": 2
@@ -319,12 +319,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     167.4,
-     150.4
+     165.2,
+     149.2
     ],
     "tip": [
-     183.5,
-     36.6
+     180.5,
+     35.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -333,24 +333,24 @@
  },
  "bear_girl_newborn": {
   "sprite": "bear_girl_newborn",
-  "width": 215,
-  "height": 251,
+  "width": 213,
+  "height": 250,
   "facing": -1,
   "mouth": [
-   104.4,
-   83.1
+   104.3,
+   82.3
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     106.4,
-     235.9
+     106.6,
+     235.0
     ],
     "tip": [
-     106.4,
-     138.1
+     106.6,
+     137.5
     ],
     "strength": 1.1,
     "layer": 2
@@ -359,12 +359,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     104.4,
-     118.3
+     104.3,
+     117.3
     ],
     "tip": [
-     104.4,
-     36.1
+     104.3,
+     34.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -373,24 +373,24 @@
  },
  "bear_girl_young": {
   "sprite": "bear_girl_young",
-  "width": 305,
-  "height": 297,
+  "width": 302,
+  "height": 296,
   "facing": 1,
   "mouth": [
-   211.6,
-   93.4
+   207.9,
+   92.9
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     85.0,
-     213.8
+     83.4,
+     213.1
     ],
     "tip": [
-     194.8,
-     204.9
+     192.1,
+     204.2
     ],
     "strength": 1.1,
     "layer": 2
@@ -399,11 +399,11 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     175.8,
-     158.8
+     172.9,
+     158.0
     ],
     "tip": [
-     190.2,
+     186.8,
      37.8
     ],
     "strength": 1.6,
@@ -417,19 +417,19 @@
   "height": 399,
   "facing": -1,
   "mouth": [
-   154.6,
-   129.3
+   155.1,
+   129.4
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     353.8,
+     353.2,
      239.4
     ],
     "tip": [
-     180.0,
+     179.3,
      227.4
     ],
     "strength": 1.1,
@@ -440,10 +440,10 @@
     "parent": "body",
     "pivot": [
      210.7,
-     217.1
+     217.2
     ],
     "tip": [
-     188.4,
+     188.9,
      33.9
     ],
     "strength": 1.6,
@@ -452,11 +452,11 @@
    {
     "id": "legFR",
     "pivot": [
-     72.5,
+     77.3,
      279.3
     ],
     "tip": [
-     72.5,
+     77.3,
      379.0
     ],
     "strength": 1.0,
@@ -465,11 +465,11 @@
    {
     "id": "legFL",
     "pivot": [
-     183.5,
+     202.9,
      279.3
     ],
     "tip": [
-     183.5,
+     202.9,
      379.0
     ],
     "strength": 1.0,
@@ -478,11 +478,11 @@
    {
     "id": "legBR",
     "pivot": [
-     280.1,
+     304.3,
      279.3
     ],
     "tip": [
-     280.1,
+     304.3,
      379.0
     ],
     "strength": 0.9,
@@ -491,11 +491,11 @@
    {
     "id": "legBL",
     "pivot": [
-     386.4,
+     410.6,
      279.3
     ],
     "tip": [
-     386.4,
+     410.6,
      379.0
     ],
     "strength": 0.9,
@@ -505,24 +505,24 @@
  },
  "beaver_boy_companion": {
   "sprite": "beaver_boy_companion",
-  "width": 395,
-  "height": 324,
+  "width": 391,
+  "height": 317,
   "facing": 1,
   "mouth": [
-   306.6,
-   106.3
+   305.4,
+   104.3
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     122.7,
-     233.3
+     121.3,
+     228.2
     ],
     "tip": [
-     264.9,
-     223.6
+     262.0,
+     218.7
     ],
     "strength": 1.1,
     "layer": 2
@@ -531,12 +531,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     251.3,
-     177.6
+     249.7,
+     174.0
     ],
     "tip": [
-     279.0,
-     27.4
+     278.0,
+     28.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -545,24 +545,24 @@
  },
  "beaver_boy_little": {
   "sprite": "beaver_boy_little",
-  "width": 286,
-  "height": 250,
+  "width": 280,
+  "height": 241,
   "facing": 1,
   "mouth": [
-   208.4,
-   82.7
+   207.2,
+   79.1
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     87.0,
-     180.0
+     85.9,
+     173.5
     ],
     "tip": [
-     190.0,
-     172.5
+     186.7,
+     166.3
     ],
     "strength": 1.1,
     "layer": 2
@@ -571,12 +571,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     173.6,
-     137.7
+     172.1,
+     132.2
     ],
     "tip": [
-     188.3,
-     24.0
+     187.6,
+     26.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -585,423 +585,23 @@
  },
  "beaver_boy_newborn": {
   "sprite": "beaver_boy_newborn",
-  "width": 250,
-  "height": 234,
-  "facing": 1,
-  "mouth": [
-   144.2,
-   78.0
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     134.7,
-     220.0
-    ],
-    "tip": [
-     134.7,
-     128.7
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     144.2,
-     110.7
-    ],
-    "tip": [
-     144.2,
-     28.0
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "beaver_boy_young": {
-  "sprite": "beaver_boy_young",
-  "width": 339,
-  "height": 278,
-  "facing": 1,
-  "mouth": [
-   255.7,
-   90.9
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     102.5,
-     200.2
-    ],
-    "tip": [
-     224.5,
-     191.8
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     210.3,
-     152.1
-    ],
-    "tip": [
-     232.0,
-     24.7
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "beaver_father": {
-  "sprite": "beaver_father",
-  "width": 536,
-  "height": 413,
-  "facing": 1,
-  "mouth": [
-   404.2,
-   128.9
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     161.0,
-     297.4
-    ],
-    "tip": [
-     354.0,
-     285.0
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     332.0,
-     219.7
-    ],
-    "tip": [
-     366.6,
-     24.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "beaver_girl_companion": {
-  "sprite": "beaver_girl_companion",
-  "width": 396,
-  "height": 324,
-  "facing": 1,
-  "mouth": [
-   302.1,
-   105.1
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     122.7,
-     233.3
-    ],
-    "tip": [
-     265.3,
-     223.6
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     248.9,
-     176.4
-    ],
-    "tip": [
-     274.4,
-     33.4
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "beaver_girl_little": {
-  "sprite": "beaver_girl_little",
-  "width": 291,
-  "height": 277,
-  "facing": 1,
-  "mouth": [
-   203.4,
-   89.9
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     85.5,
-     199.4
-    ],
-    "tip": [
-     190.2,
-     191.1
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     170.5,
-     150.9
-    ],
-    "tip": [
-     183.0,
-     29.6
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "beaver_girl_newborn": {
-  "sprite": "beaver_girl_newborn",
-  "width": 259,
-  "height": 264,
-  "facing": 1,
-  "mouth": [
-   147.3,
-   88.9
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     138.2,
-     248.2
-    ],
-    "tip": [
-     138.2,
-     145.2
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     147.3,
-     125.9
-    ],
-    "tip": [
-     147.3,
-     35.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "beaver_girl_young": {
-  "sprite": "beaver_girl_young",
-  "width": 340,
-  "height": 305,
-  "facing": 1,
-  "mouth": [
-   250.3,
-   97.5
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     103.1,
-     219.6
-    ],
-    "tip": [
-     225.5,
-     210.4
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     207.7,
-     164.6
-    ],
-    "tip": [
-     226.5,
-     32.3
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "beaver_mother": {
-  "sprite": "beaver_mother",
-  "width": 531,
-  "height": 398,
-  "facing": -1,
-  "mouth": [
-   122.5,
-   123.9
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     359.1,
-     286.6
-    ],
-    "tip": [
-     167.9,
-     274.6
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     192.1,
-     211.5
-    ],
-    "tip": [
-     159.7,
-     36.9
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "bison_boy_companion": {
-  "sprite": "bison_boy_companion",
-  "width": 354,
-  "height": 330,
-  "facing": 1,
-  "mouth": [
-   254.3,
-   104.8
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     97.6,
-     237.6
-    ],
-    "tip": [
-     225.1,
-     227.7
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     208.4,
-     177.4
-    ],
-    "tip": [
-     229.5,
-     28.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "bison_boy_little": {
-  "sprite": "bison_boy_little",
-  "width": 283,
-  "height": 268,
-  "facing": 1,
-  "mouth": [
-   202.3,
-   86.7
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     79.2,
-     193.0
-    ],
-    "tip": [
-     181.1,
-     184.9
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     166.6,
-     145.7
-    ],
-    "tip": [
-     182.4,
-     27.1
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "bison_boy_newborn": {
-  "sprite": "bison_boy_newborn",
-  "width": 219,
+  "width": 249,
   "height": 230,
   "facing": 1,
   "mouth": [
-   125.3,
-   74.7
+   143.7,
+   76.7
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     118.5,
+     132.8,
      216.2
     ],
     "tip": [
-     118.5,
+     132.8,
      126.5
     ],
     "strength": 1.1,
@@ -1011,11 +611,411 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     125.3,
-     106.9
+     143.7,
+     108.9
     ],
     "tip": [
-     125.3,
+     143.7,
+     28.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "beaver_boy_young": {
+  "sprite": "beaver_boy_young",
+  "width": 330,
+  "height": 275,
+  "facing": 1,
+  "mouth": [
+   251.2,
+   90.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     100.9,
+     198.0
+    ],
+    "tip": [
+     219.7,
+     189.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     206.5,
+     150.7
+    ],
+    "tip": [
+     228.1,
+     26.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "beaver_father": {
+  "sprite": "beaver_father",
+  "width": 528,
+  "height": 410,
+  "facing": 1,
+  "mouth": [
+   399.9,
+   133.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     157.0,
+     295.2
+    ],
+    "tip": [
+     347.1,
+     282.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     327.3,
+     223.4
+    ],
+    "tip": [
+     362.9,
+     44.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "beaver_girl_companion": {
+  "sprite": "beaver_girl_companion",
+  "width": 391,
+  "height": 323,
+  "facing": 1,
+  "mouth": [
+   297.4,
+   104.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     119.4,
+     232.6
+    ],
+    "tip": [
+     260.2,
+     222.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     244.5,
+     175.9
+    ],
+    "tip": [
+     270.0,
+     38.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "beaver_girl_little": {
+  "sprite": "beaver_girl_little",
+  "width": 286,
+  "height": 274,
+  "facing": 1,
+  "mouth": [
+   201.2,
+   88.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     84.8,
+     197.3
+    ],
+    "tip": [
+     187.7,
+     189.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     168.7,
+     149.1
+    ],
+    "tip": [
+     181.2,
+     34.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "beaver_girl_newborn": {
+  "sprite": "beaver_girl_newborn",
+  "width": 254,
+  "height": 260,
+  "facing": 1,
+  "mouth": [
+   145.7,
+   85.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     135.8,
+     244.4
+    ],
+    "tip": [
+     135.8,
+     143.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     145.7,
+     122.3
+    ],
+    "tip": [
+     145.7,
+     29.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "beaver_girl_young": {
+  "sprite": "beaver_girl_young",
+  "width": 333,
+  "height": 303,
+  "facing": 1,
+  "mouth": [
+   244.9,
+   96.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     100.4,
+     218.2
+    ],
+    "tip": [
+     220.3,
+     209.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     203.0,
+     163.1
+    ],
+    "tip": [
+     221.6,
+     37.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "beaver_mother": {
+  "sprite": "beaver_mother",
+  "width": 519,
+  "height": 394,
+  "facing": -1,
+  "mouth": [
+   113.6,
+   123.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     348.2,
+     283.7
+    ],
+    "tip": [
+     161.4,
+     271.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     183.1,
+     210.1
+    ],
+    "tip": [
+     149.9,
+     42.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "bison_boy_companion": {
+  "sprite": "bison_boy_companion",
+  "width": 352,
+  "height": 327,
+  "facing": 1,
+  "mouth": [
+   254.3,
+   105.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     99.5,
+     235.4
+    ],
+    "tip": [
+     226.3,
+     225.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     209.1,
+     177.0
+    ],
+    "tip": [
+     229.7,
+     28.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "bison_boy_little": {
+  "sprite": "bison_boy_little",
+  "width": 282,
+  "height": 267,
+  "facing": 1,
+  "mouth": [
+   201.1,
+   86.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     80.4,
+     192.2
+    ],
+    "tip": [
+     181.9,
+     184.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     166.4,
+     145.1
+    ],
+    "tip": [
+     181.4,
+     26.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "bison_boy_newborn": {
+  "sprite": "bison_boy_newborn",
+  "width": 217,
+  "height": 230,
+  "facing": 1,
+  "mouth": [
+   123.5,
+   75.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     116.7,
+     216.2
+    ],
+    "tip": [
+     116.7,
+     126.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     123.5,
+     107.5
+    ],
+    "tip": [
+     123.5,
      23.8
     ],
     "strength": 1.6,
@@ -1025,23 +1025,23 @@
  },
  "bison_boy_young": {
   "sprite": "bison_boy_young",
-  "width": 294,
+  "width": 292,
   "height": 294,
   "facing": 1,
   "mouth": [
-   209.3,
-   93.4
+   208.2,
+   93.9
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     85.0,
+     87.4,
      211.7
     ],
     "tip": [
-     190.9,
+     192.5,
      202.9
     ],
     "strength": 1.1,
@@ -1051,12 +1051,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     173.8,
-     158.1
+     174.1,
+     158.6
     ],
     "tip": [
-     188.7,
-     24.6
+     187.7,
+     25.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -1065,23 +1065,23 @@
  },
  "bison_father": {
   "sprite": "bison_father",
-  "width": 599,
+  "width": 598,
   "height": 420,
   "facing": 1,
   "mouth": [
-   393.6,
-   129.8
+   392.0,
+   130.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     152.6,
+     158.6,
      260.4
     ],
     "tip": [
-     368.2,
+     373.9,
      247.8
     ],
     "strength": 1.1,
@@ -1091,12 +1091,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     326.8,
-     222.2
+     328.5,
+     222.6
     ],
     "tip": [
-     351.6,
-     33.2
+     350.2,
+     38.2
     ],
     "strength": 1.6,
     "layer": 4
@@ -1104,11 +1104,11 @@
    {
     "id": "legBL",
     "pivot": [
-     77.9,
+     77.7,
      302.4
     ],
     "tip": [
-     77.9,
+     77.7,
      399.0
     ],
     "strength": 0.9,
@@ -1117,11 +1117,11 @@
    {
     "id": "legBR",
     "pivot": [
-     161.7,
+     173.4,
      302.4
     ],
     "tip": [
-     161.7,
+     173.4,
      399.0
     ],
     "strength": 0.9,
@@ -1130,11 +1130,11 @@
    {
     "id": "legFL",
     "pivot": [
-     311.5,
+     293.0,
      302.4
     ],
     "tip": [
-     311.5,
+     293.0,
      399.0
     ],
     "strength": 1.0,
@@ -1143,11 +1143,11 @@
    {
     "id": "legFR",
     "pivot": [
-     407.3,
+     400.7,
      302.4
     ],
     "tip": [
-     407.3,
+     400.7,
      399.0
     ],
     "strength": 1.0,
@@ -1157,24 +1157,24 @@
  },
  "bison_girl_companion": {
   "sprite": "bison_girl_companion",
-  "width": 341,
-  "height": 309,
+  "width": 342,
+  "height": 321,
   "facing": 1,
   "mouth": [
-   238.2,
-   95.7
+   242.3,
+   102.7
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     93.2,
-     222.5
+     97.3,
+     231.1
     ],
     "tip": [
-     216.0,
-     213.2
+     220.4,
+     221.5
     ],
     "strength": 1.1,
     "layer": 2
@@ -1183,12 +1183,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     196.7,
-     163.7
+     200.8,
+     173.3
     ],
     "tip": [
-     214.3,
-     25.5
+     218.3,
+     34.3
     ],
     "strength": 1.6,
     "layer": 4
@@ -1198,23 +1198,23 @@
  "bison_girl_little": {
   "sprite": "bison_girl_little",
   "width": 271,
-  "height": 268,
+  "height": 266,
   "facing": 1,
   "mouth": [
-   189.9,
-   86.0
+   189.2,
+   85.4
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     75.1,
-     193.0
+     76.6,
+     191.5
     ],
     "tip": [
-     172.6,
-     184.9
+     174.2,
+     183.5
     ],
     "strength": 1.1,
     "layer": 2
@@ -1223,12 +1223,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     157.1,
-     145.0
+     157.4,
+     143.9
     ],
     "tip": [
-     171.0,
-     25.1
+     170.2,
+     27.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -1237,23 +1237,23 @@
  },
  "bison_girl_newborn": {
   "sprite": "bison_girl_newborn",
-  "width": 226,
+  "width": 217,
   "height": 227,
   "facing": 1,
   "mouth": [
-   123.0,
-   74.5
+   121.6,
+   73.6
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     117.1,
+     116.2,
      213.4
     ],
     "tip": [
-     117.1,
+     116.2,
      124.9
     ],
     "strength": 1.1,
@@ -1263,11 +1263,11 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     123.0,
-     106.3
+     121.6,
+     105.3
     ],
     "tip": [
-     123.0,
+     121.6,
      25.6
     ],
     "strength": 1.6,
@@ -1277,24 +1277,24 @@
  },
  "bison_girl_young": {
   "sprite": "bison_girl_young",
-  "width": 285,
-  "height": 295,
+  "width": 283,
+  "height": 294,
   "facing": 1,
   "mouth": [
-   201.3,
-   93.9
+   199.4,
+   93.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     82.9,
-     212.4
+     84.6,
+     211.7
     ],
     "tip": [
-     185.5,
-     203.6
+     186.5,
+     202.9
     ],
     "strength": 1.1,
     "layer": 2
@@ -1303,12 +1303,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     167.9,
-     158.8
+     167.4,
+     157.9
     ],
     "tip": [
-     181.4,
-     30.7
+     179.5,
+     31.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -1317,24 +1317,24 @@
  },
  "bison_mother": {
   "sprite": "bison_mother",
-  "width": 513,
-  "height": 383,
+  "width": 512,
+  "height": 375,
   "facing": -1,
   "mouth": [
-   161.7,
-   124.1
+   160.5,
+   122.1
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     376.3,
-     237.5
+     369.4,
+     232.5
     ],
     "tip": [
-     191.6,
-     226.0
+     185.1,
+     221.2
     ],
     "strength": 1.1,
     "layer": 2
@@ -1343,12 +1343,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     222.6,
-     208.3
+     218.9,
+     204.6
     ],
     "tip": [
-     197.6,
-     53.0
+     196.4,
+     54.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -1356,12 +1356,12 @@
    {
     "id": "legFR",
     "pivot": [
-     66.7,
-     275.8
+     174.1,
+     270.0
     ],
     "tip": [
-     66.7,
-     363.8
+     174.1,
+     356.2
     ],
     "strength": 1.0,
     "layer": 3
@@ -1369,12 +1369,12 @@
    {
     "id": "legFL",
     "pivot": [
-     143.6,
-     275.8
+     235.5,
+     270.0
     ],
     "tip": [
-     143.6,
-     363.8
+     235.5,
+     356.2
     ],
     "strength": 1.0,
     "layer": 3
@@ -1382,12 +1382,12 @@
    {
     "id": "legBR",
     "pivot": [
-     271.9,
-     275.8
+     358.4,
+     270.0
     ],
     "tip": [
-     271.9,
-     363.8
+     358.4,
+     356.2
     ],
     "strength": 0.9,
     "layer": 0
@@ -1395,12 +1395,12 @@
    {
     "id": "legBL",
     "pivot": [
-     354.0,
-     275.8
+     445.4,
+     270.0
     ],
     "tip": [
-     354.0,
-     363.8
+     445.4,
+     356.2
     ],
     "strength": 0.9,
     "layer": 0
@@ -1409,24 +1409,24 @@
  },
  "elephant_boy_companion": {
   "sprite": "elephant_boy_companion",
-  "width": 253,
-  "height": 258,
+  "width": 322,
+  "height": 289,
   "facing": 1,
   "mouth": [
-   156.4,
-   84.7
+   205.0,
+   94.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     58.5,
-     185.8
+     82.3,
+     208.1
     ],
     "tip": [
-     149.6,
-     178.0
+     198.2,
+     199.4
     ],
     "strength": 1.1,
     "layer": 2
@@ -1435,12 +1435,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     130.0,
-     141.5
+     172.2,
+     158.1
     ],
     "tip": [
-     138.7,
-     23.5
+     182.5,
+     25.3
     ],
     "strength": 1.6,
     "layer": 4
@@ -1449,24 +1449,24 @@
  },
  "elephant_boy_little": {
   "sprite": "elephant_boy_little",
-  "width": 201,
-  "height": 188,
+  "width": 260,
+  "height": 235,
   "facing": 1,
   "mouth": [
-   122.8,
-   64.6
+   166.4,
+   80.9
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     48.1,
-     135.4
+     67.5,
+     169.2
     ],
     "tip": [
-     120.5,
-     129.7
+     161.1,
+     162.1
     ],
     "strength": 1.1,
     "layer": 2
@@ -1475,12 +1475,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     103.2,
-     106.0
+     139.9,
+     132.6
     ],
     "tip": [
-     108.8,
-     23.3
+     148.2,
+     27.1
     ],
     "strength": 1.6,
     "layer": 4
@@ -1489,24 +1489,24 @@
  },
  "elephant_boy_newborn": {
   "sprite": "elephant_boy_newborn",
-  "width": 168,
-  "height": 161,
+  "width": 202,
+  "height": 201,
   "facing": 1,
   "mouth": [
-   92.4,
-   56.3
+   111.0,
+   70.6
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     88.9,
-     151.3
+     106.6,
+     188.9
     ],
     "tip": [
-     88.9,
-     88.6
+     106.6,
+     110.6
     ],
     "strength": 1.1,
     "layer": 2
@@ -1515,12 +1515,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     92.4,
-     78.8
+     111.0,
+     98.8
     ],
     "tip": [
-     92.4,
-     21.7
+     111.0,
+     23.1
     ],
     "strength": 1.6,
     "layer": 4
@@ -1529,24 +1529,24 @@
  },
  "elephant_boy_young": {
   "sprite": "elephant_boy_young",
-  "width": 224,
-  "height": 227,
+  "width": 277,
+  "height": 269,
   "facing": 1,
   "mouth": [
-   121.2,
-   74.5
+   156.5,
+   89.8
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     108.1,
-     213.4
+     140.9,
+     252.9
     ],
     "tip": [
-     108.1,
-     124.9
+     140.9,
+     148.0
     ],
     "strength": 1.1,
     "layer": 2
@@ -1555,12 +1555,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     121.2,
-     106.2
+     156.5,
+     127.5
     ],
     "tip": [
-     121.2,
-     22.6
+     156.5,
+     22.1
     ],
     "strength": 1.6,
     "layer": 4
@@ -1569,24 +1569,24 @@
  },
  "elephant_father": {
   "sprite": "elephant_father",
-  "width": 465,
-  "height": 448,
+  "width": 536,
+  "height": 469,
   "facing": 1,
   "mouth": [
-   230.0,
-   137.6
+   273.9,
+   143.3
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     209.5,
-     421.1
+     253.1,
+     440.9
     ],
     "tip": [
-     209.5,
-     246.4
+     253.1,
+     258.0
     ],
     "strength": 1.1,
     "layer": 2
@@ -1595,38 +1595,90 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     230.0,
-     200.3
+     273.9,
+     208.9
     ],
     "tip": [
-     230.0,
-     56.9
+     273.9,
+     57.1
     ],
     "strength": 1.6,
     "layer": 4
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     80.4,
+     328.3
+    ],
+    "tip": [
+     80.4,
+     445.5
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     144.7,
+     328.3
+    ],
+    "tip": [
+     144.7,
+     445.5
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     235.8,
+     328.3
+    ],
+    "tip": [
+     235.8,
+     445.5
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     337.7,
+     328.3
+    ],
+    "tip": [
+     337.7,
+     445.5
+    ],
+    "strength": 1.0,
+    "layer": 3
    }
   ]
  },
  "elephant_girl_companion": {
   "sprite": "elephant_girl_companion",
-  "width": 253,
-  "height": 251,
+  "width": 345,
+  "height": 316,
   "facing": 1,
   "mouth": [
-   152.7,
-   83.7
+   217.8,
+   103.8
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     57.6,
-     180.7
+     89.1,
+     227.5
     ],
     "tip": [
-     148.6,
-     173.2
+     213.3,
+     218.0
     ],
     "strength": 1.1,
     "layer": 2
@@ -1635,12 +1687,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     127.5,
-     139.0
+     183.9,
+     173.3
     ],
     "tip": [
-     135.0,
-     22.1
+     193.7,
+     31.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -1649,24 +1701,24 @@
  },
  "elephant_girl_little": {
   "sprite": "elephant_girl_little",
-  "width": 202,
-  "height": 203,
+  "width": 257,
+  "height": 254,
   "facing": 1,
   "mouth": [
-   107.1,
-   72.4
+   138.4,
+   88.1
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     97.3,
-     190.8
+     125.8,
+     238.8
     ],
     "tip": [
-     97.3,
-     111.7
+     125.8,
+     139.7
     ],
     "strength": 1.1,
     "layer": 2
@@ -1675,12 +1727,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     107.1,
-     100.8
+     138.4,
+     123.6
     ],
     "tip": [
-     107.1,
-     34.2
+     138.4,
+     39.2
     ],
     "strength": 1.6,
     "layer": 4
@@ -1689,475 +1741,23 @@
  },
  "elephant_girl_newborn": {
   "sprite": "elephant_girl_newborn",
-  "width": 166,
-  "height": 180,
-  "facing": -1,
-  "mouth": [
-   85.9,
-   63.7
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     86.4,
-     169.2
-    ],
-    "tip": [
-     86.4,
-     99.0
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     85.9,
-     88.9
-    ],
-    "tip": [
-     85.9,
-     27.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "elephant_girl_young": {
-  "sprite": "elephant_girl_young",
-  "width": 229,
-  "height": 237,
-  "facing": 1,
-  "mouth": [
-   141.2,
-   81.3
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     54.6,
-     170.6
-    ],
-    "tip": [
-     137.0,
-     163.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     118.1,
-     133.5
-    ],
-    "tip": [
-     125.2,
-     33.2
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "elephant_mother": {
-  "sprite": "elephant_mother",
-  "width": 433,
-  "height": 436,
-  "facing": -1,
-  "mouth": [
-   226.0,
-   138.1
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     245.3,
-     409.8
-    ],
-    "tip": [
-     245.3,
-     239.8
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     226.0,
-     199.2
-    ],
-    "tip": [
-     226.0,
-     50.2
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_boy_companion": {
-  "sprite": "fox_boy_companion",
-  "width": 312,
-  "height": 319,
-  "facing": 1,
-  "mouth": [
-   240.5,
-   100.8
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     102.4,
-     229.7
-    ],
-    "tip": [
-     214.7,
-     220.1
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     200.0,
-     171.0
-    ],
-    "tip": [
-     218.7,
-     51.1
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_boy_little": {
-  "sprite": "fox_boy_little",
-  "width": 230,
-  "height": 255,
-  "facing": 1,
-  "mouth": [
-   139.5,
-   81.8
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     128.6,
-     239.7
-    ],
-    "tip": [
-     128.6,
-     140.2
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     139.5,
-     117.5
-    ],
-    "tip": [
-     139.5,
-     43.3
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_boy_newborn": {
-  "sprite": "fox_boy_newborn",
-  "width": 206,
-  "height": 218,
-  "facing": -1,
-  "mouth": [
-   107.3,
-   70.3
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     108.1,
-     204.9
-    ],
-    "tip": [
-     108.1,
-     119.9
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     107.3,
-     100.9
-    ],
-    "tip": [
-     107.3,
-     39.1
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_boy_young": {
-  "sprite": "fox_boy_young",
-  "width": 291,
-  "height": 273,
-  "facing": 1,
-  "mouth": [
-   214.8,
-   83.4
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     95.2,
-     196.6
-    ],
-    "tip": [
-     200.0,
-     188.4
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     181.2,
-     143.5
-    ],
-    "tip": [
-     194.4,
-     39.4
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_father": {
-  "sprite": "fox_father",
-  "width": 511,
-  "height": 429,
-  "facing": 1,
-  "mouth": [
-   390.0,
-   128.5
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     158.0,
-     257.4
-    ],
-    "tip": [
-     342.0,
-     244.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     321.1,
-     222.9
-    ],
-    "tip": [
-     354.2,
-     49.7
-    ],
-    "strength": 1.6,
-    "layer": 4
-   },
-   {
-    "id": "legBL",
-    "pivot": [
-     138.0,
-     300.3
-    ],
-    "tip": [
-     138.0,
-     407.5
-    ],
-    "strength": 0.9,
-    "layer": 0
-   },
-   {
-    "id": "legBR",
-    "pivot": [
-     194.2,
-     300.3
-    ],
-    "tip": [
-     194.2,
-     407.5
-    ],
-    "strength": 0.9,
-    "layer": 0
-   },
-   {
-    "id": "legFL",
-    "pivot": [
-     296.4,
-     300.3
-    ],
-    "tip": [
-     296.4,
-     407.5
-    ],
-    "strength": 1.0,
-    "layer": 3
-   },
-   {
-    "id": "legFR",
-    "pivot": [
-     347.5,
-     300.3
-    ],
-    "tip": [
-     347.5,
-     407.5
-    ],
-    "strength": 1.0,
-    "layer": 3
-   }
-  ]
- },
- "fox_girl_companion": {
-  "sprite": "fox_girl_companion",
-  "width": 314,
-  "height": 304,
-  "facing": 1,
-  "mouth": [
-   236.7,
-   90.4
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     104.2,
-     218.9
-    ],
-    "tip": [
-     217.2,
-     209.8
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     198.9,
-     157.3
-    ],
-    "tip": [
-     214.8,
-     24.2
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_girl_little": {
-  "sprite": "fox_girl_little",
-  "width": 239,
-  "height": 264,
-  "facing": 1,
-  "mouth": [
-   146.5,
-   81.4
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     132.9,
-     248.2
-    ],
-    "tip": [
-     132.9,
-     145.2
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     146.5,
-     118.4
-    ],
-    "tip": [
-     146.5,
-     26.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_girl_newborn": {
-  "sprite": "fox_girl_newborn",
-  "width": 203,
+  "width": 214,
   "height": 228,
   "facing": 1,
   "mouth": [
-   107.7,
-   71.9
+   114.8,
+   78.3
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     107.0,
+     112.2,
      214.3
     ],
     "tip": [
-     107.0,
+     112.2,
      125.4
     ],
     "strength": 1.1,
@@ -2167,12 +1767,516 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     107.7,
-     103.8
+     114.8,
+     110.2
     ],
     "tip": [
-     107.7,
-     24.7
+     114.8,
+     21.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "elephant_girl_young": {
+  "sprite": "elephant_girl_young",
+  "width": 306,
+  "height": 295,
+  "facing": 1,
+  "mouth": [
+   172.8,
+   99.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     154.6,
+     277.3
+    ],
+    "tip": [
+     154.6,
+     162.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     172.8,
+     140.3
+    ],
+    "tip": [
+     172.8,
+     29.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "elephant_mother": {
+  "sprite": "elephant_mother",
+  "width": 501,
+  "height": 459,
+  "facing": -1,
+  "mouth": [
+   254.0,
+   147.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     274.0,
+     431.5
+    ],
+    "tip": [
+     274.0,
+     252.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     254.0,
+     211.9
+    ],
+    "tip": [
+     254.0,
+     39.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     210.4,
+     330.5
+    ],
+    "tip": [
+     210.4,
+     436.0
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     300.6,
+     330.5
+    ],
+    "tip": [
+     300.6,
+     436.0
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     365.7,
+     330.5
+    ],
+    "tip": [
+     365.7,
+     436.0
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     415.8,
+     330.5
+    ],
+    "tip": [
+     415.8,
+     436.0
+    ],
+    "strength": 0.9,
+    "layer": 0
+   }
+  ]
+ },
+ "fox_boy_companion": {
+  "sprite": "fox_boy_companion",
+  "width": 322,
+  "height": 302,
+  "facing": 1,
+  "mouth": [
+   217.5,
+   102.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     92.4,
+     217.4
+    ],
+    "tip": [
+     208.4,
+     208.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     183.6,
+     168.9
+    ],
+    "tip": [
+     195.0,
+     57.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "fox_boy_little": {
+  "sprite": "fox_boy_little",
+  "width": 234,
+  "height": 253,
+  "facing": 1,
+  "mouth": [
+   161.2,
+   84.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     70.1,
+     182.2
+    ],
+    "tip": [
+     154.4,
+     174.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     136.5,
+     140.0
+    ],
+    "tip": [
+     144.9,
+     47.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "fox_boy_newborn": {
+  "sprite": "fox_boy_newborn",
+  "width": 191,
+  "height": 202,
+  "facing": 1,
+  "mouth": [
+   103.1,
+   69.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     100.4,
+     189.9
+    ],
+    "tip": [
+     100.4,
+     111.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     103.1,
+     97.3
+    ],
+    "tip": [
+     103.1,
+     35.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "fox_boy_young": {
+  "sprite": "fox_boy_young",
+  "width": 299,
+  "height": 261,
+  "facing": 1,
+  "mouth": [
+   202.8,
+   88.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     86.7,
+     187.9
+    ],
+    "tip": [
+     194.3,
+     180.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     171.3,
+     145.9
+    ],
+    "tip": [
+     181.9,
+     51.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "fox_father": {
+  "sprite": "fox_father",
+  "width": 538,
+  "height": 469,
+  "facing": 1,
+  "mouth": [
+   398.6,
+   144.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     178.4,
+     290.8
+    ],
+    "tip": [
+     372.1,
+     276.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     336.9,
+     247.2
+    ],
+    "tip": [
+     361.0,
+     68.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     177.5,
+     337.7
+    ],
+    "tip": [
+     177.5,
+     445.5
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     301.3,
+     337.7
+    ],
+    "tip": [
+     301.3,
+     445.5
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     376.6,
+     337.7
+    ],
+    "tip": [
+     376.6,
+     445.5
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     462.7,
+     337.7
+    ],
+    "tip": [
+     462.7,
+     445.5
+    ],
+    "strength": 1.0,
+    "layer": 3
+   }
+  ]
+ },
+ "fox_girl_companion": {
+  "sprite": "fox_girl_companion",
+  "width": 329,
+  "height": 310,
+  "facing": 1,
+  "mouth": [
+   221.9,
+   104.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     94.9,
+     223.2
+    ],
+    "tip": [
+     213.3,
+     213.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     187.6,
+     172.8
+    ],
+    "tip": [
+     198.9,
+     56.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "fox_girl_little": {
+  "sprite": "fox_girl_little",
+  "width": 225,
+  "height": 268,
+  "facing": 1,
+  "mouth": [
+   149.7,
+   89.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     64.6,
+     193.0
+    ],
+    "tip": [
+     145.6,
+     184.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     127.0,
+     148.5
+    ],
+    "tip": [
+     133.9,
+     45.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "fox_girl_newborn": {
+  "sprite": "fox_girl_newborn",
+  "width": 194,
+  "height": 221,
+  "facing": 1,
+  "mouth": [
+   104.7,
+   75.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     102.6,
+     207.7
+    ],
+    "tip": [
+     102.6,
+     121.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     104.7,
+     106.0
+    ],
+    "tip": [
+     104.7,
+     36.3
     ],
     "strength": 1.6,
     "layer": 4
@@ -2181,103 +2285,23 @@
  },
  "fox_girl_young": {
   "sprite": "fox_girl_young",
-  "width": 285,
-  "height": 296,
-  "facing": 1,
-  "mouth": [
-   205.9,
-   91.2
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     93.0,
-     213.1
-    ],
-    "tip": [
-     195.6,
-     204.2
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     174.9,
-     156.3
-    ],
-    "tip": [
-     186.0,
-     31.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "fox_mother": {
-  "sprite": "fox_mother",
-  "width": 377,
-  "height": 427,
-  "facing": -1,
-  "mouth": [
-   92.0,
-   130.7
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     259.6,
-     307.4
-    ],
-    "tip": [
-     123.9,
-     294.6
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     141.2,
-     224.6
-    ],
-    "tip": [
-     118.4,
-     76.6
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giant_panda_boy_companion": {
-  "sprite": "giant_panda_boy_companion",
-  "width": 257,
+  "width": 311,
   "height": 286,
   "facing": 1,
   "mouth": [
-   174.9,
-   87.0
+   212.6,
+   97.8
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     68.8,
+     95.5,
      205.9
     ],
     "tip": [
-     161.3,
+     207.5,
      197.3
     ],
     "strength": 1.1,
@@ -2287,12 +2311,544 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     145.0,
-     149.9
+     181.5,
+     160.7
     ],
     "tip": [
-     156.9,
-     32.2
+     190.8,
+     38.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "fox_mother": {
+  "sprite": "fox_mother",
+  "width": 514,
+  "height": 458,
+  "facing": -1,
+  "mouth": [
+   108.6,
+   147.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     342.6,
+     284.0
+    ],
+    "tip": [
+     157.5,
+     270.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     178.1,
+     248.1
+    ],
+    "tip": [
+     144.5,
+     72.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     82.2,
+     329.8
+    ],
+    "tip": [
+     82.2,
+     435.1
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     138.8,
+     329.8
+    ],
+    "tip": [
+     138.8,
+     435.1
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     205.6,
+     329.8
+    ],
+    "tip": [
+     205.6,
+     435.1
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     318.7,
+     329.8
+    ],
+    "tip": [
+     318.7,
+     435.1
+    ],
+    "strength": 0.9,
+    "layer": 0
+   }
+  ]
+ },
+ "frilled_lizard_boy_companion": {
+  "sprite": "frilled_lizard_boy_companion",
+  "width": 380,
+  "height": 285,
+  "facing": 1,
+  "mouth": [
+   261.5,
+   94.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     120.0,
+     205.2
+    ],
+    "tip": [
+     256.8,
+     196.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     224.2,
+     157.6
+    ],
+    "tip": [
+     234.9,
+     32.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_boy_little": {
+  "sprite": "frilled_lizard_boy_little",
+  "width": 278,
+  "height": 212,
+  "facing": 1,
+  "mouth": [
+   213.2,
+   68.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     84.7,
+     152.6
+    ],
+    "tip": [
+     184.8,
+     146.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     174.7,
+     115.0
+    ],
+    "tip": [
+     193.8,
+     23.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_boy_newborn": {
+  "sprite": "frilled_lizard_boy_newborn",
+  "width": 181,
+  "height": 197,
+  "facing": 1,
+  "mouth": [
+   130.0,
+   63.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     54.1,
+     141.8
+    ],
+    "tip": [
+     119.3,
+     135.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     108.4,
+     106.5
+    ],
+    "tip": [
+     117.3,
+     18.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_boy_young": {
+  "sprite": "frilled_lizard_boy_young",
+  "width": 317,
+  "height": 241,
+  "facing": 1,
+  "mouth": [
+   236.2,
+   81.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     104.2,
+     173.5
+    ],
+    "tip": [
+     218.3,
+     166.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     198.8,
+     134.4
+    ],
+    "tip": [
+     214.0,
+     26.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_father": {
+  "sprite": "frilled_lizard_father",
+  "width": 643,
+  "height": 458,
+  "facing": 1,
+  "mouth": [
+   475.1,
+   140.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     218.2,
+     329.8
+    ],
+    "tip": [
+     449.7,
+     316.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     404.1,
+     241.1
+    ],
+    "tip": [
+     430.0,
+     33.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_girl_companion": {
+  "sprite": "frilled_lizard_girl_companion",
+  "width": 381,
+  "height": 295,
+  "facing": 1,
+  "mouth": [
+   233.1,
+   94.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     211.6,
+     277.3
+    ],
+    "tip": [
+     211.6,
+     162.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     233.1,
+     135.6
+    ],
+    "tip": [
+     233.1,
+     34.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_girl_little": {
+  "sprite": "frilled_lizard_girl_little",
+  "width": 289,
+  "height": 226,
+  "facing": 1,
+  "mouth": [
+   211.0,
+   70.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     86.8,
+     162.7
+    ],
+    "tip": [
+     190.9,
+     155.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     175.2,
+     119.8
+    ],
+    "tip": [
+     190.8,
+     27.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_girl_newborn": {
+  "sprite": "frilled_lizard_girl_newborn",
+  "width": 183,
+  "height": 217,
+  "facing": 1,
+  "mouth": [
+   122.1,
+   66.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     52.7,
+     156.2
+    ],
+    "tip": [
+     118.5,
+     149.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     103.6,
+     114.6
+    ],
+    "tip": [
+     109.3,
+     26.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_girl_young": {
+  "sprite": "frilled_lizard_girl_young",
+  "width": 325,
+  "height": 253,
+  "facing": 1,
+  "mouth": [
+   234.3,
+   82.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     105.9,
+     182.2
+    ],
+    "tip": [
+     222.9,
+     174.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     199.1,
+     138.0
+    ],
+    "tip": [
+     211.6,
+     29.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "frilled_lizard_mother": {
+  "sprite": "frilled_lizard_mother",
+  "width": 577,
+  "height": 423,
+  "facing": -1,
+  "mouth": [
+   144.1,
+   138.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     364.3,
+     304.6
+    ],
+    "tip": [
+     156.6,
+     291.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     203.1,
+     231.7
+    ],
+    "tip": [
+     184.5,
+     45.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giant_panda_boy_companion": {
+  "sprite": "giant_panda_boy_companion",
+  "width": 413,
+  "height": 342,
+  "facing": 1,
+  "mouth": [
+   302.5,
+   113.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     124.3,
+     246.2
+    ],
+    "tip": [
+     273.0,
+     236.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     251.1,
+     188.7
+    ],
+    "tip": [
+     273.6,
+     46.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -2301,24 +2857,24 @@
  },
  "giant_panda_boy_little": {
   "sprite": "giant_panda_boy_little",
-  "width": 232,
-  "height": 216,
-  "facing": 1,
+  "width": 268,
+  "height": 283,
+  "facing": -1,
   "mouth": [
-   154.5,
-   68.5
+   125.7,
+   93.0
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     62.0,
-     155.5
+     128.5,
+     266.0
     ],
     "tip": [
-     145.5,
-     149.0
+     128.5,
+     155.7
     ],
     "strength": 1.1,
     "layer": 2
@@ -2327,12 +2883,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     129.0,
-     116.0
+     125.7,
+     132.6
     ],
     "tip": [
-     138.2,
-     19.0
+     125.7,
+     43.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -2341,24 +2897,24 @@
  },
  "giant_panda_boy_newborn": {
   "sprite": "giant_panda_boy_newborn",
-  "width": 186,
-  "height": 183,
+  "width": 236,
+  "height": 225,
   "facing": 1,
   "mouth": [
-   93.9,
-   57.7
+   126.7,
+   75.1
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     93.6,
-     172.0
+     124.0,
+     211.5
     ],
     "tip": [
-     93.6,
-     100.7
+     124.0,
+     123.8
     ],
     "strength": 1.1,
     "layer": 2
@@ -2367,12 +2923,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     93.9,
-     83.4
+     126.7,
+     106.6
     ],
     "tip": [
-     93.9,
-     20.0
+     126.7,
+     36.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -2381,24 +2937,24 @@
  },
  "giant_panda_boy_young": {
   "sprite": "giant_panda_boy_young",
-  "width": 242,
-  "height": 257,
+  "width": 342,
+  "height": 292,
   "facing": 1,
   "mouth": [
-   163.6,
-   79.5
+   244.2,
+   97.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     67.7,
-     185.0
+     99.5,
+     210.2
     ],
     "tip": [
-     154.8,
-     177.3
+     222.6,
+     201.5
     ],
     "strength": 1.1,
     "layer": 2
@@ -2407,12 +2963,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     137.3,
-     136.1
+     202.8,
+     161.7
     ],
     "tip": [
-     146.6,
-     18.4
+     220.2,
+     45.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -2421,24 +2977,24 @@
  },
  "giant_panda_father": {
   "sprite": "giant_panda_father",
-  "width": 428,
-  "height": 422,
+  "width": 636,
+  "height": 366,
   "facing": 1,
   "mouth": [
-   308.1,
-   126.9
+   439.8,
+   124.0
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     115.0,
-     303.8
+     190.0,
+     263.5
     ],
     "tip": [
-     269.1,
-     291.2
+     419.0,
+     252.5
     ],
     "strength": 1.1,
     "layer": 2
@@ -2447,12 +3003,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     251.0,
-     219.7
+     371.6,
+     204.6
     ],
     "tip": [
-     278.2,
-     52.3
+     395.3,
+     27.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -2461,24 +3017,24 @@
  },
  "giant_panda_girl_companion": {
   "sprite": "giant_panda_girl_companion",
-  "width": 254,
-  "height": 309,
+  "width": 417,
+  "height": 338,
   "facing": 1,
   "mouth": [
-   168.0,
-   93.9
+   294.1,
+   112.3
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     67.1,
-     222.5
+     121.6,
+     243.4
     ],
     "tip": [
-     158.6,
-     213.2
+     271.7,
+     233.2
     ],
     "strength": 1.1,
     "layer": 2
@@ -2487,12 +3043,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     140.2,
-     161.9
+     245.4,
+     186.6
     ],
     "tip": [
-     150.2,
-     20.5
+     264.9,
+     27.3
     ],
     "strength": 1.6,
     "layer": 4
@@ -2501,24 +3057,24 @@
  },
  "giant_panda_girl_little": {
   "sprite": "giant_panda_girl_little",
-  "width": 222,
-  "height": 247,
-  "facing": 1,
+  "width": 273,
+  "height": 293,
+  "facing": -1,
   "mouth": [
-   143.7,
-   77.3
+   129.1,
+   95.4
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     58.7,
-     177.8
+     133.4,
+     275.4
     ],
     "tip": [
-     138.6,
-     170.4
+     133.4,
+     161.2
     ],
     "strength": 1.1,
     "layer": 2
@@ -2527,12 +3083,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     120.9,
-     131.7
+     129.1,
+     136.4
     ],
     "tip": [
-     128.2,
-     23.8
+     129.1,
+     40.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -2541,24 +3097,24 @@
  },
  "giant_panda_girl_newborn": {
   "sprite": "giant_panda_girl_newborn",
-  "width": 188,
-  "height": 212,
+  "width": 243,
+  "height": 243,
   "facing": -1,
   "mouth": [
-   96.5,
-   66.7
+   123.7,
+   79.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     96.7,
-     199.3
+     125.0,
+     228.4
     ],
     "tip": [
-     96.7,
-     116.6
+     125.0,
+     133.7
     ],
     "strength": 1.1,
     "layer": 2
@@ -2567,12 +3123,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     96.5,
-     96.4
+     123.7,
+     113.5
     ],
     "tip": [
-     96.5,
-     25.7
+     123.7,
+     40.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -2581,24 +3137,24 @@
  },
  "giant_panda_girl_young": {
   "sprite": "giant_panda_girl_young",
-  "width": 253,
-  "height": 281,
+  "width": 339,
+  "height": 307,
   "facing": 1,
   "mouth": [
-   161.2,
-   87.8
+   229.1,
+   98.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     64.1,
-     202.3
+     92.0,
+     221.0
     ],
     "tip": [
-     155.2,
-     193.9
+     214.1,
+     211.8
     ],
     "strength": 1.1,
     "layer": 2
@@ -2607,12 +3163,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     135.1,
-     149.7
+     191.0,
+     165.7
     ],
     "tip": [
-     143.5,
-     18.9
+     205.4,
+     42.4
     ],
     "strength": 1.6,
     "layer": 4
@@ -2621,24 +3177,24 @@
  },
  "giant_panda_mother": {
   "sprite": "giant_panda_mother",
-  "width": 365,
-  "height": 399,
+  "width": 564,
+  "height": 326,
   "facing": -1,
   "mouth": [
-   106.6,
-   118.8
+   161.1,
+   112.4
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     264.9,
-     287.3
+     395.1,
+     234.7
     ],
     "tip": [
-     133.5,
-     275.3
+     192.1,
+     224.9
     ],
     "strength": 1.1,
     "layer": 2
@@ -2647,12 +3203,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     152.5,
-     206.6
+     227.2,
+     184.1
     ],
     "tip": [
-     132.1,
-     46.9
+     200.5,
+     26.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -2661,23 +3217,527 @@
  },
  "giraffe_boy_companion": {
   "sprite": "giraffe_boy_companion",
-  "width": 231,
-  "height": 331,
+  "width": 258,
+  "height": 551,
   "facing": 1,
   "mouth": [
-   186.3,
-   86.8
+   159.8,
+   146.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     70.4,
+     145.5,
+     517.9
+    ],
+    "tip": [
+     145.5,
+     303.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     159.8,
+     223.3
+    ],
+    "tip": [
+     159.8,
+     41.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_boy_little": {
+  "sprite": "giraffe_boy_little",
+  "width": 193,
+  "height": 342,
+  "facing": 1,
+  "mouth": [
+   112.8,
+   104.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     103.8,
+     321.5
+    ],
+    "tip": [
+     103.8,
+     188.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     112.8,
+     152.1
+    ],
+    "tip": [
+     112.8,
+     27.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_boy_newborn": {
+  "sprite": "giraffe_boy_newborn",
+  "width": 202,
+  "height": 258,
+  "facing": -1,
+  "mouth": [
+   106.6,
+   88.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     106.8,
+     242.5
+    ],
+    "tip": [
+     106.8,
+     141.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     106.6,
+     124.5
+    ],
+    "tip": [
+     106.6,
+     22.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_boy_young": {
+  "sprite": "giraffe_boy_young",
+  "width": 221,
+  "height": 426,
+  "facing": 1,
+  "mouth": [
+   131.5,
+   124.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     122.8,
+     400.4
+    ],
+    "tip": [
+     122.8,
+     234.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     131.5,
+     184.0
+    ],
+    "tip": [
+     131.5,
+     33.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_father": {
+  "sprite": "giraffe_father",
+  "width": 319,
+  "height": 649,
+  "facing": 1,
+  "mouth": [
+   231.0,
+   171.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     99.0,
+     363.4
+    ],
+    "tip": [
+     213.8,
+     344.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     193.8,
+     314.1
+    ],
+    "tip": [
+     208.7,
+     45.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     60.6,
+     428.3
+    ],
+    "tip": [
+     60.6,
+     616.5
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     134.0,
+     428.3
+    ],
+    "tip": [
+     134.0,
+     616.5
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     191.4,
+     428.3
+    ],
+    "tip": [
+     191.4,
+     616.5
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     248.8,
+     428.3
+    ],
+    "tip": [
+     248.8,
+     616.5
+    ],
+    "strength": 1.0,
+    "layer": 3
+   }
+  ]
+ },
+ "giraffe_girl_companion": {
+  "sprite": "giraffe_girl_companion",
+  "width": 267,
+  "height": 457,
+  "facing": 1,
+  "mouth": [
+   201.3,
+   123.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     81.0,
+     329.0
+    ],
+    "tip": [
+     177.1,
+     315.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     165.7,
+     224.4
+    ],
+    "tip": [
+     182.7,
+     35.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_girl_little": {
+  "sprite": "giraffe_girl_little",
+  "width": 225,
+  "height": 334,
+  "facing": 1,
+  "mouth": [
+   153.4,
+   106.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     66.8,
+     240.5
+    ],
+    "tip": [
+     147.8,
+     230.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     130.1,
+     180.0
+    ],
+    "tip": [
+     137.7,
+     27.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_girl_newborn": {
+  "sprite": "giraffe_girl_newborn",
+  "width": 202,
+  "height": 259,
+  "facing": 1,
+  "mouth": [
+   111.5,
+   87.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     107.6,
+     243.5
+    ],
+    "tip": [
+     107.6,
+     142.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     111.5,
+     123.5
+    ],
+    "tip": [
+     111.5,
+     23.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_girl_young": {
+  "sprite": "giraffe_girl_young",
+  "width": 267,
+  "height": 400,
+  "facing": 1,
+  "mouth": [
+   200.2,
+   114.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     81.3,
+     288.0
+    ],
+    "tip": [
+     177.4,
+     276.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     165.2,
+     202.6
+    ],
+    "tip": [
+     181.5,
+     31.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "giraffe_mother": {
+  "sprite": "giraffe_mother",
+  "width": 268,
+  "height": 597,
+  "facing": 1,
+  "mouth": [
+   188.4,
+   162.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     76.9,
+     346.3
+    ],
+    "tip": [
+     173.4,
+     328.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     156.9,
+     294.0
+    ],
+    "tip": [
+     169.7,
+     43.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     34.8,
+     406.0
+    ],
+    "tip": [
+     34.8,
+     567.1
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     93.8,
+     406.0
+    ],
+    "tip": [
+     93.8,
+     567.1
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     147.4,
+     406.0
+    ],
+    "tip": [
+     147.4,
+     567.1
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     195.6,
+     406.0
+    ],
+    "tip": [
+     195.6,
+     567.1
+    ],
+    "strength": 1.0,
+    "layer": 3
+   }
+  ]
+ },
+ "hedgehog_boy_companion": {
+  "sprite": "hedgehog_boy_companion",
+  "width": 329,
+  "height": 331,
+  "facing": 1,
+  "mouth": [
+   210.2,
+   108.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     85.1,
      238.3
     ],
     "tip": [
-     153.6,
+     203.5,
      228.4
     ],
     "strength": 1.1,
@@ -2687,464 +3747,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     150.2,
-     159.6
+     176.8,
+     180.8
     ],
     "tip": [
-     170.2,
-     21.9
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_boy_little": {
-  "sprite": "giraffe_boy_little",
-  "width": 155,
-  "height": 202,
-  "facing": 1,
-  "mouth": [
-   106.1,
-   59.0
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     46.6,
-     145.4
-    ],
-    "tip": [
-     102.4,
-     139.4
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     90.1,
-     103.5
-    ],
-    "tip": [
-     95.3,
-     15.1
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_boy_newborn": {
-  "sprite": "giraffe_boy_newborn",
-  "width": 143,
-  "height": 164,
-  "facing": 1,
-  "mouth": [
-   77.8,
-   53.6
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     75.6,
-     154.2
-    ],
-    "tip": [
-     75.6,
-     90.2
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     77.8,
-     76.6
-    ],
-    "tip": [
-     77.8,
-     14.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_boy_young": {
-  "sprite": "giraffe_boy_young",
-  "width": 188,
-  "height": 263,
-  "facing": 1,
-  "mouth": [
-   138.9,
-   77.2
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     66.7,
-     189.4
-    ],
-    "tip": [
-     134.3,
-     181.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     119.5,
-     135.0
-    ],
-    "tip": [
-     125.8,
-     17.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_father": {
-  "sprite": "giraffe_father",
-  "width": 334,
-  "height": 479,
-  "facing": 1,
-  "mouth": [
-   262.3,
-   133.6
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     97.3,
-     277.8
-    ],
-    "tip": [
-     217.6,
-     263.5
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     211.3,
-     238.9
-    ],
-    "tip": [
-     238.9,
-     38.7
-    ],
-    "strength": 1.6,
-    "layer": 4
-   },
-   {
-    "id": "legBL",
-    "pivot": [
-     56.8,
-     325.7
-    ],
-    "tip": [
-     56.8,
-     455.0
-    ],
-    "strength": 0.9,
-    "layer": 0
-   },
-   {
-    "id": "legBR",
-    "pivot": [
-     100.2,
-     325.7
-    ],
-    "tip": [
-     100.2,
-     455.0
-    ],
-    "strength": 0.9,
-    "layer": 0
-   },
-   {
-    "id": "legFL",
-    "pivot": [
-     157.0,
-     325.7
-    ],
-    "tip": [
-     157.0,
-     455.0
-    ],
-    "strength": 1.0,
-    "layer": 3
-   },
-   {
-    "id": "legFR",
-    "pivot": [
-     207.1,
-     325.7
-    ],
-    "tip": [
-     207.1,
-     455.0
-    ],
-    "strength": 1.0,
-    "layer": 3
-   }
-  ]
- },
- "giraffe_girl_companion": {
-  "sprite": "giraffe_girl_companion",
-  "width": 235,
-  "height": 295,
-  "facing": 1,
-  "mouth": [
-   188.5,
-   81.3
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     73.4,
-     212.4
-    ],
-    "tip": [
-     158.0,
-     203.6
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     153.0,
-     146.2
-    ],
-    "tip": [
-     172.1,
-     19.7
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_girl_little": {
-  "sprite": "giraffe_girl_little",
-  "width": 164,
-  "height": 246,
-  "facing": 1,
-  "mouth": [
-   114.6,
-   75.2
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     48.5,
-     177.1
-    ],
-    "tip": [
-     107.5,
-     169.7
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     96.2,
-     129.3
-    ],
-    "tip": [
-     103.1,
-     17.8
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_girl_newborn": {
-  "sprite": "giraffe_girl_newborn",
-  "width": 149,
-  "height": 181,
-  "facing": 1,
-  "mouth": [
-   80.4,
-   58.2
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     79.9,
-     170.1
-    ],
-    "tip": [
-     79.9,
-     99.6
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     80.4,
-     83.5
-    ],
-    "tip": [
-     80.4,
-     13.9
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_girl_young": {
-  "sprite": "giraffe_girl_young",
-  "width": 200,
-  "height": 281,
-  "facing": 1,
-  "mouth": [
-   154.2,
-   79.7
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     65.4,
-     202.3
-    ],
-    "tip": [
-     137.4,
-     193.9
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     128.1,
-     141.5
-    ],
-    "tip": [
-     140.2,
-     18.9
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "giraffe_mother": {
-  "sprite": "giraffe_mother",
-  "width": 247,
-  "height": 455,
-  "facing": -1,
-  "mouth": [
-   68.5,
-   126.0
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     166.6,
-     327.6
-    ],
-    "tip": [
-     77.7,
-     313.9
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     95.5,
-     226.1
-    ],
-    "tip": [
-     85.8,
-     64.3
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "hedgehog_boy_companion": {
-  "sprite": "hedgehog_boy_companion",
-  "width": 329,
-  "height": 320,
-  "facing": 1,
-  "mouth": [
-   208.6,
-   104.2
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     83.7,
-     230.4
-    ],
-    "tip": [
-     202.1,
-     220.8
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     175.3,
-     174.6
-    ],
-    "tip": [
-     185.6,
-     36.2
+     187.2,
+     34.9
     ],
     "strength": 1.6,
     "layer": 4
@@ -3157,19 +3765,19 @@
   "height": 246,
   "facing": 1,
   "mouth": [
-   147.0,
-   80.1
+   149.4,
+   80.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     136.1,
+     137.8,
      231.2
     ],
     "tip": [
-     136.1,
+     137.8,
      135.3
     ],
     "strength": 1.1,
@@ -3179,12 +3787,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     147.0,
-     114.5
+     149.4,
+     115.0
     ],
     "tip": [
-     147.0,
-     24.8
+     149.4,
+     26.8
     ],
     "strength": 1.6,
     "layer": 4
@@ -3193,24 +3801,24 @@
  },
  "hedgehog_boy_newborn": {
   "sprite": "hedgehog_boy_newborn",
-  "width": 236,
-  "height": 199,
+  "width": 233,
+  "height": 200,
   "facing": 1,
   "mouth": [
-   121.4,
-   66.7
+   117.8,
+   66.6
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     119.6,
-     187.1
+     116.7,
+     188.0
     ],
     "tip": [
-     119.6,
-     109.5
+     116.7,
+     110.0
     ],
     "strength": 1.1,
     "layer": 2
@@ -3219,12 +3827,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     121.4,
+     117.8,
      94.6
     ],
     "tip": [
-     121.4,
-     23.9
+     117.8,
+     23.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -3234,23 +3842,23 @@
  "hedgehog_boy_young": {
   "sprite": "hedgehog_boy_young",
   "width": 292,
-  "height": 277,
+  "height": 282,
   "facing": 1,
   "mouth": [
-   160.5,
-   89.7
+   162.6,
+   92.7
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     144.7,
-     260.4
+     146.5,
+     265.1
     ],
     "tip": [
-     144.7,
-     152.4
+     146.5,
+     155.1
     ],
     "strength": 1.1,
     "layer": 2
@@ -3259,12 +3867,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     160.5,
-     128.4
+     162.6,
+     132.2
     ],
     "tip": [
-     160.5,
-     30.6
+     162.6,
+     25.9
     ],
     "strength": 1.6,
     "layer": 4
@@ -3273,24 +3881,24 @@
  },
  "hedgehog_father": {
   "sprite": "hedgehog_father",
-  "width": 486,
-  "height": 398,
+  "width": 488,
+  "height": 397,
   "facing": 1,
   "mouth": [
-   313.4,
-   125.7
+   316.9,
+   123.9
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     132.7,
-     286.6
+     135.1,
+     285.8
     ],
     "tip": [
-     307.7,
-     274.6
+     310.8,
+     273.9
     ],
     "strength": 1.1,
     "layer": 2
@@ -3299,12 +3907,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     265.9,
-     213.3
+     269.0,
+     211.3
     ],
     "tip": [
-     279.4,
-     41.9
+     282.7,
+     30.8
     ],
     "strength": 1.6,
     "layer": 4
@@ -3314,23 +3922,23 @@
  "hedgehog_girl_companion": {
   "sprite": "hedgehog_girl_companion",
   "width": 338,
-  "height": 326,
+  "height": 327,
   "facing": 1,
   "mouth": [
-   210.5,
-   105.6
+   212.1,
+   105.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     84.1,
-     234.7
+     85.1,
+     235.4
     ],
     "tip": [
-     205.7,
-     224.9
+     206.8,
+     225.6
     ],
     "strength": 1.1,
     "layer": 2
@@ -3339,12 +3947,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     177.1,
-     177.3
+     178.4,
+     177.4
     ],
     "tip": [
-     186.8,
-     29.6
+     188.4,
+     27.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -3353,11 +3961,11 @@
  },
  "hedgehog_girl_little": {
   "sprite": "hedgehog_girl_little",
-  "width": 274,
-  "height": 257,
+  "width": 260,
+  "height": 258,
   "facing": 1,
   "mouth": [
-   145.6,
+   145.8,
    84.4
   ],
   "drinkDip": 0.0,
@@ -3365,12 +3973,12 @@
    {
     "id": "body",
     "pivot": [
-     134.6,
-     241.6
+     131.8,
+     242.5
     ],
     "tip": [
-     134.6,
-     141.4
+     131.8,
+     141.9
     ],
     "strength": 1.1,
     "layer": 2
@@ -3379,12 +3987,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     145.6,
-     120.4
+     145.8,
+     120.5
     ],
     "tip": [
-     145.6,
-     30.4
+     145.8,
+     30.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -3397,19 +4005,19 @@
   "height": 213,
   "facing": 1,
   "mouth": [
-   123.0,
-   70.8
+   123.5,
+   70.6
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     120.8,
+     121.8,
      200.2
     ],
     "tip": [
-     120.8,
+     121.8,
      117.2
     ],
     "strength": 1.1,
@@ -3419,12 +4027,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     123.0,
-     100.6
+     123.5,
+     100.5
     ],
     "tip": [
-     123.0,
-     24.8
+     123.5,
+     23.8
     ],
     "strength": 1.6,
     "layer": 4
@@ -3433,12 +4041,12 @@
  },
  "hedgehog_girl_young": {
   "sprite": "hedgehog_girl_young",
-  "width": 295,
-  "height": 296,
+  "width": 293,
+  "height": 297,
   "facing": 1,
   "mouth": [
-   158.5,
-   96.2
+   158.9,
+   96.6
   ],
   "drinkDip": 0.0,
   "bones": [
@@ -3446,11 +4054,11 @@
     "id": "body",
     "pivot": [
      145.0,
-     278.2
+     279.2
     ],
     "tip": [
      145.0,
-     162.8
+     163.4
     ],
     "strength": 1.1,
     "layer": 2
@@ -3459,12 +4067,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     158.5,
-     137.6
+     158.9,
+     138.2
     ],
     "tip": [
-     158.5,
-     27.8
+     158.9,
+     28.8
     ],
     "strength": 1.6,
     "layer": 4
@@ -3473,24 +4081,24 @@
  },
  "hedgehog_mother": {
   "sprite": "hedgehog_mother",
-  "width": 409,
-  "height": 373,
+  "width": 422,
+  "height": 377,
   "facing": -1,
   "mouth": [
-   179.2,
-   120.2
+   190.3,
+   122.7
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     197.7,
-     350.6
+     209.3,
+     354.4
     ],
     "tip": [
-     197.7,
-     205.2
+     209.3,
+     207.4
     ],
     "strength": 1.1,
     "layer": 2
@@ -3499,12 +4107,1212 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     179.2,
-     172.4
+     190.3,
+     175.5
     ],
     "tip": [
-     179.2,
+     190.3,
+     32.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_boy_companion": {
+  "sprite": "jaguar_boy_companion",
+  "width": 392,
+  "height": 333,
+  "facing": 1,
+  "mouth": [
+   315.7,
+   103.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     130.2,
+     239.8
+    ],
+    "tip": [
+     271.3,
+     229.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     259.4,
+     177.2
+    ],
+    "tip": [
+     288.2,
+     35.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_boy_little": {
+  "sprite": "jaguar_boy_little",
+  "width": 303,
+  "height": 265,
+  "facing": 1,
+  "mouth": [
+   228.0,
+   86.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     96.8,
+     190.8
+    ],
+    "tip": [
+     205.9,
+     182.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     190.0,
+     144.4
+    ],
+    "tip": [
+     206.8,
+     33.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_boy_newborn": {
+  "sprite": "jaguar_boy_newborn",
+  "width": 244,
+  "height": 237,
+  "facing": 1,
+  "mouth": [
+   134.9,
+   78.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     129.6,
+     222.8
+    ],
+    "tip": [
+     129.6,
+     130.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     134.9,
+     111.4
+    ],
+    "tip": [
+     134.9,
+     27.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_boy_young": {
+  "sprite": "jaguar_boy_young",
+  "width": 321,
+  "height": 295,
+  "facing": 1,
+  "mouth": [
+   242.6,
+   94.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     103.8,
+     212.4
+    ],
+    "tip": [
+     219.3,
+     203.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     202.5,
+     159.8
+    ],
+    "tip": [
+     220.2,
+     32.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_father": {
+  "sprite": "jaguar_father",
+  "width": 629,
+  "height": 396,
+  "facing": 1,
+  "mouth": [
+   485.2,
+   127.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     196.2,
+     285.1
+    ],
+    "tip": [
+     422.6,
+     273.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     398.8,
+     214.8
+    ],
+    "tip": [
+     441.1,
+     48.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_girl_companion": {
+  "sprite": "jaguar_girl_companion",
+  "width": 397,
+  "height": 333,
+  "facing": 1,
+  "mouth": [
+   318.6,
+   101.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     131.1,
+     239.8
+    ],
+    "tip": [
+     274.1,
+     229.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     261.8,
+     174.8
+    ],
+    "tip": [
+     290.8,
+     38.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_girl_little": {
+  "sprite": "jaguar_girl_little",
+  "width": 292,
+  "height": 284,
+  "facing": 1,
+  "mouth": [
+   210.8,
+   88.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     94.7,
+     204.5
+    ],
+    "tip": [
+     199.8,
+     196.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     178.9,
+     151.4
+    ],
+    "tip": [
+     190.4,
+     37.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_girl_newborn": {
+  "sprite": "jaguar_girl_newborn",
+  "width": 247,
+  "height": 259,
+  "facing": 1,
+  "mouth": [
+   135.4,
+   83.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     131.0,
+     243.5
+    ],
+    "tip": [
+     131.0,
+     142.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     135.4,
+     120.0
+    ],
+    "tip": [
+     135.4,
+     37.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_girl_young": {
+  "sprite": "jaguar_girl_young",
+  "width": 322,
+  "height": 309,
+  "facing": 1,
+  "mouth": [
+   235.8,
+   95.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     103.1,
+     222.5
+    ],
+    "tip": [
+     219.1,
+     213.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     198.5,
+     163.8
+    ],
+    "tip": [
+     213.3,
+     39.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "jaguar_mother": {
+  "sprite": "jaguar_mother",
+  "width": 630,
+  "height": 368,
+  "facing": -1,
+  "mouth": [
+   125.0,
+   116.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     432.5,
+     265.0
+    ],
+    "tip": [
+     205.7,
+     253.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     219.6,
+     197.5
+    ],
+    "tip": [
+     169.1,
+     32.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_boy_companion": {
+  "sprite": "kangaroo_boy_companion",
+  "width": 279,
+  "height": 310,
+  "facing": 1,
+  "mouth": [
+   215.7,
+   94.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     105.9,
+     223.2
+    ],
+    "tip": [
+     206.4,
+     213.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     185.7,
+     162.9
+    ],
+    "tip": [
+     196.1,
+     60.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_boy_little": {
+  "sprite": "kangaroo_boy_little",
+  "width": 215,
+  "height": 269,
+  "facing": -1,
+  "mouth": [
+   111.6,
+   84.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     114.5,
+     252.9
+    ],
+    "tip": [
+     114.5,
+     148.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     111.6,
+     122.0
+    ],
+    "tip": [
+     111.6,
+     62.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_boy_newborn": {
+  "sprite": "kangaroo_boy_newborn",
+  "width": 182,
+  "height": 218,
+  "facing": -1,
+  "mouth": [
+   69.7,
+   72.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     141.0,
+     157.0
+    ],
+    "tip": [
+     75.4,
+     150.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     89.1,
+     120.5
+    ],
+    "tip": [
+     82.4,
+     52.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_boy_young": {
+  "sprite": "kangaroo_boy_young",
+  "width": 235,
+  "height": 291,
+  "facing": 1,
+  "mouth": [
+   180.7,
+   85.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     85.3,
+     209.5
+    ],
+    "tip": [
+     169.9,
+     200.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     154.1,
+     149.4
+    ],
+    "tip": [
+     164.2,
+     53.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_father": {
+  "sprite": "kangaroo_father",
+  "width": 486,
+  "height": 472,
+  "facing": 1,
+  "mouth": [
+   391.0,
+   124.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     185.9,
+     339.8
+    ],
+    "tip": [
+     360.8,
+     325.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     332.5,
+     228.2
+    ],
+    "tip": [
+     357.0,
+     81.3
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_girl_companion": {
+  "sprite": "kangaroo_girl_companion",
+  "width": 278,
+  "height": 307,
+  "facing": 1,
+  "mouth": [
+   215.8,
+   88.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     106.7,
+     221.0
+    ],
+    "tip": [
+     206.7,
+     211.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     186.0,
+     156.3
+    ],
+    "tip": [
+     196.3,
      40.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_girl_little": {
+  "sprite": "kangaroo_girl_little",
+  "width": 216,
+  "height": 273,
+  "facing": -1,
+  "mouth": [
+   108.9,
+   84.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     113.5,
+     256.6
+    ],
+    "tip": [
+     113.5,
+     150.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     108.9,
+     122.6
+    ],
+    "tip": [
+     108.9,
+     34.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_girl_newborn": {
+  "sprite": "kangaroo_girl_newborn",
+  "width": 183,
+  "height": 226,
+  "facing": -1,
+  "mouth": [
+   68.7,
+   75.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     141.5,
+     162.7
+    ],
+    "tip": [
+     75.6,
+     155.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     88.7,
+     125.0
+    ],
+    "tip": [
+     81.5,
+     52.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_girl_young": {
+  "sprite": "kangaroo_girl_young",
+  "width": 233,
+  "height": 300,
+  "facing": 1,
+  "mouth": [
+   170.4,
+   88.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     83.7,
+     216.0
+    ],
+    "tip": [
+     167.6,
+     207.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     147.5,
+     154.4
+    ],
+    "tip": [
+     154.0,
+     38.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "kangaroo_mother": {
+  "sprite": "kangaroo_mother",
+  "width": 416,
+  "height": 465,
+  "facing": -1,
+  "mouth": [
+   128.3,
+   132.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     152.5,
+     437.1
+    ],
+    "tip": [
+     152.5,
+     255.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     128.3,
+     197.3
+    ],
+    "tip": [
+     128.3,
+     69.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_boy_companion": {
+  "sprite": "koala_boy_companion",
+  "width": 308,
+  "height": 335,
+  "facing": 1,
+  "mouth": [
+   161.5,
+   102.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     150.5,
+     314.9
+    ],
+    "tip": [
+     150.5,
+     184.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     161.5,
+     149.1
+    ],
+    "tip": [
+     161.5,
+     34.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_boy_little": {
+  "sprite": "koala_boy_little",
+  "width": 252,
+  "height": 247,
+  "facing": 1,
+  "mouth": [
+   139.3,
+   81.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     126.8,
+     232.2
+    ],
+    "tip": [
+     126.8,
+     135.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     139.3,
+     115.8
+    ],
+    "tip": [
+     139.3,
+     35.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_boy_newborn": {
+  "sprite": "koala_boy_newborn",
+  "width": 253,
+  "height": 181,
+  "facing": 1,
+  "mouth": [
+   168.7,
+   61.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     71.8,
+     130.3
+    ],
+    "tip": [
+     162.9,
+     124.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     142.7,
+     100.9
+    ],
+    "tip": [
+     151.0,
+     25.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_boy_young": {
+  "sprite": "koala_boy_young",
+  "width": 282,
+  "height": 285,
+  "facing": 1,
+  "mouth": [
+   155.1,
+   88.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     140.0,
+     267.9
+    ],
+    "tip": [
+     140.0,
+     156.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     155.1,
+     128.1
+    ],
+    "tip": [
+     155.1,
+     29.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_father": {
+  "sprite": "koala_father",
+  "width": 377,
+  "height": 453,
+  "facing": -1,
+  "mouth": [
+   183.8,
+   132.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     195.2,
+     425.8
+    ],
+    "tip": [
+     195.2,
+     249.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     183.8,
+     195.5
+    ],
+    "tip": [
+     183.8,
+     42.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_girl_companion": {
+  "sprite": "koala_girl_companion",
+  "width": 292,
+  "height": 338,
+  "facing": 1,
+  "mouth": [
+   149.1,
+   104.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     142.9,
+     317.7
+    ],
+    "tip": [
+     142.9,
+     185.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     149.1,
+     152.0
+    ],
+    "tip": [
+     149.1,
+     29.3
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_girl_little": {
+  "sprite": "koala_girl_little",
+  "width": 257,
+  "height": 263,
+  "facing": 1,
+  "mouth": [
+   138.5,
+   84.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     132.6,
+     247.2
+    ],
+    "tip": [
+     132.6,
+     144.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     138.5,
+     121.7
+    ],
+    "tip": [
+     138.5,
+     28.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_girl_newborn": {
+  "sprite": "koala_girl_newborn",
+  "width": 252,
+  "height": 185,
+  "facing": 1,
+  "mouth": [
+   144.2,
+   61.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     130.6,
+     173.9
+    ],
+    "tip": [
+     130.6,
+     101.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     144.2,
+     87.5
+    ],
+    "tip": [
+     144.2,
+     23.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_girl_young": {
+  "sprite": "koala_girl_young",
+  "width": 267,
+  "height": 302,
+  "facing": 1,
+  "mouth": [
+   141.2,
+   95.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     130.5,
+     283.9
+    ],
+    "tip": [
+     130.5,
+     166.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     141.2,
+     137.5
+    ],
+    "tip": [
+     141.2,
+     37.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "koala_mother": {
+  "sprite": "koala_mother",
+  "width": 333,
+  "height": 432,
+  "facing": 1,
+  "mouth": [
+   165.3,
+   130.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     155.8,
+     406.1
+    ],
+    "tip": [
+     155.8,
+     237.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     165.3,
+     191.2
+    ],
+    "tip": [
+     165.3,
+     58.9
     ],
     "strength": 1.6,
     "layer": 4
@@ -3646,11 +5454,11 @@
     "id": "body",
     "pivot": [
      328.4,
-     518.4
+     374.4
     ],
     "tip": [
      156.7,
-     496.8
+     352.8
     ],
     "strength": 1.1,
     "layer": 2
@@ -3668,29 +5476,81 @@
     ],
     "strength": 1.6,
     "layer": 4
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     90.6,
+     446.4
+    ],
+    "tip": [
+     90.6,
+     684.0
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     195.6,
+     446.4
+    ],
+    "tip": [
+     195.6,
+     684.0
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     262.4,
+     446.4
+    ],
+    "tip": [
+     262.4,
+     684.0
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     391.1,
+     446.4
+    ],
+    "tip": [
+     391.1,
+     684.0
+    ],
+    "strength": 0.9,
+    "layer": 0
    }
   ]
  },
  "owl_boy_companion": {
   "sprite": "owl_boy_companion",
-  "width": 312,
-  "height": 321,
+  "width": 251,
+  "height": 297,
   "facing": 1,
   "mouth": [
-   233.2,
-   100.2
+   179.9,
+   93.1
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     106.0,
-     231.1
+     85.5,
+     213.8
     ],
     "tip": [
-     218.4,
-     221.5
+     175.9,
+     204.9
     ],
     "strength": 1.1,
     "layer": 2
@@ -3699,12 +5559,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     197.6,
-     170.8
+     154.8,
+     158.5
     ],
     "tip": [
-     211.3,
-     45.3
+     162.3,
+     33.8
     ],
     "strength": 1.6,
     "layer": 4
@@ -3713,24 +5573,24 @@
  },
  "owl_boy_little": {
   "sprite": "owl_boy_little",
-  "width": 232,
-  "height": 247,
+  "width": 198,
+  "height": 250,
   "facing": 1,
   "mouth": [
-   132.8,
-   77.2
+   108.4,
+   81.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     125.4,
-     232.2
+     103.6,
+     235.0
     ],
     "tip": [
-     125.4,
-     135.9
+     103.6,
+     137.5
     ],
     "strength": 1.1,
     "layer": 2
@@ -3739,12 +5599,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     132.8,
-     111.8
+     108.4,
+     116.2
     ],
     "tip": [
-     132.8,
-     24.8
+     108.4,
+     22.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -3753,24 +5613,24 @@
  },
  "owl_boy_newborn": {
   "sprite": "owl_boy_newborn",
-  "width": 207,
-  "height": 205,
-  "facing": 1,
+  "width": 174,
+  "height": 202,
+  "facing": -1,
   "mouth": [
-   104.8,
-   66.6
+   82.6,
+   67.8
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     103.9,
-     192.7
+     84.8,
+     189.9
     ],
     "tip": [
-     103.9,
-     112.8
+     84.8,
+     111.1
     ],
     "strength": 1.1,
     "layer": 2
@@ -3779,12 +5639,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     104.8,
-     95.3
+     82.6,
+     96.1
     ],
     "tip": [
-     104.8,
-     23.3
+     82.6,
+     18.1
     ],
     "strength": 1.6,
     "layer": 4
@@ -3793,24 +5653,24 @@
  },
  "owl_boy_young": {
   "sprite": "owl_boy_young",
-  "width": 352,
-  "height": 275,
+  "width": 346,
+  "height": 262,
   "facing": 1,
   "mouth": [
-   171.8,
-   85.5
+   223.9,
+   88.7
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     165.2,
-     258.5
+     88.3,
+     188.6
     ],
     "tip": [
-     165.2,
-     151.2
+     212.9,
+     180.8
     ],
     "strength": 1.1,
     "layer": 2
@@ -3819,12 +5679,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     171.8,
-     124.0
+     186.9,
+     146.3
     ],
     "tip": [
-     171.8,
-     29.5
+     199.7,
+     34.7
     ],
     "strength": 1.6,
     "layer": 4
@@ -3833,24 +5693,24 @@
  },
  "owl_father": {
   "sprite": "owl_father",
-  "width": 431,
-  "height": 401,
+  "width": 402,
+  "height": 474,
   "facing": 1,
   "mouth": [
-   320.3,
-   119.5
+   267.9,
+   137.6
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     139.5,
-     288.7
+     114.8,
+     341.3
     ],
     "tip": [
-     294.7,
-     276.7
+     259.6,
+     327.1
     ],
     "strength": 1.1,
     "layer": 2
@@ -3859,12 +5719,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     268.9,
-     207.8
+     226.9,
+     241.9
     ],
     "tip": [
-     290.2,
-     43.1
+     239.7,
+     35.4
     ],
     "strength": 1.6,
     "layer": 4
@@ -3873,24 +5733,24 @@
  },
  "owl_girl_companion": {
   "sprite": "owl_girl_companion",
-  "width": 275,
-  "height": 318,
+  "width": 253,
+  "height": 302,
   "facing": 1,
   "mouth": [
-   186.1,
-   90.5
+   155.9,
+   96.5
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     81.5,
-     229.0
+     144.6,
+     283.9
     ],
     "tip": [
-     180.5,
-     219.4
+     144.6,
+     166.1
     ],
     "strength": 1.1,
     "layer": 2
@@ -3899,12 +5759,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     158.2,
-     160.4
+     155.9,
+     138.7
     ],
     "tip": [
-     166.9,
-     26.1
+     155.9,
+     40.1
     ],
     "strength": 1.6,
     "layer": 4
@@ -3913,23 +5773,303 @@
  },
  "owl_girl_little": {
   "sprite": "owl_girl_little",
-  "width": 220,
-  "height": 274,
+  "width": 197,
+  "height": 271,
   "facing": 1,
   "mouth": [
-   115.9,
-   85.2
+   105.4,
+   89.9
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     114.9,
+     103.0,
+     254.7
+    ],
+    "tip": [
+     103.0,
+     149.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     105.4,
+     127.9
+    ],
+    "tip": [
+     105.4,
+     38.3
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "owl_girl_newborn": {
+  "sprite": "owl_girl_newborn",
+  "width": 177,
+  "height": 224,
+  "facing": -1,
+  "mouth": [
+   81.1,
+   76.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     85.7,
+     210.6
+    ],
+    "tip": [
+     85.7,
+     123.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     81.1,
+     108.2
+    ],
+    "tip": [
+     81.1,
+     27.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "owl_girl_young": {
+  "sprite": "owl_girl_young",
+  "width": 355,
+  "height": 277,
+  "facing": 1,
+  "mouth": [
+   225.8,
+   92.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     89.3,
+     199.4
+    ],
+    "tip": [
+     217.1,
+     191.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     189.0,
+     153.3
+    ],
+    "tip": [
+     201.0,
+     38.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "owl_mother": {
+  "sprite": "owl_mother",
+  "width": 322,
+  "height": 465,
+  "facing": -1,
+  "mouth": [
+   148.6,
+   146.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     155.5,
+     437.1
+    ],
+    "tip": [
+     155.5,
+     255.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     148.6,
+     211.5
+    ],
+    "tip": [
+     148.6,
+     68.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "penguin_boy_companion": {
+  "sprite": "penguin_boy_companion",
+  "width": 222,
+  "height": 300,
+  "facing": 1,
+  "mouth": [
+   122.9,
+   90.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     115.6,
+     282.0
+    ],
+    "tip": [
+     115.6,
+     165.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     122.9,
+     132.3
+    ],
+    "tip": [
+     122.9,
+     27.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "penguin_boy_little": {
+  "sprite": "penguin_boy_little",
+  "width": 207,
+  "height": 254,
+  "facing": -1,
+  "mouth": [
+   99.0,
+   78.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     103.5,
+     238.8
+    ],
+    "tip": [
+     103.5,
+     139.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     99.0,
+     114.2
+    ],
+    "tip": [
+     99.0,
+     22.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "penguin_boy_newborn": {
+  "sprite": "penguin_boy_newborn",
+  "width": 199,
+  "height": 220,
+  "facing": -1,
+  "mouth": [
+   91.3,
+   70.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     94.9,
+     206.8
+    ],
+    "tip": [
+     94.9,
+     121.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     91.3,
+     101.0
+    ],
+    "tip": [
+     91.3,
+     20.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "penguin_boy_young": {
+  "sprite": "penguin_boy_young",
+  "width": 284,
+  "height": 274,
+  "facing": -1,
+  "mouth": [
+   139.2,
+   85.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     141.0,
      257.6
     ],
     "tip": [
-     114.9,
+     141.0,
      150.7
     ],
     "strength": 1.1,
@@ -3939,78 +6079,38 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     115.9,
-     123.5
+     139.2,
+     123.7
     ],
     "tip": [
-     115.9,
-     25.4
+     139.2,
+     22.4
     ],
     "strength": 1.6,
     "layer": 4
    }
   ]
  },
- "owl_girl_newborn": {
-  "sprite": "owl_girl_newborn",
-  "width": 211,
-  "height": 228,
-  "facing": -1,
-  "mouth": [
-   91.8,
-   73.1
-  ],
-  "drinkDip": 0.0,
-  "bones": [
-   {
-    "id": "body",
-    "pivot": [
-     102.0,
-     214.3
-    ],
-    "tip": [
-     102.0,
-     125.4
-    ],
-    "strength": 1.1,
-    "layer": 2
-   },
-   {
-    "id": "head",
-    "parent": "body",
-    "pivot": [
-     91.8,
-     105.0
-    ],
-    "tip": [
-     91.8,
-     34.7
-    ],
-    "strength": 1.6,
-    "layer": 4
-   }
-  ]
- },
- "owl_girl_young": {
-  "sprite": "owl_girl_young",
-  "width": 368,
-  "height": 293,
+ "penguin_father": {
+  "sprite": "penguin_father",
+  "width": 381,
+  "height": 451,
   "facing": 1,
   "mouth": [
-   179.6,
-   88.9
+   211.4,
+   136.8
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     174.1,
-     275.4
+     206.3,
+     423.9
     ],
     "tip": [
-     174.1,
-     161.2
+     206.3,
+     248.1
     ],
     "strength": 1.1,
     "layer": 2
@@ -4019,38 +6119,38 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     179.6,
-     129.9
+     211.4,
+     200.0
     ],
     "tip": [
-     179.6,
-     28.6
+     211.4,
+     35.1
     ],
     "strength": 1.6,
     "layer": 4
    }
   ]
  },
- "owl_mother": {
-  "sprite": "owl_mother",
-  "width": 357,
-  "height": 393,
-  "facing": -1,
+ "penguin_girl_companion": {
+  "sprite": "penguin_girl_companion",
+  "width": 220,
+  "height": 311,
+  "facing": 1,
   "mouth": [
-   102.8,
-   122.9
+   113.5,
+   94.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     243.8,
-     283.0
+     112.8,
+     292.3
     ],
     "tip": [
-     115.3,
-     271.2
+     112.8,
+     171.1
     ],
     "strength": 1.1,
     "layer": 2
@@ -4059,15 +6159,679 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     141.4,
-     209.4
+     113.5,
+     137.7
     ],
     "tip": [
-     127.8,
-     69.6
+     113.5,
+     39.7
     ],
     "strength": 1.6,
     "layer": 4
+   }
+  ]
+ },
+ "penguin_girl_little": {
+  "sprite": "penguin_girl_little",
+  "width": 214,
+  "height": 283,
+  "facing": -1,
+  "mouth": [
+   100.0,
+   92.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     107.4,
+     266.0
+    ],
+    "tip": [
+     107.4,
+     155.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     100.0,
+     131.9
+    ],
+    "tip": [
+     100.0,
+     41.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "penguin_girl_newborn": {
+  "sprite": "penguin_girl_newborn",
+  "width": 199,
+  "height": 245,
+  "facing": -1,
+  "mouth": [
+   85.6,
+   81.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     93.5,
+     230.3
+    ],
+    "tip": [
+     93.5,
+     134.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     85.6,
+     116.0
+    ],
+    "tip": [
+     85.6,
+     36.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "penguin_girl_young": {
+  "sprite": "penguin_girl_young",
+  "width": 286,
+  "height": 298,
+  "facing": -1,
+  "mouth": [
+   134.2,
+   93.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     138.5,
+     280.1
+    ],
+    "tip": [
+     138.5,
+     163.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     134.2,
+     135.6
+    ],
+    "tip": [
+     134.2,
+     34.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "penguin_mother": {
+  "sprite": "penguin_mother",
+  "width": 323,
+  "height": 442,
+  "facing": 1,
+  "mouth": [
+   154.3,
+   132.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     153.0,
+     415.5
+    ],
+    "tip": [
+     153.0,
+     243.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     154.3,
+     194.4
+    ],
+    "tip": [
+     154.3,
+     63.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_boy_companion": {
+  "sprite": "polar_bear_boy_companion",
+  "width": 324,
+  "height": 292,
+  "facing": 1,
+  "mouth": [
+   242.4,
+   93.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     97.1,
+     210.2
+    ],
+    "tip": [
+     213.8,
+     201.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     199.5,
+     157.5
+    ],
+    "tip": [
+     219.7,
+     33.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_boy_little": {
+  "sprite": "polar_bear_boy_little",
+  "width": 214,
+  "height": 239,
+  "facing": 1,
+  "mouth": [
+   142.2,
+   74.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     62.6,
+     172.1
+    ],
+    "tip": [
+     139.6,
+     164.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     121.2,
+     126.8
+    ],
+    "tip": [
+     127.2,
+     22.3
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_boy_newborn": {
+  "sprite": "polar_bear_boy_newborn",
+  "width": 213,
+  "height": 201,
+  "facing": -1,
+  "mouth": [
+   102.5,
+   65.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     103.1,
+     188.9
+    ],
+    "tip": [
+     103.1,
+     110.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     102.5,
+     94.0
+    ],
+    "tip": [
+     102.5,
+     22.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_boy_young": {
+  "sprite": "polar_bear_boy_young",
+  "width": 313,
+  "height": 244,
+  "facing": 1,
+  "mouth": [
+   226.0,
+   79.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     89.9,
+     175.7
+    ],
+    "tip": [
+     202.6,
+     168.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     186.6,
+     132.7
+    ],
+    "tip": [
+     204.1,
+     25.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_father": {
+  "sprite": "polar_bear_father",
+  "width": 563,
+  "height": 466,
+  "facing": 1,
+  "mouth": [
+   395.1,
+   149.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     164.5,
+     261.0
+    ],
+    "tip": [
+     367.2,
+     247.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     330.4,
+     252.0
+    ],
+    "tip": [
+     355.7,
+     41.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     73.2,
+     307.6
+    ],
+    "tip": [
+     73.2,
+     442.7
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     168.9,
+     307.6
+    ],
+    "tip": [
+     168.9,
+     442.7
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     337.8,
+     307.6
+    ],
+    "tip": [
+     337.8,
+     442.7
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     495.4,
+     307.6
+    ],
+    "tip": [
+     495.4,
+     442.7
+    ],
+    "strength": 1.0,
+    "layer": 3
+   }
+  ]
+ },
+ "polar_bear_girl_companion": {
+  "sprite": "polar_bear_girl_companion",
+  "width": 339,
+  "height": 296,
+  "facing": 1,
+  "mouth": [
+   249.7,
+   95.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     98.9,
+     213.1
+    ],
+    "tip": [
+     221.0,
+     204.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     205.4,
+     160.6
+    ],
+    "tip": [
+     225.9,
+     30.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_girl_little": {
+  "sprite": "polar_bear_girl_little",
+  "width": 215,
+  "height": 261,
+  "facing": 1,
+  "mouth": [
+   122.0,
+   80.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     113.7,
+     245.3
+    ],
+    "tip": [
+     113.7,
+     143.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     122.0,
+     117.4
+    ],
+    "tip": [
+     122.0,
+     28.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_girl_newborn": {
+  "sprite": "polar_bear_girl_newborn",
+  "width": 215,
+  "height": 212,
+  "facing": -1,
+  "mouth": [
+   100.6,
+   67.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     102.9,
+     199.3
+    ],
+    "tip": [
+     102.9,
+     116.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     100.6,
+     97.4
+    ],
+    "tip": [
+     100.6,
+     24.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_girl_young": {
+  "sprite": "polar_bear_girl_young",
+  "width": 314,
+  "height": 266,
+  "facing": 1,
+  "mouth": [
+   227.4,
+   84.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     91.3,
+     191.5
+    ],
+    "tip": [
+     204.3,
+     183.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     188.0,
+     142.7
+    ],
+    "tip": [
+     205.4,
+     30.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "polar_bear_mother": {
+  "sprite": "polar_bear_mother",
+  "width": 520,
+  "height": 445,
+  "facing": -1,
+  "mouth": [
+   129.5,
+   141.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     368.2,
+     258.1
+    ],
+    "tip": [
+     181.0,
+     244.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     200.8,
+     239.7
+    ],
+    "tip": [
+     165.9,
+     42.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     52.0,
+     302.6
+    ],
+    "tip": [
+     52.0,
+     422.8
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     187.2,
+     302.6
+    ],
+    "tip": [
+     187.2,
+     422.8
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     296.4,
+     302.6
+    ],
+    "tip": [
+     296.4,
+     422.8
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     442.0,
+     302.6
+    ],
+    "tip": [
+     442.0,
+     422.8
+    ],
+    "strength": 0.9,
+    "layer": 0
    }
   ]
  },
@@ -4575,26 +7339,26 @@
    }
   ]
  },
- "tiger_boy_companion": {
-  "sprite": "tiger_boy_companion",
-  "width": 302,
-  "height": 307,
+ "seal_boy_companion": {
+  "sprite": "seal_boy_companion",
+  "width": 418,
+  "height": 298,
   "facing": 1,
   "mouth": [
-   246.7,
-   86.7
+   309.2,
+   90.8
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     95.8,
-     221.0
+     137.8,
+     214.6
     ],
     "tip": [
-     204.6,
-     211.8
+     288.2,
+     205.6
     ],
     "strength": 1.1,
     "layer": 2
@@ -4603,12 +7367,812 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     199.8,
-     154.2
+     261.1,
+     156.4
     ],
     "tip": [
-     225.5,
-     18.4
+     280.0,
+     24.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_boy_little": {
+  "sprite": "seal_boy_little",
+  "width": 320,
+  "height": 250,
+  "facing": 1,
+  "mouth": [
+   231.5,
+   78.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     101.9,
+     180.0
+    ],
+    "tip": [
+     217.1,
+     172.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     195.4,
+     133.6
+    ],
+    "tip": [
+     209.1,
+     22.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_boy_newborn": {
+  "sprite": "seal_boy_newborn",
+  "width": 290,
+  "height": 201,
+  "facing": 1,
+  "mouth": [
+   199.7,
+   66.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     92.2,
+     144.7
+    ],
+    "tip": [
+     196.6,
+     138.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     171.5,
+     110.2
+    ],
+    "tip": [
+     179.4,
+     20.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_boy_young": {
+  "sprite": "seal_boy_young",
+  "width": 373,
+  "height": 265,
+  "facing": 1,
+  "mouth": [
+   283.2,
+   81.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     118.7,
+     190.8
+    ],
+    "tip": [
+     253.0,
+     182.8
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     235.1,
+     139.8
+    ],
+    "tip": [
+     257.1,
+     21.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_father": {
+  "sprite": "seal_father",
+  "width": 687,
+  "height": 428,
+  "facing": 1,
+  "mouth": [
+   556.4,
+   132.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     247.9,
+     308.2
+    ],
+    "tip": [
+     495.2,
+     295.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     465.3,
+     226.3
+    ],
+    "tip": [
+     508.3,
+     32.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_girl_companion": {
+  "sprite": "seal_girl_companion",
+  "width": 420,
+  "height": 330,
+  "facing": 1,
+  "mouth": [
+   307.8,
+   105.2
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     141.3,
+     237.6
+    ],
+    "tip": [
+     292.5,
+     227.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     262.1,
+     177.8
+    ],
+    "tip": [
+     278.4,
+     42.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_girl_little": {
+  "sprite": "seal_girl_little",
+  "width": 314,
+  "height": 280,
+  "facing": 1,
+  "mouth": [
+   219.1,
+   92.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     100.1,
+     201.6
+    ],
+    "tip": [
+     213.1,
+     193.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     187.4,
+     153.7
+    ],
+    "tip": [
+     197.1,
+     34.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_girl_newborn": {
+  "sprite": "seal_girl_newborn",
+  "width": 297,
+  "height": 228,
+  "facing": 1,
+  "mouth": [
+   180.9,
+   77.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     167.8,
+     214.3
+    ],
+    "tip": [
+     167.8,
+     125.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     180.9,
+     109.0
+    ],
+    "tip": [
+     180.9,
+     25.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_girl_young": {
+  "sprite": "seal_girl_young",
+  "width": 373,
+  "height": 300,
+  "facing": 1,
+  "mouth": [
+   270.1,
+   96.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     117.5,
+     216.0
+    ],
+    "tip": [
+     251.8,
+     207.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     227.4,
+     162.4
+    ],
+    "tip": [
+     244.0,
+     38.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "seal_mother": {
+  "sprite": "seal_mother",
+  "width": 629,
+  "height": 395,
+  "facing": -1,
+  "mouth": [
+   140.4,
+   119.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     401.9,
+     284.4
+    ],
+    "tip": [
+     175.5,
+     272.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     214.4,
+     206.3
+    ],
+    "tip": [
+     184.4,
+     40.7
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_boy_companion": {
+  "sprite": "sloth_boy_companion",
+  "width": 335,
+  "height": 300,
+  "facing": 1,
+  "mouth": [
+   258.5,
+   97.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     103.1,
+     216.0
+    ],
+    "tip": [
+     223.7,
+     207.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     211.8,
+     163.0
+    ],
+    "tip": [
+     235.0,
+     27.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_boy_little": {
+  "sprite": "sloth_boy_little",
+  "width": 256,
+  "height": 234,
+  "facing": 1,
+  "mouth": [
+   182.0,
+   76.5
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     80.7,
+     168.5
+    ],
+    "tip": [
+     172.9,
+     161.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     154.2,
+     128.0
+    ],
+    "tip": [
+     164.0,
+     26.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_boy_newborn": {
+  "sprite": "sloth_boy_newborn",
+  "width": 212,
+  "height": 186,
+  "facing": 1,
+  "mouth": [
+   117.3,
+   62.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     111.4,
+     174.8
+    ],
+    "tip": [
+     111.4,
+     102.3
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     117.3,
+     88.7
+    ],
+    "tip": [
+     117.3,
+     24.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_boy_young": {
+  "sprite": "sloth_boy_young",
+  "width": 293,
+  "height": 272,
+  "facing": 1,
+  "mouth": [
+   203.7,
+   86.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     82.2,
+     195.8
+    ],
+    "tip": [
+     187.7,
+     187.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     169.4,
+     146.2
+    ],
+    "tip": [
+     183.2,
+     24.3
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_father": {
+  "sprite": "sloth_father",
+  "width": 480,
+  "height": 474,
+  "facing": 1,
+  "mouth": [
+   339.5,
+   147.0
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     141.0,
+     341.3
+    ],
+    "tip": [
+     313.8,
+     327.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     283.5,
+     251.3
+    ],
+    "tip": [
+     305.9,
+     41.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_girl_companion": {
+  "sprite": "sloth_girl_companion",
+  "width": 347,
+  "height": 324,
+  "facing": 1,
+  "mouth": [
+   259.7,
+   101.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     105.3,
+     233.3
+    ],
+    "tip": [
+     230.2,
+     223.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     214.3,
+     173.0
+    ],
+    "tip": [
+     235.4,
+     38.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_girl_little": {
+  "sprite": "sloth_girl_little",
+  "width": 262,
+  "height": 259,
+  "facing": 1,
+  "mouth": [
+   182.8,
+   84.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     81.7,
+     186.5
+    ],
+    "tip": [
+     176.0,
+     178.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     155.5,
+     141.1
+    ],
+    "tip": [
+     164.5,
+     24.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_girl_newborn": {
+  "sprite": "sloth_girl_newborn",
+  "width": 212,
+  "height": 203,
+  "facing": 1,
+  "mouth": [
+   110.9,
+   66.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     110.4,
+     190.8
+    ],
+    "tip": [
+     110.4,
+     111.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     110.9,
+     94.8
+    ],
+    "tip": [
+     110.9,
+     21.2
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_girl_young": {
+  "sprite": "sloth_girl_young",
+  "width": 301,
+  "height": 298,
+  "facing": 1,
+  "mouth": [
+   209.1,
+   94.4
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     86.2,
+     214.6
+    ],
+    "tip": [
+     194.5,
+     205.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     174.7,
+     160.0
+    ],
+    "tip": [
+     188.0,
+     30.9
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "sloth_mother": {
+  "sprite": "sloth_mother",
+  "width": 414,
+  "height": 446,
+  "facing": -1,
+  "mouth": [
+   120.4,
+   136.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     284.1,
+     321.1
+    ],
+    "tip": [
+     135.0,
+     307.7
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     165.3,
+     234.4
+    ],
+    "tip": [
+     149.4,
+     38.8
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "tiger_boy_companion": {
+  "sprite": "tiger_boy_companion",
+  "width": 315,
+  "height": 327,
+  "facing": -1,
+  "mouth": [
+   100.5,
+   100.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     218.8,
+     235.4
+    ],
+    "tip": [
+     105.4,
+     225.6
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     131.8,
+     172.8
+    ],
+    "tip": [
+     122.5,
+     25.6
     ],
     "strength": 1.6,
     "layer": 4
@@ -4617,24 +8181,24 @@
  },
  "tiger_boy_little": {
   "sprite": "tiger_boy_little",
-  "width": 234,
-  "height": 219,
+  "width": 215,
+  "height": 235,
   "facing": 1,
   "mouth": [
-   171.4,
-   66.2
+   122.1,
+   74.9
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     70.4,
-     157.7
+     114.7,
+     220.9
     ],
     "tip": [
-     154.7,
-     151.1
+     114.7,
+     129.2
     ],
     "strength": 1.1,
     "layer": 2
@@ -4643,12 +8207,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     142.2,
-     114.4
+     122.1,
+     107.8
     ],
     "tip": [
-     155.0,
-     13.1
+     122.1,
+     24.1
     ],
     "strength": 1.6,
     "layer": 4
@@ -4657,24 +8221,24 @@
  },
  "tiger_boy_newborn": {
   "sprite": "tiger_boy_newborn",
-  "width": 200,
-  "height": 195,
+  "width": 225,
+  "height": 184,
   "facing": 1,
   "mouth": [
-   106.6,
-   61.3
+   137.5,
+   62.0
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     103.7,
-     183.3
+     126.1,
+     173.0
     ],
     "tip": [
-     103.7,
-     107.3
+     126.1,
+     101.2
     ],
     "strength": 1.1,
     "layer": 2
@@ -4683,12 +8247,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     106.6,
-     88.6
+     137.5,
+     87.7
     ],
     "tip": [
-     106.6,
-     11.7
+     137.5,
+     27.0
     ],
     "strength": 1.6,
     "layer": 4
@@ -4697,24 +8261,24 @@
  },
  "tiger_boy_young": {
   "sprite": "tiger_boy_young",
-  "width": 277,
-  "height": 258,
+  "width": 239,
+  "height": 279,
   "facing": 1,
   "mouth": [
-   178.3,
-   76.2
+   161.7,
+   88.0
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     66.9,
-     185.8
+     68.6,
+     200.9
     ],
     "tip": [
-     166.6,
-     178.0
+     154.6,
+     192.5
     ],
     "strength": 1.1,
     "layer": 2
@@ -4723,12 +8287,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     147.4,
-     133.0
+     136.4,
+     149.4
     ],
     "tip": [
-     158.9,
-     15.5
+     145.0,
+     24.7
     ],
     "strength": 1.6,
     "layer": 4
@@ -4737,24 +8301,24 @@
  },
  "tiger_father": {
   "sprite": "tiger_father",
-  "width": 532,
-  "height": 408,
+  "width": 412,
+  "height": 413,
   "facing": 1,
   "mouth": [
-   415.4,
-   126.6
+   297.9,
+   129.7
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     162.9,
-     244.8
+     131.2,
+     247.8
     ],
     "tip": [
-     354.4,
-     232.6
+     279.5,
+     235.4
     ],
     "strength": 1.1,
     "layer": 2
@@ -4763,12 +8327,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     338.7,
-     216.3
+     251.5,
+     220.6
     ],
     "tip": [
-     378.1,
-     40.5
+     269.0,
+     40.8
     ],
     "strength": 1.6,
     "layer": 4
@@ -4776,12 +8340,12 @@
    {
     "id": "legBL",
     "pivot": [
-     117.0,
-     285.6
+     70.0,
+     289.1
     ],
     "tip": [
-     117.0,
-     387.6
+     70.0,
+     392.3
     ],
     "strength": 0.9,
     "layer": 0
@@ -4789,12 +8353,12 @@
    {
     "id": "legBR",
     "pivot": [
-     212.8,
-     285.6
+     173.0,
+     289.1
     ],
     "tip": [
-     212.8,
-     387.6
+     173.0,
+     392.3
     ],
     "strength": 0.9,
     "layer": 0
@@ -4802,12 +8366,12 @@
    {
     "id": "legFL",
     "pivot": [
-     297.9,
-     285.6
+     247.2,
+     289.1
     ],
     "tip": [
-     297.9,
-     387.6
+     247.2,
+     392.3
     ],
     "strength": 1.0,
     "layer": 3
@@ -4815,12 +8379,12 @@
    {
     "id": "legFR",
     "pivot": [
-     377.7,
-     285.6
+     342.0,
+     289.1
     ],
     "tip": [
-     377.7,
-     387.6
+     342.0,
+     392.3
     ],
     "strength": 1.0,
     "layer": 3
@@ -4829,24 +8393,24 @@
  },
  "tiger_girl_companion": {
   "sprite": "tiger_girl_companion",
-  "width": 306,
-  "height": 312,
-  "facing": 1,
+  "width": 320,
+  "height": 345,
+  "facing": -1,
   "mouth": [
-   239.0,
-   89.3
+   96.3,
+   106.1
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     95.9,
-     224.6
+     218.4,
+     248.4
     ],
     "tip": [
-     206.1,
-     215.3
+     103.2,
+     238.0
     ],
     "strength": 1.1,
     "layer": 2
@@ -4855,12 +8419,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     195.9,
-     157.9
+     129.0,
+     182.0
     ],
     "tip": [
-     217.6,
-     18.7
+     118.7,
+     37.7
     ],
     "strength": 1.6,
     "layer": 4
@@ -4869,24 +8433,24 @@
  },
  "tiger_girl_little": {
   "sprite": "tiger_girl_little",
-  "width": 225,
-  "height": 258,
+  "width": 221,
+  "height": 263,
   "facing": 1,
   "mouth": [
-   155.0,
-   80.7
+   125.3,
+   86.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     67.1,
-     185.8
+     119.2,
+     247.2
     ],
     "tip": [
-     148.1,
-     178.0
+     119.2,
+     144.7
     ],
     "strength": 1.1,
     "layer": 2
@@ -4895,12 +8459,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     131.1,
-     137.5
+     125.3,
+     123.0
     ],
     "tip": [
-     139.3,
-     15.5
+     125.3,
+     21.8
     ],
     "strength": 1.6,
     "layer": 4
@@ -4909,24 +8473,24 @@
  },
  "tiger_girl_newborn": {
   "sprite": "tiger_girl_newborn",
-  "width": 187,
-  "height": 223,
-  "facing": -1,
+  "width": 237,
+  "height": 201,
+  "facing": 1,
   "mouth": [
-   95.9,
-   70.0
+   142.3,
+   66.0
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     96.4,
-     209.6
+     133.0,
+     188.9
     ],
     "tip": [
-     96.4,
-     122.7
+     133.0,
+     110.6
     ],
     "strength": 1.1,
     "layer": 2
@@ -4935,12 +8499,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     95.9,
-     101.2
+     142.3,
+     94.1
     ],
     "tip": [
-     95.9,
-     13.4
+     142.3,
+     20.1
     ],
     "strength": 1.6,
     "layer": 4
@@ -4949,24 +8513,24 @@
  },
  "tiger_girl_young": {
   "sprite": "tiger_girl_young",
-  "width": 276,
-  "height": 301,
+  "width": 264,
+  "height": 291,
   "facing": 1,
   "mouth": [
-   180.6,
-   93.1
+   181.1,
+   91.2
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     73.3,
-     216.7
+     75.8,
+     209.5
     ],
     "tip": [
-     172.7,
-     207.7
+     170.9,
+     200.8
     ],
     "strength": 1.1,
     "layer": 2
@@ -4975,12 +8539,12 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     151.5,
-     159.3
+     152.1,
+     155.3
     ],
     "tip": [
-     161.2,
-     18.1
+     162.7,
+     27.5
     ],
     "strength": 1.6,
     "layer": 4
@@ -4989,24 +8553,24 @@
  },
  "tiger_mother": {
   "sprite": "tiger_mother",
-  "width": 429,
-  "height": 379,
+  "width": 335,
+  "height": 406,
   "facing": -1,
   "mouth": [
-   67.5,
-   109.5
+   69.3,
+   120.0
   ],
   "drinkDip": 0.0,
   "bones": [
    {
     "id": "body",
     "pivot": [
-     281.9,
-     272.9
+     206.3,
+     227.4
     ],
     "tip": [
-     127.4,
-     261.5
+     85.7,
+     215.2
     ],
     "strength": 1.1,
     "layer": 2
@@ -5015,12 +8579,464 @@
     "id": "head",
     "parent": "body",
     "pivot": [
-     134.1,
-     192.9
+     107.7,
+     209.3
     ],
     "tip": [
-     97.5,
-     45.7
+     92.8,
+     54.4
+    ],
+    "strength": 1.6,
+    "layer": 4
+   },
+   {
+    "id": "legFR",
+    "pivot": [
+     43.6,
+     268.0
+    ],
+    "tip": [
+     43.6,
+     385.7
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legFL",
+    "pivot": [
+     120.6,
+     268.0
+    ],
+    "tip": [
+     120.6,
+     385.7
+    ],
+    "strength": 1.0,
+    "layer": 3
+   },
+   {
+    "id": "legBR",
+    "pivot": [
+     167.5,
+     268.0
+    ],
+    "tip": [
+     167.5,
+     385.7
+    ],
+    "strength": 0.9,
+    "layer": 0
+   },
+   {
+    "id": "legBL",
+    "pivot": [
+     231.1,
+     268.0
+    ],
+    "tip": [
+     231.1,
+     385.7
+    ],
+    "strength": 0.9,
+    "layer": 0
+   }
+  ]
+ },
+ "toucan_boy_companion": {
+  "sprite": "toucan_boy_companion",
+  "width": 375,
+  "height": 305,
+  "facing": 1,
+  "mouth": [
+   273.8,
+   95.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     100.1,
+     219.6
+    ],
+    "tip": [
+     235.1,
+     210.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     221.7,
+     162.7
+    ],
+    "tip": [
+     247.5,
+     37.3
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_boy_little": {
+  "sprite": "toucan_boy_little",
+  "width": 268,
+  "height": 242,
+  "facing": 1,
+  "mouth": [
+   181.2,
+   79.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     71.4,
+     174.2
+    ],
+    "tip": [
+     167.9,
+     167.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     150.4,
+     132.6
+    ],
+    "tip": [
+     162.4,
+     24.5
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_boy_newborn": {
+  "sprite": "toucan_boy_newborn",
+  "width": 213,
+  "height": 219,
+  "facing": 1,
+  "mouth": [
+   114.2,
+   72.3
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     111.4,
+     205.9
+    ],
+    "tip": [
+     111.4,
+     120.5
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     114.2,
+     103.0
+    ],
+    "tip": [
+     114.2,
+     29.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_boy_young": {
+  "sprite": "toucan_boy_young",
+  "width": 315,
+  "height": 268,
+  "facing": 1,
+  "mouth": [
+   220.5,
+   83.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     86.4,
+     193.0
+    ],
+    "tip": [
+     199.8,
+     184.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     182.0,
+     142.8
+    ],
+    "tip": [
+     198.5,
+     31.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_father": {
+  "sprite": "toucan_father",
+  "width": 609,
+  "height": 426,
+  "facing": 1,
+  "mouth": [
+   458.3,
+   125.6
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     188.4,
+     306.7
+    ],
+    "tip": [
+     407.6,
+     293.9
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     379.1,
+     219.3
+    ],
+    "tip": [
+     415.6,
+     42.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_girl_companion": {
+  "sprite": "toucan_girl_companion",
+  "width": 367,
+  "height": 318,
+  "facing": 1,
+  "mouth": [
+   254.8,
+   97.9
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     95.8,
+     229.0
+    ],
+    "tip": [
+     227.9,
+     219.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     208.7,
+     167.9
+    ],
+    "tip": [
+     229.1,
+     39.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_girl_little": {
+  "sprite": "toucan_girl_little",
+  "width": 268,
+  "height": 276,
+  "facing": 1,
+  "mouth": [
+   170.0,
+   88.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     68.3,
+     198.7
+    ],
+    "tip": [
+     164.8,
+     190.4
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     142.9,
+     149.4
+    ],
+    "tip": [
+     151.3,
+     33.6
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_girl_newborn": {
+  "sprite": "toucan_girl_newborn",
+  "width": 216,
+  "height": 251,
+  "facing": -1,
+  "mouth": [
+   108.0,
+   83.7
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     110.0,
+     235.9
+    ],
+    "tip": [
+     110.0,
+     138.1
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     108.0,
+     118.9
+    ],
+    "tip": [
+     108.0,
+     43.1
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_girl_young": {
+  "sprite": "toucan_girl_young",
+  "width": 319,
+  "height": 300,
+  "facing": 1,
+  "mouth": [
+   217.2,
+   93.8
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     87.2,
+     216.0
+    ],
+    "tip": [
+     202.1,
+     207.0
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     180.9,
+     159.8
+    ],
+    "tip": [
+     194.8,
+     33.0
+    ],
+    "strength": 1.6,
+    "layer": 4
+   }
+  ]
+ },
+ "toucan_mother": {
+  "sprite": "toucan_mother",
+  "width": 539,
+  "height": 396,
+  "facing": -1,
+  "mouth": [
+   153.6,
+   126.1
+  ],
+  "drinkDip": 0.0,
+  "bones": [
+   {
+    "id": "body",
+    "pivot": [
+     375.7,
+     285.1
+    ],
+    "tip": [
+     181.7,
+     273.2
+    ],
+    "strength": 1.1,
+    "layer": 2
+   },
+   {
+    "id": "head",
+    "parent": "body",
+    "pivot": [
+     216.1,
+     213.2
+    ],
+    "tip": [
+     191.3,
+     47.8
     ],
     "strength": 1.6,
     "layer": 4

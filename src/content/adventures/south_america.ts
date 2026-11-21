@@ -1,6 +1,6 @@
 /**
- * Aventures d'Amérique du Sud : jungle, cascade, rivière et vieilles pierres, étang aux nénuphars.
- * Jaguar (jungle, rivière, étang), toucan (jungle, cascade, rivière, montagnes, vallée) et
+ * Aventures d'Amérique du Sud : jungle, cascade, rivière et vieilles pierres, étang de la jungle.
+ * Jaguar (jungle, rivière, étang), toucan (jungle, cascade, rivière, montagnes) et
  * paresseux (jungle, rivière, étang, cascade ; remplace le capybara depuis le 2026-11-19) : chaque aventure ne traverse que des lieux permis à toutes
  * ses espèces.
  */
@@ -101,32 +101,32 @@ const oldStones = (sp: SpeciesDef): QuestStep[] => {
 };
 
 // ---------------------------------------------------------------------------
-// 3. L'étang aux nénuphars — de la rivière à l'étang (jaguar, paresseux)
+// 3. L'étang de la jungle — de la rivière à l'étang (jaguar, paresseux)
 // ---------------------------------------------------------------------------
 
 const lilyPond = (sp: SpeciesDef): QuestStep[] => [
-  say('narrator', 'Plip, plop! There is a little pond near the river.', 'Plip, plop ! Il y a un petit étang près de la rivière.', {}, 'curious'),
+  say('narrator', 'Plip, plop! There is a little pond in the jungle.', 'Plip, plop ! Il y a un petit étang dans la jungle.', {}, 'curious'),
   tap('mother', 'Follow the path to the pond! Where is the path?', "Suivons le chemin jusqu'à l'étang ! Où est le chemin ?", 'path', ['Look down! Find the path!', 'Regarde en bas ! Trouve le chemin !'], ['path', 'follow_the_path']),
   moveTo('path', 'walk', 'mother'),
   go('sa_wetland', 'mother', "Let's go to the pond!", "Allons à l'étang !"),
-  say('narrator', 'Welcome to the lily pond! It is green and pink.', "Bienvenue à l'étang aux nénuphars ! Il est vert et rose.", {}, 'happy'),
-  tap('father', 'Where is the water lily? Show me!', 'Où est le nénuphar ? Montre-moi !', 'water_lily', ['It is a pink flower on the water!', "C'est une fleur rose sur l'eau !"], ['water lily', 'where']),
-  tap('mother', 'And where is the big lily pad?', 'Et où est la grande feuille de nénuphar ?', 'lily_pad', ['It is round and green!', "Elle est ronde et verte !"], ['lily pad', 'big', 'where']),
-  ask('father', 'What colour is the water lily?', 'De quelle couleur est le nénuphar ?', [ok('Pink!', 'Rose !', '🩷'), no('Black!', 'Noir !', '⚫'), no('Orange!', 'Orange !', '🟠'), no('Blue!', 'Bleu !', '🔵')], ['Look at the flower!', 'Regarde la fleur !'], ['pink', 'water lily'], { pointAt: 'water_lily' }),
-  say('narrator', 'Ribbit, ribbit! Frogs jump on the lily pads!', 'Coa, coa ! Des grenouilles sautent sur les feuilles de nénuphar !', {}, 'happy'),
+  say('narrator', 'Welcome to the jungle pond! The water is blue.', "Bienvenue à l'étang de la jungle ! L'eau est bleue.", {}, 'happy'),
+  tap('father', 'Where is the little waterfall? Show me!', 'Où est la petite cascade ? Montre-moi !', 'waterfall', ['The water falls from the rocks!', "L'eau tombe des rochers !"], ['waterfall', 'where']),
+  tap('mother', 'And where is the water of the pond?', "Et où est l'eau de l'étang ?", 'water', ['It is blue and calm!', 'Elle est bleue et calme !'], ['water', 'where']),
+  ask('father', 'What colour is the flower?', 'De quelle couleur est la fleur ?', [ok('Pink!', 'Rose !', '🩷'), no('Black!', 'Noir !', '⚫'), no('Orange!', 'Orange !', '🟠'), no('Blue!', 'Bleu !', '🔵')], ['Look at the flower!', 'Regarde la fleur !'], ['pink', 'flower'], { pointAt: 'flower' }),
+  say('narrator', 'Ribbit, ribbit! Frogs jump on the rocks!', 'Coa, coa ! Des grenouilles sautent sur les rochers !', {}, 'happy'),
   ...countScene('mother', 'frog', [0, 1, 2, 4, 5], { beginner: 3, intermediate: 4, expert: 5 }, 'frog'),
   say('baby', 'Hello, little frogs!', 'Bonjour, petites grenouilles !', { needs: 'baby' }, 'happy'),
   act('actor', 'swim', 'I swim in the pond! Splash, splash!', "Je nage dans l'étang ! Splash, splash !", 'actor'),
   act('baby', 'splash', 'Splash! The pond is so nice!', "Splash ! L'étang est trop bien !", 'baby', { needs: 'baby' }),
-  tap('father', 'Where is the palm tree? Look up high!', 'Où est le palmier ? Regarde en haut !', 'palm_tree', ['It is very tall!', 'Il est très grand !'], ['palm tree', 'tall', 'where'], { minTier: 'intermediate' }),
-  ask('mother', 'Is the reed tall?', 'Est-ce que le roseau est grand ?', yesNo(true), ['Look at the reed!', 'Regarde le roseau !'], ['reed', 'big'], { minTier: 'intermediate', pointAt: 'reed', keepOrder: true }),
-  ask('father', 'Is the water lily pink?', 'Est-ce que le nénuphar est rose ?', yesNo(true), ['Look at the flower!', 'Regarde la fleur !'], ['water lily', 'pink'], { minTier: 'expert', pointAt: 'water_lily', keepOrder: true }),
+  tap('father', 'Where is the big tree? Look up high!', 'Où est le grand arbre ? Regarde en haut !', 'tree', ['It is very tall!', 'Il est très grand !'], ['tree', 'tall', 'where'], { minTier: 'intermediate' }),
+  ask('mother', 'Is the leaf green?', 'Est-ce que la feuille est verte ?', yesNo(true), ['Look at the leaf!', 'Regarde la feuille !'], ['leaf', 'green'], { minTier: 'intermediate', pointAt: 'leaf', keepOrder: true }),
+  ask('father', 'Is the flower pink?', 'Est-ce que la fleur est rose ?', yesNo(true), ['Look at the flower!', 'Regarde la fleur !'], ['flower', 'pink'], { minTier: 'expert', pointAt: 'flower', keepOrder: true }),
   say('actor', "I'm hungry! Time for a snack!", "J'ai faim ! C'est l'heure du goûter !", {}, 'thirsty'),
   ...eatScene(sp, [7, 2, 1, 0], 'actor', 'pond'),
   say('narrator', 'Look! Pretty flowers around the pond!', "Regarde ! De jolies fleurs autour de l'étang !", {}, 'happy'),
   ...colorHunt('mother', 'flower', 'pink', ['yellow', 'red', 'white'], [4, 5, 6, 7], 'lilyflower'),
   reward('sa_golden_frog', 'father', 'A little golden frog! It is our treasure!', 'Une petite grenouille dorée ! C’est notre trésor !'),
-  end('mother', 'What a happy day at the lily pond!', "Quelle journée joyeuse à l'étang aux nénuphars !"),
+  end('mother', 'What a happy day at the jungle pond!', "Quelle journée joyeuse à l'étang de la jungle !"),
 ];
 
 // ---------------------------------------------------------------------------
@@ -173,7 +173,7 @@ export const SOUTH_AMERICA: AdventurePack = {
   adventures: [
     { id: 'south_america_big_waterfall', continentId: 'south_america', titleEn: 'The big waterfall', titleFr: 'La grande cascade', icon: '🏞️', start: 'sa_river', species: ['toucan', 'sloth'], skillIds: ['3.2', '1.2', '1.4'], steps: bigWaterfall, treasure: 'sa_blue_feather', order: 1 },
     { id: 'south_america_old_stones', continentId: 'south_america', titleEn: 'The old stones', titleFr: 'Les vieilles pierres', icon: '🏛️', start: 'sa_river', species: ['jaguar', 'toucan', 'sloth'], skillIds: ['2.2', '1.3', '1.2'], steps: oldStones, treasure: 'sa_carved_stone', order: 2 },
-    { id: 'south_america_lily_pond', continentId: 'south_america', titleEn: 'The lily pond', titleFr: "L'étang aux nénuphars", icon: '🪷', start: 'sa_river', species: ['jaguar', 'sloth'], skillIds: ['1.3', '1.6', '1.2'], steps: lilyPond, treasure: 'sa_golden_frog', order: 3 },
+    { id: 'south_america_lily_pond', continentId: 'south_america', titleEn: 'The jungle pond', titleFr: "L'étang de la jungle", icon: '🐸', start: 'sa_river', species: ['jaguar', 'sloth'], skillIds: ['1.3', '1.6', '1.2'], steps: lilyPond, treasure: 'sa_golden_frog', order: 3 },
     { id: 'south_america_jungle_party', continentId: 'south_america', titleEn: 'The jungle party', titleFr: 'La fête de la jungle', icon: '🦜', start: 'sa_jungle', species: ['jaguar', 'toucan'], skillIds: ['1.6', '2.2', '1.2'], steps: jungleParty, treasure: 'sa_party_flower', order: 4 },
   ],
   treasures: [

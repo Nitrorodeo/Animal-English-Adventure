@@ -25,6 +25,8 @@ export interface Utterance {
   line: Line;
   /** préfixée de « Try again! » quand elle est dite */
   retry?: boolean;
+  /** dite seulement si ce personnage est là (« Not me! » d'un bébé pas encore né) */
+  ifPresent?: boolean;
 }
 
 export const WELL_DONE: Line = { en: 'Well done!', fr: 'Bravo !' };
@@ -75,6 +77,14 @@ export function stepUtterances(s: QuestStep): Utterance[] {
         { who: s.speaker, line: s.onCorrect ?? WELL_DONE },
         ...Object.values(s.wrong ?? {}).map((l): Utterance => ({ who: s.speaker, line: l })),
         ...(s.count ? COUNT_WORDS.slice(0, s.targets.length).map((l): Utterance => ({ who: s.speaker, line: l })) : []),
+      ];
+    case 'tapActor':
+      return [
+        { who: s.speaker, line: s.line },
+        { who: s.speaker, line: s.hint, retry: true },
+        { who: s.target, line: s.reply },
+        // « Not me! » peut être dit par n'importe quel autre membre de la famille
+        ...(['father', 'mother', 'baby', 'sibling'] as const).filter((w) => w !== s.target).map((w): Utterance => ({ who: w, line: s.notMe, ifPresent: true })),
       ];
     case 'seek':
       return [

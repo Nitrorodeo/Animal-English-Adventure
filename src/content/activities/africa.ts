@@ -295,7 +295,7 @@ export const race: ActivityDef = {
 // Toute l'Afrique — « Tu es le chef ! » (la joueuse donne des ordres à Papa)
 // ---------------------------------------------------------------------------
 
-const ORDERS = {
+export const ORDERS = {
   jump: { line: L('Jump!', 'Saute !'), icon: '🦘', reply: L("Boing! I'm jumping!", 'Boing ! Je saute !'), action: 'jump' },
   run: { line: L('Run!', 'Cours !'), icon: '🏃', reply: L("Zoom! I'm running!", 'Zoum ! Je cours !'), action: 'run' },
   roar: { line: L('Roar!', 'Rugis !'), icon: '📢', reply: L("ROAR! I'm roaring!", 'ROAAR ! Je rugis !'), action: 'roar' },

@@ -4,7 +4,7 @@ Exemple réel : la girafe, ajoutée le 2026-11-18.
 
 ## 1. Déposer les dessins
 
-Créer un dossier dans `Animaux/`. Deux formats sont acceptés :
+Créer un dossier famille dans `Animaux/<Continent>/` (`Afrique`, `Asie`, `Europe`, `Amerique du Nord`, `Amerique du Sud`, `Oceanie`, `Antarctique`), par exemple `Animaux/Oceanie/Koalas/`, et y ranger le pack (zip compris). Deux formats sont acceptés :
 
 - **PNG détourés séparés**, le plus simple : papa, maman, puis bébé garçon et bébé fille aux stades 1 à 4.
 - **Une planche** sur fond transparent (comme l'éléphant). Il faut alors un point (`seed`) à l'intérieur de chaque personnage.
@@ -17,10 +17,10 @@ Dans `tools/asset_sources.json`, rubrique `characters` :
 
 ```json
 "giraffe": {
-  "father": { "src": "Animaux/Girafes/girafe/papa_girafe.png" },
-  "mother": { "src": "Animaux/Girafes/girafe/maman_girafe.png" },
-  "boy_newborn": { "src": "Animaux/Girafes/girafe/bebe_garcon_stade_1.png" },
-  "girl_companion": { "src": "Animaux/Girafes/girafe/bebe_fille_stade_4.png" }
+  "father": { "src": "Animaux/Afrique/Girafes/girafe/papa_girafe.png" },
+  "mother": { "src": "Animaux/Afrique/Girafes/girafe/maman_girafe.png" },
+  "boy_newborn": { "src": "Animaux/Afrique/Girafes/girafe/bebe_garcon_stade_1.png" },
+  "girl_companion": { "src": "Animaux/Afrique/Girafes/girafe/bebe_fille_stade_4.png" }
 }
 ```
 

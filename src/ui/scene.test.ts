@@ -27,9 +27,30 @@ describe('scene — sprites', () => {
     }
   });
 
+  it('le lézard à collerette (Océanie, à la place de l’ornithorynque) a sa famille dessinée', () => {
+    expect(spriteFor('frilled_lizard', { role: 'father' })?.path).toMatch(/frilled_lizard_father/);
+    expect(spriteFor('frilled_lizard', { role: 'mother' })?.path).toMatch(/frilled_lizard_mother/);
+    for (const st of ['newborn', 'little', 'young', 'companion'] as const) {
+      expect(hasStageSprite('frilled_lizard', 'girl', st), st).toBe(true);
+      expect(hasStageSprite('frilled_lizard', 'boy', st), st).toBe(true);
+    }
+    expect(spriteFor('platypus' as never, { role: 'father' })).toBeUndefined();
+  });
+
+  it('les familles découpées le 2026-11-20 sont toutes dessinées (parents + 4 stades × 2)', () => {
+    for (const sp of ['elephant', 'fox', 'owl', 'sloth', 'kangaroo', 'penguin', 'seal', 'polar_bear']) {
+      expect(spriteFor(sp, { role: 'father' })?.path, sp).toMatch(new RegExp(`${sp}_father`));
+      expect(spriteFor(sp, { role: 'mother' })?.path, sp).toMatch(new RegExp(`${sp}_mother`));
+      for (const st of ['newborn', 'little', 'young', 'companion'] as const) {
+        expect(hasStageSprite(sp, 'girl', st), `${sp} ${st}`).toBe(true);
+        expect(hasStageSprite(sp, 'boy', st), `${sp} ${st}`).toBe(true);
+      }
+    }
+  });
+
   it("renvoie undefined pour une espèce sans dessin (pictogramme de repli)", () => {
-    expect(spriteFor('penguin', { role: 'father' })).toBeUndefined();
-    expect(spriteFor('penguin', { sex: 'boy', stage: 'newborn' })).toBeUndefined();
+    expect(spriteFor('unicorn', { role: 'father' })).toBeUndefined();
+    expect(spriteFor('unicorn', { sex: 'boy', stage: 'newborn' })).toBeUndefined();
   });
 });
 

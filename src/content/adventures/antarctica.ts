@@ -1,6 +1,6 @@
 /**
- * Aventures d'Antarctique : banquise, neige, glace, mer froide. Manchot et phoque vivent sur la glace
- * et dans la mer ; l'orque ne vit qu'en pleine mer (ses scènes restent dans l'eau, jamais sur la glace).
+ * Aventures d'Antarctique (décors illustrés du 2026-11-20) : banquise, grotte de glace, mer froide. Manchot et phoque vivent sur la glace
+ * et dans la mer ; l'ours polaire aussi (décision du parent, 2026-11-20). L'orque a été retirée du jeu le 2026-11-20.
  */
 import type { Ability, QuestStep, SpeciesDef } from '../types';
 import {
@@ -24,6 +24,7 @@ import {
   reward,
   say,
   seek,
+  skyProp,
   tap,
   tapProps,
   treasure,
@@ -68,12 +69,12 @@ const snowDay = (sp: SpeciesDef): QuestStep[] => [
   say('actor', 'Ahh! It is cold, but I am happy.', "Ahh ! Il fait froid, mais je suis content.", {}, 'happy'),
   back('actor'),
   ...eatScene(sp, [0, 2, 4, 6], 'father', 'fish'),
-  seek('mother', 'sibling', 'igloo', {
+  seek('mother', 'sibling', 'rock', {
     line: ['Oh! Somebody is hiding! Can you find them?', "Oh ! Quelqu'un se cache ! Tu peux le trouver ?"],
-    hint: ['Look in the ice cave!', 'Regarde dans la grotte de glace !'],
+    hint: ['Look behind the big rock!', 'Regarde derrière le gros rocher !'],
     notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
     found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
-  }, ['hide_and_seek', 'ice cave'], { needs: 'sibling', minTier: 'intermediate' }),
+  }, ['hide_and_seek', 'behind'], { needs: 'sibling', minTier: 'intermediate' }),
   act('actor', 'dance', "Let's dance on the ice!", 'Dansons sur la glace !', 'actor'),
   say('sibling', 'La la la! Dancing is warm!', 'La la la ! Danser, ça réchauffe !', { needs: 'sibling' }, 'happy'),
   say('narrator', 'Time for a swim in the cold sea!', 'C’est l’heure de nager dans la mer froide !', {}, 'happy'),
@@ -85,14 +86,14 @@ const snowDay = (sp: SpeciesDef): QuestStep[] => [
 ];
 
 // ---------------------------------------------------------------------------
-// 2. Le festin de poissons — en pleine mer (toutes les espèces, orque comprise)
+// 2. Le festin de poissons — en pleine mer (toutes les espèces)
 // ---------------------------------------------------------------------------
 
 const fishFeast = (sp: SpeciesDef): QuestStep[] => [
   say('narrator', 'The sea is big and blue. The water is very cold!', "La mer est grande et bleue. L'eau est très froide !", {}, 'calm'),
   ask('father', 'Are you hungry?', 'Tu as faim ?', [ok("Yes, I'm hungry!", "Oui, j'ai faim !", '😋'), ok('Yes, a little!', 'Oui, un peu !', '🤏')], ["You can say: yes, I'm hungry!", "Tu peux dire : yes, I'm hungry!"], ['hungry'], { keepOrder: true, onCorrect: L("Then let's find some fish!", 'Alors cherchons du poisson !') }),
-  tap('mother', 'Splash! Where is the wave?', 'Splash ! Où est la vague ?', 'wave', ['It is white, on the sea!', "Elle est blanche, sur la mer !"], ['wave', 'where']),
-  say('narrator', 'Look! Fish swim under the waves!', 'Regarde ! Des poissons nagent sous les vagues !', {}, 'curious'),
+  tap('mother', 'Look at the ice on the sea! Where is the ice?', 'Regarde la glace sur la mer ! Où est la glace ?', 'ice', ['It is white and flat, on the sea!', 'Elle est blanche et plate, sur la mer !'], ['ice', 'where']),
+  say('narrator', 'Look! Fish swim under the ice!', 'Regarde ! Des poissons nagent sous la glace !', {}, 'curious'),
   ...colorHunt('mother', 'koi', 'blue', ['yellow', 'red', 'green'], [0, 2, 4, 6], 'cfish'),
   say('father', 'There are so many fish! Can we count them?', 'Il y a tellement de poissons ! On peut les compter ?', {}, 'happy'),
   ...countScene('father', 'koi', [1, 3, 5, 7, 0, 2], { beginner: 3, intermediate: 4, expert: 5 }, 'kfish'),
@@ -101,9 +102,8 @@ const fishFeast = (sp: SpeciesDef): QuestStep[] => [
   ...showOff(sp, ['jump', 'swim'], 'father'),
   tap('mother', 'Look at the big white thing! Where is the iceberg?', 'Regarde la grande chose blanche ! Où est l’iceberg ?', 'iceberg', ['It is big, white and cold!', "Il est grand, blanc et froid !"], ['iceberg', 'where']),
   ask('father', 'Is the iceberg big?', "Est-ce que l'iceberg est grand ?", yesNo(true), ['Look at the iceberg!', "Regarde l'iceberg !"], ['iceberg', 'big'], { minTier: 'intermediate', pointAt: 'iceberg', keepOrder: true }),
-  say('narrator', 'Look at the sea! There is a boat!', 'Regarde la mer ! Il y a un bateau !', {}, 'curious'),
-  tap('father', 'Where is the boat? Show me!', 'Où est le bateau ? Montre-moi !', 'boat', ['It is on the sea!', 'Il est sur la mer !'], ['boat', 'where']),
-  ask('mother', 'Is the boat big or small?', 'Le bateau est grand ou petit ?', [ok("It's small!", 'Il est petit !', '⛵'), no("It's big!", 'Il est grand !', '🚢')], ['It is far away!', "Il est très loin !"], ['big', 'small', 'boat'], { minTier: 'intermediate', pointAt: 'boat', keepOrder: true }),
+  tap('father', 'Look up! Where is the cliff?', 'Regarde en haut ! Où est la falaise ?', 'cliff', ['It is big and blue, made of ice!', 'Elle est grande et bleue, en glace !'], ['cliff', 'where']),
+  ask('mother', 'Is the cliff big or small?', 'La falaise est grande ou petite ?', [ok("It's big!", 'Elle est grande !', '🧊'), no("It's small!", 'Elle est petite !', '🐭')], ['Look! It is very high!', 'Regarde ! Elle est très haute !'], ['big', 'small', 'cliff'], { minTier: 'intermediate', pointAt: 'cliff', keepOrder: true }),
   seek('mother', 'sibling', 'iceberg', {
     line: ['Oh! Somebody is hiding! Can you find them?', "Oh ! Quelqu'un se cache ! Tu peux le trouver ?"],
     hint: ['Look behind the iceberg!', "Regarde derrière l'iceberg !"],
@@ -120,28 +120,36 @@ const fishFeast = (sp: SpeciesDef): QuestStep[] => [
 // ---------------------------------------------------------------------------
 
 const whiteFeather = (sp: SpeciesDef): QuestStep[] => {
+  // Le manchot rentre dans la grotte de glace ; le phoque reste sur la banquise, au bord de l'eau.
+  const home: QuestStep[] = sp.id === 'penguin'
+    ? [
+        go('an_ice_cave', 'mother', "Let's go to the ice cave!", 'Allons à la grotte de glace !'),
+        tap('father', 'Where is the ice cave? Show me!', 'Où est la grotte de glace ? Montre-moi !', 'cave', ['It is a big blue cave in the ice!', "C'est une grande grotte bleue dans la glace !"], ['ice cave', 'where']),
+        ask('mother', 'Is the ice cave cold?', 'Est-ce que la grotte de glace est froide ?', yesNo(true), ['Brrr! Look at the ice cave!', 'Brrr ! Regarde la grotte de glace !'], ['ice cave', 'cold'], { minTier: 'intermediate', pointAt: 'cave', keepOrder: true }),
+      ]
+    : [
+        go('ice_coast', 'mother', "Let's go to the ice!", 'Allons sur la glace !'),
+        tap('father', 'Where is the ice? Show me!', 'Où est la glace ? Montre-moi !', 'ice', ['It is blue and white, far away!', 'Elle est bleue et blanche, au loin !'], ['ice', 'where']),
+        ask('mother', 'Is the ice blue?', 'Est-ce que la glace est bleue ?', yesNo(true), ['Look at the ice!', 'Regarde la glace !'], ['ice', 'blue'], { minTier: 'intermediate', pointAt: 'ice', keepOrder: true }),
+      ];
   const onIce: QuestStep[] = [
     say('narrator', 'The family goes back to the ice.', 'La famille retourne sur la banquise.', {}, 'calm'),
-    go('ice_coast', 'mother', "Let's go to the ice!", 'Allons sur la glace !'),
-    tap('father', 'Where is the ice cave? Show me!', 'Où est la grotte de glace ? Montre-moi !', 'igloo', ['It is a little cave in the ice!', "C'est une petite grotte dans la glace !"], ['ice cave', 'where']),
-    ask('mother', 'Is the ice cave cold?', 'Est-ce que la grotte de glace est froide ?', yesNo(true), ['Brrr! Look at the ice cave!', 'Brrr ! Regarde la grotte de glace !'], ['ice cave', 'cold'], { minTier: 'intermediate', pointAt: 'igloo', keepOrder: true }),
+    ...home,
     canDo(sp, 'hop') ? act('actor', 'hop', 'Hop, hop, hop on the ice!', 'Hop, hop, hop sur la glace !', 'actor') : act('actor', 'dance', 'I dance on the ice!', 'Je danse sur la glace !', 'actor'),
     say('baby', 'I love the ice!', "J'adore la glace !", { needs: 'baby' }, 'happy'),
   ];
-  const inSea: QuestStep[] = [
-    say('narrator', 'The orca family stays in the sea. The sun is up!', "La famille orque reste dans la mer. Le soleil est haut dans le ciel !", {}, 'happy'),
-    tap('father', 'Where is the sun? Show me!', 'Où est le soleil ? Montre-moi !', 'sun', ['It is high in the sky!', 'Il est haut dans le ciel !'], ['sun', 'where']),
-    ask('mother', 'Is the sun yellow?', 'Est-ce que le soleil est jaune ?', yesNo(true), ['Look at the sun!', 'Regarde le soleil !'], ['sun', 'yellow'], { minTier: 'intermediate', pointAt: 'sun', keepOrder: true }),
-    say('baby', 'I love the big sea!', "J'adore la grande mer !", { needs: 'baby' }, 'happy'),
-  ];
   return [
     say('narrator', 'The wind blows on the sea. Look! A bird flies in the sky!', 'Le vent souffle sur la mer. Regarde ! Un oiseau vole dans le ciel !', {}, 'curious'),
-    tap('father', 'Where is the bird? Show me!', "Où est l'oiseau ? Montre-moi !", 'bird', ['It is up high, in the sky!', 'Il est tout en haut, dans le ciel !'], ['bird', 'where']),
+    props([skyProp('bird', 'bird', 2), skyProp('flake', 'snowflake', 5)]),
+    tapProps('father', 'Where is the bird? Show me!', "Où est l'oiseau ? Montre-moi !", ['bird'], ['It is up high, in the sky!', 'Il est tout en haut, dans le ciel !'], ['bird', 'where'], {
+      wrong: { flake: L('A snowflake? No! Find the bird!', "Un flocon ? Non ! Trouve l'oiseau !") },
+    }),
     ask('mother', "Let's say hello to the bird! What do we say?", "Disons bonjour à l'oiseau ! Que dit-on ?", [ok('Hello!', 'Bonjour !', '👋'), no('Goodbye!', 'Au revoir !', '🙋'), no('Thank you!', 'Merci !', '🙏'), no("I'm hungry!", "J'ai faim !", '😋')], ['We say: hello!', 'On dit : hello!'], ['hello'], { onCorrect: L('Hello, bird!', 'Bonjour, l’oiseau !') }),
-    ask('father', 'Is the bird white?', "Est-ce que l'oiseau est blanc ?", yesNo(true), ['Look at the bird!', "Regarde l'oiseau !"], ['bird', 'white'], { minTier: 'intermediate', pointAt: 'bird', keepOrder: true }),
+    ask('father', 'Is the bird white?', "Est-ce que l'oiseau est blanc ?", yesNo(true), ['Look at the bird!', "Regarde l'oiseau !"], ['bird', 'white'], { minTier: 'intermediate', keepOrder: true }),
     ask('mother', 'How is the weather today?', 'Quel temps fait-il aujourd’hui ?', [ok("It's windy!", 'Il y a du vent !', '🌬️'), no("It's hot!", 'Il fait chaud !', '🥵'), no("It's rainy!", 'Il pleut !', '🌧️')], ['Look! The sea moves!', 'Regarde ! La mer bouge !'], ['weather', 'windy'], { minTier: 'intermediate' }),
-    tap('mother', 'The waves are big! Where is the wave?', 'Les vagues sont grandes ! Où est la vague ?', 'wave', ['It is white, on the sea!', 'Elle est blanche, sur la mer !'], ['wave', 'where']),
-    ask('father', 'What colour is the wave?', 'De quelle couleur est la vague ?', [ok('White!', 'Blanche !', '⚪'), no('Red!', 'Rouge !', '🔴'), no('Green!', 'Verte !', '🟢'), no('Pink!', 'Rose !', '🩷')], ['It is like the snow!', "Elle est comme la neige !"], ['white', 'wave'], { minTier: 'expert', pointAt: 'wave' }),
+    clearProps(),
+    tap('mother', 'The wind blows on the sea! Where is the sea?', 'Le vent souffle sur la mer ! Où est la mer ?', 'sea', ['It is big and blue!', 'Elle est grande et bleue !'], ['sea', 'where']),
+    ask('father', 'What colour is the sea?', 'De quelle couleur est la mer ?', [ok('Blue!', 'Bleue !', '🔵'), no('Red!', 'Rouge !', '🔴'), no('Yellow!', 'Jaune !', '🟡'), no('Pink!', 'Rose !', '🩷')], ['Look at the sea!', 'Regarde la mer !'], ['blue', 'sea'], { minTier: 'expert', pointAt: 'sea' }),
     ...showOff(sp, ['jump', 'swim'], 'father'),
     say('narrator', 'The bird drops feathers on the sea! Can you find the white one?', "L'oiseau laisse tomber des plumes sur la mer ! Peux-tu trouver la blanche ?", {}, 'curious'),
     ...colorHunt('mother', 'feather', 'white', ['blue', 'yellow', 'green'], [0, 2, 4, 6], 'bfeather'),
@@ -153,7 +161,7 @@ const whiteFeather = (sp: SpeciesDef): QuestStep[] => {
       notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
       found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
     }, ['hide_and_seek', 'behind'], { needs: 'sibling', minTier: 'intermediate' }),
-    ...(sp.id === 'orca' ? inSea : onIce),
+    ...onIce,
     ask('father', 'The bird flies away. What do we say?', "L'oiseau s'envole. Que dit-on ?", [ok('Goodbye!', 'Au revoir !', '🙋'), no('Hello!', 'Bonjour !', '👋'), no("I'm cold!", "J'ai froid !", '🥶'), no('Good morning!', 'Bonjour !', '🌅')], ['We say: goodbye!', 'On dit : goodbye!'], ['goodbye'], { onCorrect: L('Goodbye, bird!', 'Au revoir, l’oiseau !') }),
     reward('ant_white_feather', 'mother', 'A white feather from the bird! It is our treasure!', 'Une plume blanche de l’oiseau ! C’est notre trésor !'),
     end('father', 'What a windy day!', 'Quelle journée de vent !'),
@@ -162,9 +170,9 @@ const whiteFeather = (sp: SpeciesDef): QuestStep[] => {
 
 export const ANTARCTICA: AdventurePack = {
   adventures: [
-    { id: 'antarctica_snow_day', continentId: 'antarctica', titleEn: 'The snowflake day', titleFr: 'Le jour des flocons', icon: '❄️', start: 'ice_coast', species: ['penguin', 'seal'], skillIds: ['1.7', '1.3', '1.6'], steps: snowDay, treasure: 'ant_snow_crystal', order: 1 },
-    { id: 'antarctica_fish_feast', continentId: 'antarctica', titleEn: 'The fish feast', titleFr: 'Le festin de poissons', icon: '🐟', start: 'open_sea', species: ['penguin', 'seal', 'orca'], skillIds: ['1.6', '1.2', '1.3'], steps: fishFeast, treasure: 'ant_silver_fish', order: 2 },
-    { id: 'antarctica_white_feather', continentId: 'antarctica', titleEn: 'The white feather', titleFr: 'La plume blanche', icon: '🪶', start: 'open_sea', species: ['penguin', 'seal', 'orca'], skillIds: ['1.1', '1.7', '1.2'], steps: whiteFeather, treasure: 'ant_white_feather', order: 3 },
+    { id: 'antarctica_snow_day', continentId: 'antarctica', titleEn: 'The snowflake day', titleFr: 'Le jour des flocons', icon: '❄️', start: 'ice_coast', species: ['penguin', 'seal', 'polar_bear'], skillIds: ['1.7', '1.3', '1.6'], steps: snowDay, treasure: 'ant_snow_crystal', order: 1 },
+    { id: 'antarctica_fish_feast', continentId: 'antarctica', titleEn: 'The fish feast', titleFr: 'Le festin de poissons', icon: '🐟', start: 'open_sea', species: ['penguin', 'seal', 'polar_bear'], skillIds: ['1.6', '1.2', '1.3'], steps: fishFeast, treasure: 'ant_silver_fish', order: 2 },
+    { id: 'antarctica_white_feather', continentId: 'antarctica', titleEn: 'The white feather', titleFr: 'La plume blanche', icon: '🪶', start: 'open_sea', species: ['penguin', 'seal', 'polar_bear'], skillIds: ['1.1', '1.7', '1.2'], steps: whiteFeather, treasure: 'ant_white_feather', order: 3 },
   ],
   treasures: [
     treasure('ant_snow_crystal', 'a snow crystal', 'un cristal de neige', '❄️'),

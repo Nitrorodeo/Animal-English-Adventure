@@ -290,11 +290,11 @@
     "content_status": "planned"
   },
   {
-    "id": "platypus",
+    "id": "frilled_lizard",
     "continent_id": "oceania",
-    "natural_biome": "creek",
-    "diet_tag": "aquatic_invertebrates",
-    "primary_mobility": "swim",
+    "natural_biome": "tropical_woodland",
+    "diet_tag": "insectivore",
+    "primary_mobility": "climb",
     "has_family": true,
     "max_babies": 2,
     "baby_sexes_required": [
@@ -302,9 +302,9 @@
       "girl"
     ],
     "allowed_biomes": [
-      "creek"
+      "tropical_woodland"
     ],
-    "content_status": "planned"
+    "content_status": "art_ready"
   },
   {
     "id": "penguin",
@@ -341,11 +341,11 @@
     "content_status": "planned"
   },
   {
-    "id": "orca",
+    "id": "polar_bear",
     "continent_id": "antarctica",
-    "natural_biome": "open_sea",
-    "diet_tag": "fish_marine",
-    "primary_mobility": "swim",
+    "natural_biome": "ice_coast",
+    "diet_tag": "fish",
+    "primary_mobility": "walk_swim",
     "has_family": true,
     "max_babies": 2,
     "baby_sexes_required": [
@@ -353,8 +353,12 @@
       "girl"
     ],
     "allowed_biomes": [
-      "open_sea"
+      "ice_coast",
+      "an_ice_cave",
+      "an_snowfield",
+      "open_sea",
+      "an_aurora"
     ],
-    "content_status": "planned"
+    "content_status": "art_ready"
   }
 ]

@@ -1,6 +1,7 @@
 /**
- * Aventures d'Océanie : forêt tropicale, cascade, clairière et lagune aux nénuphars.
- * Kangourou, koala et ornithorynque n'ont pas les mêmes habitats : chaque aventure ne liste que les
+ * Aventures d'Océanie (Australie, décors du 2026-11-20) : outback rouge, forêt d'eucalyptus, gorges,
+ * plage et forêt de fougères de Tasmanie.
+ * Kangourou, koala et lézard à collerette n'ont pas les mêmes habitats : chaque aventure ne liste que les
  * espèces qui peuvent aller dans tous ses lieux, et certaines scènes dépendent de l'espèce.
  */
 import type { Ability, QuestStep, SpeciesDef } from '../types';
@@ -49,10 +50,10 @@ function showOff(sp: SpeciesDef, prefs: readonly Ability[], askFrom: 'father' | 
 // ---------------------------------------------------------------------------
 
 const forestStars = (sp: SpeciesDef): QuestStep[] => [
-  say('narrator', 'The sun goes down in the green forest. The sky is pink and orange.', 'Le soleil se couche dans la forêt verte. Le ciel est rose et orange.', {}, 'calm'),
+  say('narrator', 'The sun goes down in the gum tree forest. The sky is pink and orange.', "Le soleil se couche dans la forêt d'eucalyptus. Le ciel est rose et orange.", {}, 'calm'),
   ask('father', 'The sun goes to bed. What do we say?', 'Le soleil va se coucher. Que dit-on ?', [ok('Good night!', 'Bonne nuit !', '🌙'), no('Good morning!', 'Bonjour !', '🌅'), no('Happy birthday!', 'Joyeux anniversaire !', '🎂'), no('Thank you!', 'Merci !', '🙏')], ['We say it before bed!', 'On le dit avant de dormir !'], ['good_night'], { onCorrect: L('Good night, sun!', 'Bonne nuit, soleil !') }),
   tap('mother', 'Look at the sky! Where is the cloud?', 'Regarde le ciel ! Où est le nuage ?', 'cloud', ['It is white, up high!', "Il est blanc, tout en haut !"], ['cloud', 'where']),
-  ask('father', 'Is the mountain big?', 'Est-ce que la montagne est grande ?', yesNo(true), ['Look at the mountain!', 'Regarde la montagne !'], ['mountain', 'big'], { minTier: 'intermediate', pointAt: 'mountain', keepOrder: true }),
+  ask('father', 'Is the tree big?', "Est-ce que l'arbre est grand ?", yesNo(true), ['Look at the tall tree!', 'Regarde le grand arbre !'], ['tree', 'big'], { minTier: 'intermediate', pointAt: 'tree', keepOrder: true }),
   say('narrator', 'The flowers close for the night. Can you find the red one?', 'Les fleurs se ferment pour la nuit. Peux-tu trouver la rouge ?', {}, 'curious'),
   ...colorHunt('mother', 'flower', 'red', ['yellow', 'pink', 'blue'], [0, 2, 4, 6], 'fflower'),
   say('baby', "I'm sleepy…", "J'ai sommeil…", { needs: 'baby' }, 'calm'),
@@ -78,67 +79,69 @@ const forestStars = (sp: SpeciesDef): QuestStep[] => [
 ];
 
 // ---------------------------------------------------------------------------
-// 2. La noix de coco dorée — « Boum ! » dans la forêt (toutes les espèces)
+// 2. Le coquillage doré — une vague apporte un trésor sur la plage (toutes les espèces)
 // ---------------------------------------------------------------------------
 
-const coconutThump = (sp: SpeciesDef): QuestStep[] => [
-  say('narrator', 'Thump! Something falls from the tree!', 'Boum ! Quelque chose tombe de l’arbre !', {}, 'curious'),
-  tap('father', 'Where is the tree? Show me!', 'Où est l’arbre ? Montre-moi !', 'tree', ['It is the big tree on the left!', 'C’est le grand arbre à gauche !'], ['tree', 'where']),
-  say('baby', 'What is it?', "C'est quoi ?", { needs: 'baby' }, 'curious'),
-  props([prop('coconut', 'coconut', 2), prop('leafd', 'leaf', 5)]),
-  tapProps('mother', 'Look on the ground! Find the thing that fell!', 'Regarde par terre ! Trouve ce qui est tombé !', ['coconut'], ['It is big and brown!', "C'est gros et marron !"], ['coconut', 'where'], {
-    wrong: { leafd: L('A leaf? No, it is too light!', 'Une feuille ? Non, elle est trop légère !') },
+const goldenShell = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'Splash! A big wave comes to the sunny beach!', 'Splash ! Une grosse vague arrive sur la plage ensoleillée !', {}, 'curious'),
+  tap('father', 'Where is the sea? Show me!', 'Où est la mer ? Montre-moi !', 'sea', ['It is big and blue!', 'Elle est grande et bleue !'], ['sea', 'where']),
+  tap('mother', 'Look! Where is the wave?', 'Regarde ! Où est la vague ?', 'wave', ['It is white, on the sea!', 'Elle est blanche, sur la mer !'], ['wave', 'where']),
+  say('baby', 'What is on the sand?', "Qu'est-ce qu'il y a sur le sable ?", { needs: 'baby' }, 'curious'),
+  props([prop('shell', 'shell', 2), prop('leafd', 'leaf', 5)]),
+  tapProps('mother', 'The wave brings something! Find it on the sand!', 'La vague apporte quelque chose ! Trouve-le sur le sable !', ['shell'], ['It is pretty and it comes from the sea!', 'Il est joli et il vient de la mer !'], ['shell', 'where'], {
+    wrong: { leafd: L('A leaf? No, it comes from the tree!', "Une feuille ? Non, elle vient de l'arbre !") },
     onCorrect: L('Yes! That is it!', "Oui ! C'est ça !"),
   }),
-  ask('father', 'What is it?', "Qu'est-ce que c'est ?", [ok('A coconut!', 'Une noix de coco !', '🥥'), no('An apple!', 'Une pomme !', '🍎'), no('A star!', 'Une étoile !', '⭐'), no('A fish!', 'Un poisson !', '🐟')], ['It has water inside!', "Il y a de l'eau dedans !"], ['coconut'], { onCorrect: L('Yes! A coconut!', 'Oui ! Une noix de coco !') }),
+  ask('father', 'What is it?', "Qu'est-ce que c'est ?", [ok('A shell!', 'Un coquillage !', '🐚'), no('An apple!', 'Une pomme !', '🍎'), no('A star!', 'Une étoile !', '⭐'), no('A car!', 'Une voiture !', '🚗')], ['It comes from the sea!', 'Il vient de la mer !'], ['shell'], { onCorrect: L('Yes! A shell!', 'Oui ! Un coquillage !') }),
   clearProps(),
-  say('narrator', 'Thump, thump, thump! More coconuts fall!', 'Boum, boum, boum ! D’autres noix de coco tombent !', {}, 'happy'),
-  ...countScene('father', 'coconut', [1, 3, 4, 5, 6, 7], { beginner: 3, intermediate: 4, expert: 5 }, 'coco'),
-  tap('mother', 'Coconuts have water inside. Where is the water?', "Les noix de coco ont de l'eau dedans. Où est l'eau ?", 'water', ['Look at the blue water!', "Regarde l'eau bleue !"], ['water', 'where'], { minTier: 'intermediate' }),
-  ...showOff(sp, ['hop', 'climb', 'dig'], 'mother'),
+  say('narrator', 'Splash, splash, splash! The waves bring more shells!', "Splash, splash, splash ! Les vagues apportent d'autres coquillages !", {}, 'happy'),
+  ...countScene('father', 'shell', [1, 3, 4, 5, 6, 7], { beginner: 3, intermediate: 4, expert: 5 }, 'bshell'),
+  tap('mother', 'Where is the sand? Show me!', 'Où est le sable ? Montre-moi !', 'sand', ['It is yellow, on the beach!', 'Il est jaune, sur la plage !'], ['sand', 'where']),
+  ask('father', 'Is the sun hot?', 'Est-ce que le soleil est chaud ?', yesNo(true), ['Look at the sun!', 'Regarde le soleil !'], ['sun', 'hot'], { minTier: 'intermediate', pointAt: 'sun', keepOrder: true }),
+  ...showOff(sp, ['hop', 'climb', 'run'], 'mother'),
   say('baby', 'I can do it too! Look!', 'Moi aussi, je sais faire ! Regarde !', { needs: 'baby' }, 'proud'),
   ...eatScene(sp, [0, 2, 4, 6], 'actor', 'snack'),
   say('narrator', 'Look! Yellow, blue and green butterflies come to say hello!', 'Regarde ! Des papillons jaunes, bleus et verts viennent dire bonjour !', {}, 'happy'),
   ...colorHunt('mother', 'butterfly', 'yellow', ['blue', 'green', 'red'], [1, 3, 5, 7], 'obf'),
-  seek('father', 'sibling', 'tree', {
-    line: ['Oh! Somebody is hiding! Maybe behind the big tree?', "Oh ! Quelqu'un se cache ! Peut-être derrière le grand arbre ?"],
-    hint: ['Look behind the tree!', "Regarde derrière l'arbre !"],
+  seek('father', 'sibling', 'rock', {
+    line: ['Oh! Somebody is hiding! Maybe behind the big rock?', "Oh ! Quelqu'un se cache ! Peut-être derrière le gros rocher ?"],
+    hint: ['Look behind the rock!', 'Regarde derrière le rocher !'],
     notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
     found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
   }, ['hide_and_seek', 'behind'], { needs: 'sibling', minTier: 'intermediate' }),
-  say('mother', 'Wow! One coconut is golden!', 'Waouh ! Une noix de coco est dorée !', {}, 'curious'),
-  reward('oc_golden_coconut', 'father', 'A golden coconut! It is our treasure!', 'Une noix de coco dorée ! C’est notre trésor !'),
-  end('mother', 'What a surprise in the forest!', 'Quelle surprise dans la forêt !'),
+  say('mother', 'Wow! One shell is golden!', 'Waouh ! Un coquillage est doré !', {}, 'curious'),
+  reward('oc_golden_shell', 'father', 'A golden shell! It is our treasure!', 'Un coquillage doré ! C’est notre trésor !'),
+  end('mother', 'What a surprise on the beach!', 'Quelle surprise sur la plage !'),
 ];
 
 // ---------------------------------------------------------------------------
-// 3. Le cristal de la cascade — cascade, puis lagune (ornithorynque) ou forêt (kangourou)
+// 3. La cascade arc-en-ciel — petite cascade de la forêt d'eucalyptus ; le kangourou file ensuite
+//    jusqu'à la forêt de fougères de Tasmanie (pas de koala ni de lézard à collerette là-bas).
 // ---------------------------------------------------------------------------
 
 const waterfallCrystal = (sp: SpeciesDef): QuestStep[] => {
-  const lagoon: QuestStep[] = [
-    say('narrator', 'The platypus family likes to swim. To the lily lagoon!', "La famille ornithorynque aime nager. Vers la lagune aux nénuphars !", {}, 'happy'),
-    go('oc_lagoon', 'mother', "Let's swim to the lagoon!", 'Nageons jusqu’à la lagune !'),
-    tap('father', 'Look! A pretty flower on the water! Where is the water lily?', "Regarde ! Une jolie fleur sur l'eau ! Où est le nénuphar ?", 'water_lily', ['It is a flower on the water!', "C'est une fleur sur l'eau !"], ['water lily', 'where']),
-    ask('mother', 'Is the water lily pink?', 'Est-ce que le nénuphar est rose ?', yesNo(true), ['Look at the water lily!', 'Regarde le nénuphar !'], ['water lily', 'pink'], { minTier: 'intermediate', pointAt: 'water_lily', keepOrder: true }),
-    act('actor', 'swim', 'I swim between the lilies!', 'Je nage entre les nénuphars !', 'actor'),
-    say('narrator', 'Look! Shells shine under the water!', "Regarde ! Des coquillages brillent sous l'eau !", {}, 'curious'),
-    ...countScene('mother', 'shell', [0, 1, 2, 3, 5, 6, 7], { beginner: 3, intermediate: 4, expert: 6 }, 'shell'),
-    ...eatScene(sp, [1, 2, 4, 6], 'actor', 'lagoon_meal'),
-  ];
-  const forest: QuestStep[] = [
-    say('narrator', 'The kangaroo family likes to hop. To the green forest!', 'La famille kangourou aime sautiller. Vers la forêt verte !', {}, 'happy'),
-    go('oc_forest', 'mother', "Let's hop to the forest!", 'Sautons jusqu’à la forêt !'),
-    tap('father', 'Look at the tall tree! Where is the tree?', "Regarde le grand arbre ! Où est l'arbre ?", 'tree', ['It is the big tree on the left!', "C'est le grand arbre à gauche !"], ['tree', 'where']),
-    act('actor', 'hop', 'Hop, hop, hop! I hop in the forest!', 'Hop, hop, hop ! Je sautille dans la forêt !', 'actor'),
-    say('baby', 'Hop, hop! I can hop too!', 'Hop, hop ! Moi aussi, je sais sautiller !', { needs: 'baby' }, 'proud'),
-    ...eatScene(sp, [0, 2, 4, 6], 'actor', 'forest_meal'),
-    ...colorHunt('mother', 'flower', 'pink', ['red', 'yellow', 'blue'], [1, 3, 5, 7], 'kflower'),
-  ];
+  const forest: QuestStep[] = sp.id === 'kangaroo'
+    ? [
+        say('narrator', 'The kangaroo family likes to hop. To the fern forest!', 'La famille kangourou aime sautiller. Vers la forêt de fougères !', {}, 'happy'),
+        go('oc_fern_forest', 'mother', "Let's hop to the forest!", 'Sautons jusqu’à la forêt !'),
+        tap('father', 'Look at the big green leaves! Where is the fern?', 'Regarde les grandes feuilles vertes ! Où est la fougère ?', 'fern', ['It is a big green plant!', "C'est une grande plante verte !"], ['fern', 'where']),
+        tap('mother', 'Listen! Splash! Where is the waterfall?', 'Écoute ! Splash ! Où est la cascade ?', 'waterfall', ['It is white, far away!', 'Elle est blanche, au loin !'], ['waterfall', 'where'], { minTier: 'intermediate' }),
+        act('actor', 'hop', 'Hop, hop, hop! I hop in the forest!', 'Hop, hop, hop ! Je sautille dans la forêt !', 'actor'),
+        say('baby', 'Hop, hop! I can hop too!', 'Hop, hop ! Moi aussi, je sais sautiller !', { needs: 'baby' }, 'proud'),
+        ...eatScene(sp, [0, 2, 4, 6], 'actor', 'forest_meal'),
+        ...colorHunt('mother', 'flower', 'pink', ['red', 'yellow', 'blue'], [1, 3, 5, 7], 'kflower'),
+      ]
+    : [
+        tap('father', 'Look at the tall tree! Where is the tree?', "Regarde le grand arbre ! Où est l'arbre ?", 'tree', ['It is the big tree on the left!', "C'est le grand arbre à gauche !"], ['tree', 'where']),
+        ...showOff(sp, ['climb'], 'mother'),
+        say('baby', 'I can climb too! Look!', 'Moi aussi, je sais grimper ! Regarde !', { needs: 'baby' }, 'proud'),
+        ...eatScene(sp, [0, 2, 4, 6], 'actor', 'forest_meal'),
+        ...colorHunt('mother', 'flower', 'pink', ['red', 'yellow', 'blue'], [1, 3, 5, 7], 'kflower'),
+      ];
   return [
-    say('narrator', "It's sunny! We are at the big waterfall in the rainforest.", 'Il fait beau ! Nous sommes à la grande cascade de la forêt tropicale.', {}, 'happy'),
-    tap('father', 'Listen! Splash, splash! Where is the waterfall?', 'Écoute ! Splash, splash ! Où est la cascade ?', 'waterfall', ['It is big and white!', "Elle est grande et blanche !"], ['waterfall', 'where']),
-    ask('mother', 'Is the waterfall big or small?', 'La cascade est grande ou petite ?', [ok("It's big!", 'Elle est grande !', '💦'), no("It's small!", 'Elle est petite !', '🐭')], ['It is very high!', 'Elle est très haute !'], ['big', 'small', 'waterfall'], { keepOrder: true, pointAt: 'waterfall' }),
+    say('narrator', "It's sunny! We are at the little waterfall in the gum tree forest.", "Il fait beau ! Nous sommes à la petite cascade de la forêt d'eucalyptus.", {}, 'happy'),
+    tap('father', 'Listen! Splash, splash! Where is the waterfall?', 'Écoute ! Splash, splash ! Où est la cascade ?', 'waterfall', ['It is little and white, by the water!', "Elle est petite et blanche, au bord de l'eau !"], ['waterfall', 'where']),
+    ask('mother', 'Is the waterfall big or small?', 'La cascade est grande ou petite ?', [ok("It's small!", 'Elle est petite !', '💦'), no("It's big!", 'Elle est grande !', '🏔️')], ['Look! It is a little waterfall!', 'Regarde ! C’est une petite cascade !'], ['big', 'small', 'waterfall'], { keepOrder: true, pointAt: 'waterfall' }),
     tap('father', 'Follow the path to the water! Where is the path?', "Suivons le chemin jusqu'à l'eau ! Où est le chemin ?", 'path', ['Find the path on the ground!', 'Trouve le chemin par terre !'], ['path', 'follow_the_path']),
     moveTo('path', 'walk', 'father'),
     ...drinkScene(sp, 'water', 'actor'),
@@ -153,18 +156,18 @@ const waterfallCrystal = (sp: SpeciesDef): QuestStep[] => {
       notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
       found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
     }, ['hide_and_seek', 'behind'], { needs: 'sibling', minTier: 'intermediate' }),
-    ...(sp.id === 'platypus' ? lagoon : forest),
+    ...forest,
     reward('oc_rainbow_crystal', 'father', 'A rainbow crystal! It is our treasure!', 'Un cristal arc-en-ciel ! C’est notre trésor !'),
     end('mother', 'What a beautiful day by the water!', "Quelle belle journée au bord de l'eau !"),
   ];
 };
 
 // ---------------------------------------------------------------------------
-// 4. La clairière ensoleillée — soleil, chapeaux, danse, puis la forêt (kangourou, koala)
+// 4. L'outback rouge — soleil, chapeaux, la grande colline rouge, puis l'eau des gorges (kangourou, lézard)
 // ---------------------------------------------------------------------------
 
-const sunnyClearing = (sp: SpeciesDef): QuestStep[] => [
-  say('narrator', 'A new day in the sunny clearing! The sun is warm.', 'Un nouveau jour dans la clairière ensoleillée ! Le soleil est chaud.', {}, 'happy'),
+const redOutback = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'A new day in the red outback! The sun is very hot.', "Un nouveau jour dans l'outback rouge ! Le soleil est très chaud.", {}, 'happy'),
   props([prop('sg', 'sunglasses', 1), prop('um', 'umbrella', 3)], { maxTier: 'beginner' }),
   props([prop('hat', 'hat', 0), prop('sg', 'sunglasses', 1), prop('um', 'umbrella', 3), prop('bt', 'boots', 5)], { minTier: 'intermediate' }),
   tapProps('mother', "It's sunny! Find the sunglasses!", 'Il fait beau ! Trouve les lunettes de soleil !', ['sg'], ['Sunglasses for the sun!', 'Des lunettes pour le soleil !'], ['sunglasses', 'sunny'], {
@@ -178,13 +181,12 @@ const sunnyClearing = (sp: SpeciesDef): QuestStep[] => [
     wrong: { um: L("An umbrella? No! It's sunny!", "Un parapluie ? Non ! Il fait beau !"), bt: L("Boots? No! It's dry!", "Des bottes ? Non ! Il fait sec !") },
   }),
   clearProps(),
-  tap('father', 'Look up! Where is the vine?', 'Regarde en haut ! Où est la liane ?', 'vine', ['It is long and green!', 'Elle est longue et verte !'], ['vine', 'where']),
-  ask('mother', 'Is the vine long?', 'Est-ce que la liane est longue ?', yesNo(true), ['Look at the vine!', 'Regarde la liane !'], ['vine', 'long'], { minTier: 'expert', pointAt: 'vine', keepOrder: true }),
-  ...showOff(sp, ['hop', 'climb'], 'father'),
+  tap('father', 'Look far away! Where is the big red hill?', 'Regarde au loin ! Où est la grande colline rouge ?', 'hill', ['It is big and red, far away!', 'Elle est grande et rouge, au loin !'], ['hill', 'where']),
+  ask('mother', 'Is the hill red?', 'Est-ce que la colline est rouge ?', yesNo(true), ['Look at the hill!', 'Regarde la colline !'], ['hill', 'red'], { minTier: 'intermediate', pointAt: 'hill', keepOrder: true }),
+  ...showOff(sp, ['hop', 'climb', 'run'], 'father'),
   say('baby', 'Look at me! I can do it too!', 'Regarde-moi ! Moi aussi, je sais faire !', { needs: 'baby' }, 'proud'),
-  ...drinkScene(sp, 'water', 'mother'),
   ...eatScene(sp, [0, 1, 2, 3], 'actor', 'snack'),
-  say('narrator', 'Pretty flowers grow in the clearing. Let us count them!', 'De jolies fleurs poussent dans la clairière. Comptons-les !', {}, 'happy'),
+  say('narrator', 'Little flowers grow in the red sand. Let us count them!', 'De petites fleurs poussent dans le sable rouge. Comptons-les !', {}, 'happy'),
   ...countScene('mother', 'flower', [0, 2, 4, 6, 1, 3], { beginner: 3, intermediate: 4, expert: 5 }, 'cflower'),
   seek('father', 'sibling', 'rock', {
     line: ['Oh! Somebody is hiding! Can you find them?', "Oh ! Quelqu'un se cache ! Tu peux le trouver ?"],
@@ -192,11 +194,14 @@ const sunnyClearing = (sp: SpeciesDef): QuestStep[] => [
     notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
     found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
   }, ['hide_and_seek', 'behind'], { needs: 'sibling', minTier: 'intermediate' }),
-  tap('mother', 'Now follow the path to the forest! Where is the path?', 'Maintenant, suivons le chemin jusqu’à la forêt ! Où est le chemin ?', 'path', ['Find the path on the grass!', "Trouve le chemin dans l'herbe !"], ['path', 'follow_the_path']),
+  say('mother', 'It is so hot! We are thirsty.', 'Il fait si chaud ! Nous avons soif.', {}, 'calm'),
+  tap('mother', 'Follow the path to the water! Where is the path?', "Suivons le chemin jusqu'à l'eau ! Où est le chemin ?", 'path', ['Find the path on the red ground!', 'Trouve le chemin sur la terre rouge !'], ['path', 'follow_the_path']),
   moveTo('path', 'walk', 'mother'),
-  go('oc_forest', 'mother', "Let's go to the green forest!", 'Allons à la forêt verte !'),
-  ask('father', 'The forest is so pretty! How are you?', 'La forêt est trop jolie ! Comment vas-tu ?', [ok("I'm happy!", 'Je suis content !', '😄'), no("I'm sad!", 'Je suis triste !', '😢'), no("I'm angry!", 'Je suis en colère !', '😠'), no("I'm cold!", "J'ai froid !", '🥶')], ['Look! It is a lovely day!', "Regarde ! C'est une belle journée !"], ['happy'], { onCorrect: L("Yes! We're happy!", 'Oui ! Nous sommes contents !') }),
-  say('narrator', 'Look! Orange butterflies dance around the trees!', 'Regarde ! Des papillons orange dansent autour des arbres !', {}, 'curious'),
+  go('oc_gorge', 'mother', "Let's go to the red gorge!", 'Allons aux gorges rouges !'),
+  tap('father', 'Look! Where is the water?', "Regarde ! Où est l'eau ?", 'water', ['It is blue, between the red rocks!', 'Elle est bleue, entre les rochers rouges !'], ['water', 'where']),
+  ...drinkScene(sp, 'water', 'actor'),
+  ask('father', 'The water is so cool! How are you?', "L'eau est si fraîche ! Comment vas-tu ?", [ok("I'm happy!", 'Je suis content !', '😄'), no("I'm sad!", 'Je suis triste !', '😢'), no("I'm angry!", 'Je suis en colère !', '😠'), no("I'm cold!", "J'ai froid !", '🥶')], ['Look! It is a lovely day!', "Regarde ! C'est une belle journée !"], ['happy'], { onCorrect: L("Yes! We're happy!", 'Oui ! Nous sommes contents !') }),
+  say('narrator', 'Look! Orange butterflies dance by the water!', "Regarde ! Des papillons orange dansent au bord de l'eau !", {}, 'curious'),
   ...colorHunt('father', 'butterfly', 'orange', ['purple', 'blue', 'green'], [1, 3, 5, 7], 'obt'),
   act('actor', 'dance', "Let's dance, family!", 'Dansons, la famille !', 'actor'),
   say('sibling', 'La la la! I love to dance!', "La la la ! J'adore danser !", { needs: 'sibling' }, 'happy'),
@@ -206,13 +211,15 @@ const sunnyClearing = (sp: SpeciesDef): QuestStep[] => [
 
 export const OCEANIA: AdventurePack = {
   adventures: [
-    { id: 'oceania_forest_stars', continentId: 'oceania', titleEn: 'Stars over the forest', titleFr: 'Les étoiles de la forêt', icon: '🌟', start: 'oc_forest', species: ['kangaroo', 'koala', 'platypus'], skillIds: ['1.3', '1.2', '1.7'], steps: forestStars, treasure: 'oc_forest_star', order: 1 },
-    { id: 'oceania_coconut_thump', continentId: 'oceania', titleEn: 'The golden coconut', titleFr: 'La noix de coco dorée', icon: '🥥', start: 'oc_forest', species: ['kangaroo', 'koala', 'platypus'], skillIds: ['1.3', '1.6', '2.2'], steps: coconutThump, treasure: 'oc_golden_coconut', order: 2 },
-    { id: 'oceania_waterfall_crystal', continentId: 'oceania', titleEn: 'The rainbow waterfall', titleFr: 'La cascade arc-en-ciel', icon: '💦', start: 'oc_waterfall', species: ['kangaroo', 'platypus'], skillIds: ['1.7', '1.2', '3.2'], steps: waterfallCrystal, treasure: 'oc_rainbow_crystal', order: 3 },
-    { id: 'oceania_sunny_clearing', continentId: 'oceania', titleEn: 'The sunny clearing', titleFr: 'La clairière ensoleillée', icon: '☀️', start: 'oc_clearing', species: ['kangaroo', 'koala'], skillIds: ['2.7', '1.3', '2.2'], steps: sunnyClearing, treasure: 'oc_gum_blossom', order: 4 },
+    { id: 'oceania_forest_stars', continentId: 'oceania', titleEn: 'Stars over the forest', titleFr: 'Les étoiles de la forêt', icon: '🌟', start: 'oc_eucalyptus', species: ['kangaroo', 'koala', 'frilled_lizard'], skillIds: ['1.3', '1.2', '1.7'], steps: forestStars, treasure: 'oc_forest_star', order: 1 },
+    { id: 'oceania_coconut_thump', continentId: 'oceania', titleEn: 'The golden shell', titleFr: 'Le coquillage doré', icon: '🐚', start: 'oc_beach', species: ['kangaroo', 'koala', 'frilled_lizard'], skillIds: ['1.3', '1.6', '2.2'], steps: goldenShell, treasure: 'oc_golden_shell', order: 2 },
+    { id: 'oceania_waterfall_crystal', continentId: 'oceania', titleEn: 'The rainbow waterfall', titleFr: 'La cascade arc-en-ciel', icon: '💦', start: 'oc_eucalyptus', species: ['kangaroo', 'koala', 'frilled_lizard'], skillIds: ['1.7', '1.2', '3.2'], steps: waterfallCrystal, treasure: 'oc_rainbow_crystal', order: 3 },
+    { id: 'oceania_sunny_clearing', continentId: 'oceania', titleEn: 'The red outback', titleFr: "L'outback rouge", icon: '☀️', start: 'oc_outback', species: ['kangaroo', 'frilled_lizard'], skillIds: ['2.7', '1.3', '2.2'], steps: redOutback, treasure: 'oc_gum_blossom', order: 4 },
   ],
   treasures: [
     treasure('oc_forest_star', 'a little star', 'une petite étoile', '⭐'),
+    treasure('oc_golden_shell', 'a golden shell', 'un coquillage doré', '🐚'),
+    // ancien trésor (avant les décors australiens) : gardé pour les coffres déjà remplis
     treasure('oc_golden_coconut', 'a golden coconut', 'une noix de coco dorée', '🥥'),
     treasure('oc_rainbow_crystal', 'a rainbow crystal', 'un cristal arc-en-ciel', '💎'),
     treasure('oc_gum_blossom', 'a gum blossom', 'une fleur d’eucalyptus', '🌸'),

@@ -27,3 +27,6 @@ desktop.ini
 
 # parties copiées sur l'ordinateur (privées)
 saves/
+
+# voix du prénom de la joueuse, enregistrées sur l'ordinateur (privées)
+prenoms/

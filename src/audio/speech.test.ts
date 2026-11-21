@@ -157,3 +157,38 @@ describe('lecture des voix', () => {
     expect(FakeAudio.last.played).toEqual([]);
   });
 });
+
+describe('voix du prénom de la joueuse', () => {
+  it('joue la phrase enregistrée avec son prénom quand elle est prête', async () => {
+    const s = await load();
+    s.setNames(['Chloé', 'Mia']);
+    s.setNameVoice('Chloé', { 'bf_isabella|Hello, {name}! Let\'s go on an adventure!': 'api/name/chloe-0000/t.mp3' });
+    const p = s.speak(say.title('Chloé'));
+    await flush();
+    expect(FakeAudio.last.played).toEqual(['/api/name/chloe-0000/t.mp3']);
+    FakeAudio.last.end();
+    await p;
+  });
+
+  it('sans phrase prête (ou pour un bébé), la variante sans prénom', async () => {
+    const s = await load();
+    s.setNames(['Chloé', 'Mia']);
+    s.setNameVoice('Chloé', {});
+    const p = s.speak(say.title('Mia'));
+    await flush();
+    expect(FakeAudio.last.played).toHaveLength(1);
+    expect(FakeAudio.last.played[0]).toMatch(/audio\/voice\/[0-9a-f]{12}\.mp3$/);
+    FakeAudio.last.end();
+    await p;
+  });
+
+  it('une suite de répliques s’arrête si l’enfant touche autre chose', async () => {
+    const s = await load();
+    const seq = s.sequence([{ text: say.hello('Chloé'), opts: { role: 'mother' } }, { text: say.continent('Africa') }]);
+    await flush();
+    void s.speak(say.continentPrompt('Asia'));
+    await seq;
+    await flush();
+    expect(FakeAudio.last.played).toHaveLength(2); // l'accueil, puis la phrase demandée ; pas « Africa »
+  });
+});

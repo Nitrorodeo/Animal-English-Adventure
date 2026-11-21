@@ -57,6 +57,8 @@ export type RunAction =
   | { type: 'choose'; option: number }
   | { type: 'tapAnchor'; anchor: string }
   | { type: 'tapProp'; prop: string }
+  /** personnage touché : les rôles qu'il tient dans la scène (ex. ['actor', 'father']) */
+  | { type: 'tapActor'; who: Speaker[] }
   | { type: 'advance' };
 
 /** Durée (ms) des étapes automatiques ; null = la joueuse avance elle-même. */
@@ -86,6 +88,7 @@ function enter(script: QuestScript, prev: RunState, i: number): RunResult {
     case 'tapAnchor':
     case 'tapProps':
     case 'command':
+    case 'tapActor':
       s.bubble = { who: step.speaker, line: step.line };
       break;
     case 'scene':
@@ -137,6 +140,7 @@ export function canAdvance(script: QuestScript, s: RunState): boolean {
     case 'tapProps':
     case 'seek':
     case 'command':
+    case 'tapActor':
       return s.feedback === 'ok';
     default:
       return autoDelay(step) !== null; // étapes automatiques : avance forcée possible
@@ -211,6 +215,13 @@ export function runAction(script: QuestScript, s: RunState, a: RunAction): RunRe
       }
       return failure(s, step.speaker, step.hint, step.wrong?.[a.prop]);
     }
+    case 'tapActor': {
+      if (a.type !== 'tapActor' || !a.who.length) break;
+      if (a.who.includes(step.target)) return success({ ...s, acting: { who: step.target, action: step.action } }, step.target, step.items, step.reply);
+      // un autre personnage : « Not me! » dit par lui, puis l'indice
+      const tapped = a.who.find((w) => w !== 'actor') ?? a.who[0]!;
+      return s.wrong >= 1 ? failure(s, step.speaker, step.hint) : failure(s, tapped, step.hint, step.notMe);
+    }
     case 'seek': {
       if (a.type !== 'tapAnchor') break;
       if (a.anchor === step.hideAt) {
@@ -227,12 +238,13 @@ export function runAction(script: QuestScript, s: RunState, a: RunAction): RunRe
 }
 
 /** Bonne réponse à mettre en évidence (aide après deux erreurs). */
-export function revealTarget(script: QuestScript, s: RunState): { anchor?: string; props?: string[]; option?: number } | null {
+export function revealTarget(script: QuestScript, s: RunState): { anchor?: string; props?: string[]; option?: number; actor?: Speaker } | null {
   const step = script.steps[s.index];
   if (!step || s.wrong < 2 || s.feedback === 'ok') return null;
   if (step.kind === 'ask') return { option: step.options.findIndex((o) => o.correct) };
   if (step.kind === 'tapAnchor') return { anchor: step.anchor };
   if (step.kind === 'seek') return { anchor: step.hideAt };
+  if (step.kind === 'tapActor') return { actor: step.target };
   if (step.kind === 'tapProps') {
     const left = step.targets.filter((t) => !s.tapped.includes(t));
     return { props: step.ordered ? left.slice(0, 1) : left };
