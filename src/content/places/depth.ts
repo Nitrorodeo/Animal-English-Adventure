@@ -134,4 +134,17 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
     horizonY: 36,
     farY: [[0, 64], [18, 62], [30, 60], [40, 60], [50, 62], [60, 64], [70, 62], [78, 58], [85, 52], [92, 46], [100, 40]],
     lane: [[20, 66, 74], [28, 63, 72], [36, 62, 71], [45, 63, 70], [55, 66, 71], [65, 67, 72], [75, 64, 70], [82, 59, 66], [88, 54, 62], [94, 47, 56], [98, 43, 52]] },
+  // paresseux (2026-11-23) : la branche moussue (la famille y marche, comme sur les branches du toucan), le pied des racines
+  // géantes (rivière à droite) et le refuge au creux de l'arbre (bassin au pied de la cascade, ruisseau en bas à gauche)
+  sa_sloth_canopy: {
+    horizonY: 40,
+    farY: [[0, 66], [20, 66], [30, 66], [44, 66], [60, 64], [74, 61], [88, 56], [100, 52]] },
+  sa_sloth_roots: { horizonY: 50, farY: 62, water: [[[70, 50], [80, 49], [92, 52], [98, 56], [98, 62], [90, 63], [80, 62], [72, 60], [68, 55]]] },
+  sa_sloth_refuge: {
+    horizonY: 52,
+    farY: 68,
+    water: [
+      [[8, 60], [22, 59], [40, 62], [42, 68], [38, 72], [28, 73], [12, 72], [8, 66]],
+      [[22, 73], [42, 73], [46, 80], [44, 90], [40, 100], [22, 100], [18, 92], [20, 80]],
+    ] },
 };

@@ -189,7 +189,7 @@ describe('jeux propres aux espèces d’Amérique du Sud', () => {
     const cards = (p: string) =>
       buildQuest(arch, ctx(family('jaguar', 0, 'little', 'intermediate'), 'jaguar', p, actorOf('jaguar', 'father')))!
         .script.steps.flatMap((s) => (s.kind === 'command' ? s.options.map((o) => o.line.en) : []));
-    expect(cards('sa_jungle')).not.toContain('Swim!');
+    expect(cards('sa_andes')).not.toContain('Swim!');
     expect(cards('sa_river')).toContain('Swim!');
   });
 });
@@ -202,7 +202,7 @@ describe('vocabulaire propre à chaque décor d’Amérique du Sud', () => {
       const own = [...new Set(PLACES[id]!.anchors.map((a) => a.word))].filter((w) => where.get(w)!.size === 1);
       expect(own.length, `${id} : ${own.join(', ')}`).toBeGreaterThanOrEqual(2);
     }
-    expect(SA_PLACES.length).toBe(8);
+    expect(SA_PLACES.length).toBe(11);
   });
 
   it('les nouveaux mots des décors se nomment, ont leur question, et se photographient', () => {
@@ -215,6 +215,9 @@ describe('vocabulaire propre à chaque décor d’Amérique du Sud', () => {
       sa_canopy_branch: { words: ['blossom', 'rainforest'], photo: 'blossom' },
       sa_canopy_treehouse: { words: ['platform'], photo: 'platform' },
       sa_canopy_sunrise: { words: ['mango'], photo: 'mango' },
+      sa_sloth_canopy: { words: ['bromeliad', 'heliconia'], photo: 'bromeliad' },
+      sa_sloth_roots: { words: ['ground', 'riverbank'], photo: 'ground' },
+      sa_sloth_refuge: { words: ['hollow', 'bed'], photo: 'hollow' },
     };
     for (const [id, x] of Object.entries(expected)) {
       for (const w of x.words) {

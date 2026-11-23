@@ -203,6 +203,7 @@ const ECHO_AT: Readonly<Record<string, { anchor: string; fem: boolean }>> = {
   africa_canyon: { anchor: 'canyon', fem: false },
   oc_gorge: { anchor: 'cliff', fem: true },
   asia_mountain: { anchor: 'mountain', fem: true },
+  sa_andes: { anchor: 'mountain', fem: true },
   asia_snow_den: { anchor: 'mountain', fem: true },
   europe_alps: { anchor: 'mountain', fem: true },
   an_ice_cave: { anchor: 'cave', fem: true },
@@ -388,7 +389,7 @@ export const simonSays: ActivityDef = {
 // ---------------------------------------------------------------------------
 
 /** Décors sans ciel : pas d'étoiles à compter. */
-const NO_SKY = new Set(['an_ice_cave', 'africa_forest']); // 2026-11-23 : la forêt n'a pas de ciel visible
+const NO_SKY = new Set(['an_ice_cave', 'africa_forest', 'sa_sloth_roots']); // 2026-11-23 : la forêt n'a pas de ciel visible
 
 export const bedtime: ActivityDef = {
   id: 'bedtime',
@@ -502,6 +503,9 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   sa_canopy_branch: ['branch', 'vine', 'waterfall', 'blossom'],
   sa_canopy_treehouse: ['treehouse', 'orchid', 'bridge', 'platform'],
   sa_canopy_sunrise: ['orchid', 'fruit', 'sun', 'mango'],
+  sa_sloth_canopy: ['bromeliad', 'heliconia', 'orchid', 'moss'],
+  sa_sloth_roots: ['ground', 'riverbank', 'fern', 'root'],
+  sa_sloth_refuge: ['hollow', 'bed', 'waterfall', 'stream'],
   oc_outback: ['hill', 'bush', 'tree', 'pebbles'],
   oc_eucalyptus: ['waterfall', 'tree', 'hill', 'eucalyptus'],
   oc_gorge: ['cliff', 'baobab', 'water', 'bottlebrush'],
