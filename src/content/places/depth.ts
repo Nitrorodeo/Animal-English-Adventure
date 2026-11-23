@@ -78,6 +78,13 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
     farY: [[0, 57], [26, 57], [29, 62], [48, 62], [52, 60], [56, 61], [58, 64], [62, 65], [66, 66.5], [70, 68.5], [76, 69.5], [84, 69.5], [90, 68.5], [94, 68], [100, 67.5]],
     water: [[[57, 61], [60, 59.5], [67, 59], [71, 58], [73, 52], [74, 46], [76, 44], [89, 44], [89, 50], [87, 54], [84, 57.5], [82, 60], [86, 62], [90, 63.5], [100, 63.5], [100, 67], [94, 67.5], [90, 68], [84, 69], [76, 69], [70, 68], [66, 66], [60, 64], [57, 63]]],
   },
+  // 2026-11-23 : les trois décors nouveaux de l'Asie (mesurés sur les images quadrillées)
+  // pavillon rouge : la rivière sort de la petite chute sous le pont (x 50-62, y 65-75) et coule vers l'avant jusqu'au bas (x 55-78, y 76-90)
+  asia_pavilion: { horizonY: 50, farY: 62, water: [[[50, 65], [62, 65], [64, 70], [70, 75], [78, 77], [78, 90], [72, 91], [68, 86], [65, 79], [56, 72]]] },
+  // cascade de la jungle : bassin turquoise au pied de la chute (x 55-96, y 53-74) ; le sol de terre commence vers y 72
+  asia_jungle_falls: { horizonY: 52, farY: 62, water: [[[55, 58], [72, 53], [88, 52], [95, 56], [96, 66], [88, 71], [78, 74], [66, 72], [55, 70]]] },
+  // grotte enneigée : brume dans la vallée jusqu'à y 50, neige au premier plan, aucune eau
+  asia_snow_cave: { horizonY: 42, farY: 58 },
   // Europe
   europe_forest: { horizonY: 40, farY: 52 },
   europe_alps: { horizonY: 38, farY: 42, water: [[[37, 42], [60, 41], [85, 42], [100, 44], [100, 52], [92, 56], [80, 58], [65, 58], [55, 56], [48, 52], [42, 47]]] },

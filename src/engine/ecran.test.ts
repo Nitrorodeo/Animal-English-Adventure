@@ -68,7 +68,7 @@ describe('textes et images des jeux communs', () => {
   });
 
   it('lanternes : « What a beautiful evening! » est dit avant le retour du jour', () => {
-    const q = buildQuest(getArchetype('lanterns'), ctx(withBaby('giant_panda', 'young', 'beginner'), 'giant_panda', 'asia_pagoda', adult('giant_panda', 'mother')))!;
+    const q = buildQuest(getArchetype('lanterns'), ctx(withBaby('tiger', 'young', 'beginner'), 'tiger', 'asia_pagoda', adult('tiger', 'mother')))!;
     const st = q.script.steps;
     const day = st.findIndex((s) => s.kind === 'scene' && !s.night);
     const eve = st.findIndex((s) => 'line' in s && s.line.en.includes('evening'));

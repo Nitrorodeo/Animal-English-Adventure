@@ -182,8 +182,8 @@ describe('jeux propres aux espèces d’Asie', () => {
 
   it('le tigre se baigne seulement là où il y a un bassin, et ne chasse jamais', () => {
     const swims = (p: string) => script('tiger_stripes', 'tiger', p, 'father', 'beginner').steps.some((s) => s.kind === 'act' && s.action === 'swim');
-    expect(swims('asia_bamboo')).toBe(true);
-    expect(swims('asia_arch')).toBe(false);
+    expect(swims('asia_jungle_falls')).toBe(true);
+    expect(swims('asia_mountain')).toBe(false);
     for (const p of getSpecies('tiger').allowedBiomes) {
       const text = heard(script('tiger_stripes', 'tiger', p, 'father', 'expert'));
       expect(text).not.toMatch(/\b(hunt|prey|catch|chase|kill)/);
@@ -220,6 +220,9 @@ describe('vocabulaire propre à chaque décor d’Asie', () => {
       asia_arch: { words: ['daisy', 'peak'], photo: 'peak' },
       asia_garden: { words: ['lotus', 'iris'], photo: 'lotus' },
       asia_snow_den: { words: ['cave'], photo: 'cave' },
+      asia_pavilion: { words: ['pavilion', 'stone bridge'], photo: 'pavilion' },
+      asia_jungle_falls: { words: ['roots', 'red flower'], photo: 'roots' },
+      asia_snow_cave: { words: ['lichen', 'icicle'], photo: 'icicle' },
     };
     for (const [id, x] of Object.entries(expected)) {
       for (const w of x.words) {

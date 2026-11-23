@@ -55,8 +55,8 @@ describe('les autres continents', () => {
   });
 
   it('les jeux signatures vont aux bons décors', () => {
-    expect(everyone('giant_panda', 'asia_pagoda').has('lanterns'), 'lanterns@asia_pagoda').toBe(true);
     expect(everyone('beaver', 'na_beaver_falls').has('maple_leaves'), 'maple_leaves@na_beaver_falls').toBe(true);
+    expect(everyone('tiger', 'asia_pagoda').has('lanterns'), 'lanterns@asia_pagoda').toBe(true);
     expect(everyone('koala', 'oc_beach').has('beach_shells') || everyone('kangaroo', 'oc_beach').has('beach_shells')).toBe(true);
     expect(everyone('penguin', 'an_snowfield').has('snowflakes'), 'snowflakes@an_snowfield').toBe(true);
     expect(everyone('penguin', 'an_snowfield').has('follow_tracks'), 'follow_tracks@an_snowfield').toBe(true);
