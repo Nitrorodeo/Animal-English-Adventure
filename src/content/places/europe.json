@@ -1109,7 +1109,9 @@
       "anchors": [
         {
           "id": "pine",
-          "sameAs": ["tree"],
+          "sameAs": [
+            "tree"
+          ],
           "word": "pine tree",
           "wordFr": "le sapin",
           "icon": "🌲",
@@ -1143,7 +1145,9 @@
         },
         {
           "id": "tree",
-          "sameAs": ["pine"],
+          "sameAs": [
+            "pine"
+          ],
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌲",
@@ -2061,8 +2065,8 @@
         },
         {
           "id": "lupine",
-          "word": "lupine",
-          "wordFr": "le lupin",
+          "word": "wild lupine",
+          "wordFr": "le lupin sauvage",
           "icon": "🪻",
           "hit": {
             "x": 77,
@@ -2081,8 +2085,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is the lupine purple?",
-              "fr": "Est-ce que le lupin est violet ?"
+              "en": "Is the wild lupine purple?",
+              "fr": "Est-ce que le lupin sauvage est violet ?"
             },
             "yes": true
           }
@@ -2960,8 +2964,8 @@
         },
         {
           "id": "sunlight",
-          "word": "sunlight",
-          "wordFr": "la lumière du soleil",
+          "word": "light rays",
+          "wordFr": "les rayons de lumière",
           "icon": "🌤️",
           "hit": {
             "x": 80,
@@ -2980,8 +2984,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is the sunlight warm?",
-              "fr": "Est-ce que la lumière du soleil est chaude ?"
+              "en": "Are the light rays warm?",
+              "fr": "Est-ce que les rayons de lumière sont chauds ?"
             },
             "yes": true
           }
@@ -3444,8 +3448,8 @@
         },
         {
           "id": "clearing",
-          "word": "clearing",
-          "wordFr": "la clairière",
+          "word": "forest clearing",
+          "wordFr": "la clairière de la forêt",
           "icon": "🍂",
           "hit": {
             "x": 15,
@@ -3462,8 +3466,8 @@
           "tags": [],
           "check": {
             "q": {
-              "en": "Is the clearing sunny?",
-              "fr": "Est-ce que la clairière est ensoleillée ?"
+              "en": "Is the forest clearing sunny?",
+              "fr": "Est-ce que la clairière de la forêt est ensoleillée ?"
             },
             "yes": true
           }
@@ -3747,8 +3751,8 @@
         },
         {
           "id": "log",
-          "word": "fallen log",
-          "wordFr": "le tronc couché",
+          "word": "mossy log",
+          "wordFr": "le tronc moussu",
           "icon": "🪵",
           "hit": {
             "x": 66,
@@ -4719,6 +4723,22 @@
     "green hill": {
       "en": "A green hill",
       "fr": "Une colline verte"
+    },
+    "forest clearing": {
+      "en": "A forest clearing",
+      "fr": "Une clairière dans la forêt"
+    },
+    "wild lupine": {
+      "en": "A wild lupine",
+      "fr": "Un lupin sauvage"
+    },
+    "light rays": {
+      "en": "Light rays",
+      "fr": "Des rayons de lumière"
+    },
+    "mossy log": {
+      "en": "A mossy log",
+      "fr": "Un tronc moussu"
     }
   }
 }

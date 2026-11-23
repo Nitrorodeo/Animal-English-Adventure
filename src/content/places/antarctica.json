@@ -1441,8 +1441,8 @@
       "anchors": [
         {
           "id": "cave",
-          "word": "cave",
-          "wordFr": "la grotte",
+          "word": "blue cave",
+          "wordFr": "la grotte bleue",
           "icon": "🕳️",
           "hit": {
             "x": 3,
@@ -1461,8 +1461,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is it dark in the cave?",
-              "fr": "Est-ce qu'il fait sombre dans la grotte ?"
+              "en": "Is it dark in the blue cave?",
+              "fr": "Est-ce qu'il fait sombre dans la grotte bleue ?"
             },
             "yes": true
           }
@@ -1954,8 +1954,8 @@
         },
         {
           "id": "pebbles",
-          "word": "pebbles",
-          "wordFr": "les galets",
+          "word": "wet pebbles",
+          "wordFr": "les galets mouillés",
           "icon": "🪨",
           "hit": {
             "x": 76,
@@ -1972,8 +1972,8 @@
           "tags": [],
           "check": {
             "q": {
-              "en": "Are the pebbles small?",
-              "fr": "Est-ce que les galets sont petits ?"
+              "en": "Are the wet pebbles small?",
+              "fr": "Est-ce que les galets mouillés sont petits ?"
             },
             "yes": true
           }
@@ -2325,8 +2325,8 @@
         },
         {
           "id": "pebbles",
-          "word": "pebbles",
-          "wordFr": "les galets",
+          "word": "beach pebbles",
+          "wordFr": "les galets de la plage",
           "icon": "🪨",
           "hit": {
             "x": 33,
@@ -2343,8 +2343,8 @@
           "tags": [],
           "check": {
             "q": {
-              "en": "Are the pebbles big?",
-              "fr": "Est-ce que les galets sont gros ?"
+              "en": "Are the beach pebbles big?",
+              "fr": "Est-ce que les galets de la plage sont gros ?"
             },
             "yes": false
           }
@@ -2426,8 +2426,8 @@
       "anchors": [
         {
           "id": "cave",
-          "word": "cave",
-          "wordFr": "la grotte",
+          "word": "icy cave",
+          "wordFr": "la grotte glacée",
           "icon": "🕳️",
           "hit": {
             "x": 10,
@@ -2446,8 +2446,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is it dark in the cave?",
-              "fr": "Est-ce qu'il fait sombre dans la grotte ?"
+              "en": "Is it dark in the icy cave?",
+              "fr": "Est-ce qu'il fait sombre dans la grotte glacée ?"
             },
             "yes": true
           }
@@ -2867,6 +2867,22 @@
     "snowy rock": {
       "en": "A snowy rock",
       "fr": "Un rocher enneigé"
+    },
+    "blue cave": {
+      "en": "A blue cave",
+      "fr": "Une grotte bleue"
+    },
+    "icy cave": {
+      "en": "An icy cave",
+      "fr": "Une grotte glacée"
+    },
+    "wet pebbles": {
+      "en": "Wet pebbles",
+      "fr": "Des galets mouillés"
+    },
+    "beach pebbles": {
+      "en": "Beach pebbles",
+      "fr": "Des galets de la plage"
     }
   }
 }

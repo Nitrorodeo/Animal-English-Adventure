@@ -240,7 +240,7 @@ describe('vocabulaire propre à chaque décor d’Amérique du Nord', () => {
       na_coast: { words: ['lighthouse', 'lupine'], photo: 'lupine' },
       na_beaver_pond: { words: ['lodge', 'reed'], photo: 'reed' },
       na_redwood_trail: { words: ['clover', 'moss'], photo: 'moss' },
-      na_bear_den: { words: ['straw', 'bare bush'], photo: 'straw' },
+      na_bear_den: { words: ['straw bed', 'bare bush'], photo: 'straw' },
       na_bison_prairie: { words: ['oak tree', 'golden grass'], photo: 'oak_tree' },
       na_bison_alpine: { words: ['fir forest', 'fallen log'], photo: 'fir_forest' },
       na_bison_canyon: { words: ['red rock', 'mesa'], photo: 'mesa' },

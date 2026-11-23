@@ -3001,8 +3001,8 @@
         },
         {
           "id": "big_leaf",
-          "word": "big leaf",
-          "wordFr": "la grande feuille",
+          "word": "jungle leaf",
+          "wordFr": "la feuille de la jungle",
           "icon": "🍃",
           "hit": {
             "x": 86,
@@ -3021,8 +3021,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is the big leaf green?",
-              "fr": "Est-ce que la grande feuille est verte ?"
+              "en": "Is the jungle leaf green?",
+              "fr": "Est-ce que la feuille de la jungle est verte ?"
             },
             "yes": true
           }
@@ -3061,8 +3061,8 @@
         },
         {
           "id": "pool",
-          "word": "pool",
-          "wordFr": "le bassin",
+          "word": "jungle pool",
+          "wordFr": "le bassin de la jungle",
           "icon": "🏊",
           "hit": {
             "x": 55,
@@ -3085,8 +3085,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is the pool blue?",
-              "fr": "Est-ce que le bassin est bleu ?"
+              "en": "Is the jungle pool blue?",
+              "fr": "Est-ce que le bassin de la jungle est bleu ?"
             },
             "yes": true
           }
@@ -3175,8 +3175,8 @@
         },
         {
           "id": "sunlight",
-          "word": "sunlight",
-          "wordFr": "la lumière du soleil",
+          "word": "sunshine",
+          "wordFr": "le soleil qui brille",
           "icon": "🌞",
           "hit": {
             "x": 75,
@@ -3195,8 +3195,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is the sunlight yellow?",
-              "fr": "Est-ce que la lumière du soleil est jaune ?"
+              "en": "Is the sunshine yellow?",
+              "fr": "Est-ce que le soleil qui brille est jaune ?"
             },
             "yes": true
           }
@@ -3612,8 +3612,8 @@
         },
         {
           "id": "dry_grass",
-          "word": "dry grass",
-          "wordFr": "l'herbe sèche",
+          "word": "tuft of grass",
+          "wordFr": "la touffe d'herbe",
           "icon": "🌾",
           "hit": {
             "x": 43,
@@ -3632,8 +3632,8 @@
           ],
           "check": {
             "q": {
-              "en": "Is the dry grass yellow?",
-              "fr": "Est-ce que l'herbe sèche est jaune ?"
+              "en": "Is the tuft of grass yellow?",
+              "fr": "Est-ce que la touffe d'herbe est jaune ?"
             },
             "yes": true
           }
@@ -3901,6 +3901,22 @@
     "stone bridge": {
       "en": "A stone bridge",
       "fr": "Un pont de pierre"
+    },
+    "tuft of grass": {
+      "en": "A tuft of grass",
+      "fr": "Une touffe d'herbe"
+    },
+    "jungle leaf": {
+      "en": "A jungle leaf",
+      "fr": "Une feuille de la jungle"
+    },
+    "sunshine": {
+      "en": "Sunshine",
+      "fr": "Du soleil"
+    },
+    "jungle pool": {
+      "en": "A jungle pool",
+      "fr": "Un bassin de la jungle"
     }
   }
 }

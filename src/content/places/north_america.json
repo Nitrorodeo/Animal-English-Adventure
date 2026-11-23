@@ -2735,8 +2735,8 @@
         },
         {
           "id": "straw",
-          "word": "straw",
-          "wordFr": "la paille",
+          "word": "straw bed",
+          "wordFr": "le lit de paille",
           "icon": "🌾",
           "hit": {
             "x": 66,
@@ -2752,8 +2752,8 @@
           },
           "check": {
             "q": {
-              "en": "Is the straw yellow?",
-              "fr": "Est-ce que la paille est jaune ?"
+              "en": "Is the straw bed yellow?",
+              "fr": "Est-ce que le lit de paille est jaune ?"
             },
             "yes": true
           }
@@ -4315,6 +4315,10 @@
     "wildflower": {
       "en": "A wildflower",
       "fr": "Une fleur sauvage"
+    },
+    "straw bed": {
+      "en": "A straw bed",
+      "fr": "Un lit de paille"
     }
   }
 }

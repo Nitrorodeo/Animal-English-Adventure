@@ -318,7 +318,9 @@
       "anchors": [
         {
           "id": "tree",
-          "sameAs": ["eucalyptus"],
+          "sameAs": [
+            "eucalyptus"
+          ],
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌳",
@@ -615,7 +617,9 @@
         },
         {
           "id": "eucalyptus",
-          "sameAs": ["tree"],
+          "sameAs": [
+            "tree"
+          ],
           "word": "eucalyptus",
           "wordFr": "l'eucalyptus",
           "icon": "🌳",
@@ -1827,7 +1831,9 @@
       "anchors": [
         {
           "id": "gum_tree",
-          "sameAs": ["tree"],
+          "sameAs": [
+            "tree"
+          ],
           "word": "gum tree",
           "wordFr": "l'eucalyptus",
           "icon": "🌳",
@@ -1861,7 +1867,9 @@
         },
         {
           "id": "tree",
-          "sameAs": ["gum_tree"],
+          "sameAs": [
+            "gum_tree"
+          ],
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌳",
@@ -2928,8 +2936,8 @@
         },
         {
           "id": "red_rock",
-          "word": "red rock",
-          "wordFr": "le rocher rouge",
+          "word": "red boulder",
+          "wordFr": "le gros rocher rouge",
           "icon": "🪨",
           "hit": {
             "x": 77,
@@ -2946,8 +2954,8 @@
           "tags": [],
           "check": {
             "q": {
-              "en": "Is the red rock small?",
-              "fr": "Est-ce que le rocher rouge est petit ?"
+              "en": "Is the red boulder small?",
+              "fr": "Est-ce que le gros rocher rouge est petit ?"
             },
             "yes": false
           }
@@ -4049,6 +4057,10 @@
     "rushes": {
       "en": "Rushes",
       "fr": "Des joncs"
+    },
+    "red boulder": {
+      "en": "A red boulder",
+      "fr": "Un gros rocher rouge"
     }
   }
 }
