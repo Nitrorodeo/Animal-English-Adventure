@@ -4,7 +4,7 @@
  * Kangourou, koala et lézard à collerette n'ont pas les mêmes habitats : chaque aventure ne liste que les
  * espèces qui peuvent aller dans tous ses lieux, et certaines scènes dépendent de l'espèce.
  */
-import type { Ability, QuestStep, SpeciesDef } from '../types';
+import type { Ability, AdventureDef, QuestStep, SpeciesDef } from '../types';
 import {
   ABILITY_WORDS,
   act,
@@ -148,7 +148,7 @@ const waterfallCrystal = (sp: SpeciesDef): QuestStep[] => {
     act('baby', 'splash', 'Splash! Splash! The water is cool!', "Splash ! Splash ! L'eau est fraîche !", 'baby', { needs: 'baby' }),
     ask('mother', 'How is the weather today?', 'Quel temps fait-il aujourd’hui ?', [ok("It's sunny!", 'Il fait beau !', '☀️'), no("It's snowy!", 'Il neige !', '🌨️'), no("It's cold!", 'Il fait froid !', '🥶'), no("It's rainy!", 'Il pleut !', '🌧️')], ['Look at the sun!', 'Regarde le soleil !'], ['weather', 'sunny'], { minTier: 'intermediate' }),
     say('narrator', 'Look! The waterfall makes a rainbow!', 'Regarde ! La cascade fait un arc-en-ciel !', {}, 'happy'),
-    ...colorHunt('mother', 'pebble', 'red', ['blue', 'yellow', 'green'], [3, 4, 7, 0], 'wpebble'),
+    ...colorHunt('mother', 'pebble', 'red', ['blue', 'yellow', 'green'], [3, 4, 5, 0], 'wpebble'),
     ...countScene('father', 'butterfly', [0, 1, 2, 5, 6, 7], { beginner: 3, intermediate: 4, expert: 5 }, 'wbf'),
     seek('mother', 'sibling', 'rock', {
       line: ['Oh! Somebody is hiding! Can you find them?', "Oh ! Quelqu'un se cache ! Tu peux le trouver ?"],
@@ -209,12 +209,190 @@ const redOutback = (sp: SpeciesDef): QuestStep[] => [
   end('father', 'What a lovely day in the sun!', 'Quelle belle journée au soleil !'),
 ];
 
+// ---------------------------------------------------------------------------
+// Histoires propres à chaque décor (2026-11-23). Chaque famille a ses trois décors : une histoire au moins
+// démarre dans chacun. Débutant : mêmes mécaniques qu'avant, deux réponses ; le reste est réservé à
+// l'intermédiaire (trois réponses, positions, comparaisons, mémoire).
+// ---------------------------------------------------------------------------
+
+/** Cache-cache de la fratrie derrière le rocher du décor (intermédiaire). */
+const hideAtRock = (speaker: 'father' | 'mother'): QuestStep =>
+  seek(speaker, 'sibling', 'rock', {
+    line: ['Oh! Somebody is hiding! Can you find them?', "Oh ! Quelqu'un se cache ! Tu peux le trouver ?"],
+    hint: ['Look behind the big rock!', 'Regarde derrière le gros rocher !'],
+    notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
+    found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
+  }, ['hide_and_seek', 'behind'], { needs: 'sibling', minTier: 'intermediate' });
+
+const cap = (t: string): string => t.charAt(0).toUpperCase() + t.slice(1);
+
+/** Comparaison « plus grand » entre deux choses du décor (intermédiaire). */
+const biggerOf = (speaker: 'father' | 'mother', a: readonly [string, string], b: readonly [string, string], pointAt: string): QuestStep =>
+  ask(speaker, `Which is bigger, the ${a[0]} or the ${b[0]}?`, `Qui est plus grand : ${a[1]} ou ${b[1]} ?`, [ok(`The ${a[0]} is bigger!`, `${cap(a[1])} est plus grand !`, '👍'), no(`The ${b[0]} is bigger!`, `${cap(b[1])} est plus grand !`, '👎'), no('They are the same!', 'Ils sont pareils !', '🟰')], ['Look at both of them!', 'Regarde les deux !'], ['big', 'bigger', a[0], b[0]], { minTier: 'intermediate', pointAt, keepOrder: true });
+
+// 5. Kangourou · la plaine rouge : le grand terrain de sauts, les cailloux, le chemin rouge
+const redPlainHop = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'Hop, hop! The kangaroo family comes to the red plain.', 'Hop, hop ! La famille kangourou arrive sur la plaine rouge.', {}, 'happy'),
+  tap('father', 'Where is the tussock? Touch it!', 'Où est la touffe d’herbe ? Touche-la !', 'tussock', ['It is a big yellow tuft of grass!', 'C’est une grosse touffe d’herbe jaune !'], ['tussock', 'where']),
+  tap('mother', 'Look far away! Where is the mountain?', 'Regarde au loin ! Où est la montagne ?', 'mountain', ['It is big and blue, far away!', 'Elle est grande et bleue, au loin !'], ['mountain', 'where']),
+  ask('father', 'Is the mountain blue?', 'Est-ce que la montagne est bleue ?', yesNo(true), ['Look at the mountain!', 'Regarde la montagne !'], ['mountain', 'blue'], { minTier: 'intermediate', pointAt: 'mountain', keepOrder: true }),
+  tap('mother', 'Can you find the red outcrop, next to the mountain?', 'Tu peux trouver l’affleurement rouge, près de la montagne ?', 'outcrop', ['It is red, far away, next to the mountain!', 'Il est rouge, au loin, près de la montagne !'], ['outcrop', 'red'], { minTier: 'intermediate' }),
+  ...showOff(sp, ['hop', 'jump', 'run'], 'father'),
+  say('baby', 'Hop, hop! I can hop too!', 'Hop, hop ! Moi aussi, je sais sautiller !', { needs: 'baby' }, 'proud'),
+  say('narrator', 'Little stones lie on the red ground. Let us count them!', 'De petits cailloux sont posés sur la terre rouge. Comptons-les !', {}, 'curious'),
+  ...countScene('mother', 'pebble', [0, 2, 3, 4, 5, 6], { beginner: 3, intermediate: 4, expert: 5 }, 'rppeb'),
+  tap('father', 'Follow the red path! Where is the path?', 'Suivons le chemin rouge ! Où est le chemin ?', 'path', ['Find the path on the red ground!', 'Trouve le chemin sur la terre rouge !'], ['path', 'follow_the_path']),
+  moveTo('path', 'walk', 'father'),
+  back('father'),
+  ...eatScene(sp, [0, 1, 2, 3], 'actor', 'rpmeal'),
+  say('narrator', 'Look! Little white flowers grow near the big rock.', 'Regarde ! De petites fleurs blanches poussent près du gros rocher.', {}, 'curious'),
+  ...colorHunt('mother', 'flower', 'white', ['red', 'yellow', 'blue'], [4, 5, 6, 7], 'rpfl'),
+  tap('father', 'Where is the wildflower? It is small and white.', 'Où est la fleur sauvage ? Elle est petite et blanche.', 'wildflower', ['Look near the big red rock!', 'Regarde près du gros rocher rouge !'], ['wildflower', 'white'], { minTier: 'intermediate' }),
+  biggerOf('mother', ['rock', 'le rocher'], ['flower', 'la fleur'], 'red_rock'),
+  hideAtRock('father'),
+  ask('mother', 'What did we count on the red plain?', 'Qu’avons-nous compté sur la plaine rouge ?', [ok('Little stones!', 'Des petits cailloux !', '🪨'), no('Fish!', 'Des poissons !', '🐟'), no('Stars!', 'Des étoiles !', '⭐')], ['Think about the red ground!', 'Pense à la terre rouge !'], ['pebble'], { minTier: 'expert' }),
+  reward('oc_red_pebble', 'father', 'A red pebble! It is our treasure!', 'Un caillou rouge ! C’est notre trésor !'),
+  end('mother', 'What a big hop on the red plain!', 'Quel grand saut sur la plaine rouge !'),
+];
+
+// 6. Kangourou · le point d'eau : la pause soif de midi, le reflet, le nénuphar
+const waterholeNoon = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'It is noon at the water. The sun is very hot.', 'Il est midi au point d’eau. Le soleil est très chaud.', {}, 'calm'),
+  say('baby', 'I am thirsty!', 'J’ai soif !', { needs: 'baby' }, 'curious'),
+  tap('father', 'Where is the water? Show me!', 'Où est l’eau ? Montre-moi !', 'water', ['It is blue, with big rocks!', 'Elle est bleue, avec de gros rochers !'], ['water', 'where']),
+  ...drinkScene(sp, 'water', 'actor'),
+  act('baby', 'splash', 'Splash! The water is cool!', 'Splash ! L’eau est fraîche !', 'baby', { needs: 'baby' }),
+  tap('mother', 'Look at the water! Where are the ripples?', 'Regarde l’eau ! Où sont les rides ?', 'reflection', ['They are on the water, under the trees!', 'Elles sont sur l’eau, sous les arbres !'], ['ripples', 'where']),
+  ask('father', 'Are the ripples on the water?', 'Est-ce que les rides sont sur l’eau ?', yesNo(true), ['Look at the water!', 'Regarde l’eau !'], ['ripples', 'water'], { minTier: 'intermediate', pointAt: 'reflection', keepOrder: true }),
+  tap('mother', 'Where is the floating leaf? It is green.', 'Où est la feuille flottante ? Elle est verte.', 'lily_pad', ['It floats on the water!', 'Elle flotte sur l’eau !'], ['leaf', 'green']),
+  tap('father', 'Can you find the tall rushes next to the water?', 'Tu peux trouver les grands joncs près de l’eau ?', 'reed', ['They are tall and brown, next to the water!', 'Ils sont grands et bruns, près de l’eau !'], ['rushes', 'next_to'], { minTier: 'intermediate' }),
+  ...showOff(sp, ['hop', 'jump', 'run'], 'father'),
+  say('baby', 'Look at me! I can hop too!', 'Regarde-moi ! Moi aussi, je sais sautiller !', { needs: 'baby' }, 'proud'),
+  ...eatScene(sp, [0, 1, 2, 3], 'actor', 'whmeal'),
+  tap('mother', 'Look up! Where is the red blossom on the tree?', 'Regarde en haut ! Où est la fleur rouge de l’arbre ?', 'blossom', ['It is red, up in the big tree!', 'Elle est rouge, en haut du grand arbre !'], ['blossom', 'red']),
+  ...colorHunt('father', 'flower', 'red', ['yellow', 'white', 'blue'], [2, 4, 6, 7], 'whfl'),
+  ...countScene('mother', 'butterfly', [0, 1, 2, 3, 4, 5], { beginner: 3, intermediate: 4, expert: 5 }, 'whbf'),
+  tap('mother', 'Look far away! Where is the red mountain?', 'Regarde au loin ! Où est la montagne rouge ?', 'mountain', ['It is red, behind the trees!', 'Elle est rouge, derrière les arbres !'], ['mountain', 'red'], { minTier: 'intermediate' }),
+  biggerOf('father', ['rock', 'le rocher'], ['flower', 'la fleur'], 'rock'),
+  hideAtRock('mother'),
+  ask('mother', 'What do we do at the waterhole?', 'Que fait-on au point d’eau ?', [ok('We drink!', 'On boit !', '💧'), no('We sleep in the snow!', 'On dort dans la neige !', '❄️'), no('We fly!', 'On vole !', '🪽')], ['We are thirsty!', 'On a soif !'], ['drink', 'water'], { minTier: 'expert' }),
+  reward('oc_lily_leaf', 'father', 'A green leaf from the lily pad! It is our treasure!', 'Une feuille verte du nénuphar ! C’est notre trésor !'),
+  end('mother', 'What a cool pause at the waterhole!', 'Quelle pause fraîche au point d’eau !'),
+];
+
+// 7. Kangourou · la brousse au bord de la mer : on regarde la mer de loin (le kangourou ne s'y baigne pas)
+const coastLookout = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'The kangaroo family hops through the bush. Look! The sea!', 'La famille kangourou sautille dans la brousse. Regarde ! La mer !', {}, 'happy'),
+  tap('father', 'Where is the sea? Show me!', 'Où est la mer ? Montre-moi !', 'sea', ['It is big and blue, far away!', 'Elle est grande et bleue, au loin !'], ['sea', 'where']),
+  tap('mother', 'Look! Where is the wave?', 'Regarde ! Où est la vague ?', 'wave', ['It is white, on the sea!', 'Elle est blanche, sur la mer !'], ['wave', 'where']),
+  ask('father', 'Is the sea near or far away?', 'Est-ce que la mer est près ou loin ?', [ok('It is far away!', 'Elle est loin !', '🔭'), no('It is near!', 'Elle est près !', '📍'), no('It is under the tree!', 'Elle est sous l’arbre !', '🌳')], ['Look! We are on the hill!', 'Regarde ! Nous sommes sur la colline !'], ['sea', 'far', 'near'], { minTier: 'intermediate', pointAt: 'sea', keepOrder: true }),
+  say('narrator', 'Kangaroos do not swim in the sea. We look from the hill!', 'Les kangourous ne nagent pas dans la mer. On regarde depuis la colline !', {}, 'calm'),
+  tap('mother', 'Look at the big hill! Where is it?', 'Regarde la grande colline ! Où est-elle ?', 'hill', ['It is big and grey, far away!', 'Elle est grande et grise, au loin !'], ['hill', 'where']),
+  tap('father', 'Can you find the headland? It is by the sea.', 'Tu peux trouver le cap ? Il est au bord de la mer.', 'headland', ['It is a point of land, next to the sea!', 'C’est une pointe de terre, près de la mer !'], ['headland', 'next_to'], { minTier: 'intermediate' }),
+  ...showOff(sp, ['hop', 'jump', 'run'], 'mother'),
+  say('baby', 'Hop, hop! I can hop too!', 'Hop, hop ! Moi aussi, je sais sautiller !', { needs: 'baby' }, 'proud'),
+  ...eatScene(sp, [0, 1, 2, 3], 'actor', 'bcmeal'),
+  tap('father', 'Follow the path! Where is the path?', 'Suivons le chemin ! Où est le chemin ?', 'path', ['Find the path on the ground!', 'Trouve le chemin par terre !'], ['path', 'follow_the_path']),
+  moveTo('path', 'walk', 'father'),
+  back('father'),
+  say('narrator', 'Look! Yellow flowers grow in the bush.', 'Regarde ! Des fleurs jaunes poussent dans la brousse.', {}, 'curious'),
+  ...colorHunt('mother', 'flower', 'yellow', ['red', 'blue', 'pink'], [1, 2, 3, 4], 'bcfl'),
+  tap('father', 'Where is the wattle? It is yellow.', 'Où est l’acacia en fleurs ? Il est jaune.', 'wattle', ['Look next to the big rock!', 'Regarde près du gros rocher !'], ['wattle', 'yellow'], { minTier: 'intermediate' }),
+  ...countScene('father', 'butterfly', [0, 2, 3, 4, 5, 6], { beginner: 3, intermediate: 4, expert: 5 }, 'bcbf'),
+  biggerOf('mother', ['hill', 'la colline'], ['bush', 'le buisson'], 'hill'),
+  hideAtRock('father'),
+  reward('oc_yellow_wattle', 'mother', 'A yellow flower from the bush! It is our treasure!', 'Une fleur jaune de la brousse ! C’est notre trésor !'),
+  end('father', 'What a view of the sea!', 'Quelle vue sur la mer !'),
+];
+
+// 8. Koala · le bois d'eucalyptus : l'écorce, les feuilles, la sieste en haut de l'arbre
+const gumWoodlandNap = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'It is a sunny day in the gum woodland. The koalas are sleepy.', 'C’est une journée de soleil dans le bois d’eucalyptus. Les koalas ont sommeil.', {}, 'calm'),
+  tap('father', 'Where is the gum tree? Touch it!', 'Où est l’eucalyptus ? Touche-le !', 'gum_tree', ['It is the big tree on the left!', 'C’est le grand arbre à gauche !'], ['gum tree', 'where']),
+  tap('mother', 'Look at the tree! Where is the bark?', 'Regarde l’arbre ! Où est l’écorce ?', 'bark', ['It is white and orange, on the tree!', 'Elle est blanche et orange, sur l’arbre !'], ['bark', 'where']),
+  tap('father', 'Koalas love leaves! Where are the leaves?', 'Les koalas adorent les feuilles ! Où sont les feuilles ?', 'leaf', ['They are green, up high!', 'Elles sont vertes, en haut !'], ['leaf', 'where']),
+  ...eatScene(sp, [0, 1, 2, 3], 'actor', 'gwmeal'),
+  ...showOff(sp, ['climb'], 'mother'),
+  moveTo('gum_tree', 'rest', 'actor'),
+  say('actor', 'It is high up here! I see everything!', 'C’est haut ici ! Je vois tout !', {}, 'happy'),
+  back('actor'),
+  say('baby', 'I can climb too! Look!', 'Moi aussi, je sais grimper ! Regarde !', { needs: 'baby' }, 'proud'),
+  tap('mother', 'Can you find the dry leaves on the ground?', 'Tu peux trouver les feuilles sèches par terre ?', 'dry_leaves', ['They are brown, on the ground!', 'Elles sont brunes, par terre !'], ['dry leaves'], { minTier: 'intermediate' }),
+  say('narrator', 'Look! Yellow and green leaves fall from the trees.', 'Regarde ! Des feuilles jaunes et vertes tombent des arbres.', {}, 'curious'),
+  ...colorHunt('mother', 'leaf', 'yellow', ['green', 'red', 'orange'], [0, 1, 4, 5], 'gwleaf'),
+  tap('father', 'Where is the stone? Touch it!', 'Où est la pierre ? Touche-la !', 'stone', ['It is grey, near the big tree!', 'Elle est grise, près du grand arbre !'], ['stone', 'where'], { minTier: 'intermediate' }),
+  ...countScene('father', 'butterfly', [0, 1, 4, 5, 6, 7], { beginner: 3, intermediate: 4, expert: 5 }, 'gwbf'),
+  ask('mother', 'Where do koalas sleep?', 'Où dorment les koalas ?', [ok('In the tree!', 'Dans l’arbre !', '🌳'), no('In the sea!', 'Dans la mer !', '🌊'), no('In the sand!', 'Dans le sable !', '🏖️')], ['Koalas sleep up high!', 'Les koalas dorment en haut !'], ['tree', 'sleep'], { minTier: 'intermediate' }),
+  hideAtRock('father'),
+  say('baby', 'I am sleepy…', 'J’ai sommeil…', { needs: 'baby' }, 'calm'),
+  act('actor', 'sleep', 'Zzz… Zzz… Zzz…', 'Zzz… Zzz… Zzz…', 'actor'),
+  reward('oc_yellow_leaf', 'father', 'A yellow leaf! It is our treasure!', 'Une feuille jaune ! C’est notre trésor !'),
+  end('mother', 'Sweet dreams in the gum woodland!', 'Fais de beaux rêves dans le bois d’eucalyptus !'),
+];
+
+// 9. Koala · la crique aux rochers : le koala regarde la mer depuis son arbre (il ne nage pas)
+const rockyCoveWatch = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'The koala family walks near the sea. The sea is big and blue.', 'La famille koala marche près de la mer. La mer est grande et bleue.', {}, 'curious'),
+  tap('father', 'Where is the sea? Show me!', 'Où est la mer ? Montre-moi !', 'sea', ['It is big and blue!', 'Elle est grande et bleue !'], ['sea', 'where']),
+  say('narrator', 'Koalas do not swim. We watch the waves from the tree!', 'Les koalas ne nagent pas. On regarde les vagues depuis l’arbre !', {}, 'calm'),
+  tap('mother', 'Look! Where is the wave?', 'Regarde ! Où est la vague ?', 'wave', ['It is white, on the sea!', 'Elle est blanche, sur la mer !'], ['wave', 'where']),
+  ask('father', 'Do koalas swim in the sea?', 'Est-ce que les koalas nagent dans la mer ?', [ok('No, they do not!', 'Non, ils ne nagent pas !', '🚫'), no('Yes, they swim!', 'Oui, ils nagent !', '🏊'), no('They fly!', 'Ils volent !', '🪽')], ['Koalas live in trees!', 'Les koalas vivent dans les arbres !'], ['swim'], { minTier: 'intermediate' }),
+  tap('father', 'Where is the tree? Touch it!', 'Où est l’arbre ? Touche-le !', 'tree', ['It is big and green!', 'Il est grand et vert !'], ['tree', 'where']),
+  moveTo('tree', 'rest', 'actor'),
+  say('actor', 'I see the sea from the tree!', 'Je vois la mer depuis l’arbre !', {}, 'happy'),
+  back('actor'),
+  say('baby', 'I can see the waves too!', 'Moi aussi, je vois les vagues !', { needs: 'baby' }, 'proud'),
+  tap('mother', 'Where is the sand? Show me!', 'Où est le sable ? Montre-moi !', 'sand', ['It is yellow, near the sea!', 'Il est jaune, près de la mer !'], ['sand', 'where']),
+  say('narrator', 'The waves bring little shells to the sand.', 'Les vagues apportent de petits coquillages sur le sable.', {}, 'happy'),
+  ...countScene('father', 'shell', [0, 1, 2, 3, 4, 5], { beginner: 3, intermediate: 4, expert: 5 }, 'cvshell'),
+  tap('mother', 'Can you find the pandanus? It has orange fruit.', 'Tu peux trouver le pandanus ? Il a des fruits orange.', 'pandanus', ['It is a tall tree, near the sea!', 'C’est un grand arbre, près de la mer !'], ['pandanus', 'near'], { minTier: 'intermediate' }),
+  ...eatScene(sp, [0, 1, 2, 3], 'actor', 'cvmeal'),
+  say('narrator', 'Look! Red flowers grow near the sand.', 'Regarde ! Des fleurs rouges poussent près du sable.', {}, 'curious'),
+  ...colorHunt('mother', 'flower', 'red', ['white', 'yellow', 'blue'], [2, 3, 4, 5], 'cvfl'),
+  tap('father', 'Where is the sun? Show me!', 'Où est le soleil ? Montre-moi !', 'sun', ['It is hot, up in the sky!', 'Il est chaud, en haut dans le ciel !'], ['sun', 'where'], { minTier: 'intermediate' }),
+  biggerOf('mother', ['rock', 'le rocher'], ['stone', 'la pierre'], 'rock'),
+  hideAtRock('father'),
+  reward('oc_pink_shell', 'father', 'A pink shell! It is our treasure!', 'Un coquillage rose ! C’est notre trésor !'),
+  end('mother', 'What a nice day by the sea!', 'Quelle belle journée au bord de la mer !'),
+];
+
+// 10. Lézard à collerette · la gorge rouge : le baobab, les falaises, la grimpe à l'arbre
+const redGorgeClimb = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'It is very hot at the bottom of the red gorge.', 'Il fait très chaud au fond de la gorge rouge.', {}, 'calm'),
+  tap('father', 'Touch the baobab!', 'Touche le baobab !', 'baobab', ['It is a big tree with a round trunk!', 'C’est un grand arbre au tronc rond !'], ['baobab', 'where']),
+  tap('mother', 'Where is the red cliff? Show me!', 'Où est la falaise rouge ? Montre-moi !', 'cliff', ['It is big and red, up high!', 'Elle est grande et rouge, en haut !'], ['cliff', 'where']),
+  tap('father', 'Where is the water in the gorge?', 'Où est l’eau dans la gorge ?', 'water', ['It is blue, between the red rocks!', 'Elle est bleue, entre les rochers rouges !'], ['water', 'where']),
+  biggerOf('mother', ['cliff', 'la falaise'], ['rock', 'le rocher'], 'cliff'),
+  ...showOff(sp, ['climb', 'run'], 'father'),
+  tap('mother', 'Where is the tree? Let us climb!', 'Où est l’arbre ? Grimpons !', 'tree', ['It is the white tree on the left!', 'C’est l’arbre blanc à gauche !'], ['tree', 'where']),
+  moveTo('tree', 'rest', 'actor'),
+  say('actor', 'I see all the gorge from up here!', 'Je vois toute la gorge depuis ici !', {}, 'happy'),
+  back('actor'),
+  say('baby', 'I can climb too! Look!', 'Moi aussi, je sais grimper ! Regarde !', { needs: 'baby' }, 'proud'),
+  ...eatScene(sp, [0, 1, 2, 3], 'actor', 'ggmeal'),
+  say('narrator', 'Look! Purple and red flowers grow on the red ground.', 'Regarde ! Des fleurs violettes et rouges poussent sur la terre rouge.', {}, 'curious'),
+  ...colorHunt('mother', 'flower', 'purple', ['red', 'yellow', 'blue'], [4, 5, 6, 7], 'ggfl'),
+  tap('father', 'Where is the bottlebrush? It is red.', 'Où est le goupillon ? Il est rouge.', 'bottlebrush', ['Look on the right, near the rocks!', 'Regarde à droite, près des rochers !'], ['bottlebrush', 'red'], { minTier: 'intermediate' }),
+  ...countScene('father', 'butterfly', [0, 1, 2, 3, 4, 5], { beginner: 3, intermediate: 4, expert: 5 }, 'ggbf'),
+  ask('mother', 'Is the baobab up or down?', 'Est-ce que le baobab est en haut ou en bas ?', [ok('It is up high!', 'Il est tout en haut !', '⬆️'), no('It is down low!', 'Il est tout en bas !', '⬇️'), no('It is in the water!', 'Il est dans l’eau !', '💧')], ['Look at the baobab!', 'Regarde le baobab !'], ['baobab', 'up', 'down'], { minTier: 'expert', pointAt: 'baobab', keepOrder: true }),
+  hideAtRock('father'),
+  act('actor', 'run', 'Zoom! I run on two legs!', 'Zoum ! Je cours sur deux pattes !', 'actor'),
+  reward('oc_purple_flower', 'mother', 'A purple flower! It is our treasure!', 'Une fleur violette ! C’est notre trésor !'),
+  end('father', 'What a hot day in the gorge!', 'Quelle chaude journée dans la gorge !'),
+];
+
 export const OCEANIA: AdventurePack = {
   adventures: [
-    { id: 'oceania_forest_stars', continentId: 'oceania', titleEn: 'Stars over the forest', titleFr: 'Les étoiles de la forêt', icon: '🌟', start: 'oc_eucalyptus', species: ['kangaroo', 'koala', 'frilled_lizard'], skillIds: ['1.3', '1.2', '1.7'], steps: forestStars, treasure: 'oc_forest_star', order: 1 },
-    { id: 'oceania_coconut_thump', continentId: 'oceania', titleEn: 'The golden shell', titleFr: 'Le coquillage doré', icon: '🐚', start: 'oc_beach', species: ['kangaroo', 'koala', 'frilled_lizard'], skillIds: ['1.3', '1.6', '2.2'], steps: goldenShell, treasure: 'oc_golden_shell', order: 2 },
-    { id: 'oceania_waterfall_crystal', continentId: 'oceania', titleEn: 'The rainbow waterfall', titleFr: 'La cascade arc-en-ciel', icon: '💦', start: 'oc_eucalyptus', species: ['kangaroo', 'koala', 'frilled_lizard'], skillIds: ['1.7', '1.2', '3.2'], steps: waterfallCrystal, treasure: 'oc_rainbow_crystal', order: 3 },
-    { id: 'oceania_sunny_clearing', continentId: 'oceania', titleEn: 'The red outback', titleFr: "L'outback rouge", icon: '☀️', start: 'oc_outback', species: ['kangaroo', 'frilled_lizard'], skillIds: ['2.7', '1.3', '2.2'], steps: redOutback, treasure: 'oc_gum_blossom', order: 4 },
+    { id: 'oceania_forest_stars', continentId: 'oceania', titleEn: 'Stars over the forest', titleFr: 'Les étoiles de la forêt', icon: '🌟', start: 'oc_eucalyptus', species: ['koala'], skillIds: ['1.3', '1.2', '1.7'], steps: forestStars, treasure: 'oc_forest_star', order: 1 },
+    { id: 'oceania_coconut_thump', continentId: 'oceania', titleEn: 'The golden shell', titleFr: 'Le coquillage doré', icon: '🐚', start: 'oc_beach', species: ['frilled_lizard'], skillIds: ['1.3', '1.6', '2.2'], steps: goldenShell, treasure: 'oc_golden_shell', order: 2 },
+    { id: 'oceania_little_waterfall', continentId: 'oceania', titleEn: 'The rainbow waterfall', titleFr: 'La cascade arc-en-ciel', icon: '💦', start: 'oc_eucalyptus', species: ['koala'], skillIds: ['1.7', '1.2', '3.2'], steps: waterfallCrystal, treasure: 'oc_rainbow_crystal', order: 3 },
+    { id: 'oceania_sunny_clearing', continentId: 'oceania', titleEn: 'The red outback', titleFr: "L'outback rouge", icon: '☀️', start: 'oc_outback', species: ['frilled_lizard'], skillIds: ['2.7', '1.3', '2.2'], steps: redOutback, treasure: 'oc_gum_blossom', order: 4 },
+    { id: 'oceania_red_plain_hop', continentId: 'oceania', titleEn: 'Hops on the red plain', titleFr: 'Les sauts sur la plaine rouge', icon: '🦘', start: 'oc_red_plain', species: ['kangaroo'], skillIds: ['1.7', '2.2', '1.3'], steps: redPlainHop, treasure: 'oc_red_pebble', order: 5 },
+    { id: 'oceania_waterhole_noon', continentId: 'oceania', titleEn: 'Noon at the waterhole', titleFr: 'Midi au point d’eau', icon: '💧', start: 'oc_waterhole', species: ['kangaroo'], skillIds: ['1.7', '1.2', '3.2'], steps: waterholeNoon, treasure: 'oc_lily_leaf', order: 6 },
+    { id: 'oceania_coast_lookout', continentId: 'oceania', titleEn: 'The sea from the bush', titleFr: 'La mer depuis la brousse', icon: '🌊', start: 'oc_bush_coast', species: ['kangaroo'], skillIds: ['1.7', '2.2', '1.3'], steps: coastLookout, treasure: 'oc_yellow_wattle', order: 7 },
+    { id: 'oceania_gum_woodland_nap', continentId: 'oceania', titleEn: 'A nap in the gum woodland', titleFr: 'La sieste dans le bois d’eucalyptus', icon: '🐨', start: 'oc_gum_woodland', species: ['koala'], skillIds: ['1.7', '1.3', '2.2'], steps: gumWoodlandNap, treasure: 'oc_yellow_leaf', order: 8 },
+    { id: 'oceania_rocky_cove_watch', continentId: 'oceania', titleEn: 'Watching the waves', titleFr: 'On regarde les vagues', icon: '🌊', start: 'oc_rocky_cove', species: ['koala'], skillIds: ['1.7', '2.2', '1.3'], steps: rockyCoveWatch, treasure: 'oc_pink_shell', order: 9 },
+    { id: 'oceania_red_gorge_climb', continentId: 'oceania', titleEn: 'Up the red gorge', titleFr: 'En haut de la gorge rouge', icon: '🪨', start: 'oc_gorge', species: ['frilled_lizard'], skillIds: ['1.7', '2.2', '1.3'], steps: redGorgeClimb, treasure: 'oc_purple_flower', order: 10 },
   ],
   treasures: [
     treasure('oc_forest_star', 'a little star', 'une petite étoile', '⭐'),
@@ -223,5 +401,22 @@ export const OCEANIA: AdventurePack = {
     treasure('oc_golden_coconut', 'a golden coconut', 'une noix de coco dorée', '🥥'),
     treasure('oc_rainbow_crystal', 'a rainbow crystal', 'un cristal arc-en-ciel', '💎'),
     treasure('oc_gum_blossom', 'a gum blossom', 'une fleur d’eucalyptus', '🌸'),
+    treasure('oc_red_pebble', 'a red pebble', 'un caillou rouge', '🪨'),
+    treasure('oc_lily_leaf', 'a lily leaf', 'une feuille de nénuphar', '🍃'),
+    treasure('oc_yellow_wattle', 'a yellow wattle flower', 'une fleur d’acacia jaune', '🌼'),
+    treasure('oc_yellow_leaf', 'a yellow leaf', 'une feuille jaune', '🍂'),
+    treasure('oc_pink_shell', 'a pink shell', 'un coquillage rose', '🐚'),
+    treasure('oc_purple_flower', 'a purple flower', 'une fleur violette', '🌺'),
   ],
 };
+
+/**
+ * Variantes sorties des parcours (2026-11-23) : le kangourou n'a plus la forêt d'eucalyptus, la plage ni la forêt de
+ * fougères. Gardées pour mémoire, jamais supprimées ; rien ne les consomme.
+ */
+export const RETIRED_OCEANIA: AdventureDef[] = [
+  { id: 'oceania_forest_stars', continentId: 'oceania', titleEn: 'Stars over the forest', titleFr: 'Les étoiles de la forêt', icon: '🌟', start: 'oc_eucalyptus', species: ['kangaroo', 'frilled_lizard'], skillIds: ['1.3', '1.2', '1.7'], steps: forestStars, treasure: 'oc_forest_star', order: 1 },
+  { id: 'oceania_coconut_thump', continentId: 'oceania', titleEn: 'The golden shell', titleFr: 'Le coquillage doré', icon: '🐚', start: 'oc_beach', species: ['kangaroo', 'koala'], skillIds: ['1.3', '1.6', '2.2'], steps: goldenShell, treasure: 'oc_golden_shell', order: 2 },
+  { id: 'oceania_waterfall_crystal', continentId: 'oceania', titleEn: 'The rainbow waterfall', titleFr: 'La cascade arc-en-ciel', icon: '💦', start: 'oc_eucalyptus', species: ['kangaroo', 'frilled_lizard'], skillIds: ['1.7', '1.2', '3.2'], steps: waterfallCrystal, treasure: 'oc_rainbow_crystal', order: 3 },
+  { id: 'oceania_sunny_clearing', continentId: 'oceania', titleEn: 'The red outback', titleFr: "L'outback rouge", icon: '☀️', start: 'oc_outback', species: ['kangaroo'], skillIds: ['2.7', '1.3', '2.2'], steps: redOutback, treasure: 'oc_gum_blossom', order: 4 },
+];
