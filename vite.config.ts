@@ -20,6 +20,13 @@ const cspPlugin = () => ({
 export default defineConfig({
   base: './',
   plugins: [react(), savePlugin(), namePlugin(), cspPlugin()],
+  server: {
+    // 2026-11-23 : pendant `npm run voices`, un mp3 arrive chaque seconde dans public/audio/voice (≈ 20 000 fichiers) ;
+    // surveiller ces dossiers bloquait le serveur de jeu (3,5 s par fichier, page noire 1 min 30). Ils ne contiennent
+    // pas de code : rien à recharger. Une voix générée pendant que le serveur tourne est servie après son redémarrage.
+    // (saves/ et prenoms/ sont déjà ignorés par leurs extensions)
+    watch: { ignored: ['**/public/audio/**', '**/tools/tts/**'] },
+  },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],

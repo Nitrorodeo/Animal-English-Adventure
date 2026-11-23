@@ -50,6 +50,52 @@ export function finalizeSteps(steps: readonly QuestStep[], o: FinalizeOpts): Que
     });
 }
 
+// ---------------------------------------------------------------------------
+// Une aventure à soi pour chaque personnage (demande du parent, 2026-11-23 : « tous les personnages ont
+// exactement les mêmes questions »). Les questions de l'aventure sont rangées en « unités » (une question,
+// ou une scène d'objets du début à leur retrait) ; chaque personnage en garde une part différente.
+// Rien n'est inventé : aucune phrase nouvelle, donc aucune voix à générer, et le niveau n'est jamais durci.
+// ---------------------------------------------------------------------------
+
+/** Étapes qui sont une question ou un toucher : celles qu'on se partage entre personnages. */
+const INTERACTIVE: readonly QuestStep['kind'][] = ['ask', 'tapAnchor', 'tapProps', 'command', 'tapActor', 'seek'];
+
+/** Part gardée par chaque personnage, sur 4 : débutant la moitié (1 à 2 interactions par personnage), ensuite les trois quarts (l'expert reste presque entier). */
+export const SHARE_KEPT: Readonly<Record<Tier, number>> = { beginner: 2, intermediate: 3, expert: 3 };
+/** Au-dessous de ce nombre d'unités, on ne partage pas (un parcours trop court resterait vide). */
+const MIN_UNITS = 6;
+
+/** Unités retirables : [début, fin] (fin comprise). Une scène d'objets va de leur pose à leur retrait. */
+function unitsOf(steps: readonly QuestStep[]): [number, number][] {
+  const out: [number, number][] = [];
+  for (let i = 0; i < steps.length; i++) {
+    const s = steps[i]!;
+    if (s.kind === 'props' && s.show.length > 0) {
+      let j = i + 1;
+      while (j < steps.length && INTERACTIVE.includes(steps[j]!.kind)) j++;
+      const end = steps[j];
+      if (end && end.kind === 'props' && end.show.length === 0) {
+        out.push([i, j]);
+        i = j;
+      }
+    } else if (INTERACTIVE.includes(s.kind)) {
+      out.push([i, i]);
+    }
+  }
+  return out;
+}
+
+/** Les étapes du personnage numéro `who` (0 papa, 1 maman, 2 et 3 les bébés) : sa part des questions, tout le reste intact. */
+export function shareSteps(steps: readonly QuestStep[], who: number, tier: Tier): QuestStep[] {
+  const units = unitsOf(steps);
+  if (units.length < MIN_UNITS) return [...steps];
+  const drop = new Set<number>();
+  units.forEach(([a, b], n) => {
+    if ((((n - who) % 4) + 4) % 4 >= SHARE_KEPT[tier]) for (let i = a; i <= b; i++) drop.add(i);
+  });
+  return steps.filter((_, i) => !drop.has(i));
+}
+
 /** Lieu où se termine une suite d'étapes. */
 export function endPlaceOf(start: PlaceId, steps: readonly QuestStep[]): PlaceId {
   let place = start;

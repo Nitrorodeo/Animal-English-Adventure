@@ -68,10 +68,12 @@ interface Props {
   mood?: 'try' | 'ok' | null;
   /** côté du décor où se pose la bulle (à droite quand la cible est sous la bulle à gauche) */
   side?: Side;
+  /** revenir à la question d'avant (absent : pas de bouton) */
+  onBack?: () => void;
 }
 
 /** Bulle de dialogue : texte anglais (lu à voix haute), réécoute, ralenti et aide française facultative. */
-export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, mood, side = 'left' }: Props) {
+export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, mood, side = 'left', onBack }: Props) {
   const [showFr, setShowFr] = useState(false);
   const drag = useDraggable(side);
   return (
@@ -81,6 +83,7 @@ export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, moo
         <span className="speaker">{speaker}</span>
         <p className="en">{line?.en}</p>
         <div className="dialogue-tools">
+          {onBack && <button className="round back-btn" onClick={onBack} aria-label="Revenir à la question d'avant">⏪</button>}
           <button className="round" onClick={() => onReplay(false)} aria-label="Réécouter">🔊</button>
           <button className="round" onClick={() => onReplay(true)} aria-label="Plus lentement">🐢</button>
           {frenchHelp && (

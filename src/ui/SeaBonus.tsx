@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { speech } from '../audio/speech';
 import type { VoiceRole } from '../audio/voiceKey';
-import { DOLPHINS, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
+import { DOLPHINS, seaDecor, SEA_DECORS, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
 import type { Line } from '../content/types';
 import { currentRound, seaChoose, seaDone, seaNext, seaReward, startSea, type SeaState, type Utter } from '../engine/sea';
 import type { GameState } from '../engine/state';
@@ -18,6 +18,9 @@ interface Props {
 /** grandes images HD des jeux (la carte du monde garde ses petites découpes) */
 const sprite = (name: SeaSprite) => `${import.meta.env.BASE_URL}assets/sea/${SEA_HD[name]}.webp`;
 
+/** fonds sous-marins de chaque animal (`SEA_DECORS`) */
+const decorUrl = (name: string) => `${import.meta.env.BASE_URL}assets/sea/${name}.webp`;
+
 /** places des choses à trouver, dans l'eau, hors de la bulle de dialogue (en % de la scène) */
 const SPOTS = [
   { x: 60, y: 14 },
@@ -25,7 +28,7 @@ const SPOTS = [
   { x: 64, y: 58 },
 ];
 /** où se pose la tortue, à côté de chaque place */
-const TURTLE_HOME = { x: 8, y: 10 };
+const TURTLE_HOME = { x: 16, y: 10 };
 
 const DOLPHIN_POS: Record<DolphinId, CSSProperties> = {
   big: { left: '6%', top: '8%', width: '30%' },
@@ -104,11 +107,13 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
   return (
     <div className="screen sea-screen">
       <div className={`stage sea-stage sea-${game}`}>
-        <div className="sea-sky" aria-hidden />
+        {/* les deux décors de l'animal, l'un sur l'autre : celui de la manche se fond en douceur dans l'autre */}
+        {SEA_DECORS[game].map((name) => (
+          <img key={name} className={`sea-bg${name === seaDecor(game, sea.index) ? ' on' : ''}`} src={decorUrl(name)} alt="" draggable={false} aria-hidden />
+        ))}
         <div className="sea-water" aria-hidden>
           {[0, 1, 2, 3, 4, 5].map((i) => <i key={i} className="bubble" style={{ left: `${8 + i * 16}%`, animationDelay: `${i * 1.3}s` }} />)}
         </div>
-        <div className="sea-sand" aria-hidden />
 
         {game === 'whale' && (
           <>
@@ -148,9 +153,15 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
               return (
                 // déplacement par transform (composé par la carte graphique, sans recalcul de mise en page) :
                 // la scène fait 100cqw de large et 56,25cqw de haut (16/9)
-                <button className={`sea-actor turtle${ok ? ' swim' : ''}`} style={{ left: 0, top: 0, width: '22%', transform: `translate(${pos.x}cqw, ${pos.y * 0.5625}cqw)` }} onClick={replay} aria-label={friend.nameEn}>
-                  <img src={sprite('turtle')} alt="" draggable={false} />
-                </button>
+                <>
+                  <button className={`sea-actor turtle${ok ? ' swim' : ''}`} style={{ left: 0, top: 0, width: '22%', transform: `translate(${pos.x}cqw, ${pos.y * 0.5625}cqw)` }} onClick={replay} aria-label={friend.nameEn}>
+                    <img src={sprite('turtle')} alt="" draggable={false} />
+                  </button>
+                  {/* la petite tortue suit sa maman, un peu derrière */}
+                  <button className={`sea-actor turtle baby${ok ? ' swim' : ''}`} style={{ left: 0, top: 0, width: '12%', transform: `translate(${pos.x - 11}cqw, ${pos.y * 0.5625 - 1}cqw)` }} onClick={replay} aria-label="Baby turtle">
+                    <img src={sprite('turtle_baby')} alt="" draggable={false} />
+                  </button>
+                </>
               );
             })()}
           </>

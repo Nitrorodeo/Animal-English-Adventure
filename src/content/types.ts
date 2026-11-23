@@ -95,6 +95,14 @@ export interface BiomeDef {
   lane?: [number, number, number][];
   /** eau dessinée au sol (lac, rivière) : on n'y pose aucun animal (voir places/depth.ts) */
   water?: [number, number][][];
+  /** décor à percher : les seuls endroits où l'on pose un animal, avec sa taille à chaque endroit (voir places/depth.ts) */
+  seats?: { id: string; band: [number, number, number, number][] }[];
+  /** place de départ de chacun sur les `seats` : `[id de la place, x]` */
+  seatHome?: Record<'father' | 'mother' | 'baby1' | 'baby2', [string, number]>;
+  /** le sol reste libre ; les `seats` s'ajoutent (un animal lâché tout près s'y pose) */
+  groundToo?: boolean;
+  /** l'image est déjà une scène de nuit : pas de bouton « Bonne nuit » (demande du parent, 2026-11-23) */
+  nightImage?: boolean;
   /** dessus de gros rochers du décor où l'on peut poser un animal ; `base` = pied du rocher */
   perches?: (Rect & { base: number })[];
   /** 8 emplacements pour les petits objets des jeux */

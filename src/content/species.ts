@@ -21,7 +21,8 @@ const NA_BEAVER = ['na_beaver_pond', 'na_redwood_trail', 'na_beaver_falls'];
 const SA_JAGUAR = ['sa_wetland', 'sa_river', 'sa_andes'];
 const SA_SLOTH = ['sa_sloth_canopy', 'sa_sloth_roots', 'sa_sloth_refuge'];
 const SA_TOUCAN = ['sa_canopy_branch', 'sa_canopy_treehouse', 'sa_canopy_sunrise'];
-const ASIA_PANDA = ['asia_bamboo', 'asia_garden', 'asia_pavilion']; // 2026-11-23 : la forêt, le jardin aux lanternes, le pavillon rouge
+// 2026-11-23 : la forêt, le jardin aux lanternes, la clairière (elle remplace le pavillon rouge, trop chargé : demande du parent)
+const ASIA_PANDA = ['asia_bamboo', 'asia_garden', 'asia_clearing'];
 const ASIA_TIGER = ['asia_pagoda', 'asia_mountain', 'asia_jungle_falls']; // la pagode, le sentier dans les nuages, la cascade de la jungle
 /** la panthère des neiges ne vit que sur les hauteurs : ni bambous, ni jardin, ni pagode (demande du parent, 2026-11-21) */
 // 2026-11-23 : l'aube sur l'Himalaya (tanière), la grotte enneigée, le pré à l'arche de pierre

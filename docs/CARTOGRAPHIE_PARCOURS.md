@@ -49,7 +49,7 @@ Lecture des colonnes :
 | Ours polaire | `ice_coast` (jeu) | `an_ice_cave` (jeu) | `an_snowfield` (jeu) |
 | Phoque | *`an_seal_aurora`* (nouveau) | *`an_seal_rocks`* (nouveau) | *`an_seal_sunset`* (nouveau) |
 | Manchot | `open_sea` (jeu) | `an_aurora` (jeu) | *`an_penguin_cave`* (nouveau) |
-| Panda | `asia_bamboo` (jeu) | `asia_garden` (jeu) | *`asia_pavilion`* (nouveau) |
+| Panda | `asia_bamboo` (jeu) | `asia_garden` (jeu) | `asia_clearing` (remplace `asia_pavilion`, trop chargé, 2026-11-23) |
 | Tigre | `asia_pagoda` (jeu) | `asia_mountain` (jeu) | *`asia_jungle_falls`* (nouveau) |
 | Panthère des neiges | `asia_snow_den` (jeu) | *`asia_snow_cave`* (nouveau) | `asia_arch` (jeu) |
 | Renard | *`europe_fox_glade`* | *`europe_fox_autumn`* | *`europe_fox_snow`* |
@@ -102,10 +102,10 @@ La colonne « Écran » ne dit que ce qui a été rejoué à l'écran.
 |---|---|---|---|
 | Amérique du Nord | ours : `na_redwoods`, `na_lake`, `na_bear_den` · bison : `na_bison_prairie`, `na_bison_alpine`, `na_bison_canyon` · castor : `na_beaver_pond`, `na_redwood_trail`, `na_beaver_falls` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
 | Amérique du Sud | jaguar : `sa_wetland`, `sa_river`, `sa_andes` · paresseux : `sa_sloth_canopy`, `sa_sloth_roots`, `sa_sloth_refuge` · toucan : `sa_canopy_branch`, `sa_canopy_treehouse`, `sa_canopy_sunrise` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
-| Asie | panda : `asia_bamboo`, `asia_garden`, `asia_pavilion` · tigre : `asia_pagoda`, `asia_mountain`, `asia_jungle_falls` · panthère des neiges : `asia_snow_den`, `asia_snow_cave`, `asia_arch` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
+| Asie | panda : `asia_bamboo`, `asia_garden`, `asia_clearing` (à la place du pavillon, 2026-11-23) · tigre : `asia_pagoda`, `asia_mountain`, `asia_jungle_falls` · panthère des neiges : `asia_snow_den`, `asia_snow_cave`, `asia_arch` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
 | Antarctique | manchot : `open_sea`, `an_aurora`, `an_penguin_cave` · phoque : `an_seal_aurora`, `an_seal_rocks`, `an_seal_sunset` · ours polaire : `ice_coast`, `an_ice_cave`, `an_snowfield` | Testé | regardé par le parent ; coordonnées des 4 décors neufs à confirmer à l'écran |
 | Europe | renard : `europe_fox_glade`, `europe_fox_autumn`, `europe_fox_snow` · hibou : `europe_owl_nest`, `europe_owl_moon`, `europe_owl_oak` · hérisson : `europe_hog_stream`, `europe_hog_lake`, `europe_hog_log` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
-| Océanie | kangourou : `oc_red_plain`, `oc_waterhole`, `oc_bush_coast` · koala : `oc_eucalyptus`, `oc_gum_woodland`, `oc_rocky_cove` · lézard : `oc_outback`, `oc_gorge`, `oc_beach` | Testé | pas encore regardé (fusionné en dernier) |
+| Océanie | kangourou : `oc_red_plain`, `oc_waterhole`, `oc_bush_coast` · koala : `oc_eucalyptus`, `oc_gum_woodland`, `oc_rocky_cove` · lézard : `oc_outback`, `oc_gorge`, `oc_beach` | Testé | regardé le 2026-11-23 vers 15 h 50 sur la version construite : 9 décors, images et personnages OK |
 | Océan | 6 parcours | Cartographié | images des familles marines manquantes : rien n'est inventé |
 
 Points notés pendant la production (non bloquants) :

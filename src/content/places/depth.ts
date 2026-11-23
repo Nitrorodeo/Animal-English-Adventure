@@ -25,6 +25,25 @@ export interface PlaceDepth {
   lane?: [number, number, number][];
   /** eau dessinée au sol (lac, rivière, mer devant) : polygones `[x, y]` en % ; on n'y pose aucun animal */
   water?: [number, number][][];
+  /** décor à percher (hiboux) : les seuls endroits où l'on pose un animal (rocher, branche, nids…), voir `Seat` */
+  seats?: Seat[];
+  /** place de départ de chacun sur les `seats` : `[id de la place, x]` */
+  seatHome?: Record<SeatRole, [string, number]>;
+  /** le sol reste libre comme d'habitude ; les `seats` s'ajoutent (un animal lâché tout près s'y pose) */
+  groundToo?: boolean;
+}
+
+export type SeatRole = 'father' | 'mother' | 'baby1' | 'baby2';
+
+/**
+ * Endroit où un animal se perche (demande du parent, 2026-11-23, nid des hiboux : « pouvoir les déplacer sur
+ * les endroits stratégiques : la pierre, toute la branche avec un effet de profondeur logique, le nid au-dessus
+ * d'Oscar ou le nid au-dessus d'Olive »). `band` = points `[x, fond, devant, taille]` en % : la bande où se posent
+ * les pieds, et la taille de l'animal à cet endroit (1 = sa taille normale au premier plan).
+ */
+export interface Seat {
+  id: string;
+  band: [number, number, number, number][];
 }
 
 export type Water = readonly (readonly (readonly [number, number])[])[];
@@ -85,6 +104,8 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   },
   // 2026-11-23 : les trois décors nouveaux de l'Asie (mesurés sur les images quadrillées)
   // pavillon rouge : la rivière sort de la petite chute sous le pont (x 50-62, y 65-75) et coule vers l'avant jusqu'au bas (x 55-78, y 76-90)
+  // la clairière : le pré s'arrête au pied des bambous et des rochers du fond, vers y 42 %
+  asia_clearing: { horizonY: 42, farY: 48 },
   asia_pavilion: { horizonY: 50, farY: 62, water: [[[50, 65], [62, 65], [64, 70], [70, 75], [78, 77], [78, 90], [72, 91], [68, 86], [65, 79], [56, 72]]] },
   // cascade de la jungle : bassin turquoise au pied de la chute (x 55-96, y 53-74) ; le sol de terre commence vers y 72
   asia_jungle_falls: { horizonY: 52, farY: 62, water: [[[55, 58], [72, 53], [88, 52], [95, 56], [96, 66], [88, 71], [78, 74], [66, 72], [55, 70]]] },
@@ -100,9 +121,38 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   europe_fox_glade: { horizonY: 45, farY: 56 },
   europe_fox_autumn: { horizonY: 38, farY: 50, water: [[[76, 53], [90, 50], [100, 50], [100, 66], [88, 67], [78, 63]]] },
   europe_fox_snow: { horizonY: 45, farY: 60, water: [[[27, 59], [34, 56], [43, 54], [44, 60], [38, 64], [30, 64]]] },
-  europe_owl_nest: { horizonY: 45, farY: 60 },
-  europe_owl_moon: { horizonY: 50, farY: 62 },
-  europe_owl_oak: { horizonY: 50, farY: 62 },
+  // 2026-11-23 : le hibou se pose sur le rocher, sur toute la grosse branche (plus petit vers le bout, qui s'éloigne),
+  // dans le nid du creux de l'arbre ou dans le nid de l'arbre de droite (mesuré sur l'image quadrillée à 5 %)
+  europe_owl_nest: {
+    horizonY: 45,
+    farY: 60,
+    seats: [
+      { id: 'rock', band: [[75, 84, 89, 1], [80, 81.5, 88, 1], [85, 80.5, 87, 1], [90, 80.5, 87, 1], [95, 81, 88, 1], [98, 82, 89, 1]] },
+      { id: 'branch', band: [[20, 64, 67, 0.62], [25, 61.5, 64.5, 0.6], [30, 59.5, 62, 0.58], [35, 58, 60.5, 0.56], [40, 57, 59.5, 0.54], [45, 56.5, 59, 0.52], [50, 57.5, 59.5, 0.5], [52, 58.5, 60, 0.49]] },
+      { id: 'hole_nest', band: [[12, 42, 44, 0.55], [17, 42, 44, 0.55]] },
+      { id: 'tree_nest', band: [[82, 29, 31, 0.5], [94, 28.5, 30.5, 0.5]] },
+    ],
+    seatHome: { father: ['branch', 42], mother: ['rock', 82], baby1: ['rock', 94], baby2: ['tree_nest', 88] },
+  },
+  // 2026-11-23 (demande du parent) : de nuit, le hibou ne va que sur la grosse pierre sous la branche ou sur toute
+  // la longueur de la branche (plus petit vers le bout, qui part au loin)
+  europe_owl_moon: {
+    horizonY: 50,
+    farY: 62,
+    seats: [
+      { id: 'branch', band: [[13, 48, 51, 0.78], [20, 49, 52, 0.75], [25, 51.5, 54, 0.72], [30, 54.5, 57, 0.69], [35, 57, 59.5, 0.66], [40, 59, 61.5, 0.63], [45, 60.5, 63, 0.6], [50, 61.5, 64, 0.58], [55, 64.5, 66.5, 0.56], [60, 67.5, 69, 0.54], [63, 69, 70.5, 0.53]] },
+      { id: 'rock', band: [[16, 81.5, 86, 0.9], [20, 80.5, 86, 0.9], [25, 81.5, 87, 0.9], [30, 83.5, 88, 0.9], [34, 86, 90, 0.9]] },
+    ],
+    seatHome: { father: ['branch', 42], mother: ['rock', 24], baby1: ['branch', 54], baby2: ['rock', 31] },
+  },
+  // 2026-11-23 (demande du parent) : au chêne, la famille marche au sol comme avant ; en plus, le nid du creux de
+  // l'arbre, à une taille adaptée (l'arbre est au second plan, le creux est haut)
+  europe_owl_oak: {
+    horizonY: 50,
+    farY: 62,
+    groundToo: true,
+    seats: [{ id: 'hole_nest', band: [[76, 31, 33, 0.4], [82, 31, 33, 0.4]] }],
+  },
   europe_hog_stream: { horizonY: 38, farY: 52, water: [[[65, 57], [72, 53], [80, 47], [90, 43], [100, 42], [100, 65], [92, 67], [82, 65], [70, 62]]] },
   europe_hog_lake: { horizonY: 38, farY: 48, water: [[[28, 42], [60, 40], [85, 40], [93, 43], [91, 53], [80, 59], [66, 62], [52, 62], [40, 60], [33, 56], [29, 50]]] },
   europe_hog_log: { horizonY: 45, farY: 58 },
@@ -167,7 +217,15 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   sa_canopy_treehouse: {
     horizonY: 44,
     farY: [[0, 70], [30, 68], [38, 66], [45, 65], [60, 64], [68, 63], [80, 62], [90, 60], [100, 58]],
-    lane: [[25, 70, 77], [35, 68, 77], [45, 67, 78], [55, 66, 78], [65, 66, 77], [75, 66, 75], [85, 64, 72], [91, 62, 69]] },
+    lane: [[25, 70, 77], [35, 68, 77], [45, 67, 78], [55, 66, 78], [65, 66, 77], [75, 66, 75], [85, 64, 72], [91, 62, 69]],
+    // 2026-11-23 (demande du parent) : « je veux qu'il puisse accéder à ces 2 plateformes » (les deux plateformes de
+    // mousse à droite). La branche reste le chemin habituel ; lâché tout près d'une plateforme, le toucan s'y pose,
+    // plus petit (elles sont au second plan ; la haute un peu plus loin)
+    groundToo: true,
+    seats: [
+      { id: 'low_platform', band: [[69, 35.8, 37.4, 0.5], [72, 35.4, 37.8, 0.5], [76, 35.2, 38, 0.5], [80, 35.4, 37.8, 0.5], [83, 35.8, 37.4, 0.5]] },
+      { id: 'high_platform', band: [[81, 25.2, 26.4, 0.45], [85, 24.9, 26.5, 0.45], [89, 24.9, 26.5, 0.45], [93, 25.1, 26.4, 0.45], [95, 25.5, 26.4, 0.45]] },
+    ] },
   sa_canopy_sunrise: {
     horizonY: 36,
     farY: [[0, 64], [18, 62], [30, 60], [40, 60], [50, 62], [60, 64], [70, 62], [78, 58], [85, 52], [92, 46], [100, 40]],
@@ -184,5 +242,10 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
     water: [
       [[8, 60], [22, 59], [40, 62], [42, 68], [38, 72], [28, 73], [12, 72], [8, 66]],
       [[22, 73], [42, 73], [46, 80], [44, 90], [40, 100], [22, 100], [18, 92], [20, 80]],
-    ] },
+    ],
+    // 2026-11-23 (demande du parent) : « proportion avec le nid des paresseux n'est pas juste ». Le sol reste libre ;
+    // lâché dans le creux de l'arbre, le paresseux s'assoit sur le lit de feuilles, à la taille du creux (ouverture
+    // de y 41,6 à 60 %, soit 18 % de la hauteur : un paresseux d'environ 11 %, deux tiers du creux)
+    groundToo: true,
+    seats: [{ id: 'hollow_nest', band: [[79, 58.5, 60.5, 0.38], [83, 58, 60.5, 0.38], [87, 58, 60, 0.38]] }] },
 };

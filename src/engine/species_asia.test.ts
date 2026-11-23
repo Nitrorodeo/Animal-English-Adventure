@@ -221,6 +221,7 @@ describe('vocabulaire propre à chaque décor d’Asie', () => {
       asia_garden: { words: ['lotus', 'iris'], photo: 'lotus' },
       asia_snow_den: { words: ['cave'], photo: 'cave' },
       asia_pavilion: { words: ['pavilion', 'stone bridge'], photo: 'pavilion' },
+      asia_clearing: { words: ['field', 'shadow'], photo: 'field' },
       asia_jungle_falls: { words: ['roots', 'red flower'], photo: 'roots' },
       asia_snow_cave: { words: ['lichen', 'icicle'], photo: 'icicle' },
     };

@@ -518,13 +518,10 @@ small { font-weight: normal; opacity: 0.7; }
 
 /* écran bonus : la mer en CSS, les découpes s'y fondent */
 .sea-stage { background: #2a87c4; }
-.sea-sky { position: absolute; inset: 0 0 82% 0; background: linear-gradient(180deg, #9fdcff 0%, #cdeeff 100%); }
-.sea-water { position: absolute; inset: 15% 0 0 0; overflow: hidden; background:
-  radial-gradient(120% 8% at 50% 0%, #ffffff66 0%, #fff0 60%),
-  linear-gradient(180deg, #5cc2ec 0%, #3aa1d9 35%, #2479b6 75%, #1d669e 100%); }
-.sea-water::before { content: ''; position: absolute; left: -10%; right: -10%; top: -1.2cqw; height: 2.6cqw; background: radial-gradient(circle at 1.6cqw 0, #cdeeff 1.5cqw, #0000 1.55cqw) 0 0 / 3.2cqw 2.6cqw repeat-x; animation: waves 6s linear infinite; }
-@keyframes waves { to { translate: 3.2cqw 0; } }
-.sea-sand { position: absolute; inset: 84% 0 0 0; background: radial-gradient(60% 120% at 30% 100%, #f3dca0 0%, #e6c57d 60%, #d7b066 100%); border-top-left-radius: 50% 2cqw; border-top-right-radius: 50% 2cqw; }
+/* 2026-11-23 : un vrai décor sous-marin par manche (deux par animal), plus le dégradé de CSS */
+.sea-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease-in-out; pointer-events: none; user-select: none; }
+.sea-bg.on { opacity: 1; }
+.sea-water { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .bubble { position: absolute; bottom: -3cqw; width: 1.4cqw; height: 1.4cqw; border-radius: 50%; border: 0.2cqw solid #ffffffb0; background: radial-gradient(circle at 35% 35%, #fff9 0%, #fff0 60%); animation: bubble-up 8s linear infinite; }
 @keyframes bubble-up { 0% { translate: 0 0; opacity: 0; } 10% { opacity: 1; } 50% { translate: 1.2cqw -25cqw; } 100% { translate: -1cqw -52cqw; opacity: 0; } }
 
@@ -534,12 +531,13 @@ small { font-weight: normal; opacity: 0.7; }
 .sea-actor.turtle { transition: transform 1.4s ease-in-out; will-change: transform; }
 .sea-actor.turtle img { animation: float 3s ease-in-out infinite; }
 .sea-actor.turtle.swim img { animation: paddle 0.5s ease-in-out 3; }
+.sea-actor.turtle.baby { transition-duration: 1.8s; }
 @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -0.8cqw; } }
 @keyframes paddle { 0%, 100% { rotate: 0deg; } 50% { rotate: -7deg; } }
 
 /* baleine : les jets d'eau sortent l'un après l'autre et restent, pour qu'on puisse compter */
-.spouts { position: absolute; left: 4%; top: 4%; width: 40%; height: 20%; z-index: 5; pointer-events: none; }
-.spout { position: absolute; bottom: 0; font-size: 5cqw; opacity: 0; transform-origin: 50% 100%; animation: spout 0.7s cubic-bezier(.3,1.5,.5,1) forwards; }
+.spouts { position: absolute; left: 24%; top: 4%; width: 46%; height: 20%; z-index: 5; pointer-events: none; }
+.spout { position: absolute; bottom: 0; font-size: 5cqw; opacity: 0; filter: drop-shadow(0 0 0.35cqw #0b4f86) drop-shadow(0 0.15cqw 0.25cqw #0b3a61aa); transform-origin: 50% 100%; animation: spout 0.7s cubic-bezier(.3,1.5,.5,1) forwards; }
 @keyframes spout { 0% { opacity: 0; translate: 0 6cqw; scale: 0.3 1.6; } 60% { opacity: 1; translate: 0 -1cqw; scale: 1.15 0.9; } 100% { opacity: 1; translate: 0 0; scale: 1; } }
 .number-card .opt-icon { font-size: 4.6cqw; font-weight: 900; color: #1d4f7a; line-height: 1; }
 

@@ -1,7 +1,7 @@
 import manifest from '../content/assetManifest.json';
 import type { Anchor, GrowthStage, Rect, Sex } from '../content/types';
 import type { ActorRef, Baby, FamilyState } from '../engine/state';
-import { laneMid, type Lane } from '../game/staging';
+import { laneMid, seatAt, snapToSeats, type Lane, type SeatLike } from '../game/staging';
 
 export interface AssetInfo {
   path: string;
@@ -56,7 +56,9 @@ export interface Placement {
 /** Hauteur des parents en % de la scène, selon la taille réelle de l'espèce (lion = 34, référence).
  * Les petits animaux restent assez grands pour être touchés du doigt (≥ 22). */
 const ADULT_HEIGHT: Record<string, number> = {
-  elephant: 44, giraffe: 54, lion: 34, tiger: 34, giant_panda: 36, bear: 36, polar_bear: 38, bison: 36,
+  // panda géant : 32 depuis qu'il est dessiné assis (2026-11-23, demande du parent : « mets plutôt les pandas assis…
+  // proportionnels aux 3 décors ») ; couché, il fallait 36
+  elephant: 44, giraffe: 54, lion: 34, tiger: 34, giant_panda: 32, bear: 36, polar_bear: 38, bison: 36,
   kangaroo: 38, jaguar: 30, koala: 30, fox: 30, snow_leopard: 31, sloth: 30, penguin: 30, owl: 28, toucan: 28, beaver: 27, seal: 25, frilled_lizard: 24, hedgehog: 22,
 };
 /** Bébés : proportionnels aux parents (ADULT_HEIGHT / 34) sauf réglage dessiné à la main. */
@@ -69,7 +71,29 @@ export const REF_GROUND = 78;
 /** Sur une branche : où se tient chaque membre de la famille (x), l'un à côté de l'autre le long de la branche. */
 const LANE_X = { father: 44, mother: 60, baby1: 74, baby2: 88 };
 
-export function homePlacement(actor: ActorRef, family: FamilyState, groundY = REF_GROUND, lane?: Lane): Placement {
+/** Décor à percher (hiboux) : les endroits où se poser et la place de départ de chacun. */
+export interface SeatPlan {
+  seats?: readonly SeatLike[];
+  seatHome?: Record<'father' | 'mother' | 'baby1' | 'baby2', readonly [string, number]>;
+  groundToo?: boolean;
+}
+
+/** Rôle d'un personnage dans la famille : papa, maman, premier ou second bébé. */
+export function roleOf(actor: ActorRef, family: FamilyState): 'father' | 'mother' | 'baby1' | 'baby2' {
+  if (actor.kind === 'adult') return actor.role === 'father' ? 'father' : 'mother';
+  return family.babies.find((b) => b.id === actor.babyId)?.birthOrder === 2 ? 'baby2' : 'baby1';
+}
+
+export function homePlacement(actor: ActorRef, family: FamilyState, groundY = REF_GROUND, lane?: Lane, plan?: SeatPlan): Placement {
+  if (plan?.seats?.length && !plan.groundToo) {
+    // décor à percher : chacun à sa place de départ (papa sur la branche, maman sur le rocher…), à la taille de l'endroit
+    const natural = homePlacement(actor, family, groundY).h;
+    const [seatId, x] = plan.seatHome?.[roleOf(actor, family)] ?? [plan.seats[0]!.id, 50];
+    const seat = plan.seats.find((s) => s.id === seatId) ?? plan.seats[0]!;
+    const S = seatAt(seat, x);
+    const { seat: _s, ...spot } = snapToSeats([seat], natural, x, (S.back + S.front) / 2);
+    return spot;
+  }
   const adultH = ADULT_HEIGHT[actor.speciesId] ?? 34;
   if (lane) {
     // décor perché : toute la famille est sur la branche, taille normale

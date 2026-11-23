@@ -61,6 +61,32 @@ export function farthestY(homeY: number, horizon: number, far?: number | readonl
   return horizon + UNMEASURED_FAR * Math.max(5, homeY - horizon);
 }
 
+/**
+ * Taille gardée au point le plus au fond où l'on peut poser l'animal. Demande du parent (2026-11-23, capture de la
+ * cascade de la jungle : la tigresse au fond du chemin, minuscule à côté du papa) : « Les perspectives ne sont
+ * vraiment pas bonnes… ils sont trop petits quand ils sont au fond, c'est pas logique ». Le calcul jusqu'à l'horizon
+ * dessiné les réduisait à 15–25 % au bout du chemin : les décors peints tassent la profondeur, le fond du sol n'est
+ * pas si loin. Au plus loin, un peu plus de la moitié de sa taille ; entre les deux, la taille diminue régulièrement.
+ */
+export const FAR_SIZE = 0.55;
+
+/**
+ * Horizon « ressenti » pour la taille : le plus haut de l'horizon dessiné et de celui qui donne `FAR_SIZE` au fond du
+ * sol (`far`, sa partie la plus lointaine : la taille ne saute pas quand on glisse de côté). Décor sans mesure : le
+ * fond prudent de `farthestY`.
+ */
+export function sizeHorizon(homeY: number, horizon: number, far?: number | readonly (readonly [number, number])[]): number {
+  const back = far === undefined ? horizon + UNMEASURED_FAR * Math.max(5, homeY - horizon) : typeof far === 'number' ? far : Math.min(...far.map((p) => p[1]));
+  const f = Math.min(back, homeY - 5);
+  return Math.min(horizon, (f - FAR_SIZE * homeY) / (1 - FAR_SIZE));
+}
+
+/** Échelle d'un animal posé au doigt dans ce décor (même calcul dans le jeu et dans les tests). */
+export function placeScale(place: { groundY: number; horizonY?: number; farY?: number | readonly (readonly [number, number])[] }, homeY: number): (fromY: number, toY: number) => number {
+  const hz = sizeHorizon(homeY, horizonOf(place.groundY, place.horizonY), place.farY);
+  return (from, to) => groundScale(from, to, hz);
+}
+
 /** Fond du sol à l'abscisse `x` : une hauteur unique, ou un bord tracé point par point (bord de la mer). */
 export function farAt(far: number | readonly (readonly [number, number])[], x: number): number {
   if (typeof far === 'number') return far;
@@ -119,6 +145,64 @@ export function snapToLane(lane: Lane, home: { h: number }, x: number, y: number
 export function laneMid(lane: Lane, x: number): { x: number; y: number } {
   const L = laneAt(lane, x);
   return { x: L.x, y: (L.back + L.front) / 2 };
+}
+
+/** Endroit où se percher : bande `[x, fond, devant, taille]` (voir `Seat` dans places/depth.ts). */
+export interface SeatLike {
+  id: string;
+  band: readonly (readonly [number, number, number, number])[];
+}
+
+/** Bande et taille d'un endroit où se percher, à l'abscisse `x` (bornée aux deux bouts de l'endroit). */
+export function seatAt(seat: SeatLike, x: number): { x: number; back: number; front: number; scale: number } {
+  const pts = [...seat.band].sort((a, b) => a[0] - b[0]);
+  const cx = Math.max(pts[0]![0], Math.min(pts[pts.length - 1]![0], x));
+  let [, back, front, scale] = pts[0]!;
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, b0, f0, s0] = pts[i - 1]!;
+    const [x1, b1, f1, s1] = pts[i]!;
+    if (cx <= x1) {
+      const t = x1 === x0 ? 1 : (cx - x0) / (x1 - x0);
+      back = b0 + (b1 - b0) * t;
+      front = f0 + (f1 - f0) * t;
+      scale = s0 + (s1 - s0) * t;
+      break;
+    }
+    [, back, front, scale] = pts[i]!;
+  }
+  return { x: cx, back, front, scale };
+}
+
+/**
+ * Décor à percher (hiboux) : l'animal lâché en (x, y) va sur l'endroit le plus proche du doigt (rocher, branche,
+ * nid…), les pieds sur sa bande, à la taille de cet endroit (`naturalH` = sa taille normale au premier plan).
+ */
+export function snapToSeats(seats: readonly SeatLike[], naturalH: number, x: number, y: number): { x: number; y: number; h: number; seat: string } {
+  return nearSeat(seats, naturalH, x, y)!;
+}
+
+/** Distance (en % de la largeur de la scène) en dessous de laquelle un animal lâché au sol se pose sur un endroit à percher. */
+export const SEAT_REACH = 7;
+
+/**
+ * Comme `snapToSeats`, mais seulement si le doigt est à moins de `reach` d'un endroit (décor où le sol reste libre :
+ * le nid du chêne). Sinon `undefined` : l'animal reste au sol.
+ */
+export function nearSeat(seats: readonly SeatLike[], naturalH: number, x: number, y: number, reach = Infinity): { x: number; y: number; h: number; seat: string } | undefined {
+  let best: { x: number; y: number; h: number; seat: string; d: number } | undefined;
+  for (const seat of seats) {
+    const S = seatAt(seat, x);
+    const py = Math.max(S.back, Math.min(S.front, y));
+    // distance à l'écran (les % de hauteur valent 9/16 des % de largeur)
+    const d = Math.hypot(S.x - x, ((py - y) * 9) / 16);
+    if (!best || d < best.d) {
+      const t = S.front > S.back ? (py - S.back) / (S.front - S.back) : 0.5;
+      best = { x: S.x, y: py, h: naturalH * S.scale * (LANE_SCALE_BACK + (LANE_SCALE_FRONT - LANE_SCALE_BACK) * t), seat: seat.id, d };
+    }
+  }
+  if (!best || best.d > reach) return undefined;
+  const { d: _d, ...spot } = best;
+  return spot;
 }
 
 /** Ce qu'il faut du décor pour savoir où un animal peut se poser en hauteur. */

@@ -323,6 +323,31 @@ const pavilionBridge = (sp: SpeciesDef): QuestStep[] => [
   end('mother', 'What a nice day at the pavilion!', 'Quelle belle journée au pavillon !'),
 ];
 
+// 8 bis. La clairière de bambous — panda. 2026-11-23 : remplace le pavillon rouge dans les décors du panda (demande
+// du parent : « celui-ci est trop chargé », la clairière est « beaucoup plus épurée »). Mêmes sortes d'étapes que
+// le pavillon, sans la rivière (il n'y a pas d'eau dans la clairière).
+const clearingDay = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'Good morning! Here is the bamboo clearing.', 'Bonjour ! Voici la clairière de bambous.'),
+  tap('father', 'Look! The field! Where is the field?', 'Regarde ! Le pré ! Où est le pré ?', 'field', ['It is big and green!', "C'est grand et vert !"], ['field', 'where']),
+  ask('mother', 'Is the field green?', 'Est-ce que le pré est vert ?', yesNo(true), ['Look at the field!', 'Regarde le pré !'], ['field', 'green'], { minTier: 'intermediate', pointAt: 'field', keepOrder: true }),
+  ...countScene('mother', 'butterfly', [0, 1, 2, 7], { beginner: 2, intermediate: 3, expert: 4 }, 'clbfly'),
+  tap('father', 'Let’s go to the big rock! Where is the rock?', 'Allons au gros rocher ! Où est le rocher ?', 'rock', ['It is big and grey!', "C'est gros et gris !"], ['rock', 'follow_the_path']),
+  moveTo('rock', 'walk', 'father'),
+  say('father', 'Step, step, step! To the big rock!', 'Pas à pas ! Jusqu’au gros rocher !', {}, 'proud'),
+  back('father'),
+  tap('mother', 'Where is the shadow? Show me!', 'Où est l’ombre ? Montre-moi !', 'shadow', ['It is under the bamboo!', "C'est sous les bambous !"], ['shadow', 'where']),
+  ask('father', 'Which is higher, the mountain or the bush?', 'Lequel est le plus haut, la montagne ou le buisson ?', [ok('The mountain!', 'La montagne !', '⛰️'), no('The bush!', 'Le buisson !', '🌳')], ['Look up! The mountain is very high!', 'Regarde en haut ! La montagne est très haute !'], ['tall', 'mountain', 'bush'], { minTier: 'intermediate', pointAt: 'mountain', keepOrder: true }),
+  tap('mother', 'Look! A cloud! Where is the cloud?', 'Regarde ! Un nuage ! Où est le nuage ?', 'cloud', ['It is white and soft!', "C'est blanc et doux !"], ['cloud', 'where'], { minTier: 'intermediate' }),
+  ...eatScene(sp, [0, 1, 2, 7], 'actor', 'clmeal'),
+  say('baby', 'Yum! I like my bamboo!', "Miam ! J'aime mon bambou !", { needs: 'baby' }, 'happy'),
+  act('actor', 'climb', 'I can climb the rock! Look at me!', 'Je sais grimper sur le rocher ! Regarde-moi !', 'actor'),
+  ask('actor', 'What can I do?', 'Qu’est-ce que je sais faire ?', [ok('I can climb!', 'Je sais grimper !', '🧗'), no('I can fly!', 'Je sais voler !', '🪽'), no('I can drive a car!', 'Je sais conduire une voiture !', '🚗')], ['Look! I can climb!', 'Regarde ! Je sais grimper !'], ['can', 'climb'], { minTier: 'intermediate' }),
+  say('narrator', 'Look at the flowers in the field!', 'Regarde les fleurs dans le pré !', {}, 'curious'),
+  ...colorHunt('mother', 'flower', 'pink', ['yellow', 'red', 'purple'], [0, 1, 2, 7], 'clflower'),
+  reward('bamboo_whistle', 'father', 'A bamboo whistle! It is our treasure!', 'Un sifflet en bambou ! C’est notre trésor !'),
+  end('mother', 'What a nice day in the clearing!', 'Quelle belle journée dans la clairière !'),
+];
+
 // 9. Le soir à la pagode — tigre
 const pagodaEvening = (sp: SpeciesDef): QuestStep[] => [
   say('narrator', 'It is evening at the pagoda. The lanterns are lit!', 'C’est le soir à la pagode. Les lanternes sont allumées !', {}, 'happy'),
@@ -485,7 +510,8 @@ export const ASIA: AdventurePack = {
     { id: 'asia_bamboo_morning', continentId: 'asia', titleEn: 'The bamboo morning', titleFr: 'Le matin dans les bambous', icon: '🎋', start: 'asia_bamboo', species: ['giant_panda'], skillIds: ['1.6', '1.3', '2.2'], steps: bambooMorning, treasure: 'jade_leaf', order: 1 },
     // « La nuit des lanternes » partait de la pagode, qui n'est plus un décor du panda : voir RETIRED_ASIA.
     { id: 'asia_garden_lanterns', continentId: 'asia', titleEn: 'Lantern night in the garden', titleFr: 'La nuit des lanternes au jardin', icon: '🏮', start: 'asia_garden', species: ['giant_panda'], skillIds: ['1.2', '1.3', '2.3'], steps: gardenLanterns, treasure: 'golden_lantern', order: 2 },
-    { id: 'asia_pavilion_bridge', continentId: 'asia', titleEn: 'The red pavilion', titleFr: 'Le pavillon rouge', icon: '🏯', start: 'asia_pavilion', species: ['giant_panda'], skillIds: ['1.7', '1.2', '2.7'], steps: pavilionBridge, treasure: 'pavilion_bell', order: 3 },
+    // « Le pavillon rouge » : son décor n'est plus celui du panda (remplacé par la clairière, 2026-11-23) : voir RETIRED_ASIA.
+    { id: 'asia_clearing_day', continentId: 'asia', titleEn: 'A day in the bamboo clearing', titleFr: 'Une journée dans la clairière de bambous', icon: '🎋', start: 'asia_clearing', species: ['giant_panda'], skillIds: ['1.7', '1.2', '2.7'], steps: clearingDay, treasure: 'bamboo_whistle', order: 3 },
     // « La montagne dans la brume », « L'arc-en-ciel après la pluie » et « Le matin à l'arche » voyageaient vers un
     // décor que la famille n'a plus : voir RETIRED_ASIA.
     { id: 'asia_leopard_rocks', continentId: 'asia', titleEn: 'The big rocks', titleFr: 'Les gros rochers', icon: '🪨', start: 'asia_mountain', species: ['tiger'], skillIds: ['1.7', '2.2', '1.3'], steps: leopardRocks, treasure: 'snow_crystal', order: 5 },
@@ -504,6 +530,7 @@ export const ASIA: AdventurePack = {
     treasure('snow_crystal', 'a snow crystal', 'un cristal de neige', '❄️'),
     treasure('golden_pebble', 'a golden pebble', 'un galet doré', '🟡'),
     treasure('pavilion_bell', 'a little bell', 'une petite cloche', '🔔'),
+    treasure('bamboo_whistle', 'a bamboo whistle', 'un sifflet en bambou', '🎋'),
     treasure('gold_coin', 'a gold coin', 'une pièce d’or', '🪙'),
     treasure('red_blossom', 'a red blossom', 'une fleur rouge', '🌺'),
     treasure('frost_flower', 'a frost flower', 'une fleur de givre', '❄️'),
@@ -514,6 +541,7 @@ export const ASIA: AdventurePack = {
 /** Aventures sorties des parcours (leur départ n'est plus un décor de leur famille, ou elles voyageaient vers un
  *  décor qu'elle n'a plus). Gardées pour un retour arrière ; leurs trésors restent connus des passeports. */
 export const RETIRED_ASIA: AdventureDef[] = [
+  { id: 'asia_pavilion_bridge', continentId: 'asia', titleEn: 'The red pavilion', titleFr: 'Le pavillon rouge', icon: '🏯', start: 'asia_pavilion', species: ['giant_panda'], skillIds: ['1.7', '1.2', '2.7'], steps: pavilionBridge, treasure: 'pavilion_bell', order: 3 },
   { id: 'asia_lantern_night', continentId: 'asia', titleEn: 'The lantern night', titleFr: 'La nuit des lanternes', icon: '🏮', start: 'asia_pagoda', species: ['giant_panda'], skillIds: ['1.2', '1.3', '2.3'], steps: lanternNight, treasure: 'golden_lantern', order: 2 },
   { id: 'asia_misty_mountain', continentId: 'asia', titleEn: 'The misty mountain', titleFr: 'La montagne dans la brume', icon: '⛰️', start: 'asia_mountain', species: ['giant_panda', 'tiger', 'snow_leopard'], skillIds: ['1.7', '2.7', '3.2'], steps: mistyMountain, treasure: 'rainbow_stone', order: 3 },
   { id: 'asia_rainbow_rain', continentId: 'asia', titleEn: 'The rainbow after the rain', titleFr: 'L’arc-en-ciel après la pluie', icon: '🌈', start: 'asia_arch', species: ['giant_panda', 'tiger'], skillIds: ['1.7', '1.2', '2.7'], steps: rainbowAfterRain, treasure: 'rain_pearl', order: 4 },

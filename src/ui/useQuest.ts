@@ -4,6 +4,7 @@ import { FAMILY_LINES } from '../content/dialogues';
 import type { Line, QuestScript, Speaker } from '../content/types';
 import { say as sayUi } from '../content/utterances';
 import { fillLine, type Vars } from '../engine/dialogue';
+import { canGoBack, remember, stepBack } from '../engine/history';
 import { autoDelay, canAdvance, isFinished, revealTarget, runAction, startRun, type RunAction, type RunResult, type Utter } from '../engine/runner';
 import type { AnswerRecord } from '../engine/skills';
 
@@ -17,6 +18,8 @@ export type Cast = Record<Speaker, { name: string; role: VoiceRole } | null>;
 export function useQuest(script: QuestScript, vars: (place: string) => Vars, cast: Cast, slow: boolean, onFinish: (answers: AnswerRecord[]) => void) {
   const [run, setRun] = useState<RunResult>(() => startRun(script));
   const state = run.state;
+  /** états d'arrivée de chaque question, pour pouvoir revenir en arrière */
+  const [past, setPast] = useState<readonly RunResult[]>([]);
   const step = script.steps[state.index];
   const v = useMemo(() => vars(state.place), [vars, state.place]);
   const token = useRef(0);
@@ -47,6 +50,8 @@ export function useQuest(script: QuestScript, vars: (place: string) => Vars, cas
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [run]);
 
+  useEffect(() => setPast((p) => remember(p, script, run)), [run, script]);
+
   // étapes automatiques (déplacements, objets posés)
   useEffect(() => {
     const d = autoDelay(step);
@@ -64,6 +69,14 @@ export function useQuest(script: QuestScript, vars: (place: string) => Vars, cas
   );
 
   const act = useCallback((a: RunAction) => setRun((r) => runAction(script, r.state, a)), [script]);
+
+  /** revient à la question d'avant : tout redevient comme à ce moment-là, la question est redite */
+  const back = useCallback(() => {
+    const b = stepBack(past, script, run);
+    if (!b) return;
+    setPast(b.stack);
+    setRun(b.to);
+  }, [past, script, run]);
 
   const replay = useCallback(
     (slowNow?: boolean) => {
@@ -85,6 +98,8 @@ export function useQuest(script: QuestScript, vars: (place: string) => Vars, cas
     bubble: state.bubble ? { who: state.bubble.who, line: text(state.bubble) } : null,
     canAdvance: canAdvance(script, state) && autoDelay(step) === null,
     finished: isFinished(script, state),
+    canBack: canGoBack(past, script, run) && !isFinished(script, state),
+    back,
     reveal: revealTarget(script, state),
     advance: () => act({ type: 'advance' }),
     choose: (option: number) => act({ type: 'choose', option }),

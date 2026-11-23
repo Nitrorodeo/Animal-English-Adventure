@@ -39,7 +39,7 @@ const FAMILY_DECORS: Record<string, Record<string, readonly string[]>> = {
     penguin: ['open_sea', 'an_aurora', 'an_penguin_cave'],
   },
   asia: {
-    giant_panda: ['asia_bamboo', 'asia_garden', 'asia_pavilion'],
+    giant_panda: ['asia_bamboo', 'asia_garden', 'asia_clearing'],
     tiger: ['asia_pagoda', 'asia_mountain', 'asia_jungle_falls'],
     snow_leopard: ['asia_snow_den', 'asia_snow_cave', 'asia_arch'],
   },

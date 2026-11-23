@@ -2830,6 +2830,397 @@
       ]
     },
     {
+      "id": "asia_clearing",
+      "source": "Animaux/Asie/Pandas/Clairière de bambous enchantée.png",
+      "background": "asia_clearing",
+      "nameEn": "the bamboo clearing",
+      "nameFr": "la clairière de bambous",
+      "weather": "sunny",
+      "groundY": 82,
+      "anchors": [
+        {
+          "id": "field",
+          "word": "field",
+          "wordFr": "le pré",
+          "icon": "🌿",
+          "hit": {
+            "x": 40,
+            "y": 47,
+            "w": 42,
+            "h": 26
+          },
+          "crop": {
+            "x": 30,
+            "y": 42,
+            "w": 50,
+            "h": 40
+          },
+          "stand": {
+            "x": 40,
+            "y": 52
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the field green?",
+              "fr": "Est-ce que le pré est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "shadow",
+          "word": "shadow",
+          "wordFr": "l'ombre",
+          "icon": "🌑",
+          "hit": {
+            "x": 8,
+            "y": 45,
+            "w": 26,
+            "h": 16
+          },
+          "crop": {
+            "x": 4,
+            "y": 40,
+            "w": 36,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the shadow dark?",
+              "fr": "Est-ce que l'ombre est sombre ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "bamboo",
+          "word": "bamboo",
+          "wordFr": "le bambou",
+          "icon": "🎋",
+          "hit": {
+            "x": 0,
+            "y": 0,
+            "w": 14,
+            "h": 52
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 22,
+            "h": 60
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the bamboo green?",
+              "fr": "Est-ce que le bambou est vert ?"
+            },
+            "yes": true
+          },
+          "sameAs": [
+            "bamboo_right"
+          ]
+        },
+        {
+          "id": "bamboo_right",
+          "word": "bamboo",
+          "wordFr": "le bambou",
+          "icon": "🎋",
+          "hit": {
+            "x": 88,
+            "y": 0,
+            "w": 12,
+            "h": 45
+          },
+          "crop": {
+            "x": 80,
+            "y": 0,
+            "w": 20,
+            "h": 52
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the bamboo green?",
+              "fr": "Est-ce que le bambou est vert ?"
+            },
+            "yes": true
+          },
+          "sameAs": [
+            "bamboo"
+          ]
+        },
+        {
+          "id": "bush",
+          "word": "bush",
+          "wordFr": "le buisson",
+          "icon": "🌳",
+          "hit": {
+            "x": 7,
+            "y": 32,
+            "w": 14,
+            "h": 12
+          },
+          "crop": {
+            "x": 4,
+            "y": 28,
+            "w": 20,
+            "h": 20
+          },
+          "tags": [
+            "plant",
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the bush green?",
+              "fr": "Est-ce que le buisson est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "flower",
+          "word": "flower",
+          "wordFr": "la fleur",
+          "icon": "🌸",
+          "hit": {
+            "x": 83,
+            "y": 35,
+            "w": 6,
+            "h": 6
+          },
+          "crop": {
+            "x": 79,
+            "y": 31,
+            "w": 14,
+            "h": 14
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the flower pink?",
+              "fr": "Est-ce que la fleur est rose ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 75,
+            "y": 30,
+            "w": 14,
+            "h": 13
+          },
+          "crop": {
+            "x": 71,
+            "y": 25,
+            "w": 22,
+            "h": 22
+          },
+          "stand": {
+            "x": 80,
+            "y": 47
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock big?",
+              "fr": "Est-ce que le rocher est gros ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "stone",
+          "word": "stone",
+          "wordFr": "la pierre",
+          "icon": "🪨",
+          "hit": {
+            "x": 7,
+            "y": 76,
+            "w": 13,
+            "h": 16
+          },
+          "crop": {
+            "x": 3,
+            "y": 70,
+            "w": 22,
+            "h": 26
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the stone pink?",
+              "fr": "Est-ce que la pierre est rose ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "⛰️",
+          "hit": {
+            "x": 60,
+            "y": 10,
+            "w": 12,
+            "h": 20
+          },
+          "crop": {
+            "x": 54,
+            "y": 6,
+            "w": 24,
+            "h": 30
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain high?",
+              "fr": "Est-ce que la montagne est haute ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 58,
+            "y": 3,
+            "w": 14,
+            "h": 10
+          },
+          "crop": {
+            "x": 55,
+            "y": 0,
+            "w": 20,
+            "h": 16
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud white?",
+              "fr": "Est-ce que le nuage est blanc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "tree",
+          "word": "tree",
+          "wordFr": "l'arbre",
+          "icon": "🌳",
+          "hit": {
+            "x": 43,
+            "y": 30,
+            "w": 14,
+            "h": 9
+          },
+          "crop": {
+            "x": 40,
+            "y": 26,
+            "w": 20,
+            "h": 16
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the tree blue?",
+              "fr": "Est-ce que l'arbre est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "leaf",
+          "word": "leaf",
+          "wordFr": "la feuille",
+          "icon": "🍃",
+          "hit": {
+            "x": 18,
+            "y": 0,
+            "w": 26,
+            "h": 12
+          },
+          "crop": {
+            "x": 14,
+            "y": 0,
+            "w": 32,
+            "h": 18
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the leaf green?",
+              "fr": "Est-ce que la feuille est verte ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 24,
+          "y": 45
+        },
+        {
+          "x": 34,
+          "y": 43
+        },
+        {
+          "x": 44,
+          "y": 42
+        },
+        {
+          "x": 54,
+          "y": 42
+        },
+        {
+          "x": 64,
+          "y": 42
+        },
+        {
+          "x": 72,
+          "y": 44
+        },
+        {
+          "x": 16,
+          "y": 45
+        },
+        {
+          "x": 39,
+          "y": 45
+        }
+      ]
+    },
+    {
       "id": "asia_jungle_falls",
       "source": "Animaux/Asie/Tigres/Clairière tropicale et cascade lumineuse.png",
       "background": "asia_jungle_falls",
@@ -3917,6 +4308,18 @@
     "jungle pool": {
       "en": "A jungle pool",
       "fr": "Un bassin de la jungle"
+    },
+    "field": {
+      "en": "A field",
+      "fr": "Un pré"
+    },
+    "shadow": {
+      "en": "A shadow",
+      "fr": "Une ombre"
+    },
+    "bush": {
+      "en": "A bush",
+      "fr": "Un buisson"
     }
   }
 }

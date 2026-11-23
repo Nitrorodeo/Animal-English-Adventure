@@ -314,6 +314,10 @@
     "oc_bush_coast": {
       "src": "Animaux/Oceanie/Kangourous/Paysage côtier australien ensoleillé-3.png",
       "maxWidth": 1672
+    },
+    "asia_clearing": {
+      "src": "Animaux/Asie/Pandas/Clairière de bambous enchantée.png",
+      "maxWidth": 1672
     }
   },
   "characters": {

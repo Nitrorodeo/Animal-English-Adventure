@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { clipFor } from '../audio/speech';
 import { itemInfo } from '../content/items';
-import { DOLPHINS, SEA_FRIENDS, SEA_HD, SEA_THINGS, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
+import { DOLPHINS, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_THINGS, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
 import { CONTINENTS } from '../content/world';
 import { currentRound, INTRO, numberChoices, OUTRO, seaChoose, seaDone, seaNext, seaReward, seaRounds, startSea, type SeaState } from './sea';
 import { newGameState } from './state';
@@ -135,6 +135,28 @@ describe('jeux bonus de la mer : contenu', () => {
 
   it('les grandes images HD des jeux existent', () => {
     for (const name of Object.values(SEA_HD)) expect(SPRITES, name).toContain(`/public/assets/sea/${name}.webp`);
+  });
+
+  it('chaque animal marin a ses deux décors sous-marins, différents, qui alternent d’une manche à l’autre', () => {
+    for (const g of GAMES) {
+      const [a, b] = SEA_DECORS[g];
+      expect(a, g).not.toBe(b);
+      for (const name of [a, b]) expect(SPRITES, name).toContain(`/public/assets/sea/${name}.webp`);
+      expect(seaDecor(g, -1)).toBe(a); // l'introduction
+      expect(seaDecor(g, 0)).toBe(a);
+      expect(seaDecor(g, 1)).toBe(b);
+      expect(seaDecor(g, 2)).toBe(a);
+    }
+    // aucun fond n'est partagé entre deux animaux
+    const all = GAMES.flatMap((g) => [...SEA_DECORS[g]]);
+    expect(new Set(all).size).toBe(all.length);
+  });
+
+  it('les deux animaux de chaque planche sont utilisés : maman + baleineau ensemble, grande + petite tortue', () => {
+    expect(SEA_HD.whale).toBe('whale_family_hd');
+    expect(SEA_HD.turtle).toBe('turtle_mother_hd');
+    expect(SEA_HD.turtle_baby).toBe('turtle_baby_hd');
+    expect(SEA_HD.dolphin_big).not.toBe(SEA_HD.dolphin_little);
   });
 
   it('les découpes existent et sont posées dans la mer, hors des continents', () => {

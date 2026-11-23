@@ -5,6 +5,24 @@ import { PLACES } from '../content/places';
 import { anchorAt, cropStyle, hasStageSprite, homePlacement, spriteFor, tappedAnchor } from './scene';
 
 describe('scene — sprites', () => {
+  // 2026-11-23 (demande du parent) : « mets plutôt les pandas assis… proportionnels aux 3 décors »
+  it('les pandas sont dessinés assis (planche « Famille de pandas assis »), à la taille d’un tigre', () => {
+    const family = getFamily(newGameState(), 'giant_panda');
+    for (const role of ['father', 'mother'] as const) {
+      const s = spriteFor('giant_panda', { role })!;
+      expect(s.width / s.height, role).toBeLessThan(1.15); // couché, il était presque deux fois plus large que haut
+    }
+    for (const sex of ['girl', 'boy'] as const)
+      for (const st of ['newborn', 'little', 'young', 'companion'] as const) {
+        const s = spriteFor('giant_panda', { sex, stage: st })!;
+        expect(s.width / s.height, `${sex} ${st}`).toBeLessThan(1.15);
+      }
+    const panda = homePlacement({ kind: 'adult', speciesId: 'giant_panda', role: 'father' }, family);
+    const tiger = homePlacement({ kind: 'adult', speciesId: 'tiger', role: 'father' }, family);
+    expect(panda.h).toBeLessThanOrEqual(tiger.h);
+    expect(panda.h).toBeGreaterThanOrEqual(30);
+  });
+
   it('donne les parents lion et éléphant', () => {
     expect(spriteFor('lion', { role: 'father' })?.path).toMatch(/lion_father/);
     expect(spriteFor('elephant', { role: 'mother' })?.path).toMatch(/elephant_mother/);

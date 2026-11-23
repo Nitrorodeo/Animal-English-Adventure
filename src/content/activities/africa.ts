@@ -498,6 +498,7 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   asia_snow_den: ['cave', 'waterfall', 'flag'],
   asia_garden: ['lantern', 'cherry_blossom', 'bridge', 'lotus'],
   asia_pavilion: ['pavilion', 'stream', 'bridge', 'mist'],
+  asia_clearing: ['field', 'bush', 'mountain', 'shadow'],
   asia_jungle_falls: ['waterfall', 'roots', 'big_leaf', 'pool'],
   asia_snow_cave: ['lair', 'icicle', 'summit', 'berries'],
   europe_forest: ['mushroom', 'den', 'castle', 'oak'],

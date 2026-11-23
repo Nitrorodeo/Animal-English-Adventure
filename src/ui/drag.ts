@@ -1,4 +1,4 @@
-import { dryNear, inWater, snapToLane, type Lane, type Water } from '../game/staging';
+import { dryNear, inWater, nearSeat, SEAT_REACH, snapToLane, snapToSeats, type Lane, type SeatLike, type Water } from '../game/staging';
 
 /** Déplacement de la bulle de dialogue au doigt ou à la souris (fonctions pures, testées). */
 
@@ -58,7 +58,18 @@ export function dragSpot(
   perchAt?: (x: number, y: number) => number | undefined,
   lane?: Lane,
   water?: Water,
+  seats?: { list: readonly SeatLike[]; naturalH: number; groundToo?: boolean },
 ): Spot {
+  // décor à percher (hiboux) : seulement sur le rocher, la branche ou un nid, l'endroit le plus proche du doigt ;
+  // si le sol reste libre (chêne), seulement quand on le lâche tout près du nid
+  if (seats?.list.length) {
+    const feet = { x: pointer.x, y: pointer.y + grabDy };
+    const on = seats.groundToo ? nearSeat(seats.list, seats.naturalH, feet.x, feet.y, SEAT_REACH) : snapToSeats(seats.list, seats.naturalH, feet.x, feet.y);
+    if (on) {
+      const { seat: _seat, ...spot } = on;
+      return spot;
+    }
+  }
   // décor perché : on ne quitte jamais la branche (règle des toucans), et on garde sa taille
   if (lane) return snapToLane(lane, home, pointer.x, pointer.y + grabDy);
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));

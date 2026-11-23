@@ -12,7 +12,7 @@ import { NOUNS, PLACES } from '../content/places';
 import type { ActivityCtx, ActivityDef, ActorKind, AdventureDef, BiomeDef, QuestArchetype, QuestScript, SpeciesDef, Tier } from '../content/types';
 import { nextStageGoal } from './family';
 import type { Rng } from './rng';
-import { endPlaceOf, finalizeSteps, walkSteps } from './script';
+import { endPlaceOf, finalizeSteps, shareSteps, walkSteps } from './script';
 import { chooseTier, itemStatus, scriptItems, statusAtLeast } from './skills';
 import { actorId, getFamily, type ActorRef, type Baby, type GameState } from './state';
 
@@ -202,13 +202,21 @@ export function adventuresFor(species: SpeciesDef): AdventureDef[] {
   return ADVENTURES.filter((a) => a.continentId === species.continentId && a.species.includes(species.id)).sort((a, b) => a.order - b.order);
 }
 
+/** Numéro du personnage : 0 papa, 1 maman, 2 et 3 les bébés (par ordre de naissance). */
+export function characterNumber(state: GameState, a: ActorRef): number {
+  if (a.kind === 'adult') return a.role === 'father' ? 0 : 1;
+  const i = getFamily(state, a.speciesId).babies.findIndex((b) => b.id === a.babyId);
+  return 2 + (Math.max(i, 0) % 2);
+}
+
 export function buildAdventure(adv: AdventureDef, ctx: QuestContext): AdventureOffer | undefined {
   if (!adv.species.includes(ctx.species.id) || !ctx.species.allowedBiomes.includes(adv.start)) return undefined;
   const raw = adv.steps(ctx.species);
   const babies = getFamily(ctx.state, ctx.species.id).babies.length;
   const seed = ctx.state.player.activityCounter * 104729 + adv.order;
   const scriptFor = (tier: Tier): QuestScript | undefined => {
-    const steps = finalizeSteps(raw, { tier, babies, seed });
+    // chaque personnage a sa part des questions (papa, maman, puis chaque bébé dans l'ordre de naissance)
+    const steps = shareSteps(finalizeSteps(raw, { tier, babies, seed }), characterNumber(ctx.state, ctx.actor), tier);
     return validated(
       {
         id: `${adv.id}|${ctx.species.id}|${tier}`,

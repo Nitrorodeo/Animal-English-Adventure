@@ -384,6 +384,11 @@
       "path": "assets/backgrounds/oc_bush_coast.webp",
       "width": 1672,
       "height": 941
+    },
+    "asia_clearing": {
+      "path": "assets/backgrounds/asia_clearing.webp",
+      "width": 1672,
+      "height": 941
     }
   },
   "characters": {
@@ -549,53 +554,53 @@
     },
     "giant_panda_father": {
       "path": "assets/characters/giant_panda_father.webp",
-      "width": 636,
-      "height": 366
+      "width": 425,
+      "height": 412
     },
     "giant_panda_mother": {
       "path": "assets/characters/giant_panda_mother.webp",
-      "width": 564,
-      "height": 326
+      "width": 351,
+      "height": 380
     },
     "giant_panda_boy_newborn": {
       "path": "assets/characters/giant_panda_boy_newborn.webp",
-      "width": 236,
-      "height": 225
+      "width": 175,
+      "height": 182
     },
     "giant_panda_boy_little": {
       "path": "assets/characters/giant_panda_boy_little.webp",
-      "width": 268,
-      "height": 283
+      "width": 210,
+      "height": 237
     },
     "giant_panda_boy_young": {
       "path": "assets/characters/giant_panda_boy_young.webp",
-      "width": 342,
-      "height": 292
+      "width": 261,
+      "height": 282
     },
     "giant_panda_boy_companion": {
       "path": "assets/characters/giant_panda_boy_companion.webp",
-      "width": 413,
-      "height": 342
+      "width": 324,
+      "height": 328
     },
     "giant_panda_girl_newborn": {
       "path": "assets/characters/giant_panda_girl_newborn.webp",
-      "width": 243,
-      "height": 243
+      "width": 181,
+      "height": 201
     },
     "giant_panda_girl_little": {
       "path": "assets/characters/giant_panda_girl_little.webp",
-      "width": 273,
-      "height": 293
+      "width": 217,
+      "height": 261
     },
     "giant_panda_girl_young": {
       "path": "assets/characters/giant_panda_girl_young.webp",
-      "width": 339,
-      "height": 307
+      "width": 268,
+      "height": 309
     },
     "giant_panda_girl_companion": {
       "path": "assets/characters/giant_panda_girl_companion.webp",
-      "width": 417,
-      "height": 338
+      "width": 329,
+      "height": 353
     },
     "tiger_father": {
       "path": "assets/characters/tiger_father.webp",

@@ -98,7 +98,10 @@ const SAVANNA: BiomeDef = {
 const FILES = [africa, asia, europe, northAmerica, southAmerica, oceania, antarctica] as unknown as RawFile[];
 
 // horizon, fond et rochers mesurés sur chaque décor (perspective des animaux posés au doigt)
-const LIST: BiomeDef[] = [SAVANNA, ...FILES.flatMap(fromFile)].map((p) => ({ ...p, ...PLACE_DEPTH[p.id] }));
+/** Décors dont l'image est déjà de nuit : le bouton « Bonne nuit » n'y sert à rien (demande du parent, 2026-11-23). */
+export const NIGHT_IMAGES: readonly string[] = ['europe_owl_moon'];
+
+const LIST: BiomeDef[] = [SAVANNA, ...FILES.flatMap(fromFile)].map((p) => ({ ...p, ...PLACE_DEPTH[p.id], ...(NIGHT_IMAGES.includes(p.id) ? { nightImage: true } : {}) }));
 
 export const PLACES: Readonly<Record<PlaceId, BiomeDef>> = Object.fromEntries(LIST.map((p) => [p.id, p]));
 

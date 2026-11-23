@@ -18,7 +18,7 @@ import type { Line, Rect } from './types';
 const L = (en: string, fr: string): Line => ({ en, fr });
 
 export type SeaGameId = 'whale' | 'turtle' | 'dolphins';
-export type SeaSprite = 'whale' | 'turtle' | 'dolphin_big' | 'dolphin_little';
+export type SeaSprite = 'whale' | 'turtle' | 'turtle_baby' | 'dolphin_big' | 'dolphin_little';
 
 /**
  * Grandes images HD des jeux bonus (dessins fournis par le parent dans `Animaux/Ocean map/`,
@@ -26,11 +26,30 @@ export type SeaSprite = 'whale' | 'turtle' | 'dolphin_big' | 'dolphin_little';
  * ci-dessus, posées exactement sur sa peinture.
  */
 export const SEA_HD: Readonly<Record<SeaSprite, string>> = {
-  whale: 'whale_hd',
-  turtle: 'turtle_hd',
+  // 2026-11-23 : les planches « Baleines à bosse complices » (maman + baleineau, ensemble) et « Tortues de mer joyeuses
+  // en nageant » (la grande et la petite) remplacent la baleine et la tortue seules (`scripts/sea_famille.py`) ;
+  // `whale_hd` et `turtle_hd` restent dans le dossier, plus utilisées par le jeu.
+  whale: 'whale_family_hd',
+  turtle: 'turtle_mother_hd',
+  turtle_baby: 'turtle_baby_hd',
   dolphin_big: 'dolphin_big_hd',
   dolphin_little: 'dolphin_little_hd',
 };
+
+/**
+ * Les deux décors sous-marins de chaque animal (dessins du parent dans `Animaux/Ocean map/<animal>/`,
+ * `scripts/sea_famille.py`, 2026-11-23). Le jeu change de décor à chaque manche : en une partie, l'enfant voit les deux.
+ *   baleine : la cathédrale de glace puis le panorama de l'Antarctique ·
+ *   dauphins : le paradis lumineux puis le canyon de kelp · tortue : le jardin corallien puis le canyon turquoise.
+ */
+export const SEA_DECORS: Readonly<Record<SeaGameId, readonly [string, string]>> = {
+  whale: ['bg_whale_1', 'bg_whale_2'],
+  dolphins: ['bg_dolphins_1', 'bg_dolphins_2'],
+  turtle: ['bg_turtle_1', 'bg_turtle_2'],
+};
+
+/** décor de la manche `index` (−1 = l'introduction : le premier décor) : un puis l'autre, en alternance */
+export const seaDecor = (game: SeaGameId, index: number): string => SEA_DECORS[game][Math.max(index, 0) % 2]!;
 
 export interface SeaFriend {
   id: SeaGameId;

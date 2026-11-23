@@ -5,7 +5,7 @@ import type { BiomeDef } from '../content/types';
 import type { ActorRef, FamilyState } from '../engine/state';
 import { dragSpot } from '../ui/drag';
 import { homePlacement } from '../ui/scene';
-import { farAt, FARTHEST, farthestY, groundScale, horizonOf, inWater, perchAt } from './staging';
+import { farAt, FAR_SIZE, FARTHEST, farthestY, horizonOf, inWater, perchAt, placeScale } from './staging';
 
 // demande du parent (2026-11-20) : « il doit pouvoir aller quand même assez loin… je dois pouvoir le poser
 // sur la Pierre et les Lions… il faut qu'ils soient complètement au fond du chemin »
@@ -17,7 +17,7 @@ const adult = (speciesId: string, role: 'father' | 'mother'): ActorRef => ({ kin
 function drop(place: BiomeDef, actor: ActorRef, pointer: { x: number; y: number }) {
   const home = homePlacement(actor, family, place.groundY);
   const hz = horizonOf(place.groundY, place.horizonY);
-  return { home, spot: dragSpot(home, pointer, 0, (f, t) => groundScale(f, t, hz), (x) => farthestY(home.y, hz, place.farY, x), (x, y) => perchAt(place, x, y)) };
+  return { home, spot: dragSpot(home, pointer, 0, placeScale(place, home.y), (x) => farthestY(home.y, hz, place.farY, x), (x, y) => perchAt(place, x, y)) };
 }
 
 describe('profondeur mesurée de chaque décor', () => {
@@ -38,13 +38,16 @@ describe('profondeur mesurée de chaque décor', () => {
     for (const id of Object.keys(PLACE_DEPTH)) expect(PLACES[id as keyof typeof PLACES], id).toBeDefined();
   });
 
-  it('tout au fond, un animal est tout petit mais reste visible', () => {
+  // 2026-11-23 (demande du parent) : « ils sont trop petits quand ils sont au fond, c'est pas logique » : tout au fond
+  // du sol, un animal garde un peu plus de la moitié de sa taille (FAR_SIZE), et rapetisse régulièrement jusque-là
+  it('tout au fond, un animal est plus petit, mais garde au moins un peu plus de la moitié de sa taille', () => {
     for (const p of Object.values(PLACES)) {
       // là où le sol va le plus loin (sur une plage : le sable du fond, pas devant la mer)
       const x = [...Array(19).keys()].map((i) => 5 + i * 5).reduce((m, v) => (farAt(p.farY!, v) < farAt(p.farY!, m) ? v : m));
       const { home, spot } = drop(p, adult('lion', 'father'), { x, y: 0 });
       expect(spot.y, p.id).toBeCloseTo(Math.max(farAt(p.farY!, x), spot.h + 1), 5);
-      expect(spot.h / home.h, p.id).toBeLessThan(0.55); // la montagne d'Asie : le sol s'arrête au bord de la falaise
+      expect(spot.h / home.h, p.id).toBeLessThan(0.8);
+      expect(spot.h / home.h, p.id).toBeGreaterThanOrEqual(FAR_SIZE - 1e-9);
       expect(spot.h / home.h, p.id).toBeGreaterThanOrEqual(FARTHEST - 1e-9);
     }
   });
@@ -52,11 +55,12 @@ describe('profondeur mesurée de chaque décor', () => {
 
 describe('les lions tout au fond du chemin de la savane', () => {
   const savanna = PLACES.savanna!;
-  it('on peut les poser là où le chemin se perd (x 72, y 42), tout petits', () => {
+  it('on peut les poser là où le chemin se perd (x 72, y 42), plus petits, mais pas minuscules', () => {
     for (const role of ['father', 'mother'] as const) {
       const { home, spot } = drop(savanna, adult('lion', role), { x: 72, y: 42 });
       expect(spot.y).toBe(42);
-      expect(spot.h / home.h).toBeLessThan(0.3); // avant : jamais moins de 0,42, et pas plus loin que y 63
+      expect(spot.h / home.h).toBeLessThan(0.7);
+      expect(spot.h / home.h).toBeGreaterThanOrEqual(FAR_SIZE - 1e-9); // 2026-11-23 : avant, moins de 0,3 : trop petit
     }
   });
   it('encore plus loin, dans la plaine, jusqu\'au pied des collines, mais pas dans le ciel', () => {
@@ -81,8 +85,10 @@ describe('le lézard sur la grosse pierre de la plage', () => {
   it('posé sur le dessus de la pierre, il y reste, à la taille qu\'il aurait au pied de la pierre', () => {
     const { home, spot } = drop(beach, lizard, { x: 21, y: 36 });
     expect(spot.y).toBe(36); // plus haut que le sable du fond (y 51) : il est sur la pierre
-    expect(spot.h).toBeCloseTo(home.h * groundScale(home.y, 50, 45), 5);
-    expect(spot.h).toBeLessThan(home.h * 0.2);
+    expect(spot.h).toBeCloseTo(home.h * placeScale(beach, home.y)(home.y, 50), 5);
+    // la pierre est tout au fond : à peu près la taille du fond du sable
+    expect(spot.h).toBeLessThan(home.h * 0.62);
+    expect(spot.h).toBeGreaterThan(home.h * 0.5);
   });
   it('à côté de la pierre, dans le ciel : il redescend sur le sable du fond', () => {
     expect(drop(beach, lizard, { x: 8, y: 30 }).spot.y).toBeCloseTo(51.4, 1);
@@ -120,7 +126,7 @@ describe("pas d'animal dans l'eau des lacs et des rivières", () => {
   const dropIn = (place: BiomeDef, pointer: { x: number; y: number }) => {
     const home = homePlacement(adult('lion', 'father'), family, place.groundY);
     const hz = horizonOf(place.groundY, place.horizonY);
-    return dragSpot(home, pointer, 0, (f, t) => groundScale(f, t, hz), (x) => farthestY(home.y, hz, place.farY, x), (x, y) => perchAt(place, x, y), undefined, place.water);
+    return dragSpot(home, pointer, 0, placeScale(place, home.y), (x) => farthestY(home.y, hz, place.farY, x), (x, y) => perchAt(place, x, y), undefined, place.water);
   };
 
   it("l'eau est mesurée sur les décors qui ont un lac, une rivière ou la mer devant", () => {
@@ -157,6 +163,38 @@ describe("pas d'animal dans l'eau des lacs et des rivières", () => {
           const s = dropIn(p, { x, y });
           if (perchAt(p, s.x, s.y) === undefined) expect(inWater(p.water, s.x, s.y), `${p.id} (${x}, ${y})`).toBe(false);
         }
+    }
+  });
+});
+
+// 2026-11-23 (capture du tigre à la cascade de la jungle) : « Les perspectives ne sont vraiment pas bonnes… ils sont
+// trop petits quand ils sont au fond, c'est pas logique »
+describe('la perspective revue : au fond, plus petit mais jamais minuscule', () => {
+  it('la cascade de la jungle : le tigre au fond du chemin garde plus de la moitié de sa taille', () => {
+    const falls = PLACES.asia_jungle_falls!;
+    for (const role of ['father', 'mother'] as const) {
+      const { home, spot } = drop(falls, adult('tiger', role), { x: 50, y: 0 });
+      expect(spot.y).toBeLessThan(home.y - 5);
+      expect(spot.h / home.h).toBeGreaterThanOrEqual(FAR_SIZE - 1e-9);
+      expect(spot.h / home.h).toBeLessThan(0.8);
+    }
+  });
+
+  it('dans chaque décor, la taille diminue régulièrement du devant vers le fond, sans saut', () => {
+    for (const p of Object.values(PLACES)) {
+      if (p.lane || p.seats?.length) continue;
+      const home = homePlacement(adult('lion', 'father'), family, p.groundY);
+      const scale = placeScale(p, home.y);
+      const far = farAt(p.farY!, home.x);
+      let prev = Infinity;
+      for (let y = home.y; y >= far; y -= 1) {
+        const k = scale(home.y, y);
+        expect(k, `${p.id} y ${y}`).toBeLessThanOrEqual(prev + 1e-9);
+        if (prev !== Infinity) expect(prev - k, `${p.id} y ${y}`).toBeLessThan(0.12);
+        prev = k;
+      }
+      expect(scale(home.y, home.y), p.id).toBeCloseTo(1, 9);
+      expect(scale(home.y, far), p.id).toBeGreaterThanOrEqual(FAR_SIZE - 1e-9);
     }
   });
 });
