@@ -82,7 +82,7 @@ describe('Monde libre (MON-01, MON-02)', () => {
   it("commencer par l'Antarctique ne bloque rien : l'Afrique reste jouable ensuite", () => {
     let state = newGameState();
     const penguin: ActorRef = { speciesId: 'penguin', kind: 'adult', role: 'father' };
-    const g = selectActivities(ctx(state, 'penguin', 'ice_coast', penguin)).find((a) => a.archetype.id === 'greeting')!;
+    const g = selectActivities(ctx(state, 'penguin', 'open_sea', penguin)).find((a) => a.archetype.id === 'greeting')!;
     state = play(state, g, penguin);
     // comme à l'écran : tant que la famille n'a pas trouvé d'eau ici, Papa a soif
     // 2026-11-23 : chaque famille a ses décors ; le point d'eau est celui de la girafe

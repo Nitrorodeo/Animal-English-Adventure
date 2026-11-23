@@ -58,11 +58,11 @@ describe('les autres continents', () => {
     expect(everyone('giant_panda', 'asia_pagoda').has('lanterns'), 'lanterns@asia_pagoda').toBe(true);
     expect(everyone('beaver', 'na_lake').has('maple_leaves'), 'maple_leaves@na_lake').toBe(true);
     expect(everyone('koala', 'oc_beach').has('beach_shells') || everyone('kangaroo', 'oc_beach').has('beach_shells')).toBe(true);
-    expect(everyone('penguin', 'an_snowfield').has('snowflakes'), 'snowflakes@an_snowfield').toBe(true);
-    expect(everyone('penguin', 'an_snowfield').has('follow_tracks'), 'follow_tracks@an_snowfield').toBe(true);
-    expect(everyone('penguin', 'an_ice_cave').has('echo_canyon'), 'echo_canyon@an_ice_cave').toBe(true);
+    expect(everyone('polar_bear', 'an_snowfield').has('snowflakes'), 'snowflakes@an_snowfield').toBe(true);
+    expect(everyone('polar_bear', 'an_snowfield').has('follow_tracks'), 'follow_tracks@an_snowfield').toBe(true);
+    expect(everyone('polar_bear', 'an_ice_cave').has('echo_canyon'), 'echo_canyon@an_ice_cave').toBe(true);
     // jamais de lanternes en Antarctique, ni de flocons dans la savane
-    expect(everyone('penguin', 'an_snowfield').has('lanterns'), 'lanterns@an_snowfield').toBe(false);
+    expect(everyone('polar_bear', 'an_snowfield').has('lanterns'), 'lanterns@an_snowfield').toBe(false);
     expect(everyone('lion', 'africa_baobab').has('snowflakes'), 'snowflakes@africa_baobab').toBe(false);
   });
 

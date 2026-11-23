@@ -77,7 +77,7 @@ describe('textes et images des jeux communs', () => {
   });
 
   it('flocons : pas « It’s snowing! » sous le soleil', () => {
-    const q = buildQuest(getArchetype('snowflakes'), ctx(withBaby('penguin', 'young', 'beginner'), 'penguin', 'an_snowfield', adult('penguin', 'father')));
+    const q = buildQuest(getArchetype('snowflakes'), ctx(withBaby('penguin', 'young', 'beginner'), 'penguin', 'an_aurora', adult('penguin', 'father')));
     expect(q).toBeTruthy();
     if (q) expect(JSON.stringify(q.script.steps)).not.toMatch(/It's snowing/);
   });
@@ -118,7 +118,7 @@ describe('décors et objets corrigés (2026-11-22)', () => {
   const shown = (st: readonly QuestStep[]) => st.flatMap((s) => (s.kind === 'props' ? s.show : []));
 
   it('empreintes : sabots pour le zèbre et le cerf, trois doigts pour le manchot, jamais dans la mare', () => {
-    for (const [sp, place, print] of [['giraffe', 'africa_plains', 'hoofprint'], ['elephant', 'africa_acacia_plain', 'hoofprint'], ['giraffe', 'africa_green_meadow', 'hoofprint'], ['fox', 'europe_forest', 'hoofprint'], ['penguin', 'an_snowfield', 'birdprint']] as const) {
+    for (const [sp, place, print] of [['giraffe', 'africa_plains', 'hoofprint'], ['elephant', 'africa_acacia_plain', 'hoofprint'], ['giraffe', 'africa_green_meadow', 'hoofprint'], ['fox', 'europe_forest', 'hoofprint'], ['polar_bear', 'an_snowfield', 'birdprint']] as const) {
       for (const tier of ['beginner', 'intermediate', 'expert'] as const) {
         const st = steps('follow_tracks', sp, place, tier);
         const prints = shown(st).filter((p) => p.id.startsWith('fp'));
@@ -162,7 +162,7 @@ describe('décors et objets corrigés (2026-11-22)', () => {
   });
 
   it('canyon d’écho : pas de grenouille dans la neige', () => {
-    for (const [sp, place] of [['penguin', 'an_ice_cave'], ['snow_leopard', 'asia_snow_den'], ['lion', 'africa_canyon']] as const) {
+    for (const [sp, place] of [['polar_bear', 'an_ice_cave'], ['snow_leopard', 'asia_snow_den'], ['lion', 'africa_canyon']] as const) {
       expect(JSON.stringify(steps('echo_canyon', sp, place, 'intermediate')), place).not.toMatch(/frog|🐸/);
     }
   });

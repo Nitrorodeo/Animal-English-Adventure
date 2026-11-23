@@ -514,6 +514,10 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   an_snowfield: ['snow', 'mountain', 'hill', 'glacier'],
   open_sea: ['iceberg', 'cliff', 'sea', 'block'],
   an_aurora: ['arch', 'iceberg', 'sea', 'aurora'],
+  an_seal_aurora: ['cliff', 'floe', 'lights', 'sea'],
+  an_seal_rocks: ['starfish', 'pool', 'wave', 'sea'],
+  an_seal_sunset: ['sunset', 'flowers', 'island', 'sea'],
+  an_penguin_cave: ['wall', 'snowy_rock', 'cave', 'sea'],
 };
 
 export function photoSubjects(c: ActivityCtx): string[] {

@@ -6,7 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { getArchetype } from '../content/archetypes';
 import { photoSubjects } from '../content/activities/africa';
-import { landSpots } from '../content/activities/kit';
+import { anchor, landSpots } from '../content/activities/kit';
 import { inWater } from '../content/places/depth';
 import { NOUNS, PLACES } from '../content/places';
 import { getSpecies, SPECIES } from '../content/species';
@@ -25,7 +25,7 @@ const TIERS: readonly Tier[] = ['beginner', 'intermediate', 'expert'];
 /** Jeu de chaque espèce, et les mots propres qu'on doit entendre (débutant, puis en plus à l'expert). */
 const GAMES = [
   { id: 'penguin_waddle', species: 'penguin', words: ['waddle', 'flippers', 'slide', 'belly'], expert: ['chick', 'huddle'] },
-  { id: 'seal_whiskers', species: 'seal', words: ['whiskers', 'dive', 'clap', 'fish'], expert: ['pup', 'breathing hole'] },
+  { id: 'seal_whiskers', species: 'seal', words: ['whiskers', 'dive', 'clap', 'fish'], expert: ['pup'] },
   { id: 'polar_bear_fur', species: 'polar_bear', words: ['white', 'fur', 'black', 'nose', 'roll in the snow', 'paddle'], expert: ['cub'] },
 ] as const;
 
@@ -54,7 +54,7 @@ describe('jeux propres aux espèces de l’Antarctique', () => {
     for (const g of GAMES) {
       const arch = getArchetype(g.id);
       expect(arch.speciesIds, g.id).toEqual([g.species]);
-      expect(arch.allowedBiomes, g.id).toEqual([]);
+      expect(arch.allowedBiomes, g.id).toEqual(getSpecies(g.species).allowedBiomes); // 2026-11-23 : le jeu est propre aux 3 décors de sa famille
       expect(arch.roles?.length, g.id).toBeGreaterThan(0);
       for (const p of getSpecies(g.species).allowedBiomes) {
         for (const role of arch.roles ?? []) {
@@ -140,6 +140,11 @@ describe('jeux propres aux espèces de l’Antarctique', () => {
         const expert = heard(build(g, p, 'expert')!.script);
         for (const w of g.words) expect(beginner, `${g.id}@${p} débutant : ${w}`).toContain(w);
         for (const w of [...g.words, ...g.expert]) expect(expert, `${g.id}@${p} expert : ${w}`).toContain(w);
+        // le phoque ne parle d'un trou dans la glace que là où il y a de la glace et de la neige (pas au rivage ni à la plage)
+        if (g.id === 'seal_whiskers') {
+          if (anchor(PLACES[p]!, 'snow')) expect(expert, `${p} : breathing hole`).toContain('breathing hole');
+          else expect(expert, `${p} : pas de trou dans la glace`).not.toMatch(/breathing hole|snow|ice/);
+        }
       }
     }
   });
@@ -151,7 +156,7 @@ describe('jeux propres aux espèces de l’Antarctique', () => {
       if (landSpots(PLACES[p]!).length >= 5) expect(text, p).toContain('pebbles');
       else expect(text, p).not.toContain('pebbles');
     }
-    expect(heard(build(g, 'an_snowfield', 'expert')!.script)).toContain('egg');
+    expect(heard(build(g, 'an_penguin_cave', 'expert')!.script)).toContain('egg');
   });
 
   it('l’ours polaire compte ses empreintes sur la neige, et ne pagaie (carte) que près de la mer', () => {
@@ -185,6 +190,10 @@ describe('vocabulaire propre à chaque décor de l’Antarctique', () => {
       open_sea: ['ice block', 'ice ledge'],
       an_snowfield: ['glacier', 'snowdrift'],
       an_aurora: ['aurora', 'ice crack'],
+      an_seal_aurora: ['ice cliff', 'northern lights'],
+      an_seal_rocks: ['starfish', 'rock pool'],
+      an_seal_sunset: ['sunset', 'flowers'],
+      an_penguin_cave: ['ice wall', 'snowy rock'],
     };
     for (const [id, words] of Object.entries(expected)) {
       for (const w of words) {
