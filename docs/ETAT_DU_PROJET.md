@@ -23,6 +23,13 @@ Décision du parent : « J'aimerais que l'on reprenne tout sur celle ci ». Les 
 | 11 | Voyage accompagné entre continents : proposé, non validé | Parent (décision) |
 | 12 | ~~Un jeu à soi pour chaque animal, des mots à soi pour chaque décor~~ **fait** le 2026-11-22 : 21 jeux d'espèce, chaque décor a au moins 2 mots qu'aucun autre n'a | Claude |
 | 13 | **3 décors choisis par animal**, déposés par le parent dans `Animaux/` : les intégrer à son signal (comme `asia_snow_den`) | Parent (images), puis Claude |
+| 14 | **Cartographie des 69 parcours, anomalies et feuille de route** rédigées le 2026-11-23 (`docs/CARTOGRAPHIE_PARCOURS.md`, `docs/ROADMAP_PARCOURS.md`). **En attente de la validation du parent** : aucune production avant (océan, images A1-A4, découpe du lion, décors sortants, mangue du toucan, ordre des zones) | Parent (décision), puis Claude |
+
+*Mis à jour le 2026-11-23 vers 13 h — **Cartographie avant refonte** (demande du parent : « Présente-moi d'abord la cartographie, les anomalies et la roadmap pour validation ») :*
+*- 69 décors cartographiés (32 déjà dans le jeu, 37 nouveaux) : ce qu'on voit, histoire, mots propres et réutilisés, interactions des 4 personnages en débutant et intermédiaire.*
+*- Croissance vérifiée par `src/engine/croissance.test.ts` (64 tests OK, 21 familles) : 4 phases une à une, deux bébés indépendants, sauvegarde, phase conservée d'un décor à l'autre. Seul défaut réel : les bébés lions n'ont qu'une image par sexe (planche à découper).*
+*- Constat voix : `generate_voices.py` ne régénère jamais une phrase inchangée, mais supprime en fin de passe les voix dont le texte a disparu → à transformer en archivage (étape 0 de la feuille de route).*
+*- Rien n'a été modifié dans les parcours, les images ni les voix.*
 
 *Mis à jour le 2026-11-23 vers 10 h — **Un jeu à soi pour chaque animal, des mots à soi pour chaque décor, relecture et contrôle à l'écran** (demandes du parent : « Chaque personnage a son propre jeu avec son propre vocabulaire, chaque décor a son propre vocabulaire », « si tu vois des putains de défauts, fais les au lieu de me dire ») :*
 *- **21 jeux d'espèce** (`src/content/activities/species/`, un fichier par continent) : chaque animal a son jeu, avec 4 à 6 mots à lui (mane, trunk, tusk, pouch, quills, frill, bamboo, eucalyptus leaf, beak, flipper…), sa vraie nourriture et ses vrais gestes. Réservé à l'espèce (`speciesIds`, +7 au classement du menu), 3 niveaux différents, présent dans le menu d'une famille neuve. Le koala, le lézard (Maman et bébés) et le kangourou ont des rôles fixés (`roles`) pour que personne ne dise « Look at Daddy! » à sa propre place.*
