@@ -85,7 +85,8 @@ describe('jeux propres aux décors', () => {
   it('chaque décor d’Afrique a au moins un jeu qu’on ne trouve que là (ou presque)', () => {
     for (const p of AFRICA_PLACES) {
       const all = new Set([...offered(state, 'lion', p, father('lion')), ...offered(state, 'lion', p, mother('lion')), ...offered(state, 'lion', p, baby('lion'))]);
-      const local = [...all].filter((id) => getArchetype(id).allowedBiomes.length > 0 && getArchetype(id).allowedBiomes.length < AFRICA_PLACES.length);
+      const inAfrica = (id: string) => getArchetype(id).allowedBiomes.filter((b) => AFRICA_PLACES.includes(b)).length;
+      const local = [...all].filter((id) => inAfrica(id) > 0 && inAfrica(id) < AFRICA_PLACES.length);
       expect(local.length, p).toBeGreaterThan(0);
     }
   });
@@ -133,10 +134,15 @@ describe('jeux propres aux décors', () => {
     expect(offered(gir, 'giraffe', 'africa_desert', father('giraffe')).has('climb_rock')).toBe(false);
   });
 
-  it('les jeux d’Afrique ne sont jamais proposés sur un autre continent', () => {
+  it('les jeux de tout le monde (ordres, nuit, photo, émotions) vont aussi sur les autres continents', () => {
     const panda = withBaby('giant_panda', 'companion');
-    const sp = getSpecies('giant_panda');
-    for (const p of sp.allowedBiomes) for (const id of ['simon_says', 'bedtime', 'photo', 'feelings']) expect(offered(panda, 'giant_panda', p, mother('giant_panda')).has(id) || offered(panda, 'giant_panda', p, father('giant_panda')).has(id), `${id}@${p}`).toBe(false);
+    for (const p of getSpecies('giant_panda').allowedBiomes) {
+      const all = new Set([...offered(panda, 'giant_panda', p, mother('giant_panda')), ...offered(panda, 'giant_panda', p, father('giant_panda'))]);
+      for (const id of ['simon_says', 'bedtime', 'photo', 'feelings']) expect(all.has(id), `${id}@${p}`).toBe(true);
+    }
+    // pas d'étoiles à compter dans la grotte de glace
+    const peng = withBaby('penguin', 'companion');
+    expect(offered(peng, 'penguin', 'an_ice_cave', father('penguin')).has('bedtime')).toBe(false);
   });
 });
 

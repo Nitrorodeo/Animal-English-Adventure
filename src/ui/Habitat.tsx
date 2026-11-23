@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { speech, type VoiceRole } from '../audio/speech';
 import { babyVoice, DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
 import { TREASURES } from '../content/adventures';
@@ -20,13 +20,14 @@ import type { AnswerRecord } from '../engine/skills';
 import { actorId, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
 import { Confetti } from './Confetti';
 import { DialogueBox, Options } from './DialogueBox';
+import { bubbleSide, nameInside, wornSlot } from './bubbleSide';
 import { FamilyEvent, PhotoSnap } from './FamilyEvent';
 import { LiveSprite } from './LiveSprite';
-import { PropLayer } from './PropLayer';
+import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
 import { rigFor } from '../game/rigs';
-import { depthScale, farthestY, groundScale, horizonOf, perchAt, puppetClip, snapToLane, walkMs, WALK_MS } from '../game/staging';
-import { assetUrl, background, homePlacement, spriteFor, type Placement } from './scene';
+import { canFly, depthScale, farthestY, groundScale, horizonOf, perchAt, puppetClip, snapToLane, walkMs, WALK_MS } from '../game/staging';
+import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { dragSpot, isDrag, type Spot } from './drag';
 import { placeActor, spotKey } from '../engine/spots';
@@ -140,15 +141,19 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
     [species.id, family.babies],
   );
 
-  const ctxFor = useCallback(
-    (actor: ActorRef): QuestContext => {
-      const greeted = state.player.history.some((h) => h.speciesId === species.id);
-      const memory = actor.kind === 'adult' ? family.parentMemory[actor.role] : (findBaby(state, actor)?.questMemory ?? []);
+  const ctxIn = useCallback(
+    (st: GameState, actor: ActorRef): QuestContext => {
+      const greeted = st.player.history.some((h) => h.speciesId === species.id);
+      const memory = actor.kind === 'adult' ? getFamily(st, species.id).parentMemory[actor.role] : (findBaby(st, actor)?.questMemory ?? []);
       const need = greeted && !memory.some((m) => m.startsWith('found_water')) ? ('thirsty' as const) : null;
-      return { state, species, biome, actor, rng: createRng(seed + state.player.activityCounter * 31 + actorId(actor).length), need };
+      return { state: st, species, biome, actor, rng: createRng(seed + st.player.activityCounter * 31 + actorId(actor).length), need };
     },
-    [state, species, biome, family.parentMemory, seed],
+    [species, biome, seed],
   );
+  const ctxFor = useCallback((actor: ActorRef) => ctxIn(state, actor), [ctxIn, state]);
+  // la bulle « ? » des bébés curieux se recalcule après coup (rendu de faible priorité) : pas au moment
+  // où l'on pose un animal ou finit un jeu, là où chaque milliseconde se voit
+  const calmState = useDeferredValue(state);
 
   const menu = useMemo(() => {
     if (!menuFor) return null;
@@ -158,9 +163,9 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
 
   const curious = useMemo(() => {
     const out = new Set<string>();
-    for (const a of actors) if (a.kind === 'baby' && selectActivities(ctxFor(a)).some((x) => x.archetype.id === 'name_object')) out.add(actorId(a));
+    for (const a of actors) if (a.kind === 'baby' && selectActivities(ctxIn(calmState, a)).some((x) => x.archetype.id === 'name_object')) out.add(actorId(a));
     return out;
-  }, [actors, ctxFor]);
+  }, [actors, ctxIn, calmState]);
 
   useEffect(() => {
     // en arrivant, la maman accueille la joueuse par son prénom (s'il est donné), puis le lieu est annoncé
@@ -286,13 +291,15 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             place={spotOf(a) ?? homePlacement(a, family, biome.groundY, biome.lane)}
             baseH={homePlacement(a, family, biome.groundY, biome.lane).h}
             face={spotOf(a)?.f}
+            dim={!!night}
+            paused={showFamily || !!grow || !!stickerPick}
             onDragTo={
               night
                 ? undefined
                 : (pointer, grabDy) => {
                     const home = homePlacement(a, family, biome.groundY, biome.lane);
                     const hz = horizonOf(biome.groundY, biome.horizonY);
-                    const next = dragSpot(home, pointer, grabDy, (from, to) => groundScale(from, to, hz), (x) => farthestY(home.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y), biome.lane);
+                    const next = dragSpot(home, pointer, grabDy, (from, to) => groundScale(from, to, hz), (x) => farthestY(home.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y), biome.lane, biome.water);
                     // il regarde vers où on l'emmène, et garde ce sens une fois posé
                     const prev: Spot = (liveRef.current?.id === actorId(a) ? liveRef.current.spot : undefined) ?? spotOf(a) ?? { x: home.x, y: home.y, h: home.h };
                     const dx = next.x - prev.x;
@@ -557,9 +564,13 @@ interface CharacterProps {
   baseH?: number;
   /** sens où il regarde au repos (choisi par l'enfant) ; absent = sens du dessin */
   face?: 1 | -1;
+  /** nuit : dessin assombri */
+  dim?: boolean;
+  /** caché sous un calque plein écran (famille, « grandit », autocollant) : l'animation s'arrête */
+  paused?: boolean;
 }
 
-function Character({ actor, state, species, place, question, action, speaking, hidden, found, onTap, wearing, wanted, glow, cuddle, onHold, onDragTo, onDragEnd, baseH, face }: CharacterProps) {
+function Character({ actor, state, species, place, question, action, speaking, hidden, found, onTap, wearing, wanted, glow, cuddle, onHold, onDragTo, onDragEnd, baseH, face, dim, paused }: CharacterProps) {
   const sprite = spriteOf(state, species, actor);
   const name = actorName(state, species, actor);
   const rig = rigFor(sprite?.path.split('/').pop()?.replace(/\.\w+$/, ''));
@@ -588,7 +599,8 @@ function Character({ actor, state, species, place, question, action, speaking, h
   useEffect(() => {
     if (!walk) lastDir.current = rest;
   }, [rest, walk]);
-  const clip = puppetClip({ walking: !!walk, action, speaking });
+  const flies = canFly(species.mobility, actor.kind === 'baby' ? getFamily(state, actor.speciesId).babies.find((b) => b.id === actor.babyId)?.stage : undefined);
+  const clip = puppetClip({ walking: !!walk, action, speaking, flies });
   const facing: 1 | -1 = walk ? walk.dir : action ? lastDir.current : rest;
   const puppet = !!rig && !!sprite && puppetOk !== false && !hidden;
   // appui long : chatouilles / câlin ; le simple toucher garde son effet (menu)
@@ -602,6 +614,17 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const drag = useRef<{ sx: number; sy: number; grabDy: number; on: boolean; rect: DOMRect } | null>(null);
   const dragged = useRef(false);
   const [dragging, setDragging] = useState(false);
+  // un doigt ou une souris envoient 120 à 240 mouvements par seconde : on n'en garde qu'un par image
+  const pendingMove = useRef<{ x: number; y: number; grabDy: number } | null>(null);
+  const moveRaf = useRef(0);
+  const flushMove = () => {
+    if (moveRaf.current) cancelAnimationFrame(moveRaf.current);
+    moveRaf.current = 0;
+    const m = pendingMove.current;
+    pendingMove.current = null;
+    if (m) onDragTo?.({ x: m.x, y: m.y }, m.grabDy);
+  };
+  useEffect(() => () => cancelAnimationFrame(moveRaf.current), []);
   const toStage = (e: React.PointerEvent, rect: DOMRect) => ({ x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100 });
   const dragProps = onDragTo
     ? {
@@ -617,7 +640,8 @@ function Character({ actor, state, species, place, question, action, speaking, h
             e.currentTarget.setPointerCapture?.(e.pointerId);
             setDragging(true);
           }
-          onDragTo(toStage(e, d.rect), d.grabDy);
+          pendingMove.current = { ...toStage(e, d.rect), grabDy: d.grabDy };
+          if (!moveRaf.current) moveRaf.current = requestAnimationFrame(flushMove);
         },
       }
     : {};
@@ -628,6 +652,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
   };
   const endDrag = () => {
     if (drag.current?.on) {
+      flushMove(); // dernière position du doigt avant de poser
       setDragging(false);
       setWalk(null); // posé : il s'arrête net
       onDragEnd?.();
@@ -673,12 +698,13 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const base = baseH ?? place.h;
   return (
     <button
-      className={`char${action ? ` act-${action}` : ''}${speaking ? ' speaking' : ''}${hidden ? ' hidden' : ''}${found ? ' found' : ''}${puppet && puppetOk ? ' puppeted' : ''}${puppet && walk ? ' walking' : ''}${wanted ? ' wanted' : ''}${glow ? ' glow' : ''}${cuddle ? (actor.kind === 'baby' ? ' tickled' : ' hugged') : ''}${onDragTo ? ' movable' : ''}${dragging ? ' dragging' : ''}`}
+      className={`char${action ? ` act-${action}` : ''}${speaking ? ' speaking' : ''}${hidden ? ' hidden' : ''}${found ? ' found' : ''}${puppet && puppetOk ? ' puppeted' : ''}${puppet && walk ? ' walking' : ''}${flies && walk && !dragging ? ' flying' : ''}${wanted ? ' wanted' : ''}${glow ? ' glow' : ''}${cuddle ? (actor.kind === 'baby' ? ' tickled' : ' hugged') : ''}${onDragTo ? ' movable' : ''}${dragging ? ' dragging' : ''}${nameInside(place.y) ? ' low' : ''}`}
       style={{
         // déplacé par transform (calculé par la carte graphique, sans recalcul de mise en page) : marche fluide
         height: `${base}%`,
         transform: `translate(${place.x}cqw, ${(place.y * 9) / 16}cqw) translate(-50%, -100%) scale(${place.h / base})`,
         transitionDuration: `${track.current.ms}ms`,
+        ['--trip' as string]: `${track.current.ms}ms`,
         zIndex: dragging ? 400 : Math.round(place.y),
         // tout petit au fond du décor : zone de prise agrandie (invisible) pour pouvoir le reprendre au doigt
         ['--grab' as string]: `${Math.round(Math.max(0, 0.45 / (place.h / base) - 1) * 50)}%`,
@@ -694,9 +720,13 @@ function Character({ actor, state, species, place, question, action, speaking, h
       ) : (
         <span className="char-icon" style={{ fontSize: `${base * 0.3}cqw` }}>{species.icon}</span>
       )}
-      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={clip} facing={facing} onReady={setPuppetOk} />}
+      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} />}
       {question && <span className="q-bubble">?</span>}
-      {wearing && wearing.length > 0 && <span className="worn">{wearing.join('')}</span>}
+      {wearing?.map((k) => (
+        <span key={k} className={`worn worn-${wornSlot(k)}`}>
+          {PROPS[k]?.emoji}
+        </span>
+      ))}
       <span className="char-name">{name}</span>
       {action === 'drink_trunk' && <span className="splash">💦</span>}
       {action === 'splash' && <span className="splash">💦</span>}
@@ -853,6 +883,16 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
   const idOf = (sp: Speaker) => (roles[sp] ? actorId(roles[sp]!) : null);
 
   const glow = step?.kind === 'ask' ? step.pointAt : q.reveal?.anchor;
+  // la bulle ne cache jamais ce qu'on demande de regarder ou de toucher
+  const side = useMemo(() => {
+    const ground = run.props.filter((p) => !p.sky);
+    const pts = ground.map((p) => ({ x: propPos(p, place).left, y: propPos(p, place).top }));
+    const rect = (id?: string) => place.anchors.find((a) => a.id === id)?.hit;
+    const targets = step?.kind === 'tapAnchor' ? [step.anchor] : step?.kind === 'seek' ? [step.hideAt] : [glow];
+    const main = targets.map(rect).filter((r): r is NonNullable<typeof r> => !!r);
+    if (step?.kind === 'tapProps') for (const p of ground.filter((x) => step.targets.includes(x.id))) main.push({ x: propPos(p, place).left - 3, y: propPos(p, place).top - 10, w: 6, h: 10 });
+    return bubbleSide(pts, main);
+  }, [run.props, place, step, glow]);
   const treasure = run.treasure ? TREASURES[run.treasure] : undefined;
 
   return (
@@ -873,7 +913,7 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
           className={`anchor${glow === a.id ? ' glow' : ''}${q.wantsAnchor ? ' wanted' : ''}`}
           style={rectStyle(a.hit)}
           aria-label={a.word}
-          onClick={() => (q.wantsAnchor ? q.tapAnchor(a.id) : onWord(place, a.id))}
+          onClick={() => (q.wantsAnchor ? q.tapAnchor(step?.kind === 'tapAnchor' ? tappedAnchor(place, a.id, step.anchor) : a.id) : onWord(place, a.id))}
         />
       ))}
       {wordBubble && !q.wantsAnchor && <WordBubble place={place} anchorId={wordBubble.anchorId} text={wordBubble.text} />}
@@ -890,9 +930,9 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
         const pos = target ? { ...home, x: target.stand?.x ?? target.hit.x + target.hit.w / 2, y: toY, h: place.lane ? home.h : home.h * depthScale(home.y, toY) } : home;
         const acting = run.acting && mySpeakers.includes(run.acting.who) ? run.acting.action : undefined;
         const speaking = !!run.bubble && mySpeakers.includes(run.bubble.who) && !move;
-        const worn = mySpeakers.flatMap((sp) => run.wearing[sp] ?? []).map((k) => PROPS[k]?.emoji ?? '');
+        const worn = mySpeakers.flatMap((sp) => run.wearing[sp] ?? []);
         const glowing = !!q.reveal?.actor && mySpeakers.includes(q.reveal.actor);
-        return <Character key={id} actor={a} state={state} species={species} place={pos} baseH={home.h} action={acting ?? move?.action} speaking={speaking} hidden={!!hiding && !hiding.found} found={!!hiding?.found} wearing={worn} wanted={q.wantsActor} glow={glowing} onTap={q.wantsActor ? () => q.tapActor(mySpeakers) : undefined} />;
+        return <Character key={id} actor={a} state={state} species={species} place={pos} baseH={home.h} dim={!!run.night} action={acting ?? move?.action} speaking={speaking} hidden={!!hiding && !hiding.found} found={!!hiding?.found} wearing={worn} wanted={q.wantsActor} glow={glowing} onTap={q.wantsActor ? () => q.tapActor(mySpeakers) : undefined} />;
       })}
       <div className="quest-title">
         {running.icon} {running.title}
@@ -926,7 +966,7 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
       )}
       {q.finished && <Confetti n={30} wide />}
       {q.bubble && step && step.kind !== 'moveTo' && step.kind !== 'moveBack' && step.kind !== 'props' && (
-        <DialogueBox speaker={cast[q.bubble.who]?.name ?? ''} line={q.bubble.line} frenchHelp={state.settings.frenchHelp} onReplay={q.replay} mood={run.feedback}>
+        <DialogueBox speaker={cast[q.bubble.who]?.name ?? ''} line={q.bubble.line} frenchHelp={state.settings.frenchHelp} onReplay={q.replay} mood={run.feedback} side={side}>
           {step.kind === 'ask' && run.feedback !== 'ok' && <Options options={step.options.map((o) => ({ ...o, line: q.filled(o.line) }))} biome={place} reveal={q.reveal?.option !== undefined} disabled={false} onChoose={q.choose} listen={step.listen} />}
           {step.kind === 'command' && run.feedback !== 'ok' && (
             <>

@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { getFamily, newGameState } from '../engine/state';
 import { createBaby } from '../engine/family';
-import { cropStyle, hasStageSprite, homePlacement, spriteFor } from './scene';
+import { PLACES } from '../content/places';
+import { cropStyle, hasStageSprite, homePlacement, spriteFor, tappedAnchor } from './scene';
 
 describe('scene — sprites', () => {
   it('donne les parents lion et éléphant', () => {
@@ -100,5 +101,31 @@ describe('scene — placement', () => {
     const grown = { ...a.family, babies: a.family.babies.map((x) => ({ ...x, stage: 'companion' as const })) };
     const baby = homePlacement({ kind: 'baby', speciesId: 'hedgehog', babyId: 'hh-b1' }, grown);
     expect(baby.h).toBeLessThan(h('hedgehog'));
+  });
+});
+
+describe('scene — un même arbre sous deux mots (2026-11-23)', () => {
+  it('toucher le grand eucalyptus (« tree ») compte quand on demande « eucalyptus », et l’inverse', () => {
+    const p = PLACES.oc_eucalyptus!;
+    expect(tappedAnchor(p, 'tree', 'eucalyptus')).toBe('eucalyptus');
+    expect(tappedAnchor(p, 'eucalyptus', 'tree')).toBe('tree');
+    expect(tappedAnchor(p, 'water', 'eucalyptus')).toBe('water');
+    expect(tappedAnchor(p, 'tree', undefined)).toBe('tree');
+    expect(tappedAnchor(PLACES.na_redwoods!, 'trunk', 'redwood')).toBe('redwood');
+  });
+  it('chaque « sameAs » vise un point du même décor, sans lui-même, et dans les deux sens', () => {
+    let n = 0;
+    for (const p of Object.values(PLACES)) {
+      const ids = new Set(p.anchors.map((a) => a.id));
+      for (const a of p.anchors) {
+        for (const o of a.sameAs ?? []) {
+          n++;
+          expect(ids.has(o), `${p.id}:${a.id} → ${o}`).toBe(true);
+          expect(o, `${p.id}:${a.id}`).not.toBe(a.id);
+          expect(p.anchors.find((b) => b.id === o)?.sameAs ?? [], `${p.id}:${o} ← ${a.id}`).toContain(a.id);
+        }
+      }
+    }
+    expect(n).toBeGreaterThanOrEqual(10);
   });
 });

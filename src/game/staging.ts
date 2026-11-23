@@ -1,16 +1,24 @@
 import type { ClipName } from './puppet';
-import type { Rect } from '../content/types';
+import type { GrowthStage, Mobility, Rect } from '../content/types';
+import { inWater, type Water } from '../content/places/depth';
+
+export { inWater, type Water };
 
 /** Durée d'un trajet dans le décor : la même que la transition CSS de `.char` (left / top). */
 export const WALK_MS = 1600;
 
 /** Animation de marionnette à jouer selon ce que fait le personnage. */
-export function puppetClip(s: { walking: boolean; action?: string; speaking?: boolean }): ClipName {
-  if (s.walking) return 'walk';
+export function puppetClip(s: { walking: boolean; action?: string; speaking?: boolean; flies?: boolean }): ClipName {
+  if (s.walking) return s.flies ? 'fly' : 'walk';
   if (s.action === 'walk' || s.action === 'sniff') return 'walk';
   if (s.action === 'drink_lap') return 'drink';
   if (s.speaking) return 'talk';
   return 'idle';
+}
+
+/** Les oiseaux (hibou, toucan) volent pour changer de place ; un oisillon nouveau-né ne vole pas encore. */
+export function canFly(mobility: Mobility, stage?: GrowthStage): boolean {
+  return mobility === 'fly' && stage !== 'newborn';
 }
 
 /**
@@ -142,6 +150,25 @@ export function perchAt(place: Perches, x: number, y: number): number | undefine
     if (x >= t.x && x <= t.x + t.w && y >= t.y && y <= t.y + t.h && y < t.base) best = Math.max(best ?? -1, t.base); // le plus proche devant
   }
   return best;
+}
+
+
+/**
+ * Demande du parent : « il faut bien que les animaux soient posés sur la terre et pas au milieu de l'eau ».
+ * Lâché dans un lac ou une rivière, l'animal va sur la berge la plus proche (pas plus au fond que `floor`).
+ */
+export function dryNear(water: Water | undefined, x: number, y: number, floor: (x: number) => number): { x: number; y: number } {
+  if (!inWater(water, x, y)) return { x, y };
+  let best: { x: number; y: number; d: number } | undefined;
+  for (let px = 3; px <= 97; px += 0.5) {
+    const top = Math.min(floor(px), 99.5);
+    for (let py = top; py <= 99.5; py += 0.5) {
+      if (inWater(water, px, py)) continue;
+      const d = Math.hypot(px - x, (py - y) * (9 / 16));
+      if (!best || d < best.d) best = { x: px, y: py, d };
+    }
+  }
+  return best ?? { x, y };
 }
 
 /** Durée d'un trajet : vitesse de marche constante (un petit pas est court, une traversée plus longue). */

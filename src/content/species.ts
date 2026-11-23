@@ -9,7 +9,8 @@ function sp(s: Base): SpeciesDef {
 const AFRICA = ['savanna', 'africa_waterhole', 'africa_baobab', 'africa_desert', 'africa_canyon', 'africa_plains'];
 const ASIA_PANDA = ['asia_bamboo', 'asia_mountain', 'asia_arch', 'asia_garden', 'asia_pagoda'];
 /** la panthère des neiges ne vit que sur les hauteurs : ni bambous, ni jardin, ni pagode (demande du parent, 2026-11-21) */
-const ASIA_HEIGHTS = ['asia_mountain', 'asia_arch'];
+// + sa tanière enneigée, propre à elle seule (2026-11-21 : un 3e décor par animal, « mondes différents »)
+const ASIA_HEIGHTS = ['asia_mountain', 'asia_arch', 'asia_snow_den'];
 
 /**
  * 21 espèces principales (orque retirée le 2026-11-20, à la demande du parent) (cahier des charges §3). V2 : toutes jouables avec leur famille complète

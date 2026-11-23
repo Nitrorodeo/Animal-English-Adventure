@@ -8,7 +8,7 @@ import { ACTIVITY_BY_ID } from '../content/activities';
 import { ADVENTURES } from '../content/adventures';
 import { archetypeFits, ARCHETYPES } from '../content/archetypes';
 import { chatScript } from '../content/dialogues';
-import { NOUNS } from '../content/places';
+import { NOUNS, PLACES } from '../content/places';
 import type { ActivityCtx, ActivityDef, ActorKind, AdventureDef, BiomeDef, QuestArchetype, QuestScript, SpeciesDef, Tier } from '../content/types';
 import { nextStageGoal } from './family';
 import type { Rng } from './rng';
@@ -124,6 +124,7 @@ export function isCompatible(arch: QuestArchetype, ctx: QuestContext): boolean {
   if (!arch.implemented || !ACTIVITY_BY_ID[arch.id]) return false;
   if (!ctx.species.allowedBiomes.includes(ctx.biome.id)) return false;
   if (arch.allowedBiomes.length && !arch.allowedBiomes.includes(ctx.biome.id)) return false;
+  if (arch.speciesIds?.length && !arch.speciesIds.includes(ctx.species.id)) return false;
   // qui propose ce jeu : papa, maman, ou un bébé assez grand
   const role = ctx.actor.kind === 'adult' ? ctx.actor.role : undefined;
   const stage = findBaby(ctx.state, ctx.actor)?.stage;
@@ -268,10 +269,15 @@ export function rankActivity(q: BuiltQuest, ctx: QuestContext): number {
   if (q.archetype.id === 'greeting' && !player.history.some((h) => h.speciesId === ctx.species.id)) score += 30;
   if (q.archetype.id === 'family_presentation' && !getFamily(ctx.state, ctx.species.id).memories.includes('met_family')) score += 8;
   if (q.archetype.id === 'remember_yesterday') score += 3;
+  // révisions (1.8, 2.8, 3.8) : seulement après quelques jeux, pas dès l'arrivée
+  if (q.archetype.skillIds.some((s) => s.endsWith('.8')) && player.history.length < 5) score -= 12;
   // jeu propre au décor : il passe devant les jeux qu'on peut faire partout ;
   // un jeu de 1 à 3 lieux (le nid au baobab, l'écho au canyon) passe devant un jeu de tout le continent
-  const nPlaces = q.archetype.allowedBiomes.length;
+  // (on compte les lieux du continent où l'on est : l'écho du canyon reste local même s'il y a aussi un écho dans les Alpes)
+  const nPlaces = q.archetype.allowedBiomes.filter((b) => PLACES[b]?.continentId === ctx.biome.continentId).length;
   if (nPlaces) score += nPlaces <= 3 ? 6 : 2;
+  // le jeu à soi de l'animal (son vocabulaire à lui) passe aussi devant les jeux de partout
+  if (q.archetype.speciesIds?.includes(ctx.species.id)) score += q.archetype.speciesIds.length === 1 ? 7 : 4;
   // un bébé revient volontiers à ses jeux préférés (sans écraser la variété)
   const likes = findBaby(ctx.state, ctx.actor)?.likes?.[q.archetype.mechanic] ?? 0;
   score += Math.min(likes, 3);

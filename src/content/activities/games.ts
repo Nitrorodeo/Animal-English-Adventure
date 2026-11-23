@@ -44,9 +44,12 @@ export const other = (s: Sex): Sex => (s === 'girl' ? 'boy' : 'girl');
 
 const COUNT_BY_TIER = { beginner: 3, intermediate: 5, expert: 7 } as const;
 
+const KEYCAPS = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
+
 export function numberOptions(n: number): ResponseOption[] {
   const ks = [n, n - 1, n + 1, n + 2].filter((k) => k >= 1 && k <= 10);
-  return ks.map((k) => ({ line: L(`${NUMBERS[k]!.en}!`, `${NUMBERS[k]!.fr} !`), correct: k === n }));
+  // le chiffre sur la carte : l'enfant ne lit pas encore « Five »
+  return ks.map((k) => ({ line: L(`${NUMBERS[k]!.en}!`, `${NUMBERS[k]!.fr} !`), icon: KEYCAPS[k], correct: k === n }));
 }
 
 export const countObjects: ActivityDef = {

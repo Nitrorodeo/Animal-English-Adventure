@@ -12,6 +12,7 @@
       "anchors": [
         {
           "id": "redwood",
+          "sameAs": ["tree", "trunk"],
           "word": "redwood",
           "wordFr": "le séquoia",
           "icon": "🌲",
@@ -45,6 +46,7 @@
         },
         {
           "id": "tree",
+          "sameAs": ["redwood", "trunk"],
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌲",
@@ -78,6 +80,7 @@
         },
         {
           "id": "trunk",
+          "sameAs": ["redwood", "tree"],
           "word": "trunk",
           "wordFr": "le tronc",
           "icon": "🪵",
@@ -278,6 +281,59 @@
             "q": {
               "en": "Is the path brown?",
               "fr": "Est-ce que le chemin est marron ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sunbeam",
+          "word": "sunbeam",
+          "wordFr": "le rayon de soleil",
+          "icon": "🌤️",
+          "hit": {
+            "x": 80,
+            "y": 3,
+            "w": 8,
+            "h": 32
+          },
+          "crop": {
+            "x": 77,
+            "y": 0,
+            "w": 14,
+            "h": 38
+          },
+          "check": {
+            "q": {
+              "en": "Is the sunbeam bright?",
+              "fr": "Est-ce que le rayon de soleil brille ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "poppy",
+          "word": "poppy",
+          "wordFr": "le pavot",
+          "icon": "🌺",
+          "hit": {
+            "x": 88,
+            "y": 72,
+            "w": 12,
+            "h": 12
+          },
+          "crop": {
+            "x": 85,
+            "y": 69,
+            "w": 15,
+            "h": 18
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the poppy orange?",
+              "fr": "Est-ce que le pavot est orange ?"
             },
             "yes": true
           }
@@ -621,6 +677,59 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "boulder",
+          "word": "boulder",
+          "wordFr": "le gros rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 83,
+            "y": 72,
+            "w": 17,
+            "h": 14
+          },
+          "crop": {
+            "x": 80,
+            "y": 69,
+            "w": 20,
+            "h": 20
+          },
+          "check": {
+            "q": {
+              "en": "Is the boulder big?",
+              "fr": "Est-ce que le gros rocher est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "red_bush",
+          "word": "red bush",
+          "wordFr": "le buisson rouge",
+          "icon": "🍁",
+          "hit": {
+            "x": 11,
+            "y": 59,
+            "w": 7,
+            "h": 11
+          },
+          "crop": {
+            "x": 8,
+            "y": 56,
+            "w": 13,
+            "h": 17
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the bush red?",
+              "fr": "Est-ce que le buisson est rouge ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -958,6 +1067,34 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "reflection",
+          "word": "reflection",
+          "wordFr": "le reflet",
+          "icon": "🪞",
+          "hit": {
+            "x": 67,
+            "y": 50,
+            "w": 30,
+            "h": 12
+          },
+          "crop": {
+            "x": 64,
+            "y": 47,
+            "w": 36,
+            "h": 18
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Can you see the trees in the water?",
+              "fr": "Est-ce qu'on voit les arbres dans l'eau ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -1287,6 +1424,34 @@
             "q": {
               "en": "Is the flower pink?",
               "fr": "Est-ce que la fleur est rose ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "agave",
+          "word": "agave",
+          "wordFr": "l'agave",
+          "icon": "🌵",
+          "hit": {
+            "x": 84,
+            "y": 60,
+            "w": 16,
+            "h": 20
+          },
+          "crop": {
+            "x": 81,
+            "y": 57,
+            "w": 19,
+            "h": 26
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the agave spiky?",
+              "fr": "Est-ce que l'agave pique ?"
             },
             "yes": true
           }
@@ -1620,6 +1785,34 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "lupine",
+          "word": "lupine",
+          "wordFr": "le lupin",
+          "icon": "💜",
+          "hit": {
+            "x": 91,
+            "y": 81,
+            "w": 9,
+            "h": 17
+          },
+          "crop": {
+            "x": 88,
+            "y": 78,
+            "w": 12,
+            "h": 22
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the lupine purple?",
+              "fr": "Est-ce que le lupin est violet ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -1636,20 +1829,20 @@
           "y": 59
         },
         {
-          "x": 32,
-          "y": 54
+          "x": 31,
+          "y": 66
         },
         {
-          "x": 44,
-          "y": 46
+          "x": 42,
+          "y": 70
         },
         {
-          "x": 55,
-          "y": 46
+          "x": 52,
+          "y": 78
         },
         {
-          "x": 63,
-          "y": 46
+          "x": 45,
+          "y": 89
         },
         {
           "x": 37,
@@ -2050,24 +2243,24 @@
       ],
       "spots": [
         {
-          "x": 12,
-          "y": 44
+          "x": 6,
+          "y": 41
         },
         {
-          "x": 24,
-          "y": 43
+          "x": 17,
+          "y": 41
         },
         {
-          "x": 36,
-          "y": 43
+          "x": 28,
+          "y": 41.5
         },
         {
-          "x": 49,
-          "y": 44
+          "x": 38,
+          "y": 41.5
         },
         {
-          "x": 55,
-          "y": 49
+          "x": 48,
+          "y": 41
         },
         {
           "x": 30,
@@ -2094,6 +2287,7 @@
       "anchors": [
         {
           "id": "redwood",
+          "sameAs": ["tree"],
           "word": "redwood",
           "wordFr": "le séquoia",
           "icon": "🌲",
@@ -2127,6 +2321,7 @@
         },
         {
           "id": "tree",
+          "sameAs": ["redwood"],
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌲",
@@ -2391,6 +2586,62 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "clover",
+          "word": "clover",
+          "wordFr": "le trèfle",
+          "icon": "☘️",
+          "hit": {
+            "x": 0,
+            "y": 82,
+            "w": 7,
+            "h": 18
+          },
+          "crop": {
+            "x": 0,
+            "y": 79,
+            "w": 10,
+            "h": 21
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the clover green?",
+              "fr": "Est-ce que le trèfle est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "moss",
+          "word": "moss",
+          "wordFr": "la mousse",
+          "icon": "🟢",
+          "hit": {
+            "x": 83,
+            "y": 79,
+            "w": 17,
+            "h": 21
+          },
+          "crop": {
+            "x": 80,
+            "y": 76,
+            "w": 20,
+            "h": 24
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the moss green?",
+              "fr": "Est-ce que la mousse est verte ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -2557,6 +2808,42 @@
     "reed": {
       "en": "A reed",
       "fr": "Un roseau"
+    },
+    "sunbeam": {
+      "en": "A sunbeam",
+      "fr": "Un rayon de soleil"
+    },
+    "poppy": {
+      "en": "A poppy",
+      "fr": "Un pavot"
+    },
+    "clover": {
+      "en": "Clover",
+      "fr": "Du trèfle"
+    },
+    "moss": {
+      "en": "Moss",
+      "fr": "De la mousse"
+    },
+    "boulder": {
+      "en": "A boulder",
+      "fr": "Un gros rocher"
+    },
+    "red bush": {
+      "en": "A red bush",
+      "fr": "Un buisson rouge"
+    },
+    "reflection": {
+      "en": "A reflection",
+      "fr": "Un reflet"
+    },
+    "lupine": {
+      "en": "A lupine",
+      "fr": "Un lupin"
+    },
+    "agave": {
+      "en": "An agave",
+      "fr": "Un agave"
     }
   }
 }

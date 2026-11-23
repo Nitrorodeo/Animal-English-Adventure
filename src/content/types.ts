@@ -63,6 +63,9 @@ export interface Anchor {
   tags?: AnchorTag[];
   /** question oui/non vraie ou fausse de façon évidente dans l'image */
   check?: { q: Line; yes: boolean };
+  /** ce que cet endroit est aussi (le grand arbre de la forêt d'eucalyptus est un eucalyptus) :
+   *  le toucher compte quand le jeu demande l'un de ces points */
+  sameAs?: string[];
 }
 
 /** Emplacement (en % du décor) où le jeu pose un petit objet. */
@@ -90,6 +93,8 @@ export interface BiomeDef {
   farY?: number | [number, number][];
   /** décor perché (toucans) : le seul sol possible est le dessus d'une branche, `[x, fond, devant]` en % (voir places/depth.ts) */
   lane?: [number, number, number][];
+  /** eau dessinée au sol (lac, rivière) : on n'y pose aucun animal (voir places/depth.ts) */
+  water?: [number, number][][];
   /** dessus de gros rochers du décor où l'on peut poser un animal ; `base` = pied du rocher */
   perches?: (Rect & { base: number })[];
   /** 8 emplacements pour les petits objets des jeux */
@@ -209,6 +214,8 @@ export interface QuestArchetype {
   roles?: ActorRole[];
   /** stade de croissance minimal d'un bébé pour proposer ce jeu (les parents ne sont pas concernés) */
   minStage?: GrowthStage;
+  /** jeu propre à ces espèces (« chaque animal a son jeu ») ; absent = toutes */
+  speciesIds?: string[];
 }
 
 // ---------- Scripts de quête (interprétés par le QuestRunner) ----------
@@ -445,7 +452,7 @@ export interface PropDef {
   need?: Line;
 }
 
-export type PropShape = 'flower' | 'pebble' | 'feather' | 'leaf' | 'butterfly' | 'fish' | 'shell';
+export type PropShape = 'flower' | 'pebble' | 'feather' | 'leaf' | 'butterfly' | 'fish' | 'shell' | 'maple' | 'hoof' | 'birdfoot';
 
 // ---------- Activités génériques (assemblées pour n'importe quel lieu compatible) ----------
 

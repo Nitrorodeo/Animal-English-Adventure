@@ -1,5 +1,5 @@
 import manifest from '../content/assetManifest.json';
-import type { GrowthStage, Rect, Sex } from '../content/types';
+import type { Anchor, GrowthStage, Rect, Sex } from '../content/types';
 import type { ActorRef, Baby, FamilyState } from '../engine/state';
 import { laneMid, type Lane } from '../game/staging';
 
@@ -83,7 +83,8 @@ export function homePlacement(actor: ActorRef, family: FamilyState, groundY = RE
   const dy = Math.max(-8, Math.min(6, groundY - REF_GROUND));
   const at = (p: Placement): Placement => ({ ...p, y: Math.min(98, p.y + dy) });
   // famille groupée à droite : la bulle de dialogue occupe la gauche de la scène
-  if (actor.kind === 'adult') return at(actor.role === 'father' ? { x: 68, y: 80, h: adultH } : { x: 87, y: 82, h: adultH * 0.94 });
+  // papa un peu plus à gauche : la tête de maman (devant) ne cache plus celle de papa (pandas, jaguars couchés)
+  if (actor.kind === 'adult') return at(actor.role === 'father' ? { x: 64, y: 80, h: adultH } : { x: 87, y: 82, h: adultH * 0.94 });
   const baby = family.babies.find((b) => b.id === actor.babyId);
   const i = baby?.birthOrder === 2 ? 1 : 0;
   const scale = BABY_SCALE[actor.speciesId] ?? adultH / 34;
@@ -92,4 +93,14 @@ export function homePlacement(actor: ActorRef, family: FamilyState, groundY = RE
 
 export function babyLabel(b: Baby): string {
   return b.name;
+}
+
+/**
+ * Point du décor compté pour un toucher. Si l'endroit touché est la même chose que celui demandé
+ * (`sameAs` : « Touch the eucalyptus! » et l'enfant touche le grand eucalyptus marqué « tree »),
+ * c'est une bonne réponse.
+ */
+export function tappedAnchor(place: { anchors: readonly Anchor[] }, tapped: string, wanted: string | undefined): string {
+  if (!wanted || tapped === wanted) return tapped;
+  return place.anchors.find((a) => a.id === tapped)?.sameAs?.includes(wanted) ? wanted : tapped;
 }

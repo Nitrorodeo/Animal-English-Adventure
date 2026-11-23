@@ -125,6 +125,14 @@ export interface Mesh {
   influences: number[][];
 }
 
+const MESHES = new WeakMap<RigDef, Mesh>();
+/** Maillage d'un squelette, calculé une seule fois (il ne change jamais) : remonter un personnage ne coûte plus ~6 ms. */
+export function meshFor(rig: RigDef): Mesh {
+  let m = MESHES.get(rig);
+  if (!m) MESHES.set(rig, (m = buildMesh(rig)));
+  return m;
+}
+
 /** Grille régulière posée sur l'image, chaque sommet lié aux os. */
 export function buildMesh(rig: RigDef, cols = 28, rows = 36): Mesh {
   const n = (cols + 1) * (rows + 1);
@@ -204,7 +212,7 @@ export function skinPoint(rig: RigDef, pose: Pose, p: Vec): Vec {
 export const PAD_X = 0.45;
 export const PAD_Y = 0.15;
 
-export type ClipName = 'idle' | 'talk' | 'walk' | 'drink';
+export type ClipName = 'idle' | 'talk' | 'walk' | 'drink' | 'fly';
 
 const has = (rig: RigDef, id: string) => rig.bones.some((b) => b.id === id);
 
@@ -271,13 +279,28 @@ export function drinkPose(rig: RigDef, t: number): Record<string, BonePose> {
   };
 }
 
+/**
+ * Voler (hibou, toucan ; demande du parent : le hibou ne se dandine plus pour se déplacer, il vole) :
+ * corps penché vers l'avant, battements d'ailes rapides (le corps se gonfle et monte à chaque battement),
+ * tête qui reste droite pour regarder où il va. La montée et la descente du trajet sont faites en CSS (`.flying`).
+ */
+export function flyPose(rig: RigDef, t: number): Record<string, BonePose> {
+  const beat = Math.sin(t * 2 * Math.PI * 4.5);
+  const f = rig.facing;
+  return {
+    body: { rot: 9 * f, sx: 1 + 0.05 * beat, sy: 1 - 0.06 * beat, dy: -rig.height * 0.04 * (0.6 + 0.4 * beat) },
+    head: { rot: -7 * f, dy: rig.height * 0.008 * beat },
+    tail: { rot: 6 * Math.sin(t * 2 * Math.PI * 4.5 + 1) },
+  };
+}
+
 function talk(rig: RigDef, t: number): Record<string, BonePose> {
   const base = idle(rig, t);
   return { ...base, head: { rot: 2.5 * Math.sin(t * 2 * Math.PI * 1.7), dy: -rig.height * 0.004 * Math.abs(Math.sin(t * 2 * Math.PI * 1.7)) } };
 }
 
 export function clipPose(rig: RigDef, clip: ClipName, t: number): Pose {
-  const pose = clip === 'walk' ? walkPose(rig, t) : clip === 'drink' ? drinkPose(rig, t) : clip === 'talk' ? talk(rig, t) : idle(rig, t);
+  const pose = clip === 'fly' ? flyPose(rig, t) : clip === 'walk' ? walkPose(rig, t) : clip === 'drink' ? drinkPose(rig, t) : clip === 'talk' ? talk(rig, t) : idle(rig, t);
   // on ne garde que les os qui existent dans ce squelette
   return Object.fromEntries(Object.entries(pose).filter(([id]) => has(rig, id)));
 }

@@ -3,6 +3,7 @@ import { speech } from '../audio/speech';
 import type { BiomeDef, Line, ResponseOption } from '../content/types';
 import { clampOffset, isDrag, type Box, type Offset } from './drag';
 import { background, cropStyle } from './scene';
+import { frTypo, type Side } from './bubbleSide';
 
 /** Dernière position choisie par l'enfant : la bulle y revient à chaque nouvelle réplique. */
 let saved: Offset = { dx: 0, dy: 0 };
@@ -15,7 +16,7 @@ function measure(el: HTMLElement, cur: Offset): { base: Box; bounds: Box } {
 }
 
 /** La bulle se déplace en la faisant glisser (doigt ou souris) ; les boutons restent de simples boutons. */
-function useDraggable() {
+function useDraggable(side: Side) {
   const ref = useRef<HTMLDivElement>(null);
   const [off, setOff] = useState<Offset>(saved);
   const [dragging, setDragging] = useState(false);
@@ -26,7 +27,7 @@ function useDraggable() {
     if (!ref.current || (saved.dx === 0 && saved.dy === 0)) return;
     const m = measure(ref.current, saved);
     setOff(clampOffset(saved, { x: 0, y: 0 }, m.base, m.bounds));
-  }, []);
+  }, [side]);
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     const el = ref.current;
@@ -65,14 +66,16 @@ interface Props {
   onReplay: (slow?: boolean) => void;
   children?: ReactNode;
   mood?: 'try' | 'ok' | null;
+  /** côté du décor où se pose la bulle (à droite quand la cible est sous la bulle à gauche) */
+  side?: Side;
 }
 
 /** Bulle de dialogue : texte anglais (lu à voix haute), réécoute, ralenti et aide française facultative. */
-export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, mood }: Props) {
+export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, mood, side = 'left' }: Props) {
   const [showFr, setShowFr] = useState(false);
-  const drag = useDraggable();
+  const drag = useDraggable(side);
   return (
-    <div ref={drag.ref} className={`dialogue${mood ? ` mood-${mood}` : ''}${drag.dragging ? ' dragging' : ''}`} style={drag.style} {...drag.handlers}>
+    <div ref={drag.ref} className={`dialogue${side === 'right' ? ' at-right' : ''}${mood ? ` mood-${mood}` : ''}${drag.dragging ? ' dragging' : ''}`} style={drag.style} {...drag.handlers}>
       <span className="drag-grip" aria-hidden />
       <div className="dialogue-row">
         <span className="speaker">{speaker}</span>
@@ -87,7 +90,7 @@ export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, moo
           )}
         </div>
       </div>
-      {frenchHelp && showFr && line && <p className="fr-line">{line.fr}</p>}
+      {frenchHelp && showFr && line && <p className="fr-line">{frTypo(line.fr)}</p>}
       {children}
     </div>
   );

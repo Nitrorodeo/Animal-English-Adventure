@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PAD_X, PAD_Y, blendPose, buildMesh, clipPose, drinkPose, localMatrix, apply, skin, skinPoint, validateRig, walkPose, weightsAt, type Pose } from './puppet';
+import { PAD_X, PAD_Y, blendPose, buildMesh, clipPose, meshFor, drinkPose, localMatrix, apply, skin, skinPoint, validateRig, walkPose, weightsAt, type Pose } from './puppet';
 import { RIGS } from './rigs';
 import assetManifest from '../content/assetManifest.json';
 
@@ -107,7 +107,8 @@ describe('marionnette déformable', () => {
     for (const rig of Object.values(RIGS)) {
       const mesh = buildMesh(rig, 14, 18);
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
-      for (const clip of ['walk', 'drink', 'talk', 'idle'] as const) {
+      const clips = /^(owl|toucan)_/.test(rig.sprite) ? (['walk', 'drink', 'talk', 'idle', 'fly'] as const) : (['walk', 'drink', 'talk', 'idle'] as const);
+      for (const clip of clips) {
         for (let t = 0; t < 2.5; t += 0.15) {
           const out = skin(rig, mesh, clipPose(rig, clip, t));
           for (let i = 0; i < out.length; i += 2) {
@@ -131,5 +132,27 @@ describe('marionnette déformable', () => {
     expect(b.body!.dy!).toBeLessThan(0);
     // un parent debout de profil garde ses quatre pattes
     expect(RIGS.bison_father!.bones.filter((x) => x.id.startsWith('leg'))).toHaveLength(4);
+  });
+});
+
+describe('vol du hibou', () => {
+  it('le corps bat des ailes (monte et descend vite), penché vers où il va, et seulement avec les os du squelette', () => {
+    const owl = RIGS.owl_father!;
+    expect(owl).toBeDefined();
+    const ys = Array.from({ length: 24 }, (_, i) => clipPose(owl, 'fly', i / 24).body!.dy!);
+    expect(Math.max(...ys) - Math.min(...ys)).toBeGreaterThan(owl.height * 0.025); // battements visibles
+    expect(Math.sign(clipPose(owl, 'fly', 0).body!.rot!)).toBe(owl.facing); // penché en avant
+    expect(Object.keys(clipPose(owl, 'fly', 0.3)).every((id) => owl.bones.some((b) => b.id === id))).toBe(true);
+  });
+
+  it('le maillage est calculé une fois par squelette (remonter un personnage ne le recalcule pas)', () => {
+    const m = meshFor(leo);
+    expect(meshFor(leo)).toBe(m);
+    const fresh = buildMesh(leo);
+    expect(Array.from(m.rest)).toEqual(Array.from(fresh.rest));
+    expect(Array.from(m.indices)).toEqual(Array.from(fresh.indices));
+    // la déformation écrit ailleurs : le maillage partagé reste intact
+    skin(leo, m, clipPose(leo, 'walk', 0.4));
+    expect(Array.from(m.rest)).toEqual(Array.from(fresh.rest));
   });
 });

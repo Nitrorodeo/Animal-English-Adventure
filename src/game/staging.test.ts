@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { depthScale, farAt, FARTHEST, farthestY, groundScale, horizonOf, NEAREST, puppetClip, walkMs } from './staging';
+import { canFly, depthScale, farAt, FARTHEST, farthestY, groundScale, horizonOf, NEAREST, puppetClip, walkMs } from './staging';
 
 describe('mise en scène des marionnettes', () => {
   it('choisit la bonne animation', () => {
@@ -55,5 +55,17 @@ describe('bord de la mer tracé point par point', () => {
     expect(farAt(shore, 90)).toBe(70);
     expect(farAt(55, 12)).toBe(55);
     expect(farthestY(80, 40, shore, 30)).toBe(60);
+  });
+});
+
+describe('le hibou vole pour changer de place', () => {
+  it("un oiseau qui se déplace vole au lieu de marcher ; l'oisillon nouveau-né sautille encore", () => {
+    expect(canFly('fly')).toBe(true);
+    expect(canFly('fly', 'little')).toBe(true);
+    expect(canFly('fly', 'newborn')).toBe(false);
+    expect(canFly('walk')).toBe(false);
+    expect(puppetClip({ walking: true, flies: true })).toBe('fly');
+    expect(puppetClip({ walking: false, flies: true })).toBe('idle'); // posé : il ne bat plus des ailes
+    expect(puppetClip({ walking: true, flies: false })).toBe('walk');
   });
 });

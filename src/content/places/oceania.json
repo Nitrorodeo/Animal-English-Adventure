@@ -218,6 +218,58 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "pebbles",
+          "word": "pebbles",
+          "wordFr": "les cailloux",
+          "icon": "🪨",
+          "hit": {
+            "x": 26,
+            "y": 82,
+            "w": 16,
+            "h": 14
+          },
+          "crop": {
+            "x": 22,
+            "y": 78,
+            "w": 24,
+            "h": 22
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the pebbles small?",
+              "fr": "Est-ce que les cailloux sont petits ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "red_sand",
+          "word": "red sand",
+          "wordFr": "le sable rouge",
+          "icon": "🏜️",
+          "hit": {
+            "x": 55,
+            "y": 64,
+            "w": 26,
+            "h": 11
+          },
+          "crop": {
+            "x": 51,
+            "y": 60,
+            "w": 34,
+            "h": 19
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the sand red?",
+              "fr": "Est-ce que le sable est rouge ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -266,6 +318,7 @@
       "anchors": [
         {
           "id": "tree",
+          "sameAs": ["eucalyptus"],
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌳",
@@ -556,6 +609,59 @@
             "q": {
               "en": "Is the leaf green?",
               "fr": "Est-ce que la feuille est verte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "eucalyptus",
+          "sameAs": ["tree"],
+          "word": "eucalyptus",
+          "wordFr": "l'eucalyptus",
+          "icon": "🌳",
+          "hit": {
+            "x": 30,
+            "y": 4,
+            "w": 8,
+            "h": 50
+          },
+          "crop": {
+            "x": 26,
+            "y": 0,
+            "w": 16,
+            "h": 58
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the eucalyptus tall?",
+              "fr": "Est-ce que l'eucalyptus est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "grass_tree",
+          "word": "grass tree",
+          "wordFr": "l'arbre à herbe",
+          "icon": "🌱",
+          "hit": {
+            "x": 45,
+            "y": 46,
+            "w": 7,
+            "h": 12
+          },
+          "crop": {
+            "x": 41,
+            "y": 42,
+            "w": 15,
+            "h": 20
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the grass tree green?",
+              "fr": "Est-ce que l'arbre à herbe est vert ?"
             },
             "yes": true
           }
@@ -872,6 +978,58 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "gorge",
+          "word": "gorge",
+          "wordFr": "la gorge",
+          "icon": "🏞️",
+          "hit": {
+            "x": 49,
+            "y": 33,
+            "w": 8,
+            "h": 17
+          },
+          "crop": {
+            "x": 45,
+            "y": 29,
+            "w": 16,
+            "h": 25
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the gorge deep?",
+              "fr": "Est-ce que la gorge est profonde ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "bottlebrush",
+          "word": "bottlebrush",
+          "wordFr": "le rince-bouteille",
+          "icon": "🌺",
+          "hit": {
+            "x": 88,
+            "y": 59,
+            "w": 12,
+            "h": 16
+          },
+          "crop": {
+            "x": 84,
+            "y": 55,
+            "w": 16,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the bottlebrush red?",
+              "fr": "Est-ce que le rince-bouteille est rouge ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -1177,6 +1335,58 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "foam",
+          "word": "foam",
+          "wordFr": "l'écume",
+          "icon": "🫧",
+          "hit": {
+            "x": 46,
+            "y": 66,
+            "w": 18,
+            "h": 8
+          },
+          "crop": {
+            "x": 42,
+            "y": 62,
+            "w": 26,
+            "h": 16
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the foam white?",
+              "fr": "Est-ce que l'écume est blanche ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "wet_sand",
+          "word": "wet sand",
+          "wordFr": "le sable mouillé",
+          "icon": "🏖️",
+          "hit": {
+            "x": 55,
+            "y": 76,
+            "w": 18,
+            "h": 10
+          },
+          "crop": {
+            "x": 51,
+            "y": 72,
+            "w": 26,
+            "h": 18
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the wet sand dry?",
+              "fr": "Est-ce que le sable mouillé est sec ?"
+            },
+            "yes": false
+          }
         }
       ],
       "spots": [
@@ -1186,31 +1396,31 @@
         },
         {
           "x": 34,
-          "y": 70
-        },
-        {
-          "x": 42,
-          "y": 68
-        },
-        {
-          "x": 50,
           "y": 72
         },
         {
-          "x": 58,
-          "y": 74
+          "x": 40,
+          "y": 75
         },
         {
-          "x": 20,
-          "y": 62
+          "x": 49,
+          "y": 80
+        },
+        {
+          "x": 57,
+          "y": 88
+        },
+        {
+          "x": 22,
+          "y": 84
         },
         {
           "x": 30,
-          "y": 76
+          "y": 80
         },
         {
-          "x": 46,
-          "y": 78
+          "x": 42,
+          "y": 86
         }
       ]
     },
@@ -1491,6 +1701,84 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "tree_fern",
+          "word": "tree fern",
+          "wordFr": "la fougère arborescente",
+          "icon": "🌴",
+          "hit": {
+            "x": 1,
+            "y": 5,
+            "w": 20,
+            "h": 40
+          },
+          "crop": {
+            "x": 0,
+            "y": 1,
+            "w": 28,
+            "h": 48
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the tree fern tall?",
+              "fr": "Est-ce que la fougère arborescente est grande ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mossy_stone",
+          "word": "mossy stone",
+          "wordFr": "la pierre moussue",
+          "icon": "🪨",
+          "hit": {
+            "x": 0,
+            "y": 86,
+            "w": 18,
+            "h": 14
+          },
+          "crop": {
+            "x": 0,
+            "y": 82,
+            "w": 26,
+            "h": 18
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mossy stone green?",
+              "fr": "Est-ce que la pierre moussue est verte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rapids",
+          "word": "rapids",
+          "wordFr": "les rapides",
+          "icon": "🌊",
+          "hit": {
+            "x": 15,
+            "y": 57,
+            "w": 18,
+            "h": 12
+          },
+          "crop": {
+            "x": 11,
+            "y": 53,
+            "w": 26,
+            "h": 20
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the rapids fast?",
+              "fr": "Est-ce que les rapides vont vite ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -1539,6 +1827,7 @@
       "anchors": [
         {
           "id": "gum_tree",
+          "sameAs": ["tree"],
           "word": "gum tree",
           "wordFr": "l'eucalyptus",
           "icon": "🌳",
@@ -1572,6 +1861,7 @@
         },
         {
           "id": "tree",
+          "sameAs": ["gum_tree"],
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌳",
@@ -1836,6 +2126,58 @@
               "fr": "Est-ce que la feuille est verte ?"
             },
             "yes": true
+          }
+        },
+        {
+          "id": "bark",
+          "word": "bark",
+          "wordFr": "l'écorce",
+          "icon": "🪵",
+          "hit": {
+            "x": 6,
+            "y": 22,
+            "w": 12,
+            "h": 30
+          },
+          "crop": {
+            "x": 2,
+            "y": 18,
+            "w": 20,
+            "h": 38
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the bark blue?",
+              "fr": "Est-ce que l'écorce est bleue ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "dry_leaves",
+          "word": "dry leaves",
+          "wordFr": "les feuilles sèches",
+          "icon": "🍂",
+          "hit": {
+            "x": 70,
+            "y": 86,
+            "w": 22,
+            "h": 13
+          },
+          "crop": {
+            "x": 66,
+            "y": 82,
+            "w": 30,
+            "h": 18
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the dry leaves green?",
+              "fr": "Est-ce que les feuilles sèches sont vertes ?"
+            },
+            "yes": false
           }
         }
       ],
@@ -2200,6 +2542,58 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "pandanus",
+          "word": "pandanus",
+          "wordFr": "le pandanus",
+          "icon": "🌴",
+          "hit": {
+            "x": 79,
+            "y": 2,
+            "w": 21,
+            "h": 30
+          },
+          "crop": {
+            "x": 75,
+            "y": 0,
+            "w": 25,
+            "h": 38
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Has the pandanus got orange fruit?",
+              "fr": "Est-ce que le pandanus a des fruits orange ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "boulders",
+          "word": "boulders",
+          "wordFr": "les gros rochers",
+          "icon": "🪨",
+          "hit": {
+            "x": 52,
+            "y": 37,
+            "w": 26,
+            "h": 15
+          },
+          "crop": {
+            "x": 48,
+            "y": 33,
+            "w": 34,
+            "h": 23
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the boulders big?",
+              "fr": "Est-ce que les rochers sont gros ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -2322,6 +2716,66 @@
     "gum tree": {
       "en": "A gum tree",
       "fr": "Un eucalyptus"
+    },
+    "pebbles": {
+      "en": "Pebbles",
+      "fr": "Des cailloux"
+    },
+    "red sand": {
+      "en": "Red sand",
+      "fr": "Du sable rouge"
+    },
+    "eucalyptus": {
+      "en": "A eucalyptus",
+      "fr": "Un eucalyptus"
+    },
+    "grass tree": {
+      "en": "A grass tree",
+      "fr": "Un arbre à herbe"
+    },
+    "gorge": {
+      "en": "A gorge",
+      "fr": "Une gorge"
+    },
+    "bottlebrush": {
+      "en": "A bottlebrush",
+      "fr": "Un rince-bouteille"
+    },
+    "foam": {
+      "en": "Foam",
+      "fr": "De l'écume"
+    },
+    "wet sand": {
+      "en": "Wet sand",
+      "fr": "Du sable mouillé"
+    },
+    "tree fern": {
+      "en": "A tree fern",
+      "fr": "Une fougère arborescente"
+    },
+    "rapids": {
+      "en": "Rapids",
+      "fr": "Des rapides"
+    },
+    "bark": {
+      "en": "Bark",
+      "fr": "De l'écorce"
+    },
+    "dry leaves": {
+      "en": "Dry leaves",
+      "fr": "Des feuilles sèches"
+    },
+    "pandanus": {
+      "en": "A pandanus",
+      "fr": "Un pandanus"
+    },
+    "boulders": {
+      "en": "Boulders",
+      "fr": "De gros rochers"
+    },
+    "mossy stone": {
+      "en": "A mossy stone",
+      "fr": "Une pierre moussue"
     }
   }
 }

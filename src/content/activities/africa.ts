@@ -1,6 +1,8 @@
 /**
- * Pilote Afrique (2026-11-19) : jeux propres à chaque décor, et jeux partagés par toute
- * l'Afrique (ordres, coucher, émotions, photo). Demande du parent : « vraiment différents
+ * Pilote Afrique (2026-11-19) : jeux propres à chaque décor, et jeux partagés (ordres, coucher,
+ * émotions, photo). Depuis le 2026-11-21, ces jeux vont aussi sur les autres continents quand le
+ * décor s'y prête (l'écho dans les montagnes, les empreintes du lapin dans la prairie…) ; les jeux
+ * signatures des autres continents sont dans world.ts. Demande du parent : « vraiment différents
  * types de jeux et d'animation en fonction des 5 décors pour que ce ne soit pas répétitif ».
  *
  * Les lieux autorisés et les personnages qui proposent chaque jeu (papa, maman, bébés) sont
@@ -17,6 +19,7 @@ import {
   ask,
   back,
   canDo,
+  cap,
   clearProps,
   command,
   end,
@@ -45,6 +48,16 @@ const byTier = <T>(tier: Tier, b: T, i: T, e: T): T => (tier === 'beginner' ? b 
 const WATER_SPOTS: Readonly<Record<string, readonly [number, number, number]>> = {
   africa_waterhole: [2, 4, 5],
   savanna: [2, 5, 3],
+  // 2026-11-21 : mêmes jeux au bord des lacs, étangs et rivières des autres continents [cible, autre, poisson dans l'eau]
+  europe_lake: [2, 3, 4],
+  sa_waterfall: [1, 2, 3],
+  sa_wetland: [1, 2, 3],
+  sa_river: [3, 5, 4],
+  oc_fern_forest: [1, 2, 3],
+  oc_gorge: [7, 6, 4],
+  na_lake: [6, 5, 7],
+  asia_garden: [3, 5, 4],
+  asia_bamboo: [2, 4, 3],
 };
 
 const WATER_ANIMALS = {
@@ -93,7 +106,9 @@ export const whoInWater: ActivityDef = {
         ['fish', 'swim', 'cant'],
         { minTier: 'expert', keepOrder: true, onCorrect: L('Yes! A fish swims in the water!', "Oui ! Un poisson nage dans l'eau !") },
       ),
-      act('actor', 'splash', 'Splash! I love the water!', "Splash ! J'adore l'eau !", 'actor'),
+      ...(canDo(c.species, 'swim')
+        ? [act('actor', 'splash', 'Splash! I love the water!', "Splash ! J'adore l'eau !", 'actor')]
+        : [say('actor', 'I like to look at the water!', "J'aime bien regarder l'eau !", {}, 'happy')]),
       clearProps(),
       end('actor', 'Bye, little friends! See you soon!', 'Au revoir, petits amis ! À bientôt !'),
     ];
@@ -182,16 +197,30 @@ export const sunAndShade: ActivityDef = {
 // Canyon — l'écho
 // ---------------------------------------------------------------------------
 
+/** Où l'on entend l'écho (2026-11-21 : aussi la falaise, les montagnes et la grotte de glace) ; `fem` = « elle est grande ». */
+const ECHO_AT: Readonly<Record<string, { anchor: string; fem: boolean }>> = {
+  africa_canyon: { anchor: 'canyon', fem: false },
+  oc_gorge: { anchor: 'cliff', fem: true },
+  asia_mountain: { anchor: 'mountain', fem: true },
+  asia_snow_den: { anchor: 'mountain', fem: true },
+  europe_alps: { anchor: 'mountain', fem: true },
+  an_ice_cave: { anchor: 'cave', fem: true },
+};
+
 export const echoCanyon: ActivityDef = {
   id: 'echo_canyon',
-  choices: (c) => (anchor(c.place, 'canyon') ? ['hello'] : []),
+  choices: (c) => (ECHO_AT[c.place.id] && anchor(c.place, ECHO_AT[c.place.id]!.anchor) ? ['hello'] : []),
   build(c) {
-    const path = c.place.anchors.find((a) => a.tags?.includes('path') && a.stand);
+    const at = ECHO_AT[c.place.id];
+    const a = at && anchor(c.place, at.anchor);
+    if (!at || !a) return undefined;
+    const [il, grand, petit] = at.fem ? ['Elle', 'grande', 'petite'] : ['Il', 'grand', 'petit'];
+    const path = c.place.anchors.find((x) => x.tags?.includes('path') && x.stand);
     return [
-      ask('actor', 'Look at the canyon! Is it big or small?', 'Regarde le canyon ! Il est grand ou petit ?', [ok("It's big!", 'Il est grand !', '⬆️'), no("It's small!", 'Il est petit !', '⬇️')], ['Look! It’s very, very big!', 'Regarde ! Il est très, très grand !'], ['canyon', 'big'], { pointAt: 'canyon', keepOrder: true, onCorrect: ["Yes! It's very big!", 'Oui ! Il est très grand !'] }),
+      ask('actor', `Look at the ${a.word}! Is it big or small?`, `Regarde ${a.wordFr} ! ${il} est ${grand} ou ${petit} ?`, [ok("It's big!", `${il} est ${grand} !`, '⬆️'), no("It's small!", `${il} est ${petit} !`, '⬇️')], ['Look! It’s very, very big!', `Regarde ! ${il} est très, très ${grand} !`], [a.word, 'big'], { pointAt: a.id, keepOrder: true, onCorrect: ["Yes! It's very big!", `Oui ! ${il} est très ${grand} !`] }),
       say('actor', "Listen! Let's shout: Hello!", 'Écoute ! Crions : Hello !', {}, 'happy'),
       say('narrator', 'Hello… hello… hello…', 'Hello… hello… hello…'),
-      ask('actor', 'Listen! What is it?', "Écoute ! Qu'est-ce que c'est ?", [ok('An echo!', 'Un écho !', '🗣️'), no('A bird!', 'Un oiseau !', '🐦'), no('A frog!', 'Une grenouille !', '🐸')], ['The canyon says it again! It’s an echo!', "Le canyon le répète ! C'est un écho !"], ['echo'], { minTier: 'intermediate', onCorrect: ["Yes! It's an echo!", "Oui ! C'est un écho !"] }),
+      ask('actor', 'Listen! What is it?', "Écoute ! Qu'est-ce que c'est ?", [ok('An echo!', 'Un écho !', '🗣️'), no('A bird!', 'Un oiseau !', '🐦'), no('The wind!', 'Le vent !', '🌬️')], [`The ${a.word} says it again! It’s an echo!`, `${cap(a.wordFr)} le répète ! C'est un écho !`], ['echo'], { minTier: 'intermediate', onCorrect: ["Yes! It's an echo!", "Oui ! C'est un écho !"] }),
       say('actor', 'Now you! Say: thank you!', 'À toi ! Dis : thank you !', { minTier: 'intermediate' }),
       say('narrator', 'Thank you… thank you… thank you…', 'Thank you… thank you… thank you…', { minTier: 'intermediate' }),
       ...(path
@@ -201,7 +230,7 @@ export const echoCanyon: ActivityDef = {
             back(undefined, { minTier: 'expert' }),
           ]
         : []),
-      end('actor', 'Bye, canyon! Bye… bye… bye…', 'Au revoir, canyon ! Au revoir… revoir… revoir…'),
+      end('actor', `Bye, ${a.word}! Bye… bye… bye…`, a.id === 'canyon' ? 'Au revoir, canyon ! Au revoir… revoir… revoir…' : `Au revoir, ${a.wordFr} ! Au revoir… revoir… revoir…`),
     ];
   },
   memoryEvent: () => 'heard_echo',
@@ -223,7 +252,7 @@ export const climbRock: ActivityDef = {
       ask('actor', 'Am I up or down?', 'Je suis en haut ou en bas ?', [ok("You're up!", 'Tu es en haut !', '⬆️'), no("You're down!", 'Tu es en bas !', '⬇️')], ["I'm at the top!", 'Je suis tout en haut !'], ['up', 'top'], { keepOrder: true, onCorrect: ["Yes! I'm up! I can see everything!", 'Oui ! Je suis en haut ! Je vois tout !'] }),
       jumps
         ? act('actor', 'jump', 'Now I jump down! Wheee!', 'Maintenant, je saute en bas ! Youpi !', 'actor', { minTier: 'intermediate' })
-        : act('actor', 'run', 'Now I go down! Down, down, down!', 'Maintenant, je descends ! Descends, descends !', 'actor', { minTier: 'intermediate' }),
+        : act('actor', canDo(c.species, 'run') ? 'run' : 'climb', 'Now I go down! Down, down, down!', 'Maintenant, je descends ! Descends, descends !', 'actor', { minTier: 'intermediate' }),
       ask('actor', 'And now? Am I up or down?', 'Et maintenant ? En haut ou en bas ?', [no("You're up!", 'Tu es en haut !', '⬆️'), ok("You're down!", 'Tu es en bas !', '⬇️')], ["I'm down now!", 'Je suis en bas maintenant !'], ['down'], { minTier: 'intermediate', keepOrder: true, onCorrect: ["Yes! I'm down!", 'Oui ! Je suis en bas !'] }),
       ask('actor', 'Is the rock big or small?', 'Le rocher est grand ou petit ?', [ok("It's big!", 'Il est grand !', '⬆️'), no("It's small!", 'Il est petit !', '⬇️')], ['A big, big rock!', 'Un très gros rocher !'], ['big', 'rock'], { minTier: 'expert', keepOrder: true, pointAt: choice, onCorrect: ['Yes! A big rock!', 'Oui ! Un gros rocher !'] }),
       end('actor', 'Up and down! What fun!', 'En haut, en bas ! Trop drôle !'),
@@ -235,20 +264,30 @@ export const climbRock: ActivityDef = {
 // Plaines et savane — suivre les empreintes (dans l'ordre), puis le zèbre
 // ---------------------------------------------------------------------------
 
-/** Piste d'empreintes de gauche à droite, et place du zèbre au bout. */
-const TRAILS: Readonly<Record<string, { prints: readonly number[]; zebra: number }>> = {
-  africa_plains: { prints: [0, 1, 2, 3, 4], zebra: 7 },
-  savanna: { prints: [0, 1, 2, 3, 4], zebra: 6 },
+/** Piste d'empreintes de gauche à droite, l'animal qui l'a faite et sa place au bout. */
+/** `print` : trace de l'animal (sabots du zèbre et du cerf, pattes à trois doigts du manchot). */
+const TRAILS: Readonly<Record<string, { prints: readonly number[]; end: number; animal: string; legs: number; others: readonly string[]; print: string }>> = {
+  africa_plains: { prints: [0, 1, 2, 3, 5], end: 6, animal: 'zebra', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  savanna: { prints: [0, 1, 2, 3, 4], end: 7, animal: 'zebra', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  // 2026-11-21 : une piste sur chaque continent qui a un grand espace ouvert
+  // 2026-11-22 : ni empreinte ni animal du bout posés sur Papa ou Maman (test dans ecran.test.ts)
+  na_prairie: { prints: [0, 1, 2, 3, 4], end: 5, animal: 'rabbit', legs: 4, others: ['duck', 'frog', 'bird'], print: 'footprint' },
+  europe_forest: { prints: [7, 2, 3, 4, 5], end: 1, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  an_snowfield: { prints: [5, 0, 1, 2, 3], end: 6, animal: 'penguin', legs: 2, others: ['fish', 'bird'], print: 'birdprint' },
+  na_redwoods: { prints: [0, 1, 2, 3, 4], end: 6, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  na_redwood_trail: { prints: [7, 4, 5, 1, 2], end: 0, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
 };
 
 export const followTracks: ActivityDef = {
   id: 'follow_tracks',
-  choices: (c) => (TRAILS[c.place.id] ? ['zebra'] : []),
+  choices: (c) => (TRAILS[c.place.id] ? [TRAILS[c.place.id]!.animal] : []),
   build(c, tier) {
     const trail = TRAILS[c.place.id];
     if (!trail) return undefined;
+    const a = PROPS[trail.animal]!;
+    const legs = NUMBERS[trail.legs]!;
     const n = byTier(tier, 3, 4, 5);
-    const prints = trail.prints.slice(0, n).map((s, i) => prop(`fp${i}`, 'footprint', s));
+    const prints = trail.prints.slice(-n).map((s, i) => prop(`fp${i}`, trail.print, s));
     const ids = prints.map((p) => p.id);
     const found = L('We followed the footprints!', 'On a suivi les empreintes !');
     return [
@@ -256,15 +295,15 @@ export const followTracks: ActivityDef = {
       say('actor', 'Look! Footprints! Who made them? Let’s follow the footprints!', 'Regarde ! Des empreintes ! Qui les a faites ? Suivons les empreintes !', {}, 'curious'),
       tapProps('actor', 'Touch the footprints!', 'Touche les empreintes !', ids, ['Touch every footprint!', 'Touche chaque empreinte !'], ['footprints', 'count'], { maxTier: 'beginner', count: true, onCorrect: found }),
       tapProps('actor', 'Follow the footprints one by one!', 'Suis les empreintes une par une !', ids, ['Start on the left! One by one!', 'Commence à gauche ! Une par une !'], ['footprints', 'first'], { minTier: 'intermediate', ordered: true, count: true, onCorrect: found }),
-      props([...prints, prop('zebra', 'zebra', trail.zebra)]),
+      props([...prints, prop(a.id, a.id, trail.end)]),
       say('actor', 'Oh! Look! Who is it?', "Oh ! Regarde ! Qui est-ce ?", {}, 'curious'),
-      ask('actor', 'Who made the footprints?', 'Qui a fait les empreintes ?', [ok('A zebra!', 'Un zèbre !', '🦓'), no('A duck!', 'Un canard !', '🦆'), no('A frog!', 'Une grenouille !', '🐸'), no('A bird!', 'Un oiseau !', '🐦')], ['Look at the end of the trail!', 'Regarde au bout de la piste !'], ['zebra', 'footprints'], { onCorrect: ['Yes! A zebra! Hello, zebra!', 'Oui ! Un zèbre ! Bonjour, le zèbre !'] }),
-      ask('actor', 'How many legs does a zebra have?', 'Combien de pattes a un zèbre ?', numberOptions(4), ['Count the legs: one, two, three…', 'Compte les pattes : one, two, three…'], [numberId(4), 'how_many'], { minTier: 'expert', onCorrect: ['Yes! Four legs!', 'Oui ! Quatre pattes !'] }),
+      ask('actor', 'Who made the footprints?', 'Qui a fait les empreintes ?', [ok(`${a.noun.en}!`, `${a.noun.fr} !`, a.emoji), ...trail.others.map((o) => no(`${PROPS[o]!.noun.en}!`, `${PROPS[o]!.noun.fr} !`, PROPS[o]!.emoji))], ['Look at the end of the trail!', 'Regarde au bout de la piste !'], [a.word, 'footprints'], { onCorrect: L(`Yes! ${a.noun.en}! Hello, ${a.word}!`, `Oui ! ${a.noun.fr} ! Bonjour, ${a.wordFr} !`) }),
+      ask('actor', `How many legs does ${a.noun.en.toLowerCase()} have?`, `Combien de pattes a ${a.noun.fr.toLowerCase()} ?`, numberOptions(trail.legs), ['Count the legs: one, two, three…', 'Compte les pattes : one, two, three…'], [numberId(trail.legs), 'how_many'], { minTier: 'expert', onCorrect: L(`Yes! ${legs.en} legs!`, `Oui ! ${legs.fr} pattes !`) }),
       clearProps(),
-      end('actor', 'We found the zebra! You are a great explorer!', 'On a trouvé le zèbre ! Tu es une super exploratrice !'),
+      end('actor', `We found the ${a.word}! You are a great explorer!`, `On a trouvé ${a.wordFr} ! Tu es une super exploratrice !`),
     ];
   },
-  memoryEvent: () => 'met:zebra',
+  memoryEvent: (c) => `met:${TRAILS[c.place.id]?.animal ?? 'zebra'}`,
 };
 
 // ---------------------------------------------------------------------------
@@ -324,7 +363,8 @@ export const simonSays: ActivityDef = {
   choices: () => ['boss'],
   build(c, tier) {
     const keys = ordersFor(c);
-    const need = byTier(tier, 2, 3, 4);
+    // un animal qui ne sait ni sauter, ni courir, ni rugir (le panda) a moins d'ordres : on en demande moins
+    const need = Math.min(byTier(tier, 2, 3, 4), keys.length - 1);
     const cards = keys.slice(0, need + 1).map((k): CommandOption => ORDERS[k]);
     const flies = c.species.can.includes('fly');
     const options = flies ? cards : [...cards.slice(0, 2), FLY, ...cards.slice(2)];
@@ -343,9 +383,12 @@ export const simonSays: ActivityDef = {
 // Toute l'Afrique — « Bonne nuit ! » (la nuit tombe, étoiles et lune)
 // ---------------------------------------------------------------------------
 
+/** Décors sans ciel : pas d'étoiles à compter. */
+const NO_SKY = new Set(['an_ice_cave']);
+
 export const bedtime: ActivityDef = {
   id: 'bedtime',
-  choices: () => ['night'],
+  choices: (c) => (NO_SKY.has(c.place.id) ? [] : ['night']),
   build(_c, tier) {
     const n = byTier(tier, 3, 4, 5);
     const starSpots = [0, 2, 3, 5, 7].slice(0, n);
@@ -418,12 +461,51 @@ export const feelings: ActivityDef = {
 
 /** Ce qu'on photographie dans chaque lieu (le mot propre au décor d'abord). */
 const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
-  africa_waterhole: ['waterhole', 'water_lily', 'tree'],
-  africa_baobab: ['baobab', 'flower', 'leaf'],
-  africa_desert: ['sand', 'tree', 'hill'],
-  africa_canyon: ['canyon', 'mountain', 'flower'],
-  africa_plains: ['termite_mound', 'tree', 'mountain'],
-  savanna: ['acacia', 'waterfall', 'flower'],
+  africa_waterhole: ['waterhole', 'water_lily', 'tree', 'lily_pad'],
+  africa_baobab: ['baobab', 'flower', 'leaf', 'hibiscus'],
+  africa_desert: ['sand', 'tree', 'hill', 'sand_dune'],
+  africa_canyon: ['canyon', 'mountain', 'flower', 'valley'],
+  africa_plains: ['termite_mound', 'tree', 'mountain', 'tall_grass'],
+  savanna: ['acacia', 'waterfall', 'flower', 'acacia_far'],
+  // 2026-11-21 : tous les décors des autres continents
+  asia_bamboo: ['bamboo', 'cherry_blossom', 'waterfall', 'sunray'],
+  asia_pagoda: ['pagoda', 'lantern', 'bridge'],
+  asia_mountain: ['mountain', 'waterfall', 'bamboo', 'azalea'],
+  asia_arch: ['arch', 'bamboo', 'tree', 'peak'],
+  asia_snow_den: ['cave', 'waterfall', 'flag'],
+  asia_garden: ['lantern', 'cherry_blossom', 'bridge', 'lotus'],
+  europe_forest: ['mushroom', 'den', 'castle', 'oak'],
+  europe_alps: ['church', 'edelweiss', 'mountain', 'lake'],
+  europe_coast: ['cypress', 'sea', 'arch', 'house'],
+  europe_lake: ['island', 'mist', 'lake', 'mountain'],
+  europe_farm: ['appletree', 'village', 'castle', 'house'],
+  na_redwoods: ['redwood', 'fern', 'root', 'sunbeam'],
+  na_prairie: ['hill', 'mountain', 'flower', 'boulder'],
+  na_lake: ['canoe', 'maple', 'waterfall', 'reflection'],
+  na_desert: ['cactus', 'arch', 'hill', 'agave'],
+  na_coast: ['lighthouse', 'cliff', 'sea', 'lupine'],
+  na_beaver_pond: ['lodge', 'water_lily', 'mountain', 'reed'],
+  na_redwood_trail: ['redwood', 'log', 'fern', 'moss'],
+  sa_jungle: ['vine', 'tree', 'flower', 'bird_of_paradise'],
+  sa_waterfall: ['waterfall', 'mountain', 'vine', 'pool'],
+  sa_river: ['ruins', 'river', 'water_lily', 'staircase'],
+  sa_andes: ['mountain', 'ruins', 'snow', 'terrace'],
+  sa_wetland: ['water', 'tree', 'mountain', 'liana'],
+  sa_canopy_branch: ['branch', 'vine', 'waterfall', 'blossom'],
+  sa_canopy_treehouse: ['treehouse', 'orchid', 'bridge', 'platform'],
+  sa_canopy_sunrise: ['orchid', 'fruit', 'sun', 'mango'],
+  oc_outback: ['hill', 'bush', 'tree', 'pebbles'],
+  oc_eucalyptus: ['waterfall', 'tree', 'hill', 'eucalyptus'],
+  oc_gorge: ['cliff', 'baobab', 'water', 'bottlebrush'],
+  oc_beach: ['sea', 'sand', 'mountain', 'foam'],
+  oc_fern_forest: ['fern', 'waterfall', 'mountain', 'tree_fern'],
+  oc_gum_woodland: ['gum_tree', 'hill', 'flower', 'bark'],
+  oc_rocky_cove: ['sea', 'gum_tree', 'hill', 'pandanus'],
+  ice_coast: ['iceberg', 'sea', 'mountain', 'floe'],
+  an_ice_cave: ['crystal', 'icicle', 'cave'],
+  an_snowfield: ['snow', 'mountain', 'hill', 'glacier'],
+  open_sea: ['iceberg', 'cliff', 'sea', 'block'],
+  an_aurora: ['arch', 'iceberg', 'sea', 'aurora'],
 };
 
 export function photoSubjects(c: ActivityCtx): string[] {

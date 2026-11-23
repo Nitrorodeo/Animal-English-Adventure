@@ -5,7 +5,7 @@ import type { BiomeDef } from '../content/types';
 import type { ActorRef, FamilyState } from '../engine/state';
 import { dragSpot } from '../ui/drag';
 import { homePlacement } from '../ui/scene';
-import { farAt, FARTHEST, farthestY, groundScale, horizonOf, perchAt } from './staging';
+import { farAt, FARTHEST, farthestY, groundScale, horizonOf, inWater, perchAt } from './staging';
 
 // demande du parent (2026-11-20) : « il doit pouvoir aller quand même assez loin… je dois pouvoir le poser
 // sur la Pierre et les Lions… il faut qu'ils soient complètement au fond du chemin »
@@ -111,5 +111,52 @@ describe('rochers où l\'on peut se poser', () => {
     expect(perchAt(p, 60, 20)).toBeUndefined();
     expect(perchAt(p, 85, 12)).toBeUndefined();
     expect(perchAt({ ...p, perches: [{ x: 0, y: 0, w: 100, h: 100, base: 90 }] }, 20, 52)).toBe(90); // le plus proche gagne
+  });
+});
+
+describe("pas d'animal dans l'eau des lacs et des rivières", () => {
+  // demande du parent : « il faut bien que les animaux soient posés sur la terre et pas au milieu de l'eau »
+  const withBabies = { babies: [{ id: 'b1', birthOrder: 1, stage: 'newborn' }, { id: 'b2', birthOrder: 2, stage: 'companion' }] } as unknown as FamilyState;
+  const dropIn = (place: BiomeDef, pointer: { x: number; y: number }) => {
+    const home = homePlacement(adult('lion', 'father'), family, place.groundY);
+    const hz = horizonOf(place.groundY, place.horizonY);
+    return dragSpot(home, pointer, 0, (f, t) => groundScale(f, t, hz), (x) => farthestY(home.y, hz, place.farY, x), (x, y) => perchAt(place, x, y), undefined, place.water);
+  };
+
+  it("l'eau est mesurée sur les décors qui ont un lac, une rivière ou la mer devant", () => {
+    for (const id of ['africa_waterhole', 'europe_lake', 'na_lake', 'sa_river', 'sa_waterfall', 'oc_fern_forest', 'ice_coast'])
+      expect(PLACES[id as keyof typeof PLACES]!.water?.length, id).toBeGreaterThan(0);
+    expect(inWater(PLACES.africa_waterhole!.water, 50, 50)).toBe(true);
+    expect(inWater(PLACES.africa_waterhole!.water, 85, 80)).toBe(false);
+  });
+
+  it('la famille, à sa place, se tient toujours sur la terre', () => {
+    for (const p of Object.values(PLACES)) {
+      const actors: ActorRef[] = [adult('lion', 'father'), adult('lion', 'mother'), { kind: 'baby', speciesId: 'lion', babyId: 'b1' } as ActorRef, { kind: 'baby', speciesId: 'lion', babyId: 'b2' } as ActorRef];
+      for (const a of actors) {
+        const h = homePlacement(a, withBabies, p.groundY, p.lane);
+        expect(inWater(p.water, h.x, h.y), `${p.id} ${a.kind}`).toBe(false);
+      }
+    }
+  });
+
+  it("lâché au milieu de l'étang du point d'eau, il revient sur la berge la plus proche", () => {
+    const wh = PLACES.africa_waterhole!;
+    const spot = dropIn(wh, { x: 50, y: 50 });
+    expect(inWater(wh.water, spot.x, spot.y)).toBe(false);
+    expect(Math.hypot(spot.x - 50, spot.y - 50)).toBeLessThan(16);
+    // à côté de l'étang : là où on le pose
+    expect(dropIn(wh, { x: 85, y: 80 })).toMatchObject({ x: 85, y: 80 });
+  });
+
+  it("nulle part, dans aucun décor, un animal posé au doigt ne reste dans l'eau", () => {
+    for (const p of Object.values(PLACES)) {
+      if (!p.water) continue;
+      for (let x = 5; x <= 95; x += 10)
+        for (let y = 30; y <= 98; y += 8) {
+          const s = dropIn(p, { x, y });
+          if (perchAt(p, s.x, s.y) === undefined) expect(inWater(p.water, s.x, s.y), `${p.id} (${x}, ${y})`).toBe(false);
+        }
+    }
   });
 });

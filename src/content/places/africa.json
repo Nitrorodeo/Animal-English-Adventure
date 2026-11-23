@@ -300,6 +300,34 @@
             },
             "yes": false
           }
+        },
+        {
+          "id": "lily_pad",
+          "word": "lily pad",
+          "wordFr": "la feuille de nénuphar",
+          "icon": "🟢",
+          "hit": {
+            "x": 58,
+            "y": 45,
+            "w": 17,
+            "h": 11
+          },
+          "crop": {
+            "x": 54,
+            "y": 41,
+            "w": 25,
+            "h": 19
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the lily pad green?",
+              "fr": "Est-ce que la feuille de nénuphar est verte ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -609,6 +637,60 @@
             },
             "yes": false
           }
+        },
+        {
+          "id": "hibiscus",
+          "word": "hibiscus",
+          "wordFr": "l'hibiscus",
+          "icon": "🌺",
+          "hit": {
+            "x": 87,
+            "y": 79,
+            "w": 12,
+            "h": 17
+          },
+          "crop": {
+            "x": 83,
+            "y": 75,
+            "w": 17,
+            "h": 25
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the hibiscus orange?",
+              "fr": "Est-ce que l'hibiscus est orange ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "red_dirt",
+          "word": "red dirt",
+          "wordFr": "la terre rouge",
+          "icon": "🟫",
+          "hit": {
+            "x": 22,
+            "y": 66,
+            "w": 52,
+            "h": 16
+          },
+          "crop": {
+            "x": 18,
+            "y": 62,
+            "w": 60,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the red dirt blue?",
+              "fr": "Est-ce que la terre rouge est bleue ?"
+            },
+            "yes": false
+          }
         }
       ],
       "spots": [
@@ -910,6 +992,58 @@
             "q": {
               "en": "Is the grass green?",
               "fr": "Est-ce que l'herbe est verte ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "sand_dune",
+          "word": "sand dune",
+          "wordFr": "la dune",
+          "icon": "🏜️",
+          "hit": {
+            "x": 40,
+            "y": 33,
+            "w": 26,
+            "h": 8
+          },
+          "crop": {
+            "x": 36,
+            "y": 29,
+            "w": 34,
+            "h": 16
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the sand dune yellow?",
+              "fr": "Est-ce que la dune est jaune ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "crack",
+          "word": "crack",
+          "wordFr": "la fissure",
+          "icon": "〰️",
+          "hit": {
+            "x": 12,
+            "y": 77,
+            "w": 28,
+            "h": 11
+          },
+          "crop": {
+            "x": 8,
+            "y": 73,
+            "w": 36,
+            "h": 19
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the crack wet?",
+              "fr": "Est-ce que la fissure est mouillée ?"
             },
             "yes": false
           }
@@ -1242,6 +1376,58 @@
             },
             "yes": false
           }
+        },
+        {
+          "id": "valley",
+          "word": "valley",
+          "wordFr": "la vallée",
+          "icon": "🏞️",
+          "hit": {
+            "x": 80,
+            "y": 52,
+            "w": 20,
+            "h": 25
+          },
+          "crop": {
+            "x": 76,
+            "y": 48,
+            "w": 24,
+            "h": 33
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the valley far away?",
+              "fr": "Est-ce que la vallée est loin ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "boulder",
+          "word": "red boulder",
+          "wordFr": "le gros rocher rouge",
+          "icon": "🪨",
+          "hit": {
+            "x": 0,
+            "y": 30,
+            "w": 18,
+            "h": 25
+          },
+          "crop": {
+            "x": 0,
+            "y": 26,
+            "w": 22,
+            "h": 33
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the red boulder small?",
+              "fr": "Est-ce que le gros rocher rouge est petit ?"
+            },
+            "yes": false
+          }
         }
       ],
       "spots": [
@@ -1549,6 +1735,34 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "tall_grass",
+          "word": "tall grass",
+          "wordFr": "les hautes herbes",
+          "icon": "🌾",
+          "hit": {
+            "x": 80,
+            "y": 56,
+            "w": 20,
+            "h": 18
+          },
+          "crop": {
+            "x": 76,
+            "y": 52,
+            "w": 24,
+            "h": 26
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the tall grass yellow?",
+              "fr": "Est-ce que les hautes herbes sont jaunes ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -1663,6 +1877,42 @@
     "termite mound": {
       "en": "A termite mound",
       "fr": "Une termitière"
+    },
+    "acacia": {
+      "en": "An acacia tree",
+      "fr": "Un acacia"
+    },
+    "lily pad": {
+      "en": "A lily pad",
+      "fr": "Une feuille de nénuphar"
+    },
+    "hibiscus": {
+      "en": "A hibiscus",
+      "fr": "Un hibiscus"
+    },
+    "red dirt": {
+      "en": "Red dirt",
+      "fr": "De la terre rouge"
+    },
+    "sand dune": {
+      "en": "A sand dune",
+      "fr": "Une dune"
+    },
+    "crack": {
+      "en": "A crack",
+      "fr": "Une fissure"
+    },
+    "valley": {
+      "en": "A valley",
+      "fr": "Une vallée"
+    },
+    "tall grass": {
+      "en": "Tall grass",
+      "fr": "De hautes herbes"
+    },
+    "red boulder": {
+      "en": "A red boulder",
+      "fr": "Un gros rocher rouge"
     }
   }
 }

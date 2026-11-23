@@ -5,6 +5,7 @@
  * des objets, des couleurs ou des nombres validés sont insérés dans des modèles fixes.
  */
 import { NOUNS } from '../places';
+import { inWater } from '../places/depth';
 import { PROPS } from '../props';
 import type {
   ActAction,
@@ -152,6 +153,9 @@ export const anchor = (place: PlaceDef, id: string): Anchor | undefined => place
 
 /** Objets du décor qu'on peut nommer (mot validé). */
 export const nameable = (place: PlaceDef) => place.anchors.filter((a) => NOUNS[a.word]);
+
+/** Emplacements d'objets hors de l'eau dessinée du décor (on ne pose pas une pomme au milieu du lac). */
+export const landSpots = (place: PlaceDef): number[] => place.spots.flatMap((s, i) => (inWater(place.water, s.x, s.y) ? [] : [i]));
 
 /** Cachettes possibles : objet marqué « hide » avec un endroit où se placer. */
 export const hidingPlaces = (place: PlaceDef) => place.anchors.filter((a) => a.tags?.includes('hide') && a.stand);

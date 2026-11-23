@@ -66,7 +66,7 @@
           "check": {
             "q": {
               "en": "Is the vine long?",
-              "fr": "Est-ce que la liane est long ?"
+              "fr": "Est-ce que la liane est longue ?"
             },
             "yes": true
           }
@@ -273,6 +273,60 @@
               "fr": "Est-ce que la plante est bleu ?"
             },
             "yes": false
+          }
+        },
+        {
+          "id": "clearing",
+          "word": "clearing",
+          "wordFr": "la clairière",
+          "icon": "🌿",
+          "hit": {
+            "x": 60,
+            "y": 58,
+            "w": 22,
+            "h": 12
+          },
+          "crop": {
+            "x": 52,
+            "y": 50,
+            "w": 38,
+            "h": 28
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the clearing green?",
+              "fr": "Est-ce que la clairière est verte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "bird_of_paradise",
+          "word": "bird of paradise",
+          "wordFr": "l'oiseau de paradis (une fleur)",
+          "icon": "🌺",
+          "hit": {
+            "x": 15,
+            "y": 64,
+            "w": 8,
+            "h": 11
+          },
+          "crop": {
+            "x": 9,
+            "y": 58,
+            "w": 20,
+            "h": 22
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the bird of paradise orange?",
+              "fr": "Est-ce que l'oiseau de paradis est orange ?"
+            },
+            "yes": true
           }
         }
       ],
@@ -605,6 +659,58 @@
             "q": {
               "en": "Is the cloud brown?",
               "fr": "Est-ce que le nuage est brun ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "spray",
+          "word": "spray",
+          "wordFr": "les gouttelettes d'eau",
+          "icon": "💦",
+          "hit": {
+            "x": 33,
+            "y": 54,
+            "w": 40,
+            "h": 7
+          },
+          "crop": {
+            "x": 28,
+            "y": 44,
+            "w": 50,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the spray white?",
+              "fr": "Est-ce que les gouttelettes d'eau sont blanches ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "pool",
+          "word": "pool",
+          "wordFr": "le bassin",
+          "icon": "💧",
+          "hit": {
+            "x": 50,
+            "y": 62,
+            "w": 24,
+            "h": 9
+          },
+          "crop": {
+            "x": 42,
+            "y": 54,
+            "w": 40,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the pool red?",
+              "fr": "Est-ce que le bassin est rouge ?"
             },
             "yes": false
           }
@@ -953,6 +1059,58 @@
             },
             "yes": true
           }
+        },
+        {
+          "id": "staircase",
+          "word": "staircase",
+          "wordFr": "l'escalier",
+          "icon": "🪜",
+          "hit": {
+            "x": 37,
+            "y": 30,
+            "w": 9,
+            "h": 18
+          },
+          "crop": {
+            "x": 30,
+            "y": 22,
+            "w": 24,
+            "h": 32
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the staircase made of stone?",
+              "fr": "Est-ce que l'escalier est en pierre ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "stepping_stone",
+          "word": "stepping stone",
+          "wordFr": "la pierre de gué",
+          "icon": "🪨",
+          "hit": {
+            "x": 25,
+            "y": 79,
+            "w": 12,
+            "h": 7
+          },
+          "crop": {
+            "x": 19,
+            "y": 72,
+            "w": 26,
+            "h": 20
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the stepping stone flat?",
+              "fr": "Est-ce que la pierre de gué est plate ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -1258,6 +1416,58 @@
               "fr": "Est-ce que l'herbe est brun ?"
             },
             "yes": false
+          }
+        },
+        {
+          "id": "terrace",
+          "word": "terrace",
+          "wordFr": "la terrasse (des marches de champs)",
+          "icon": "🌾",
+          "hit": {
+            "x": 57,
+            "y": 42,
+            "w": 22,
+            "h": 13
+          },
+          "crop": {
+            "x": 50,
+            "y": 34,
+            "w": 40,
+            "h": 28
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the terraces green?",
+              "fr": "Est-ce que les terrasses sont vertes ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "carving",
+          "word": "carving",
+          "wordFr": "la sculpture dans la pierre",
+          "icon": "🗿",
+          "hit": {
+            "x": 3,
+            "y": 19,
+            "w": 11,
+            "h": 10
+          },
+          "crop": {
+            "x": 0,
+            "y": 10,
+            "w": 24,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the carving made of stone?",
+              "fr": "Est-ce que la sculpture est en pierre ?"
+            },
+            "yes": true
           }
         }
       ],
@@ -1569,6 +1779,62 @@
             "q": {
               "en": "Is the path brown?",
               "fr": "Est-ce que le chemin est brun ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sunlight",
+          "word": "sunlight",
+          "wordFr": "la lumière du soleil",
+          "icon": "🌤️",
+          "hit": {
+            "x": 55,
+            "y": 12,
+            "w": 14,
+            "h": 26
+          },
+          "crop": {
+            "x": 48,
+            "y": 4,
+            "w": 28,
+            "h": 42
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sunlight yellow?",
+              "fr": "Est-ce que la lumière du soleil est jaune ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "liana",
+          "word": "liana",
+          "wordFr": "la liane",
+          "icon": "🌿",
+          "hit": {
+            "x": 15,
+            "y": 1,
+            "w": 13,
+            "h": 15
+          },
+          "crop": {
+            "x": 10,
+            "y": 0,
+            "w": 26,
+            "h": 26
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the liana long?",
+              "fr": "Est-ce que la liane est longue ?"
             },
             "yes": true
           }
@@ -1902,6 +2168,62 @@
             },
             "yes": false
           }
+        },
+        {
+          "id": "blossom",
+          "word": "blossom",
+          "wordFr": "les fleurs de l'arbre",
+          "icon": "🌸",
+          "hit": {
+            "x": 29,
+            "y": 47,
+            "w": 12,
+            "h": 9
+          },
+          "crop": {
+            "x": 22,
+            "y": 40,
+            "w": 26,
+            "h": 22
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the blossom pink?",
+              "fr": "Est-ce que les fleurs de l'arbre sont roses ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rainforest",
+          "word": "rainforest",
+          "wordFr": "la forêt tropicale",
+          "icon": "🌳",
+          "hit": {
+            "x": 36,
+            "y": 81,
+            "w": 42,
+            "h": 17
+          },
+          "crop": {
+            "x": 30,
+            "y": 72,
+            "w": 54,
+            "h": 28
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rainforest green?",
+              "fr": "Est-ce que la forêt tropicale est verte ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -2224,6 +2546,32 @@
               "fr": "Est-ce que le nuage est noir ?"
             },
             "yes": false
+          }
+        },
+        {
+          "id": "platform",
+          "word": "platform",
+          "wordFr": "la plateforme",
+          "icon": "🟢",
+          "hit": {
+            "x": 65,
+            "y": 35,
+            "w": 22,
+            "h": 10
+          },
+          "crop": {
+            "x": 58,
+            "y": 26,
+            "w": 36,
+            "h": 28
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the platform round?",
+              "fr": "Est-ce que la plateforme est ronde ?"
+            },
+            "yes": true
           }
         }
       ],
@@ -2611,6 +2959,34 @@
             },
             "yes": false
           }
+        },
+        {
+          "id": "mango",
+          "word": "mango",
+          "wordFr": "la mangue",
+          "icon": "🥭",
+          "hit": {
+            "x": 89,
+            "y": 61,
+            "w": 9,
+            "h": 13
+          },
+          "crop": {
+            "x": 80,
+            "y": 54,
+            "w": 20,
+            "h": 28
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the mango yellow?",
+              "fr": "Est-ce que la mangue est jaune ?"
+            },
+            "yes": true
+          }
         }
       ],
       "spots": [
@@ -2749,6 +3125,62 @@
     "fruit": {
       "en": "A fruit",
       "fr": "Un fruit"
+    },
+    "clearing": {
+      "en": "A clearing",
+      "fr": "Une clairière"
+    },
+    "bird of paradise": {
+      "en": "A bird of paradise flower",
+      "fr": "Une fleur oiseau de paradis"
+    },
+    "sunlight": {
+      "en": "Sunlight",
+      "fr": "La lumière du soleil"
+    },
+    "liana": {
+      "en": "A liana",
+      "fr": "Une liane"
+    },
+    "pool": {
+      "en": "A pool",
+      "fr": "Un bassin"
+    },
+    "staircase": {
+      "en": "A staircase",
+      "fr": "Un escalier"
+    },
+    "stepping stone": {
+      "en": "A stepping stone",
+      "fr": "Une pierre de gué"
+    },
+    "blossom": {
+      "en": "Blossom",
+      "fr": "Des fleurs d'arbre"
+    },
+    "rainforest": {
+      "en": "A rainforest",
+      "fr": "Une forêt tropicale"
+    },
+    "platform": {
+      "en": "A platform",
+      "fr": "Une plateforme"
+    },
+    "mango": {
+      "en": "A mango",
+      "fr": "Une mangue"
+    },
+    "spray": {
+      "en": "Spray from the waterfall",
+      "fr": "Des gouttelettes d'eau"
+    },
+    "terrace": {
+      "en": "A terrace",
+      "fr": "Une terrasse"
+    },
+    "carving": {
+      "en": "A stone carving",
+      "fr": "Une sculpture dans la pierre"
     }
   }
 }

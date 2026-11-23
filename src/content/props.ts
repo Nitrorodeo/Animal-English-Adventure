@@ -39,7 +39,7 @@ const RAW: Record<string, P> = {
   mushroom: thing('mushroom', 'mushrooms', 'le champignon', 'champignons', L('A mushroom', 'Un champignon'), { emoji: '🍄' }),
   acorn: thing('acorn', 'acorns', 'le gland', 'glands', L('An acorn', 'Un gland'), { emoji: '🌰' }),
   apple: thing('apple', 'apples', 'la pomme', 'pommes', L('An apple', 'Une pomme'), { emoji: '🍎' }, true),
-  maple_leaf: thing('maple leaf', 'maple leaves', "la feuille d'érable", "feuilles d'érable", L('A maple leaf', "Une feuille d'érable"), { emoji: '🍁' }, true),
+  maple_leaf: thing('maple leaf', 'maple leaves', "la feuille d'érable", "feuilles d'érable", L('A maple leaf', "Une feuille d'érable"), { shape: 'maple' }, true),
   frog: thing('frog', 'frogs', 'la grenouille', 'grenouilles', L('A frog', 'Une grenouille'), { emoji: '🐸' }, true),
   egg: thing('egg', 'eggs', "l'œuf", 'œufs', L('An egg', 'Un œuf'), { emoji: '🥚' }),
   star: thing('star', 'stars', "l'étoile", 'étoiles', L('A star', 'Une étoile'), { emoji: '⭐' }, true),
@@ -50,9 +50,21 @@ const RAW: Record<string, P> = {
   bird: thing('bird', 'birds', "l'oiseau", 'oiseaux', L('A bird', 'Un oiseau'), { emoji: '🐦' }),
   nest: thing('nest', 'nests', 'le nid', 'nids', L('A nest', 'Un nid'), { emoji: '🪺' }),
   zebra: thing('zebra', 'zebras', 'le zèbre', 'zèbres', L('A zebra', 'Un zèbre'), { emoji: '🦓' }),
+  rabbit: thing('rabbit', 'rabbits', 'le lapin', 'lapins', L('A rabbit', 'Un lapin'), { emoji: '🐇' }),
+  deer: thing('deer', 'deer', 'le cerf', 'cerfs', L('A deer', 'Un cerf'), { emoji: '🦌' }),
+  penguin: thing('penguin', 'penguins', 'le manchot', 'manchots', L('A penguin', 'Un manchot'), { emoji: '🐧' }),
   footprint: thing('footprint', 'footprints', "l'empreinte", 'empreintes', L('A footprint', 'Une empreinte'), { emoji: '🐾' }, true),
+  // même mot, trace différente : sabots (zèbre, cerf) et pattes à trois doigts (manchot)
+  hoofprint: thing('footprint', 'footprints', "l'empreinte", 'empreintes', L('A footprint', 'Une empreinte'), { shape: 'hoof' }, true),
+  birdprint: thing('footprint', 'footprints', "l'empreinte", 'empreintes', L('A footprint', 'Une empreinte'), { shape: 'birdfoot' }, true),
   moon: thing('moon', 'moons', 'la lune', 'lunes', L('The moon', 'La lune'), { emoji: '🌙' }, true),
   pinecone: thing('pine cone', 'pine cones', 'la pomme de pin', 'pommes de pin', L('A pine cone', 'Une pomme de pin'), { emoji: '🌲' }, true),
+  // Amérique du Nord : troupeau du bison, branches du castor
+  bison: thing('bison', 'bison', 'le bison', 'bisons', L('A bison', 'Un bison'), { emoji: '🦬' }),
+  stick: thing('stick', 'sticks', 'la branche', 'branches', L('A stick', 'Une branche'), { emoji: '🪵' }, true),
+  // Europe : la tanière du renard, le scarabée du hérisson (jeux propres aux espèces, 2026-11-21)
+  den: thing('den', 'dens', 'la tanière', 'tanières', L('A den', 'Une tanière'), { emoji: '🕳️' }, true),
+  beetle: thing('beetle', 'beetles', 'le scarabée', 'scarabées', L('A beetle', 'Un scarabée'), { emoji: '🪲' }),
 
   // --- habits (météo) ---
   hat: clothes('hat', 'le chapeau', L('a hat', 'un chapeau'), '👒'),

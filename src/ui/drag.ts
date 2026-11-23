@@ -1,4 +1,4 @@
-import { snapToLane, type Lane } from '../game/staging';
+import { dryNear, inWater, snapToLane, type Lane, type Water } from '../game/staging';
 
 /** Déplacement de la bulle de dialogue au doigt ou à la souris (fonctions pures, testées). */
 
@@ -57,6 +57,7 @@ export function dragSpot(
   minY: number | ((x: number) => number) = 0,
   perchAt?: (x: number, y: number) => number | undefined,
   lane?: Lane,
+  water?: Water,
 ): Spot {
   // décor perché : on ne quitte jamais la branche (règle des toucans), et on garde sa taille
   if (lane) return snapToLane(lane, home, pointer.x, pointer.y + grabDy);
@@ -73,6 +74,11 @@ export function dragSpot(
     // tête hors du haut de la scène : on redescend jusqu'à ce qu'il tienne entier
     ({ y, h } = settle(Math.min(99.5, h + 1)));
     y = Math.max(y, h + 1);
+  }
+  // jamais dans l'eau d'un lac ou d'une rivière (sauf sur un rocher qui en sort) : sur la berge la plus proche
+  if (inWater(water, x, y) && perchAt?.(x, y) === undefined) {
+    const dry = dryNear(water, x, y, (px) => (typeof minY === 'number' ? minY : minY(px)));
+    return { x: dry.x, y: dry.y, h: home.h * scaleFor(home.y, dry.y) };
   }
   return { x, y, h };
 }

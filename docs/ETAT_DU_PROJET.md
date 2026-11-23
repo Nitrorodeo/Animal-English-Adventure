@@ -1,5 +1,48 @@
 # État du projet — Animal English Adventure
 
+## Reprise unique — 2026-11-21 vers 11 h 15
+
+Décision du parent : « J'aimerais que l'on reprenne tout sur celle ci ». Les deux conversations parallèles (« Jeu d'apprentissage anglais pour enfant » et « Planches manquantes, décors et fluidité ») sont arrêtées. **Une seule conversation travaille désormais sur le jeu.**
+
+**Point de départ vérifié** : `main` = `origin/main` = `f4ea33f` (panthère des neiges), dossier de travail propre. Publication GitHub Pages réussie ; le site en ligne contient `snow_leopard` et plus `red_panda`. `npx tsc -b` OK, **262 Vitest OK**.
+
+**Reste à faire pour finir le jeu** (mis à jour le 2026-11-22 vers 10 h 30, après « je vais te mettre 3 decors choisi par animaux, laisse moi les mettre en places et on finira le jeux »)
+
+| # | Sujet | Qui |
+|---|---|---|
+| 1 | ~~Jeux propres à chaque décor sur les 6 autres continents~~ **fait** : chaque décor de chaque espèce a au moins un jeu à lui (voir plus bas) | Claude |
+| 2 | ~~Synthèses 1.8, 2.8, 3.8~~ **fait** : « Quiz time! » (1.8), « Super quiz! » (2.8), « Who is it? » (énigme, 2.8 / 3.7 / 3.8) | Claude |
+| 3 | ~~Eau des lacs et rivières~~ **fait** : un animal lâché dans un lac ou une rivière se pose sur la rive ; aucun objet de jeu n'est posé dans l'eau | Claude |
+| 4 | ~~Vol du hibou~~ **fait** : le hibou et le toucan volent d'un endroit à l'autre | Claude |
+| 5 | ~~Erreurs console partie partagée~~ revérifié : rien à corriger | Claude |
+| 6 | ~~Parcours complet automatique~~ **fait** (`src/engine/parcours.test.ts`) | Claude |
+| 7 | ~~3e décor de la panthère des neiges~~ **fait** : « the snowy cave » (`asia_snow_den`), réservé à la panthère | Claude |
+| 8 | Parents couchés à redessiner debout : jaguars, pandas géants, panthères | Parent (planches) |
+| 9 | Objets encore en émojis : nid, étoiles, habits, zèbre, lapin, cerf, manchot des empreintes, lanternes, papillons, coquillages, flocons, lune, arc-en-ciel, grenouille, banane (empreintes de sabots, de manchot et feuille d'érable : dessinées le 2026-11-22) | Parent (dessins) ou défaut |
+| 10 | ~~Fichiers `red_panda_*`~~ **supprimés** (10 images, récupérables dans l'historique git) | Claude |
+| 11 | Voyage accompagné entre continents : proposé, non validé | Parent (décision) |
+| 12 | ~~Un jeu à soi pour chaque animal, des mots à soi pour chaque décor~~ **fait** le 2026-11-22 : 21 jeux d'espèce, chaque décor a au moins 2 mots qu'aucun autre n'a | Claude |
+| 13 | **3 décors choisis par animal**, déposés par le parent dans `Animaux/` : les intégrer à son signal (comme `asia_snow_den`) | Parent (images), puis Claude |
+
+*Mis à jour le 2026-11-23 vers 10 h — **Un jeu à soi pour chaque animal, des mots à soi pour chaque décor, relecture et contrôle à l'écran** (demandes du parent : « Chaque personnage a son propre jeu avec son propre vocabulaire, chaque décor a son propre vocabulaire », « si tu vois des putains de défauts, fais les au lieu de me dire ») :*
+*- **21 jeux d'espèce** (`src/content/activities/species/`, un fichier par continent) : chaque animal a son jeu, avec 4 à 6 mots à lui (mane, trunk, tusk, pouch, quills, frill, bamboo, eucalyptus leaf, beak, flipper…), sa vraie nourriture et ses vrais gestes. Réservé à l'espèce (`speciesIds`, +7 au classement du menu), 3 niveaux différents, présent dans le menu d'une famille neuve. Le koala, le lézard (Maman et bébés) et le kangourou ont des rôles fixés (`roles`) pour que personne ne dise « Look at Daddy! » à sa propre place.*
+*- **Mots par décor** : chaque décor du jeu a au moins 2 mots qu'aucun autre décor n'a, visibles dans l'image (zones mesurées et contrôlées sur image).*
+*- **Relecture complète des phrases** (anglais simple, français correct, pas d'absurdité) : une vingtaine de phrases reprises (indices, fins de jeu, « Not me! Find Daddy! », « Leap! », etc.).*
+*- **Défauts vus à l'écran et corrigés** : empreintes de sabot brunes invisibles sur la crinière de Leo → liseré clair sur les traces (sabots, pattes de manchot) et sur la feuille d'érable, et pistes déplacées : aucune empreinte ni l'animal du bout de piste n'est posé sur Papa ou Maman (test sur 7 décors × 3 niveaux × chaque espèce). Feuilles 🌿 du koala perdues dans les fougères → liseré clair sur tous les objets émoji. « Touch the eucalyptus! » refusait le grand eucalyptus marqué « tree » → nouveau champ `sameAs` des décors (un même arbre sous deux mots : eucalyptus, gommiers, séquoias ×2, pins du lac) ; le toucher compte pour les deux.*
+*- **Contrôlé au navigateur** (version construite) : crinière du lion, suivre les empreintes (savane et plaine enneigée), feuilles d'érable (lac), pique-nique de bambou du panda, koala qui dort (Maman, et absent du menu de Papa), grand bec du toucan.*
+*- Voix des nouvelles phrases : génération Kokoro en cours (environ 57 % le 2026-11-23 à 11 h). Tests du 2026-11-23 : **390 Vitest réussis sur 393** (les 3 restants attendent la fin des voix), typage OK, 38 tests Python OK, construction OK. Banc de fluidité : 60 images/s sur toutes les espèces et tous les décors, aucune tâche longue.*
+*- **Point noté, non corrigé** : dans certains décors, des objets de jeu se posent parfois devant Papa ou Maman, ou en partie sous le coin de la bulle (ex. la banane aux pieds de Papa toucan sur la grande branche) ; ils restent visibles et touchables. À reprendre décor par décor si cela gêne, pas à l'aveugle.*
+
+*Mis à jour le 2026-11-21 vers 12 h 30 — **Toutes les corrections du tableau** (demande du parent : « Je veux que tu fasses toutes les corrections ») :*
+*- **Jeux signatures des autres continents** (`src/content/activities/world.ts`) : lanternes à compter (jardin et pagode d'Asie), pommes à ramasser (ferme d'Europe), feuilles d'érable d'automne (lac et étang des castors d'Amérique du Nord), papillons de couleur (jungle, cascade et canopée d'Amérique du Sud), coquillages (plages d'Océanie, d'Europe et d'Amérique du Nord), flocons de neige puis manteau et gants (Antarctique ; en pleine mer, seulement les flocons).*
+*- **Jeux d'Afrique étendus là où le décor s'y prête** : l'écho (gorge d'Océanie, montagnes d'Asie et des Alpes, grotte de glace), les empreintes (lapin dans la prairie, cerf dans la forêt d'Europe et les séquoias, manchot sur la plaine enneigée), qui vit dans l'eau (9 lacs et rivières), le rocher à escalader, la course, le soleil et l'ombre. « Tu es le chef », « Bonne nuit » (sauf grotte de glace), les émotions et la photo vont partout ; la photo a 2 ou 3 sujets propres à chacun des 43 décors.*
+*- **Révisions** : « Quiz time! » (Maman, bébé au stade « young » : salut, couleurs, compter, grand/petit, can/can't, nourriture, météo), « Super quiz! » (Papa, bébé « companion » : he/she, où est, do you like, what's this, habits selon la météo), « Who is it? » (devinettes en 3 indices : canard, grenouille, oiseau, papillon ; manchot, poisson en Antarctique). Une révision ne passe en tête du menu qu'après 5 jeux.*
+*- Le classement « jeu propre au lieu » compte maintenant les lieux du continent où l'on est. Le panda (qui ne court ni ne saute) a un « Tu es le chef » à 3 ordres et redescend du rocher en grimpant. Marche de l'arche d'Asie : point d'arrivée ajouté (course possible pour le tigre).*
+*- Défaut corrigé en vérifiant à l'écran : Papa manchot porte déjà une écharpe sur son dessin ; le jeu des flocons et le quiz font donc mettre un manteau.*
+*- Tests : `src/engine/world.test.ts` (jeu local partout, photo partout, révisions, objets jamais dans l'eau), tests Afrique adaptés. Vérifié au navigateur : empreintes et flocons du manchot, lion lâché au milieu de la mare posé sur la rive.*
+
+*Les paragraphes datés plus bas sont l'historique. Lorsqu'un point de l'historique contredit ce tableau, c'est le tableau qui fait foi.*
+
 *Mis à jour le 2026-11-21 vers 9 h — **Jeu en ligne, 4 nouveaux décors, audit** (demandes du parent : « tu trouvera les 4 decors dans les dossiers des castors et koalas met en place », « fais un audit complet du jeu », « Je veux un vrai site en ligne », « je veux les deux noindex et le code ») :*
 *- **Site en ligne** : https://nitrorodeo.github.io/Animal-English-Adventure/ (GitHub Pages, dépôt public). Publié par `.github/workflows/deploy.yml` à chaque envoi sur `main`, après les tests. Build `VITE_STATIC_SITE=1` : code demandé une fois par appareil (`src/engine/access.ts`, seule l'empreinte est dans le code), aucun appel aux API de l'ordinateur (sauvegarde, voix du prénom). Le jeu servi par l'ordinateur (`npm run dev`) ne demande rien.*
 *- **Pas de référencement** : `noindex, nofollow, noarchive` dans `index.html`. **Politique de sécurité (CSP)** ajoutée au jeu construit (`tools/pwa/csp.mjs`) : seuls les fichiers du jeu sont chargés.*
@@ -8,14 +51,14 @@
 *- Contrôlé en ligne : code refusé puis accepté, noindex, CSP, service hors-ligne actifs, aucune erreur console. Tests : **236 Vitest** + typage OK.*
 *- **Partie partagée entre appareils** (demande : « pouvoir s'y connecter du PC, de la tablette, du téléphone ») : code de famille créé sur le premier appareil (ex. `lion-mango-4271`), tapé une fois sur les autres ; la partie s'envoie toute seule et se récupère au démarrage, au retour sur le jeu et chaque minute. Service Cloudflare `cloud/worker.mjs` (notice `cloud/LISEZ_MOI.md`), décisions `src/engine/cloud.ts`, écran `src/ui/FamilyGate.tsx`, section « Partie partagée » dans l'espace parents. Testé (253 Vitest) et vérifié au navigateur avec un faux service : création du code, mauvais code refusé, appareil vierge qui retrouve la partie, mise à jour venue d'un autre appareil reprise automatiquement. **En ligne depuis le 2026-11-21** : service `https://aea-saves.aea-famille.workers.dev` (compte Cloudflare du parent, stockage KV `SAVES`), relié au site par la variable de dépôt `CLOUD_URL`.*
 *- **Mise à jour immédiate sur les appareils** : quand une nouvelle version est publiée, le jeu se recharge tout seul une fois dans la minute qui suit l'ouverture (`shouldReloadForUpdate`, `src/pwa/offline.ts`), au lieu d'afficher l'ancienne version jusqu'à l'ouverture suivante.*
-*- **En cours (autre session)** : panthère des neiges à la place du panda roux en Asie (décision du parent).*
+*- ~~En cours (autre session)~~ : panthère des neiges à la place du panda roux en Asie, faite et publiée (`f4ea33f`).*
 *- **Limites** : la page du dépôt GitHub public peut être indexée ; le code n'est qu'une porte (le dépôt est lisible). L'écran de prononciation du prénom n'a pas d'effet en ligne.*
 
 *Mis à jour le 2026-11-20 vers 18 h 30 — **Carte élargie puis recentrée, étiquettes fines, vraie profondeur par décor** (demandes du parent : « il doit pouvoir aller quand même assez loin […] complètement au fond du chemin », « on est trop décalé vers la droite, centre-moi ce décor », « les bulles marchent sur les pingouins […] quelque chose de plus petit, de plus fin, de plus premium ») :*
 *- **Carte du monde** 2172×1086 (2:1). Élargie par `scripts/map_wide.py` : les continents sont écartés, la mer est étirée. Elle est ensuite **recentrée** par `scripts/map_center.py` : 135 px d'océan retirés à gauche et 135 px de mer ajoutés à droite, par coutures dans l'eau. Les continents se décalent d'un bloc, sans déformation. Seule la pointe de la Sibérie, coupée par le bord, est un peu allongée dans l'herbe. L'image d'avant le recentrage est gardée : `world_map_avant_centrage.webp`. Ont été recalés : les zones cliquables et les étiquettes (`world.ts`), la baleine, la tortue et les dauphins (`sea.ts`), et les autocollants déjà collés (`toWideMap`, nouveau repère `map: 3`).*
 *- **Étiquettes des continents** : petites pastilles de verre (fond blanc translucide, ombre douce, police plus petite, compteur 🎁 discret derrière un filet). « Africa » est passée dans la mer, à côté du sud de l'Afrique. « Antarctica » est posée sur la banquise, à gauche des manchots. La bulle de jeu des animaux marins est affinée de la même façon. Contrôlé au navigateur en 1879×940, en tablette 1024×768 et en iPhone couché 844×390.*
 *- **Profondeur par décor** (`src/content/places/depth.ts`) : pour chacun des 36 décors, la ligne d'horizon et le fond du sol sont mesurés sur l'image. Un animal posé tout au fond descend jusqu'à 14 % de sa taille (`FARTHEST`) ; par exemple les lions au bout du chemin de la savane. Sur les plages, le bord de la mer est tracé point par point : un animal lâché au-dessus de l'eau reste sur le sable. Sur les rochers (`perches`, et les ancres de type rocher) l'animal se pose dessus, avec la taille qu'il aurait au pied du rocher ; exemple : le lézard sur la grosse pierre de la plage. Les petits animaux au fond sont plus faciles à attraper (zone de prise agrandie, `--grab`).*
-*- **Limite** : l'eau des lacs et des rivières à l'intérieur d'un décor n'est pas encore interdite ; seul le bord de mer du fond l'est.*
+*- ~~**Limite** : l'eau des lacs et des rivières à l'intérieur d'un décor n'est pas encore interdite~~ (corrigé le 2026-11-21).*
 *- Tests : **227 Vitest** (dont `src/game/depth.test.ts`) et typage OK.*
 
 *Mis à jour le 2026-11-20 vers 17 h 30 — **Restes de découpe des autres familles vérifiés et corrigés** (demande du parent : « vérifie les autres familles pour des restes de découpe ») :*
@@ -334,14 +377,14 @@ Constaté dans le navigateur (savane, lion) : Papa propose empreintes / course /
 
 ## En cours / limites connues
 
-- **Pilote Afrique seulement** : les 11 jeux par décor n'existent qu'en Afrique ; les autres continents gardent les 15 jeux V2 (avec rôles et stades). Le menu ne montre que 3 jeux à la fois : les autres reviennent au fil des parties.
+- ~~**Pilote Afrique seulement**~~ (étendu aux 7 continents le 2026-11-21). Le menu ne montre que 3 jeux à la fois : les autres reviennent au fil des parties.
 - Pilote Afrique : empreintes, nid, étoiles et habits sont des émojis (pas encore de dessins) ; le zèbre de « Follow the footprints » aussi.
 - Après une mise à jour pendant que le jeu est ouvert, une page blanche peut apparaître (cache du navigateur) : recharger avec Ctrl + F5.
 
 - **Dessins manquants** (le parent les fournira) : lion, éléphant, girafe, panda géant, tigre, panda roux, renard, ours, bison, castor, hibou et hérisson ont des sprites (paresseux, jaguar, toucan, kangourou, koala, ornithorynque, manchot, phoque, orque : pictogramme) ; les autres espèces ont un pictogramme. Décors de l'Antarctique provisoires (dégradés), sans point d'eau.
 - Décors : `sa_andes` ne sert à aucune aventure (seul le toucan y va) ; quelques points du décor sont dans la zone de la famille.
 - Objets : pas encore de perle, arc-en-ciel, grenouille ou banane en objets à toucher ; la pluie est racontée sur des décors ensoleillés ; certaines vérifications de couleur sont approximatives (stone / rock presque doublons).
-- Le hibou n'a pas d'animation de vol pour se déplacer (il se dandine).
+- ~~Le hibou n'a pas d'animation de vol pour se déplacer~~ (corrigé le 2026-11-21 : il vole).
 - Prénoms : les voix enregistrées ne prononcent pas les prénoms libres (la bulle les affiche).
 - Hors-ligne : seulement en https ou sur `localhost`, et seulement avec la version construite (`npm run build`), pas avec `npm run dev`. Tablette en http local : pas de hors-ligne.
 - Queues animées : en attente de tous les dessins (décision du parent).
@@ -388,8 +431,8 @@ Fonctionnement :
 
 - ~~Planches à refaire sur fond vert~~ : fait le 2026-11-20 (16 h 15), les planches sur fond crème sont découpées directement (bisons, castors, ours bruns, jaguars, toucans, hérissons, koalas).
 - **Parents couchés à refaire debout** sur fond vert : jaguars, pandas géants (les pandas actuels, parents couchés, restent dans le jeu en attendant), panthères des neiges (pas encore dans le jeu).
-- **Panda roux** : dossier supprimé à la demande du parent ; l'espèce reste jouable avec ses anciennes images. À confirmer : la garder ou la retirer (la panthère des neiges la remplacerait en Asie).
-- **Deux nouveaux décors d'Amérique du Sud** (« Cascade tropicale… », « Clairière tropicale… ») pas encore utilisés : les anciens décors cascade, zone humide et vallée, déjà réglés (points touchables), restent en place.
+- ~~Panda roux~~ : remplacé par la panthère des neiges le 2026-11-21 (décision du parent).
+- ~~Deux nouveaux décors d'Amérique du Sud~~ : câblés le 2026-11-20.
 - Fichiers en vrac laissés tels quels : 10 PNG à la racine de `Animaux/Amerique du Sud/Paresseux/`, 4 PNG à la racine de `Animaux/Oceanie/Kangourous/`, et les zips (Antarctique, Girafes, Paresseux).
 - **Voyage accompagné d'animaux entre continents** : proposé, **non validé** — non implémenté. Les voyages de la V2 restent **à l'intérieur d'un continent**.
 - Style des lions : voir la note de droits dans `docs/INVENTAIRE_ASSETS.md`.

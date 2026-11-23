@@ -3,6 +3,8 @@ import type { ActivityDef } from '../types';
 import { findFood, findObject, findWater, greeting, nameObject } from './basic';
 import { familyPresentation, helpSibling, rememberYesterday } from './family';
 import { AFRICA_ACTIVITIES } from './africa';
+import { WORLD_ACTIVITIES } from './world';
+import { SPECIES_ACTIVITIES } from './species';
 import { familyOrders, yesOrNo } from './play';
 import { animalAbilities, compareObjects, countObjects, describeActions, hideAndSeek, identifyColors, weatherCheck } from './games';
 
@@ -25,6 +27,8 @@ export const ACTIVITIES: readonly ActivityDef[] = [
   familyOrders,
   yesOrNo,
   ...AFRICA_ACTIVITIES,
+  ...WORLD_ACTIVITIES,
+  ...SPECIES_ACTIVITIES,
 ];
 
 export const ACTIVITY_BY_ID: Readonly<Record<string, ActivityDef>> = Object.fromEntries(ACTIVITIES.map((a) => [a.id, a]));

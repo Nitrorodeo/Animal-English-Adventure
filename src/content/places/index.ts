@@ -78,7 +78,8 @@ const SAVANNA: BiomeDef = {
   placeholderGradient: GRADIENTS.africa,
   weather: 'hot',
   groundY: 80,
-  spots: [{ x: 6, y: 58 }, { x: 19, y: 42 }, { x: 33, y: 57 }, { x: 40, y: 47 }, { x: 47, y: 46 }, { x: 52, y: 57 }, { x: 58, y: 47 }, { x: 26, y: 40 }],
+  // 2026-11-22 : tous sur la terre ferme (deux tombaient dans la mare, un sur les rochers de la cascade)
+  spots: [{ x: 6, y: 72 }, { x: 18, y: 73 }, { x: 30, y: 74 }, { x: 42, y: 77 }, { x: 48, y: 68 }, { x: 66, y: 64 }, { x: 80, y: 60 }, { x: 47, y: 46 }],
   anchors: [
     { id: 'waterhole', word: 'water', wordFr: "l'eau", icon: '💧', hit: { x: 17, y: 48, w: 33, h: 16 }, crop: { x: 13, y: 40, w: 40, h: 28 }, stand: { x: 42, y: 70 }, tags: ['water'], check: { q: L('Is the water blue?', "Est-ce que l'eau est bleue ?"), yes: true } },
     { id: 'acacia', word: 'tree', wordFr: "l'arbre", icon: '🌳', hit: { x: 0, y: 4, w: 20, h: 46 }, crop: { x: 0, y: 0, w: 46, h: 62 }, stand: { x: 10, y: 66 }, tags: ['climb', 'hide'], check: { q: L('Is the tree big?', "Est-ce que l'arbre est grand ?"), yes: true } },
@@ -90,6 +91,7 @@ const SAVANNA: BiomeDef = {
     { id: 'path', word: 'path', wordFr: 'le chemin', icon: '🛤️', hit: { x: 46, y: 74, w: 22, h: 18 }, crop: { x: 36, y: 58, w: 46, h: 42 }, stand: { x: 55, y: 80 }, tags: ['path'], check: { q: L('Is the path long?', 'Est-ce que le chemin est long ?'), yes: true } },
     { id: 'cloud', word: 'cloud', wordFr: 'le nuage', icon: '☁️', hit: { x: 51, y: 2, w: 21, h: 11 }, crop: { x: 50, y: 0, w: 24, h: 15 }, tags: ['sky'], check: { q: L('Is the cloud white?', 'Est-ce que le nuage est blanc ?'), yes: true } },
     { id: 'waterfall', word: 'waterfall', wordFr: 'la cascade', icon: '🌊', hit: { x: 16, y: 43, w: 8, h: 8 }, crop: { x: 13, y: 39, w: 13, h: 15 }, tags: [], check: { q: L('Is the waterfall big?', 'Est-ce que la cascade est grande ?'), yes: false } },
+    { id: 'acacia_far', word: 'acacia', wordFr: "l'acacia", icon: '🌳', hit: { x: 79, y: 22, w: 20, h: 22 }, crop: { x: 75, y: 18, w: 25, h: 30 }, tags: ['plant'], check: { q: L('Is the acacia tree green?', "Est-ce que l'acacia est vert ?"), yes: true } },
   ],
 };
 

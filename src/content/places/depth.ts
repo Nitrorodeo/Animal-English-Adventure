@@ -23,38 +23,65 @@ export interface PlaceDepth {
   perches?: Perch[];
   /** décor perché : bande de la branche `[x, fond, devant]` ; le seul endroit où se posent les pieds (toucans) */
   lane?: [number, number, number][];
+  /** eau dessinée au sol (lac, rivière, mer devant) : polygones `[x, y]` en % ; on n'y pose aucun animal */
+  water?: [number, number][][];
+}
+
+export type Water = readonly (readonly (readonly [number, number])[])[];
+
+/** Le point (x, y), en % de la scène, est-il dans l'eau dessinée du décor (lac, rivière, mer devant) ? */
+export function inWater(water: Water | undefined, x: number, y: number): boolean {
+  for (const poly of water ?? []) {
+    let inside = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const [xi, yi] = poly[i]!;
+      const [xj, yj] = poly[j]!;
+      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+    }
+    if (inside) return true;
+  }
+  return false;
 }
 
 export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   // Afrique
-  savanna: { horizonY: 31, farY: 35 }, // le chemin se perd vers y 41, la plaine continue jusqu'à 35
-  africa_waterhole: { horizonY: 27, farY: 31 },
+  savanna: { horizonY: 31, farY: 35, // le chemin se perd vers y 41, la plaine continue jusqu'à 35
+    water: [[[17, 52], [20, 49], [30, 49], [45, 50], [52, 52], [53, 57], [48, 61], [38, 64], [25, 63], [17, 60]]] }, // la mare sous la cascade
+  africa_waterhole: { horizonY: 27, farY: 31, water: [[[27, 40], [35, 38], [50, 38], [65, 38], [72, 41], [74, 50], [70, 58], [60, 62], [45, 63], [35, 61], [28, 56], [26, 48]]] },
   africa_baobab: { horizonY: 52, farY: 56 },
   africa_desert: { horizonY: 33, farY: 36 },
   africa_canyon: { horizonY: 28, farY: 36 },
   africa_plains: { horizonY: 33, farY: 37 },
   // Antarctique
-  ice_coast: { horizonY: 33, farY: 36 },
+  ice_coast: { horizonY: 33, farY: 36, water: [[[0, 30], [30, 30], [60, 30], [88, 33], [95, 40], [80, 44], [72, 48], [70, 55], [60, 59], [45, 62], [30, 61], [18, 58], [10, 52], [0, 48]]] },
   an_ice_cave: { horizonY: 46, farY: 52 },
   an_snowfield: { horizonY: 35, farY: 38 },
-  open_sea: { horizonY: 50, farY: 54 },
+  open_sea: { horizonY: 50, farY: 54, water: [[[10, 48], [30, 48], [60, 48], [90, 50], [97, 55], [88, 62], [85, 70], [70, 73], [50, 73], [30, 72], [18, 70], [12, 62]]] },
   an_aurora: { horizonY: 47, farY: 50 },
   // Asie
-  asia_bamboo: { horizonY: 52, farY: 57 },
-  asia_pagoda: { horizonY: 38, farY: 50 },
+  asia_bamboo: { horizonY: 52, farY: 57, water: [[[20, 50], [30, 50], [40, 51], [46, 57], [42, 60], [30, 61], [22, 60]]] },
+  asia_pagoda: { horizonY: 38, farY: 50, water: [[[18, 46], [30, 46], [45, 46], [52, 52], [45, 55], [30, 57], [20, 56]]] },
   asia_mountain: { horizonY: 35, farY: 58 },
   asia_arch: { horizonY: 45, farY: 52 },
-  asia_garden: { horizonY: 42, farY: 58 },
+  asia_garden: { horizonY: 42, farY: 58, water: [[[20, 48], [45, 47], [50, 52], [42, 57], [25, 58], [20, 55]]] },
+  // tanière de la panthère des neiges (2026-11-21) : pied des montagnes et mer de nuages vers y 45 ; le sol va
+  // jusqu'à l'entrée de la grotte (y 57) et au pied du grand rocher plat (y 62) ; à droite, le bord du bassin
+  // turquoise. L'eau = la cascade (x 74–89, y 44–58) et le bassin (x 57–100, y 58–69).
+  asia_snow_den: {
+    horizonY: 45,
+    farY: [[0, 57], [26, 57], [29, 62], [48, 62], [52, 60], [56, 61], [58, 64], [62, 65], [66, 66.5], [70, 68.5], [76, 69.5], [84, 69.5], [90, 68.5], [94, 68], [100, 67.5]],
+    water: [[[57, 61], [60, 59.5], [67, 59], [71, 58], [73, 52], [74, 46], [76, 44], [89, 44], [89, 50], [87, 54], [84, 57.5], [82, 60], [86, 62], [90, 63.5], [100, 63.5], [100, 67], [94, 67.5], [90, 68], [84, 69], [76, 69], [70, 68], [66, 66], [60, 64], [57, 63]]],
+  },
   // Europe
   europe_forest: { horizonY: 40, farY: 52 },
-  europe_alps: { horizonY: 38, farY: 42 },
+  europe_alps: { horizonY: 38, farY: 42, water: [[[37, 42], [60, 41], [85, 42], [100, 44], [100, 52], [92, 56], [80, 58], [65, 58], [55, 56], [48, 52], [42, 47]]] },
   europe_coast: { horizonY: 47, farY: [[0, 70], [25, 68], [55, 68], [60, 64], [65, 58], [70, 53], [78, 52], [100, 62]] },
-  europe_lake: { horizonY: 47, farY: 60 },
-  europe_farm: { horizonY: 38, farY: 56 },
+  europe_lake: { horizonY: 47, farY: 60, water: [[[12, 44], [80, 44], [78, 52], [70, 58], [55, 60], [35, 59], [25, 55], [15, 50]]] },
+  europe_farm: { horizonY: 38, farY: 56, water: [[[70, 55], [86, 54], [86, 60], [95, 66], [93, 71], [80, 70], [68, 66], [66, 62]]] },
   // Amérique du Nord
   na_redwoods: { horizonY: 55, farY: 60 },
   na_prairie: { horizonY: 42, farY: 46 },
-  na_lake: { horizonY: 52, farY: 68 },
+  na_lake: { horizonY: 52, farY: 68, water: [[[15, 48], [100, 48], [100, 62], [92, 68], [70, 72], [60, 77], [45, 77], [35, 73], [25, 66], [18, 58]]] },
   na_desert: { horizonY: 38, farY: 44 },
   na_coast: { horizonY: 44, farY: [[0, 57], [30, 58], [35, 60], [40, 63], [45, 65], [50, 66], [60, 69], [70, 70], [82, 72], [100, 72]] },
   // étang des castors (image retournée) : l'eau occupe la gauche jusqu'en bas ; la rive va de la bûche jusque
@@ -64,14 +91,16 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   na_redwood_trail: { horizonY: 52, farY: [[0, 66], [20, 64], [30, 62], [45, 60], [55, 58], [65, 58], [75, 61], [85, 68], [100, 68]] },
   // Océanie
   oc_outback: { horizonY: 47, farY: 50 },
-  oc_eucalyptus: { horizonY: 52, farY: 60 },
-  oc_gorge: { horizonY: 48, farY: 60 },
+  oc_eucalyptus: { horizonY: 52, farY: 60, water: [[[40, 64], [55, 63], [65, 56], [75, 55], [80, 58], [78, 64], [68, 70], [55, 71], [42, 69]]] },
+  oc_gorge: { horizonY: 48, farY: 60, water: [[[33, 57], [50, 52], [70, 52], [78, 55], [70, 60], [60, 64], [48, 65], [36, 62]]] },
   // la grosse pierre ronde à gauche, au fond de la plage : dessus vers y 33–42, pied à y 50
   oc_beach: {
     horizonY: 45,
     farY: [[0, 51], [22, 52], [26, 56], [30, 60], [35, 63], [40, 66], [45, 69], [50, 72], [55, 74], [60, 76], [70, 80], [78, 82], [100, 84]],
-    perches: [{ x: 14, y: 32, w: 15, h: 10, base: 50 }] },
-  oc_fern_forest: { horizonY: 48, farY: 62 },
+    perches: [{ x: 14, y: 32, w: 15, h: 10, base: 50 }],
+    // la mer jusqu'au bord des vagues, et le reflet mouillé en bas à droite
+    water: [[[26, 52], [30, 48], [60, 47], [100, 47], [100, 62], [92, 66], [80, 70], [76, 74], [75, 80], [70, 82], [60, 78], [50, 70], [40, 64], [30, 58], [27, 55]]] },
+  oc_fern_forest: { horizonY: 48, farY: 62, water: [[[12, 52], [32, 52], [33, 60], [30, 66], [42, 70], [55, 72], [60, 78], [60, 88], [65, 95], [65, 100], [10, 100], [10, 88], [15, 80], [12, 70], [14, 62]]] },
   // bois d'eucalyptus : la prairie dorée va jusqu'au pied des collines (y 59)
   oc_gum_woodland: { horizonY: 55, farY: 59 },
   // crique aux rochers (image retournée) : bord de la mer tracé point par point ; les gros rochers du fond
@@ -82,10 +111,10 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
     perches: [{ x: 57, y: 36, w: 17, h: 10, base: 50 }] },
   // Amérique du Sud
   sa_jungle: { horizonY: 52, farY: 60 },
-  sa_waterfall: { horizonY: 45, farY: 60 },
-  sa_river: { horizonY: 45, farY: 50 },
+  sa_waterfall: { horizonY: 45, farY: 60, water: [[[22, 62], [40, 58], [55, 60], [65, 62], [75, 64], [72, 72], [65, 78], [55, 80], [40, 85], [30, 90], [15, 92], [2, 92], [0, 85], [5, 78], [8, 72], [18, 68]]] },
+  sa_river: { horizonY: 45, farY: 50, water: [[[55, 52], [68, 45], [70, 40], [78, 40], [80, 46], [88, 50], [85, 56], [95, 62], [100, 64], [95, 72], [85, 78], [78, 85], [70, 85], [62, 82], [55, 80], [45, 78], [42, 72], [48, 66], [55, 60], [52, 56]]] },
   sa_andes: { horizonY: 50, farY: 56 },
-  sa_wetland: { horizonY: 52, farY: 62 },
+  sa_wetland: { horizonY: 52, farY: 62, water: [[[12, 58], [30, 57], [50, 58], [50, 64], [42, 68], [30, 74], [20, 78], [8, 80], [4, 74], [10, 66]]] },
   // canopée (2026-11-21) : le sol est le dessus d'une grosse branche, bord arrière de l'écorce tracé point par point
   sa_canopy_branch: {
     horizonY: 38,
