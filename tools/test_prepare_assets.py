@@ -75,3 +75,10 @@ class PrepareBackground(unittest.TestCase):
         out = pa.prepare_background(self.fond(), {'maxWidth': 200})
         self.assertEqual(out.size, (200, 112))
         self.assertEqual(out.getpixel((10, 50)), (255, 0, 0))
+
+    def test_recadrage_16_9_et_agrandissement(self):
+        img = Image.new('RGB', (300, 200), (0, 0, 255))
+        img.paste(Image.new('RGB', (300, 10), (255, 0, 0)), (0, 0))  # bande rouge en haut, coupée
+        out = pa.prepare_background(img, {'maxWidth': 600, 'crop16x9': True})
+        self.assertEqual(out.size, (600, 338))
+        self.assertEqual(out.getpixel((300, 2)), (0, 0, 255))

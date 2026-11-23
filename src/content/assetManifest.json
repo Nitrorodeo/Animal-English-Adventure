@@ -249,6 +249,141 @@
       "path": "assets/backgrounds/oc_rocky_cove.webp",
       "width": 1672,
       "height": 941
+    },
+    "na_bear_den": {
+      "path": "assets/backgrounds/na_bear_den.webp",
+      "width": 1672,
+      "height": 940
+    },
+    "na_bison_prairie": {
+      "path": "assets/backgrounds/na_bison_prairie.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_bison_alpine": {
+      "path": "assets/backgrounds/na_bison_alpine.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_bison_canyon": {
+      "path": "assets/backgrounds/na_bison_canyon.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "na_beaver_falls": {
+      "path": "assets/backgrounds/na_beaver_falls.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_sloth_canopy": {
+      "path": "assets/backgrounds/sa_sloth_canopy.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_sloth_roots": {
+      "path": "assets/backgrounds/sa_sloth_roots.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "sa_sloth_refuge": {
+      "path": "assets/backgrounds/sa_sloth_refuge.webp",
+      "width": 1671,
+      "height": 941
+    },
+    "an_seal_aurora": {
+      "path": "assets/backgrounds/an_seal_aurora.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "an_seal_rocks": {
+      "path": "assets/backgrounds/an_seal_rocks.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "an_seal_sunset": {
+      "path": "assets/backgrounds/an_seal_sunset.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "an_penguin_cave": {
+      "path": "assets/backgrounds/an_penguin_cave.webp",
+      "width": 1672,
+      "height": 940
+    },
+    "asia_pavilion": {
+      "path": "assets/backgrounds/asia_pavilion.webp",
+      "width": 1671,
+      "height": 941
+    },
+    "asia_jungle_falls": {
+      "path": "assets/backgrounds/asia_jungle_falls.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "asia_snow_cave": {
+      "path": "assets/backgrounds/asia_snow_cave.webp",
+      "width": 1671,
+      "height": 941
+    },
+    "europe_fox_glade": {
+      "path": "assets/backgrounds/europe_fox_glade.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_fox_autumn": {
+      "path": "assets/backgrounds/europe_fox_autumn.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_fox_snow": {
+      "path": "assets/backgrounds/europe_fox_snow.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_owl_nest": {
+      "path": "assets/backgrounds/europe_owl_nest.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_owl_moon": {
+      "path": "assets/backgrounds/europe_owl_moon.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_owl_oak": {
+      "path": "assets/backgrounds/europe_owl_oak.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_hog_stream": {
+      "path": "assets/backgrounds/europe_hog_stream.webp",
+      "width": 1671,
+      "height": 941
+    },
+    "europe_hog_lake": {
+      "path": "assets/backgrounds/europe_hog_lake.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "europe_hog_log": {
+      "path": "assets/backgrounds/europe_hog_log.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "oc_red_plain": {
+      "path": "assets/backgrounds/oc_red_plain.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "oc_waterhole": {
+      "path": "assets/backgrounds/oc_waterhole.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "oc_bush_coast": {
+      "path": "assets/backgrounds/oc_bush_coast.webp",
+      "width": 1672,
+      "height": 941
     }
   },
   "characters": {

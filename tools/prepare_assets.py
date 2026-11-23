@@ -111,6 +111,15 @@ def prepare_background(img: Image.Image, spec: dict) -> Image.Image:
     (pour que la terre ferme tombe à droite, là où se tient la famille)."""
     img = img.convert("RGB")
     mw = spec.get("maxWidth", 1920)
+    # 2026-11-23 : image source plus haute que l'écran (tanière de l'ours, 763×506) : on la recadre en 16:9,
+    # centrée en hauteur, puis on l'agrandit à maxWidth, pour qu'elle remplisse la scène sans être déformée.
+    if spec.get("crop16x9"):
+        h = round(img.width * 9 / 16)
+        if img.height > h:
+            top = (img.height - h) // 2
+            img = img.crop((0, top, img.width, top + h))
+        if img.width < mw:
+            img = img.resize((mw, round(img.height * mw / img.width)), Image.LANCZOS)
     if img.width > mw:
         img = img.resize((mw, round(img.height * mw / img.width)), Image.LANCZOS)
     if spec.get("flip"):

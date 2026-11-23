@@ -205,6 +205,115 @@
       "src": "Animaux/Oceanie/Koalas/Image ChatGPT 21 nov. 2026, 07_56_41-4.png",
       "maxWidth": 1672,
       "flip": true
+    },
+    "na_bear_den": {
+      "src": "Animaux/Amerique du Nord/Ours_Bruns/03_Taniere_hivernale.png",
+      "maxWidth": 1672,
+      "crop16x9": true
+    },
+    "na_bison_prairie": {
+      "src": "Animaux/Amerique du Nord/Bisons/Prairie nord-américaine fleurie et montagneuse-1.png",
+      "maxWidth": 1672
+    },
+    "na_bison_alpine": {
+      "src": "Animaux/Amerique du Nord/Bisons/Panorama alpin fleuri et rivière scintillante-2.png",
+      "maxWidth": 1672
+    },
+    "na_bison_canyon": {
+      "src": "Animaux/Amerique du Nord/Bisons/Paysage de canyon aux falaises rouges-3.png",
+      "maxWidth": 1672
+    },
+    "na_beaver_falls": {
+      "src": "Animaux/Amerique du Nord/Castors/Image ChatGPT 21 nov. 2026, 12_46_54-3.png",
+      "maxWidth": 1672
+    },
+    "sa_sloth_canopy": {
+      "src": "Animaux/Amerique du Sud/Paresseux/Image ChatGPT 22 nov. 2026, 09_54_38-1.png",
+      "maxWidth": 1672
+    },
+    "sa_sloth_roots": {
+      "src": "Animaux/Amerique du Sud/Paresseux/Image ChatGPT 22 nov. 2026, 09_54_40-2.png",
+      "maxWidth": 1672
+    },
+    "sa_sloth_refuge": {
+      "src": "Animaux/Amerique du Sud/Paresseux/Refuge tropical au pied de la cascade.png",
+      "maxWidth": 1672
+    },
+    "an_seal_aurora": {
+      "src": "Animaux/Antarctique/Phoque/Paysage arctique sous une aurore boréale-1.png",
+      "maxWidth": 1672
+    },
+    "an_seal_rocks": {
+      "src": "Animaux/Antarctique/Phoque/Littoral subarctique entre rochers et glaciers-2.png",
+      "maxWidth": 1672
+    },
+    "an_seal_sunset": {
+      "src": "Animaux/Antarctique/Phoque/Crique nordique au coucher du soleil-3.png",
+      "maxWidth": 1672
+    },
+    "an_penguin_cave": {
+      "src": "Animaux/Antarctique/Pingoin/Paysage polaire en 3D cartoon virtuel.png",
+      "maxWidth": 1672
+    },
+    "asia_pavilion": {
+      "src": "Animaux/Asie/Pandas/Paysage de bambous et pagode en montagne.png",
+      "maxWidth": 1672
+    },
+    "asia_jungle_falls": {
+      "src": "Animaux/Asie/Tigres/Clairière tropicale et cascade lumineuse.png",
+      "maxWidth": 1672
+    },
+    "asia_snow_cave": {
+      "src": "Animaux/Asie/Penthere des neige/Grotte enneigée face aux sommets alpins.png",
+      "maxWidth": 1672
+    },
+    "europe_fox_glade": {
+      "src": "Animaux/Europe/Renards/01_Clairiere_et_terrier.png",
+      "maxWidth": 1672
+    },
+    "europe_fox_autumn": {
+      "src": "Animaux/Europe/Renards/02_Sous_bois_automnal.png",
+      "maxWidth": 1672
+    },
+    "europe_fox_snow": {
+      "src": "Animaux/Europe/Renards/03_Foret_enneigee.png",
+      "maxWidth": 1672
+    },
+    "europe_owl_nest": {
+      "src": "Animaux/Europe/Hiboux/01_Hiboux_Nid_Foret_Jour.png",
+      "maxWidth": 1672
+    },
+    "europe_owl_moon": {
+      "src": "Animaux/Europe/Hiboux/02_Hiboux_Branche_Foret_Nuit.png",
+      "maxWidth": 1672
+    },
+    "europe_owl_oak": {
+      "src": "Animaux/Europe/Hiboux/Image ChatGPT 22 nov. 2026, 10_03_16-1.png",
+      "maxWidth": 1672
+    },
+    "europe_hog_stream": {
+      "src": "Animaux/Europe/Herissons/Clairière enchantée au ruisseau scintillant.png",
+      "maxWidth": 1672
+    },
+    "europe_hog_lake": {
+      "src": "Animaux/Europe/Herissons/Image ChatGPT 21 nov. 2026, 12_46_47-1.png",
+      "maxWidth": 1672
+    },
+    "europe_hog_log": {
+      "src": "Animaux/Europe/Herissons/Image ChatGPT 21 nov. 2026, 12_46_51-2.png",
+      "maxWidth": 1672
+    },
+    "oc_red_plain": {
+      "src": "Animaux/Oceanie/Kangourous/Paysage coloré de l’Outback australien-1.png",
+      "maxWidth": 1672
+    },
+    "oc_waterhole": {
+      "src": "Animaux/Oceanie/Kangourous/Reflet paisible dans l’outback australien-2.png",
+      "maxWidth": 1672
+    },
+    "oc_bush_coast": {
+      "src": "Animaux/Oceanie/Kangourous/Paysage côtier australien ensoleillé-3.png",
+      "maxWidth": 1672
     }
   },
   "characters": {
