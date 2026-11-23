@@ -38,6 +38,8 @@ const RAW: Record<string, P> = {
   lantern: thing('lantern', 'lanterns', 'la lanterne', 'lanternes', L('A lantern', 'Une lanterne'), { emoji: '🏮' }, true),
   mushroom: thing('mushroom', 'mushrooms', 'le champignon', 'champignons', L('A mushroom', 'Un champignon'), { emoji: '🍄' }),
   acorn: thing('acorn', 'acorns', 'le gland', 'glands', L('An acorn', 'Un gland'), { emoji: '🌰' }),
+  strawberry: thing('strawberry', 'strawberries', 'la fraise', 'fraises', L('A strawberry', 'Une fraise'), { emoji: '🍓' }, true),
+  blueberry: thing('blueberry', 'blueberries', 'la myrtille', 'myrtilles', L('A blueberry', 'Une myrtille'), { emoji: '🫐' }, true),
   apple: thing('apple', 'apples', 'la pomme', 'pommes', L('An apple', 'Une pomme'), { emoji: '🍎' }, true),
   maple_leaf: thing('maple leaf', 'maple leaves', "la feuille d'érable", "feuilles d'érable", L('A maple leaf', "Une feuille d'érable"), { shape: 'maple' }, true),
   frog: thing('frog', 'frogs', 'la grenouille', 'grenouilles', L('A frog', 'Une grenouille'), { emoji: '🐸' }, true),
