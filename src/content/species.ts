@@ -11,10 +11,11 @@ function sp(s: Base): SpeciesDef {
 const AFRICA_LION = ['africa_baobab', 'africa_desert', 'africa_canyon'];
 const AFRICA_ELEPHANT = ['africa_pond', 'africa_acacia_plain', 'africa_forest'];
 const AFRICA_GIRAFFE = ['africa_waterhole', 'africa_plains', 'africa_green_meadow'];
-const ASIA_PANDA = ['asia_bamboo', 'asia_mountain', 'asia_arch', 'asia_garden', 'asia_pagoda'];
+const ASIA_PANDA = ['asia_bamboo', 'asia_garden', 'asia_pavilion']; // 2026-11-23 : la forêt, le jardin aux lanternes, le pavillon rouge
+const ASIA_TIGER = ['asia_pagoda', 'asia_mountain', 'asia_jungle_falls']; // la pagode, le sentier dans les nuages, la cascade de la jungle
 /** la panthère des neiges ne vit que sur les hauteurs : ni bambous, ni jardin, ni pagode (demande du parent, 2026-11-21) */
-// + sa tanière enneigée, propre à elle seule (2026-11-21 : un 3e décor par animal, « mondes différents »)
-const ASIA_HEIGHTS = ['asia_mountain', 'asia_arch', 'asia_snow_den'];
+// 2026-11-23 : l'aube sur l'Himalaya (tanière), la grotte enneigée, le pré à l'arche de pierre
+const ASIA_HEIGHTS = ['asia_snow_den', 'asia_snow_cave', 'asia_arch'];
 
 /**
  * 21 espèces principales (orque retirée le 2026-11-20, à la demande du parent) (cahier des charges §3). V2 : toutes jouables avec leur famille complète
@@ -28,7 +29,7 @@ export const SPECIES: readonly SpeciesDef[] = [
   sp({ id: 'giraffe', nameEn: 'giraffe', nameFr: 'girafe', continentId: 'africa', allowedBiomes: AFRICA_GIRAFFE, diet: 'herbivore', mobility: 'walk', icon: '🦒', drinkStyle: 'splay', foods: ['leaves'], notFoods: ['meat', 'fish'], can: ['run'], cannot: ['fly', 'climb'], father: { name: 'Gus', personality: 'calm' }, mother: { name: 'Gina', personality: 'curious' }, babyWord: { en: 'calf', fr: 'girafon' } }),
 
   sp({ id: 'giant_panda', nameEn: 'panda', nameFr: 'panda géant', continentId: 'asia', allowedBiomes: ASIA_PANDA, diet: 'bamboo', mobility: 'walk', icon: '🐼', foods: ['bamboo'], notFoods: ['fish', 'meat'], can: ['climb'], cannot: ['fly'], father: { name: 'Bao', personality: 'sleepy' }, mother: { name: 'Mei', personality: 'gentle' }, babyWord: { en: 'cub', fr: 'bébé panda' } }),
-  sp({ id: 'tiger', nameEn: 'tiger', nameFr: 'tigre', continentId: 'asia', allowedBiomes: ['asia_bamboo', 'asia_mountain', 'asia_arch'], diet: 'carnivore', mobility: 'walk', icon: '🐯', foods: ['meat'], notFoods: ['bamboo', 'berries'], can: ['swim', 'run', 'jump', 'roar'], cannot: ['fly'], father: { name: 'Raj', personality: 'proud' }, mother: { name: 'Tara', personality: 'calm' }, babyWord: { en: 'cub', fr: 'bébé tigre' } }),
+  sp({ id: 'tiger', nameEn: 'tiger', nameFr: 'tigre', continentId: 'asia', allowedBiomes: ASIA_TIGER, diet: 'carnivore', mobility: 'walk', icon: '🐯', foods: ['meat'], notFoods: ['bamboo', 'berries'], can: ['swim', 'run', 'jump', 'roar'], cannot: ['fly'], father: { name: 'Raj', personality: 'proud' }, mother: { name: 'Tara', personality: 'calm' }, babyWord: { en: 'cub', fr: 'bébé tigre' } }),
   // la panthère des neiges remplace le panda roux (demande du parent, 2026-11-21 : « on a remplacé les pandarous par les panthères des neiges »)
   sp({ id: 'snow_leopard', nameEn: 'snow leopard', nameFr: 'panthère des neiges', continentId: 'asia', allowedBiomes: ASIA_HEIGHTS, diet: 'carnivore', mobility: 'walk', icon: '🐆', foods: ['meat'], notFoods: ['bamboo', 'berries'], can: ['climb', 'jump', 'run'], cannot: ['fly'], father: { name: 'Sasha', personality: 'quiet' }, mother: { name: 'Shanti', personality: 'gentle' }, babyWord: { en: 'cub', fr: 'bébé panthère' } }),
 

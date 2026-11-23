@@ -34,7 +34,7 @@ describe('la tanière enneigée de la panthère des neiges', () => {
   });
 
   it('c’est le 3e décor de la panthère, et il n’est à aucune autre espèce', () => {
-    expect(leopard.allowedBiomes).toEqual(['asia_mountain', 'asia_arch', DEN]);
+    expect(leopard.allowedBiomes).toEqual([DEN, 'asia_snow_cave', 'asia_arch']);
     for (const sp of SPECIES) if (sp.id !== 'snow_leopard') expect(sp.allowedBiomes, sp.id).not.toContain(DEN);
   });
 

@@ -59,6 +59,8 @@ const WATER_SPOTS: Readonly<Record<string, readonly [number, number, number]>> =
   na_lake: [6, 5, 7],
   asia_garden: [3, 5, 4],
   asia_bamboo: [2, 4, 3],
+  asia_pavilion: [2, 4, 3],
+  asia_jungle_falls: [3, 2, 4],
 };
 
 const WATER_ANIMALS = {
@@ -204,6 +206,7 @@ const ECHO_AT: Readonly<Record<string, { anchor: string; fem: boolean }>> = {
   oc_gorge: { anchor: 'cliff', fem: true },
   asia_mountain: { anchor: 'mountain', fem: true },
   asia_snow_den: { anchor: 'mountain', fem: true },
+  asia_snow_cave: { anchor: 'mountain', fem: true },
   europe_alps: { anchor: 'mountain', fem: true },
   an_ice_cave: { anchor: 'cave', fem: true },
 };
@@ -482,6 +485,9 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   asia_arch: ['arch', 'bamboo', 'tree', 'peak'],
   asia_snow_den: ['cave', 'waterfall', 'flag'],
   asia_garden: ['lantern', 'cherry_blossom', 'bridge', 'lotus'],
+  asia_pavilion: ['pavilion', 'stream', 'bridge', 'mist'],
+  asia_jungle_falls: ['waterfall', 'roots', 'big_leaf', 'pool'],
+  asia_snow_cave: ['lair', 'icicle', 'summit', 'berries'],
   europe_forest: ['mushroom', 'den', 'castle', 'oak'],
   europe_alps: ['church', 'edelweiss', 'mountain', 'lake'],
   europe_coast: ['cypress', 'sea', 'arch', 'house'],
