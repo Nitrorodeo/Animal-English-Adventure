@@ -9,6 +9,7 @@
  * Nourriture et capacités réelles (species.ts : foods / can / cannot).
  */
 import { NUMBERS } from '../../props';
+import { PLACE_DEPTH } from '../../places/depth';
 import type { ActivityCtx, ActivityDef, CommandOption, Line, QuestStep, Tier } from '../../types';
 import { numberId, numberOptions } from '../games';
 import { act, ask, clearProps, command, end, L, landSpots, no, ok, prop, props, say, scene, skyProp, tapProps } from '../kit';
@@ -55,9 +56,11 @@ const J_FLY: CommandOption = { line: L('Fly!', 'Vole !'), icon: '🪽', reply: L
 
 export const jaguarQuietPaws: ActivityDef = {
   id: 'jaguar_quiet_paws',
-  choices: (c) => (c.species.id === 'jaguar' && dryLand(c.place).length >= 3 ? ['quiet'] : []),
+  choices: (c) => (c.species.id === 'jaguar' && dryLand(c.place).filter((s) => c.place.spots[s]!.y >= (PLACE_DEPTH[c.place.id]?.horizonY ?? 0)).length >= 3 ? ['quiet'] : []),
   build(c, tier) {
-    const land = dryLand(c.place);
+    // des empreintes sur le sol seulement : jamais au-dessus de l'horizon (fond de forêt)
+    const horizon = PLACE_DEPTH[c.place.id]?.horizonY ?? 0;
+    const land = dryLand(c.place).filter((s) => c.place.spots[s]!.y >= horizon);
     if (land.length < 3) return undefined;
     const o = otherParent(c);
     const parent = c.actorKind === 'adult';
