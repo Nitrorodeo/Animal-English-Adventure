@@ -91,17 +91,34 @@ objet caché sous la bulle ni sous le panneau de 3 ou 4 réponses, chaque zone �
 et qui répond là où on la touche, aucune cachette derrière Papa ou Maman, garde-fou débutant (2 réponses,
 difficulté figée), croissance des bébés, décors propres à chaque famille, voix toutes présentes.
 
-### Autres zones
+### Autres zones — snapshot du 2026-11-23 vers 15 h 30
 
-| Zone | Parcours | Statut |
-|---|---|---|
-| Amérique du Nord | 9 | Cartographié |
-| Amérique du Sud | 9 | Cartographié |
-| Asie | 9 | Cartographié |
-| Antarctique | 9 | Cartographié |
-| Europe | 9 | Cartographié |
-| Océanie | 9 | Cartographié |
-| Océan | 6 | Cartographié (images des familles marines manquantes) |
+Production menée continent par continent, puis fusionnée dans `main` (branches `prod/<continent>` conservées).
+« Testé » = la suite complète a tourné après fusion des 7 continents : 513 tests réussis sur 515, les 2 restants
+attendent la fin de la génération des voix. Mêmes contrôles que pour l'Afrique, sur chaque décor et aux 3 niveaux.
+La colonne « Écran » ne dit que ce qui a été rejoué à l'écran.
+
+| Zone | Familles et décors | Statut | Écran |
+|---|---|---|---|
+| Amérique du Nord | ours : `na_redwoods`, `na_lake`, `na_bear_den` · bison : `na_bison_prairie`, `na_bison_alpine`, `na_bison_canyon` · castor : `na_beaver_pond`, `na_redwood_trail`, `na_beaver_falls` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
+| Amérique du Sud | jaguar : `sa_wetland`, `sa_river`, `sa_andes` · paresseux : `sa_sloth_canopy`, `sa_sloth_roots`, `sa_sloth_refuge` · toucan : `sa_canopy_branch`, `sa_canopy_treehouse`, `sa_canopy_sunrise` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
+| Asie | panda : `asia_bamboo`, `asia_garden`, `asia_pavilion` · tigre : `asia_pagoda`, `asia_mountain`, `asia_jungle_falls` · panthère des neiges : `asia_snow_den`, `asia_snow_cave`, `asia_arch` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
+| Antarctique | manchot : `open_sea`, `an_aurora`, `an_penguin_cave` · phoque : `an_seal_aurora`, `an_seal_rocks`, `an_seal_sunset` · ours polaire : `ice_coast`, `an_ice_cave`, `an_snowfield` | Testé | regardé par le parent ; coordonnées des 4 décors neufs à confirmer à l'écran |
+| Europe | renard : `europe_fox_glade`, `europe_fox_autumn`, `europe_fox_snow` · hibou : `europe_owl_nest`, `europe_owl_moon`, `europe_owl_oak` · hérisson : `europe_hog_stream`, `europe_hog_lake`, `europe_hog_log` | Testé | regardé par le parent ; pas de rejeu complet par Claude |
+| Océanie | kangourou : `oc_red_plain`, `oc_waterhole`, `oc_bush_coast` · koala : `oc_eucalyptus`, `oc_gum_woodland`, `oc_rocky_cove` · lézard : `oc_outback`, `oc_gorge`, `oc_beach` | Testé | pas encore regardé (fusionné en dernier) |
+| Océan | 6 parcours | Cartographié | images des familles marines manquantes : rien n'est inventé |
+
+Points notés pendant la production (non bloquants) :
+- garde-fou débutant : les 9 286 séquences débutant encore jouées sont identiques mot pour mot ; les séquences des
+  décors et aventures retirés sortent de l'empreinte (archivée dans `src/engine/__baseline__/archive/`), celles des
+  décors de chaque famille y entrent ; plafonds (2 réponses, longueur des consignes, sortes d'étapes et de jeux)
+  inchangés et vérifiés identiques. En Océanie, koala et lézard : objets déplacés hors de la bulle, leurre
+  « duck » → « rabbit » et « frog » → « bird » (18 séquences, même texte, même nombre de réponses) ;
+- mots devenus partagés après fusion, précisés côté décor de famille d'après l'image : blue cave, icy cave,
+  straw bed, forest clearing, wild lupine, wet pebbles, beach pebbles, tuft of grass, jungle leaf, sunshine,
+  light rays, mossy log, red boulder, jungle pool ;
+- jeux perdus en Europe (pick_apples, race, beach_shells) et aventures retirées : gardées dans le code
+  (`RETIRED_<continent>`), hors parcours.
 
 ## Comment lire chaque fiche
 
