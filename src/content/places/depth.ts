@@ -115,6 +115,12 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
     horizonY: 40,
     farY: [[0, 80], [25, 80], [30, 78], [40, 73], [50, 68], [60, 62], [66, 58], [70, 55], [75, 52], [85, 52], [100, 56]],
     perches: [{ x: 57, y: 36, w: 17, h: 10, base: 50 }] },
+  // plaine rouge du kangourou : l'herbe jaune commence vers y 52, au pied des collines
+  oc_red_plain: { horizonY: 46, farY: 54 },
+  // point d'eau du kangourou : l'étang occupe le centre droit (rive gauche vers x 48–58, nénuphars jusqu'à y 80)
+  oc_waterhole: { horizonY: 46, farY: 52, water: [[[50, 57], [60, 53], [100, 52], [100, 80], [88, 79], [76, 74], [66, 72], [57, 70], [51, 65]]] },
+  // brousse côtière du kangourou : la mer au fond à droite, la prairie s'étend jusqu'aux rochers roses (y 50)
+  oc_bush_coast: { horizonY: 40, farY: 52 },
   // Amérique du Sud
   sa_jungle: { horizonY: 52, farY: 60 },
   sa_waterfall: { horizonY: 45, farY: 60, water: [[[22, 62], [40, 58], [55, 60], [65, 62], [75, 64], [72, 72], [65, 78], [55, 80], [40, 85], [30, 90], [15, 92], [2, 92], [0, 85], [5, 78], [8, 72], [18, 68]]] },
