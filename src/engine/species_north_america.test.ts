@@ -24,6 +24,8 @@ import { activityVariants, STRUCTURAL_CONFIGS } from './variants';
 
 const NA_PLACES = Object.values(PLACES).filter((p) => p.continentId === 'north_america').map((p) => p.id);
 const TIERS: readonly Tier[] = ['beginner', 'intermediate', 'expert'];
+/** Tanière enneigée de l'ours (2026-11-23) : pas de miel ni de baies sous la neige, des pommes de pin à la place. */
+const WINTER_DEN = 'na_bear_den';
 
 /** Jeu de chaque espèce, et les mots propres qu'on doit entendre (débutant, puis en plus à l'expert). */
 const GAMES = [
@@ -175,15 +177,19 @@ describe('jeux propres aux espèces d’Amérique du Nord', () => {
         for (const role of getArchetype(g.id).roles ?? []) {
           const beginner = heard(script(g, p, role, 'beginner'));
           const expert = heard(script(g, p, role, 'expert'));
-          for (const w of g.words) expect(beginner, `${g.id}@${p} ${role} débutant : ${w}`).toContain(w);
-          for (const w of [...g.words, ...g.expert]) expect(expert, `${g.id}@${p} ${role} expert : ${w}`).toContain(w);
+          const winter = g.id === 'bear_honey' && p === WINTER_DEN;
+          const words = winter ? [...g.words.filter((w) => w !== 'honey'), 'pine cone'] : g.words;
+          const more = winter ? g.expert.filter((w) => w !== 'berries') : g.expert;
+          for (const w of words) expect(beginner, `${g.id}@${p} ${role} débutant : ${w}`).toContain(w);
+          for (const w of [...words, ...more]) expect(expert, `${g.id}@${p} ${role} expert : ${w}`).toContain(w);
+          if (winter) for (const w of ['honey', 'berries']) expect(expert, `${g.id}@${p} ${role} : pas de ${w} sous la neige`).not.toContain(w);
         }
       }
     }
   });
 
   it('la nourriture montrée est la vraie, et les capacités montrées sont réelles', () => {
-    for (const p of getSpecies('bear').allowedBiomes) {
+    for (const p of getSpecies('bear').allowedBiomes.filter((x) => x !== WINTER_DEN)) {
       const t = heard(script(GAMES[0], p, 'mother', 'expert'));
       expect(t).toContain("i don't eat grass");
       expect(t).toContain("i don't eat bamboo");
@@ -218,7 +224,7 @@ describe('vocabulaire propre à chaque décor d’Amérique du Nord', () => {
   it('chaque décor d’Amérique du Nord a au moins 2 mots qu’aucun autre décor du jeu n’a', () => {
     const where = new Map<string, Set<string>>();
     for (const p of Object.values(PLACES)) for (const a of p.anchors) where.set(a.word, (where.get(a.word) ?? new Set()).add(p.id));
-    expect(NA_PLACES.length).toBe(7);
+    expect(NA_PLACES.length).toBe(12);
     for (const id of NA_PLACES) {
       const own = [...new Set(PLACES[id]!.anchors.map((a) => a.word))].filter((w) => where.get(w)!.size === 1);
       expect(own.length, `${id} : ${own.join(', ')}`).toBeGreaterThanOrEqual(2);
@@ -234,6 +240,11 @@ describe('vocabulaire propre à chaque décor d’Amérique du Nord', () => {
       na_coast: { words: ['lighthouse', 'lupine'], photo: 'lupine' },
       na_beaver_pond: { words: ['lodge', 'reed'], photo: 'reed' },
       na_redwood_trail: { words: ['clover', 'moss'], photo: 'moss' },
+      na_bear_den: { words: ['straw', 'bare bush'], photo: 'straw' },
+      na_bison_prairie: { words: ['oak tree', 'golden grass'], photo: 'oak_tree' },
+      na_bison_alpine: { words: ['fir forest', 'fallen log'], photo: 'fir_forest' },
+      na_bison_canyon: { words: ['red rock', 'mesa'], photo: 'mesa' },
+      na_beaver_falls: { words: ['torrent', 'mossy rock'], photo: 'torrent' },
     };
     for (const [id, x] of Object.entries(expected)) {
       for (const w of x.words) {
@@ -243,7 +254,8 @@ describe('vocabulaire propre à chaque décor d’Amérique du Nord', () => {
         expect(a!.crop, `${id} : ${w}`).toBeDefined();
         expect(NOUNS[w], `${id} : ${w}`).toBeDefined();
       }
-      const sp = SPECIES.find((s) => s.allowedBiomes.includes(id))!;
+      // Les décors sortis des parcours (prairie, désert, côte) n'ont plus de famille : on prend le bison.
+      const sp = SPECIES.find((s) => s.allowedBiomes.includes(id)) ?? getSpecies('bison');
       const c = { species: sp, place: getBiome(id) } as unknown as ActivityCtx;
       expect(photoSubjects(c), id).toContain(x.photo);
     }

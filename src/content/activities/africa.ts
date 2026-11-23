@@ -206,6 +206,10 @@ const ECHO_AT: Readonly<Record<string, { anchor: string; fem: boolean }>> = {
   asia_snow_den: { anchor: 'mountain', fem: true },
   europe_alps: { anchor: 'mountain', fem: true },
   an_ice_cave: { anchor: 'cave', fem: true },
+  // 2026-11-23 : la tanière de l'ours, la montagne du bison, la falaise du canyon rouge
+  na_bear_den: { anchor: 'mountain', fem: true },
+  na_bison_alpine: { anchor: 'mountain', fem: true },
+  na_bison_canyon: { anchor: 'cliff', fem: true },
 };
 
 export const echoCanyon: ActivityDef = {
@@ -280,6 +284,8 @@ const TRAILS: Readonly<Record<string, { prints: readonly number[]; end: number; 
   an_snowfield: { prints: [5, 0, 1, 2, 3], end: 6, animal: 'penguin', legs: 2, others: ['fish', 'bird'], print: 'birdprint' },
   na_redwoods: { prints: [0, 1, 2, 3, 4], end: 6, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
   na_redwood_trail: { prints: [7, 4, 5, 1, 2], end: 0, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  // 2026-11-23 : la prairie du bison (la piste suit l'herbe à gauche, loin de la famille et de la bulle)
+  na_bison_prairie: { prints: [0, 1, 2, 3, 4], end: 5, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
 };
 
 export const followTracks: ActivityDef = {
@@ -494,6 +500,12 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   na_coast: ['lighthouse', 'cliff', 'sea', 'lupine'],
   na_beaver_pond: ['lodge', 'water_lily', 'mountain', 'reed'],
   na_redwood_trail: ['redwood', 'log', 'fern', 'moss'],
+  // 2026-11-23 : les décors des familles d'Amérique du Nord
+  na_bear_den: ['straw', 'bare_bush', 'icicle', 'den'],
+  na_bison_prairie: ['oak_tree', 'golden_grass', 'stream', 'lupine'],
+  na_bison_alpine: ['fir_forest', 'fallen_log', 'river', 'mountain'],
+  na_bison_canyon: ['mesa', 'red_rock', 'cliff', 'red_flower'],
+  na_beaver_falls: ['torrent', 'aspen', 'mossy_rock', 'red_berries'],
   sa_jungle: ['vine', 'tree', 'flower', 'bird_of_paradise'],
   sa_waterfall: ['waterfall', 'mountain', 'vine', 'pool'],
   sa_river: ['ruins', 'river', 'water_lily', 'staircase'],

@@ -95,6 +95,16 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   na_beaver_pond: { horizonY: 42, farY: [[0, 90], [45, 92], [50, 84], [56, 76], [62, 72], [72, 68], [80, 62], [85, 56], [88, 50], [100, 46]] },
   // sentier des séquoias : le chemin se perd vers x 55–65, y 58 ; à droite, le tas de bûches ferme le fond
   na_redwood_trail: { horizonY: 52, farY: [[0, 66], [20, 64], [30, 62], [45, 60], [55, 58], [65, 58], [75, 61], [85, 68], [100, 68]] },
+  // 2026-11-23 : les décors des familles d'Amérique du Nord (tanière de l'ours, trois décors du bison, chutes du castor)
+  na_bear_den: { horizonY: 40, farY: 58 },
+  // le ruisseau du fond à droite, à gauche de la famille ; l'herbe commence sous les collines (y 47)
+  na_bison_prairie: { horizonY: 47, farY: 50, water: [[[68, 58], [100, 58], [100, 70], [92, 72], [78, 72], [68, 66]]] },
+  // la rivière aux rapides (droite) et le petit lac devant la forêt de sapins
+  na_bison_alpine: { horizonY: 40, farY: 58, water: [[[55, 55], [100, 55], [100, 72], [92, 73], [75, 72], [62, 70], [55, 64]], [[38, 47], [52, 47], [52, 52], [40, 52]]] },
+  // la rivière turquoise en méandre, du fond à la rive devant la famille
+  na_bison_canyon: { horizonY: 45, farY: 60, water: [[[44, 57], [90, 56], [90, 70], [80, 75], [60, 76], [48, 70]]] },
+  // le torrent au pied de la cascade ; la clairière de terre rouge commence vers y 60
+  na_beaver_falls: { horizonY: 45, farY: 60, water: [[[28, 43], [78, 43], [78, 58], [60, 59], [40, 58], [28, 53]]] },
   // Océanie
   oc_outback: { horizonY: 47, farY: 50 },
   oc_eucalyptus: { horizonY: 52, farY: 60, water: [[[40, 64], [55, 63], [65, 56], [75, 55], [80, 58], [78, 64], [68, 70], [55, 71], [42, 69]]] },
