@@ -64,6 +64,11 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   an_snowfield: { horizonY: 35, farY: 38 },
   open_sea: { horizonY: 50, farY: 54, water: [[[10, 48], [30, 48], [60, 48], [90, 50], [97, 55], [88, 62], [85, 70], [70, 73], [50, 73], [30, 72], [18, 70], [12, 62]]] },
   an_aurora: { horizonY: 47, farY: 50 },
+  // Antarctique : décors du phoque et du manchot (2026-11-23)
+  an_seal_aurora: { horizonY: 36, farY: 40, water: [[[44, 40], [100, 40], [100, 68], [80, 68], [60, 64], [48, 58], [44, 50]]] },
+  an_seal_rocks: { horizonY: 32, farY: 36, water: [[[44, 34], [100, 34], [100, 63], [80, 63], [65, 60], [45, 50]], [[24, 72], [40, 70], [57, 72], [58, 86], [45, 92], [26, 90]]] },
+  an_seal_sunset: { horizonY: 38, farY: 42, water: [[[34, 40], [100, 40], [100, 70], [85, 70], [70, 66], [55, 62], [40, 57], [34, 52]]] },
+  an_penguin_cave: { horizonY: 44, farY: 48, water: [[[40, 46], [100, 46], [100, 67], [80, 67], [60, 65], [44, 60], [40, 54]]] },
   // Asie
   asia_bamboo: { horizonY: 52, farY: 57, water: [[[20, 50], [30, 50], [40, 51], [46, 57], [42, 60], [30, 61], [22, 60]]] },
   asia_pagoda: { horizonY: 38, farY: 50, water: [[[18, 46], [30, 46], [45, 46], [52, 52], [45, 55], [30, 57], [20, 56]]] },

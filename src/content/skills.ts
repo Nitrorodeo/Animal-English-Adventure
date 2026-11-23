@@ -227,6 +227,7 @@ export const ITEMS: Readonly<Record<string, { en: string; fr: string; icon: stri
   penguin_chick: { en: 'a chick', fr: 'un poussin', icon: '🐣' },
   seal_whiskers: { en: 'whiskers', fr: 'les moustaches', icon: '〰️' },
   seal_dive: { en: 'dive', fr: 'plonger', icon: '🤿' },
+  seal_breathe: { en: 'breathe', fr: 'respirer', icon: '💨' },
   seal_clap: { en: 'clap', fr: 'applaudir', icon: '👏' },
   seal_pup: { en: 'a pup', fr: 'un bébé phoque', icon: '🦭' },
   seal_hole: { en: 'a breathing hole', fr: 'un trou pour respirer', icon: '🕳️' },

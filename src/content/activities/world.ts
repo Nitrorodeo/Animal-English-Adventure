@@ -207,7 +207,8 @@ export const snowflakes: ActivityDef = {
       clearProps(),
     ];
     // en pleine mer, rien de sec pour poser les habits : on attrape seulement les flocons
-    if (sp.length < 4) return [...snow, end('actor', 'What fun! I love the snow!', "Trop bien ! J'adore la neige !")];
+    // (le lagon des manchots : la glace du bord est trop étroite pour y poser des habits, comme avant)
+    if (sp.length < 4 || c.place.id === 'open_sea') return [...snow, end('actor', 'What fun! I love the snow!', "Trop bien ! J'adore la neige !")];
     return [
       ...snow,
       props([prop('coat', 'coat', sp[0]!), prop('glasses', 'sunglasses', sp[1]!)], { maxTier: 'beginner' }),

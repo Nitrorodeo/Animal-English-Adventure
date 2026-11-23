@@ -77,20 +77,20 @@
           "wordFr": "la neige",
           "icon": "❄️",
           "hit": {
-            "x": 28,
+            "x": 22,
             "y": 68,
-            "w": 40,
-            "h": 20
+            "w": 18,
+            "h": 26
           },
           "crop": {
-            "x": 24,
+            "x": 19,
             "y": 64,
-            "w": 48,
-            "h": 30
+            "w": 24,
+            "h": 34
           },
           "stand": {
-            "x": 44,
-            "y": 82
+            "x": 31,
+            "y": 86
           },
           "tags": [],
           "check": {
@@ -308,24 +308,24 @@
           "y": 62
         },
         {
-          "x": 40,
-          "y": 66
+          "x": 37,
+          "y": 70
         },
         {
-          "x": 50,
-          "y": 62
+          "x": 36,
+          "y": 81
         },
         {
-          "x": 58,
-          "y": 68
+          "x": 28,
+          "y": 91
         },
         {
           "x": 26,
           "y": 74
         },
         {
-          "x": 46,
-          "y": 72
+          "x": 38,
+          "y": 92
         }
       ]
     },
@@ -374,13 +374,13 @@
           "hit": {
             "x": 20,
             "y": 62,
-            "w": 56,
+            "w": 40,
             "h": 24
           },
           "crop": {
-            "x": 16,
+            "x": 17,
             "y": 58,
-            "w": 64,
+            "w": 46,
             "h": 32
           },
           "stand": {
@@ -489,16 +489,16 @@
           "y": 68
         },
         {
-          "x": 40,
-          "y": 62
+          "x": 38,
+          "y": 60
         },
         {
-          "x": 48,
-          "y": 66
+          "x": 14,
+          "y": 84
         },
         {
-          "x": 56,
-          "y": 62
+          "x": 26,
+          "y": 82
         },
         {
           "x": 20,
@@ -509,8 +509,8 @@
           "y": 74
         },
         {
-          "x": 52,
-          "y": 72
+          "x": 34,
+          "y": 90
         }
       ]
     },
@@ -755,28 +755,28 @@
           "y": 66
         },
         {
-          "x": 40,
-          "y": 60
+          "x": 38,
+          "y": 72
         },
         {
-          "x": 48,
-          "y": 64
+          "x": 32,
+          "y": 78
         },
         {
-          "x": 56,
-          "y": 60
+          "x": 37,
+          "y": 84
         },
         {
           "x": 28,
           "y": 72
         },
         {
-          "x": 44,
-          "y": 70
+          "x": 24,
+          "y": 88
         },
         {
-          "x": 58,
-          "y": 68
+          "x": 34,
+          "y": 92
         }
       ]
     },
@@ -835,8 +835,8 @@
             "h": 20
           },
           "stand": {
-            "x": 72,
-            "y": 80
+            "x": 73,
+            "y": 76
           },
           "tags": [
             "hide",
@@ -910,20 +910,20 @@
           "wordFr": "la neige",
           "icon": "❄️",
           "hit": {
-            "x": 24,
+            "x": 22,
             "y": 76,
-            "w": 50,
-            "h": 20
+            "w": 18,
+            "h": 22
           },
           "crop": {
-            "x": 20,
+            "x": 19,
             "y": 72,
-            "w": 58,
+            "w": 24,
             "h": 28
           },
           "stand": {
-            "x": 46,
-            "y": 86
+            "x": 31,
+            "y": 88
           },
           "tags": [],
           "check": {
@@ -1101,36 +1101,36 @@
       ],
       "spots": [
         {
-          "x": 22,
-          "y": 56
+          "x": 24,
+          "y": 78
         },
         {
-          "x": 30,
-          "y": 60
+          "x": 34,
+          "y": 77
         },
         {
-          "x": 38,
-          "y": 55
-        },
-        {
-          "x": 46,
-          "y": 62
-        },
-        {
-          "x": 54,
-          "y": 57
-        },
-        {
-          "x": 60,
-          "y": 63
+          "x": 16,
+          "y": 82
         },
         {
           "x": 28,
-          "y": 66
+          "y": 85
         },
         {
-          "x": 50,
-          "y": 66
+          "x": 37,
+          "y": 86
+        },
+        {
+          "x": 22,
+          "y": 92
+        },
+        {
+          "x": 30,
+          "y": 93
+        },
+        {
+          "x": 38,
+          "y": 94
         }
       ]
     },
@@ -1233,16 +1233,16 @@
           "wordFr": "le soleil",
           "icon": "☀️",
           "hit": {
-            "x": 33,
-            "y": 39,
-            "w": 6,
-            "h": 6
+            "x": 31,
+            "y": 38,
+            "w": 10,
+            "h": 10
           },
           "crop": {
             "x": 28,
             "y": 34,
             "w": 16,
-            "h": 14
+            "h": 18
           },
           "tags": [
             "sky"
@@ -1261,19 +1261,19 @@
           "wordFr": "la neige",
           "icon": "❄️",
           "hit": {
-            "x": 20,
+            "x": 4,
             "y": 84,
-            "w": 50,
-            "h": 16
+            "w": 36,
+            "h": 14
           },
           "crop": {
-            "x": 16,
+            "x": 1,
             "y": 80,
-            "w": 58,
+            "w": 42,
             "h": 20
           },
           "stand": {
-            "x": 44,
+            "x": 26,
             "y": 90
           },
           "tags": [],
@@ -1375,15 +1375,15 @@
           "wordFr": "la fissure dans la glace",
           "icon": "⚡",
           "hit": {
-            "x": 33,
+            "x": 34,
             "y": 64,
-            "w": 28,
+            "w": 12,
             "h": 20
           },
           "crop": {
-            "x": 30,
+            "x": 31,
             "y": 60,
-            "w": 34,
+            "w": 18,
             "h": 28
           },
           "check": {
@@ -1405,28 +1405,1308 @@
           "y": 62
         },
         {
-          "x": 40,
-          "y": 56
+          "x": 36,
+          "y": 58
         },
         {
-          "x": 48,
-          "y": 64
+          "x": 30,
+          "y": 76
         },
         {
-          "x": 56,
-          "y": 60
+          "x": 37,
+          "y": 78
         },
         {
           "x": 28,
           "y": 70
         },
         {
-          "x": 44,
+          "x": 33,
+          "y": 84
+        },
+        {
+          "x": 22,
+          "y": 86
+        }
+      ]
+    },
+    {
+      "id": "an_seal_aurora",
+      "source": "Animaux/Antarctique/Phoque/Paysage arctique sous une aurore boréale-1.png",
+      "background": "an_seal_aurora",
+      "nameEn": "the northern lights",
+      "nameFr": "les aurores boréales",
+      "weather": "cold",
+      "groundY": 86,
+      "anchors": [
+        {
+          "id": "cave",
+          "word": "cave",
+          "wordFr": "la grotte",
+          "icon": "🕳️",
+          "hit": {
+            "x": 3,
+            "y": 22,
+            "w": 16,
+            "h": 24
+          },
+          "crop": {
+            "x": 0,
+            "y": 18,
+            "w": 22,
+            "h": 32
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is it dark in the cave?",
+              "fr": "Est-ce qu'il fait sombre dans la grotte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "icicle",
+          "word": "icicle",
+          "wordFr": "le glaçon",
+          "icon": "🧊",
+          "hit": {
+            "x": 16,
+            "y": 12,
+            "w": 15,
+            "h": 26
+          },
+          "crop": {
+            "x": 13,
+            "y": 8,
+            "w": 21,
+            "h": 34
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the icicle cold?",
+              "fr": "Est-ce que le glaçon est froid ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sea",
+          "word": "sea",
+          "wordFr": "la mer",
+          "icon": "🌊",
+          "hit": {
+            "x": 44,
+            "y": 48,
+            "w": 50,
+            "h": 18
+          },
+          "crop": {
+            "x": 41,
+            "y": 44,
+            "w": 56,
+            "h": 26
+          },
+          "tags": [
+            "sea"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sea blue?",
+              "fr": "Est-ce que la mer est bleue ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "floe",
+          "word": "floe",
+          "wordFr": "la plaque de glace",
+          "icon": "🧊",
+          "hit": {
+            "x": 69,
+            "y": 48,
+            "w": 18,
+            "h": 10
+          },
+          "crop": {
+            "x": 66,
+            "y": 44,
+            "w": 24,
+            "h": 18
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the floe white?",
+              "fr": "Est-ce que la plaque de glace est blanche ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "cliff",
+          "word": "ice cliff",
+          "wordFr": "la falaise de glace",
+          "icon": "🧊",
+          "hit": {
+            "x": 52,
+            "y": 29,
+            "w": 40,
+            "h": 12
+          },
+          "crop": {
+            "x": 49,
+            "y": 25,
+            "w": 46,
+            "h": 20
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the ice cliff blue?",
+              "fr": "Est-ce que la falaise de glace est bleue ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "lights",
+          "word": "northern lights",
+          "wordFr": "les aurores boréales",
+          "icon": "🌌",
+          "hit": {
+            "x": 42,
+            "y": 0,
+            "w": 44,
+            "h": 22
+          },
+          "crop": {
+            "x": 39,
+            "y": 0,
+            "w": 50,
+            "h": 30
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the northern lights green?",
+              "fr": "Est-ce que les aurores boréales sont vertes ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "pinkcloud",
+          "word": "pink cloud",
+          "wordFr": "le nuage rose",
+          "icon": "☁️",
+          "hit": {
+            "x": 30,
+            "y": 10,
+            "w": 18,
+            "h": 11
+          },
+          "crop": {
+            "x": 27,
+            "y": 6,
+            "w": 24,
+            "h": 19
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud pink?",
+              "fr": "Est-ce que le nuage est rose ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "🏔️",
+          "hit": {
+            "x": 70,
+            "y": 17,
+            "w": 30,
+            "h": 15
+          },
+          "crop": {
+            "x": 67,
+            "y": 13,
+            "w": 33,
+            "h": 23
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain small?",
+              "fr": "Est-ce que la montagne est petite ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 0,
+            "y": 68,
+            "w": 24,
+            "h": 28
+          },
+          "crop": {
+            "x": 0,
+            "y": 64,
+            "w": 30,
+            "h": 36
+          },
+          "stand": {
+            "x": 28,
+            "y": 92
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock brown?",
+              "fr": "Est-ce que le rocher est brun ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "snow",
+          "word": "snow",
+          "wordFr": "la neige",
+          "icon": "❄️",
+          "hit": {
+            "x": 24,
+            "y": 74,
+            "w": 16,
+            "h": 22
+          },
+          "crop": {
+            "x": 21,
+            "y": 70,
+            "w": 22,
+            "h": 30
+          },
+          "stand": {
+            "x": 32,
+            "y": 88
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the snow white?",
+              "fr": "Est-ce que la neige est blanche ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 16,
+          "y": 56
+        },
+        {
+          "x": 27,
+          "y": 79
+        },
+        {
+          "x": 37,
+          "y": 79
+        },
+        {
+          "x": 32,
+          "y": 86
+        },
+        {
+          "x": 26,
+          "y": 92
+        },
+        {
+          "x": 38,
+          "y": 92
+        },
+        {
+          "x": 28,
+          "y": 54
+        },
+        {
+          "x": 38,
+          "y": 55
+        }
+      ]
+    },
+    {
+      "id": "an_seal_rocks",
+      "source": "Animaux/Antarctique/Phoque/Littoral subarctique entre rochers et glaciers-2.png",
+      "background": "an_seal_rocks",
+      "nameEn": "the rocky shore",
+      "nameFr": "le rivage de rochers",
+      "weather": "sunny",
+      "groundY": 84,
+      "anchors": [
+        {
+          "id": "sea",
+          "word": "sea",
+          "wordFr": "la mer",
+          "icon": "🌊",
+          "hit": {
+            "x": 50,
+            "y": 36,
+            "w": 46,
+            "h": 24
+          },
+          "crop": {
+            "x": 47,
+            "y": 32,
+            "w": 52,
+            "h": 32
+          },
+          "tags": [
+            "sea"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sea blue?",
+              "fr": "Est-ce que la mer est bleue ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "wave",
+          "word": "wave",
+          "wordFr": "la vague",
+          "icon": "🌊",
+          "hit": {
+            "x": 53,
+            "y": 36,
+            "w": 14,
+            "h": 12
+          },
+          "crop": {
+            "x": 50,
+            "y": 32,
+            "w": 20,
+            "h": 20
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the wave wet?",
+              "fr": "Est-ce que la vague est mouillée ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "starfish",
+          "word": "starfish",
+          "wordFr": "l'étoile de mer",
+          "icon": "⭐",
+          "hit": {
+            "x": 10,
+            "y": 78,
+            "w": 14,
+            "h": 16
+          },
+          "crop": {
+            "x": 7,
+            "y": 74,
+            "w": 20,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the starfish red?",
+              "fr": "Est-ce que l'étoile de mer est rouge ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "barnacles",
+          "word": "barnacles",
+          "wordFr": "les bernacles",
+          "icon": "🐚",
+          "hit": {
+            "x": 35,
+            "y": 60,
+            "w": 11,
+            "h": 11
+          },
+          "crop": {
+            "x": 32,
+            "y": 56,
+            "w": 17,
+            "h": 19
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the barnacles white?",
+              "fr": "Est-ce que les bernacles sont blanches ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "seaweed",
+          "word": "seaweed",
+          "wordFr": "l'algue",
+          "icon": "🌿",
+          "hit": {
+            "x": 5,
+            "y": 46,
+            "w": 32,
+            "h": 22
+          },
+          "crop": {
+            "x": 2,
+            "y": 42,
+            "w": 38,
+            "h": 30
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the seaweed blue?",
+              "fr": "Est-ce que l'algue est bleue ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "pool",
+          "word": "rock pool",
+          "wordFr": "la mare",
+          "icon": "💧",
+          "hit": {
+            "x": 24,
+            "y": 71,
+            "w": 28,
+            "h": 21
+          },
+          "crop": {
+            "x": 21,
+            "y": 67,
+            "w": 34,
+            "h": 29
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the rock pool dry?",
+              "fr": "Est-ce que la mare est sèche ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 0,
+            "y": 34,
+            "w": 19,
+            "h": 20
+          },
+          "crop": {
+            "x": 0,
+            "y": 30,
+            "w": 25,
+            "h": 28
+          },
+          "stand": {
+            "x": 14,
+            "y": 72
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "pebbles",
+          "word": "pebbles",
+          "wordFr": "les galets",
+          "icon": "🪨",
+          "hit": {
+            "x": 76,
+            "y": 88,
+            "w": 16,
+            "h": 11
+          },
+          "crop": {
+            "x": 73,
+            "y": 84,
+            "w": 22,
+            "h": 16
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the pebbles small?",
+              "fr": "Est-ce que les galets sont petits ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "🏔️",
+          "hit": {
+            "x": 58,
+            "y": 15,
+            "w": 42,
+            "h": 16
+          },
+          "crop": {
+            "x": 55,
+            "y": 11,
+            "w": 45,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain green?",
+              "fr": "Est-ce que la montagne est verte ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "iceberg",
+          "word": "iceberg",
+          "wordFr": "l'iceberg",
+          "icon": "🧊",
+          "hit": {
+            "x": 55,
+            "y": 27,
+            "w": 24,
+            "h": 9
+          },
+          "crop": {
+            "x": 52,
+            "y": 23,
+            "w": 30,
+            "h": 17
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the iceberg near?",
+              "fr": "Est-ce que l'iceberg est près ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 23,
+            "y": 2,
+            "w": 22,
+            "h": 11
+          },
+          "crop": {
+            "x": 20,
+            "y": 0,
+            "w": 28,
+            "h": 19
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud black?",
+              "fr": "Est-ce que le nuage est noir ?"
+            },
+            "yes": false
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 10,
           "y": 70
         },
         {
-          "x": 60,
+          "x": 22,
           "y": 66
+        },
+        {
+          "x": 6,
+          "y": 52
+        },
+        {
+          "x": 16,
+          "y": 60
+        },
+        {
+          "x": 34,
+          "y": 64
+        },
+        {
+          "x": 36,
+          "y": 50
+        },
+        {
+          "x": 10,
+          "y": 40
+        },
+        {
+          "x": 26,
+          "y": 38
+        }
+      ]
+    },
+    {
+      "id": "an_seal_sunset",
+      "source": "Animaux/Antarctique/Phoque/Crique nordique au coucher du soleil-3.png",
+      "background": "an_seal_sunset",
+      "nameEn": "the sunset beach",
+      "nameFr": "la plage du coucher de soleil",
+      "weather": "sunny",
+      "groundY": 86,
+      "anchors": [
+        {
+          "id": "sunset",
+          "word": "sunset",
+          "wordFr": "le coucher de soleil",
+          "icon": "🌅",
+          "hit": {
+            "x": 80,
+            "y": 27,
+            "w": 12,
+            "h": 14
+          },
+          "crop": {
+            "x": 77,
+            "y": 23,
+            "w": 18,
+            "h": 22
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sunset orange?",
+              "fr": "Est-ce que le coucher de soleil est orange ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sea",
+          "word": "sea",
+          "wordFr": "la mer",
+          "icon": "🌊",
+          "hit": {
+            "x": 46,
+            "y": 44,
+            "w": 48,
+            "h": 20
+          },
+          "crop": {
+            "x": 43,
+            "y": 40,
+            "w": 54,
+            "h": 28
+          },
+          "tags": [
+            "sea"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sea red?",
+              "fr": "Est-ce que la mer est rouge ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "wave",
+          "word": "wave",
+          "wordFr": "la vague",
+          "icon": "🌊",
+          "hit": {
+            "x": 47,
+            "y": 48,
+            "w": 15,
+            "h": 10
+          },
+          "crop": {
+            "x": 44,
+            "y": 44,
+            "w": 21,
+            "h": 18
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the wave dry?",
+              "fr": "Est-ce que la vague est sèche ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 15,
+            "y": 0,
+            "w": 36,
+            "h": 15
+          },
+          "crop": {
+            "x": 12,
+            "y": 0,
+            "w": 42,
+            "h": 23
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud green?",
+              "fr": "Est-ce que le nuage est vert ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 10,
+            "y": 72,
+            "w": 28,
+            "h": 18
+          },
+          "crop": {
+            "x": 7,
+            "y": 68,
+            "w": 34,
+            "h": 26
+          },
+          "stand": {
+            "x": 40,
+            "y": 90
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock blue?",
+              "fr": "Est-ce que le rocher est bleu ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "island",
+          "word": "island",
+          "wordFr": "l'île",
+          "icon": "🏝️",
+          "hit": {
+            "x": 48,
+            "y": 31,
+            "w": 20,
+            "h": 9
+          },
+          "crop": {
+            "x": 45,
+            "y": 27,
+            "w": 26,
+            "h": 17
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the island far?",
+              "fr": "Est-ce que l'île est loin ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "grass",
+          "word": "grass",
+          "wordFr": "l'herbe",
+          "icon": "🌿",
+          "hit": {
+            "x": 0,
+            "y": 62,
+            "w": 18,
+            "h": 30
+          },
+          "crop": {
+            "x": 0,
+            "y": 58,
+            "w": 24,
+            "h": 38
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the grass green?",
+              "fr": "Est-ce que l'herbe est verte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "flowers",
+          "word": "flowers",
+          "wordFr": "les fleurs",
+          "icon": "🌸",
+          "hit": {
+            "x": 0,
+            "y": 38,
+            "w": 20,
+            "h": 16
+          },
+          "crop": {
+            "x": 0,
+            "y": 34,
+            "w": 26,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the flowers black?",
+              "fr": "Est-ce que les fleurs sont noires ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "pebbles",
+          "word": "pebbles",
+          "wordFr": "les galets",
+          "icon": "🪨",
+          "hit": {
+            "x": 33,
+            "y": 86,
+            "w": 12,
+            "h": 10
+          },
+          "crop": {
+            "x": 30,
+            "y": 82,
+            "w": 18,
+            "h": 18
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the pebbles big?",
+              "fr": "Est-ce que les galets sont gros ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "sand",
+          "word": "sand",
+          "wordFr": "le sable",
+          "icon": "🏖️",
+          "hit": {
+            "x": 60,
+            "y": 72,
+            "w": 20,
+            "h": 26
+          },
+          "crop": {
+            "x": 57,
+            "y": 68,
+            "w": 26,
+            "h": 32
+          },
+          "stand": {
+            "x": 66,
+            "y": 94
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the sand blue?",
+              "fr": "Est-ce que le sable est bleu ?"
+            },
+            "yes": false
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 26,
+          "y": 66
+        },
+        {
+          "x": 36,
+          "y": 70
+        },
+        {
+          "x": 16,
+          "y": 64
+        },
+        {
+          "x": 37,
+          "y": 80
+        },
+        {
+          "x": 38,
+          "y": 92
+        },
+        {
+          "x": 30,
+          "y": 57
+        },
+        {
+          "x": 28,
+          "y": 74
+        },
+        {
+          "x": 34,
+          "y": 86
+        }
+      ]
+    },
+    {
+      "id": "an_penguin_cave",
+      "source": "Animaux/Antarctique/Pingoin/Paysage polaire en 3D cartoon virtuel.png",
+      "background": "an_penguin_cave",
+      "nameEn": "the penguin cave",
+      "nameFr": "la grotte des manchots",
+      "weather": "cold",
+      "groundY": 84,
+      "anchors": [
+        {
+          "id": "cave",
+          "word": "cave",
+          "wordFr": "la grotte",
+          "icon": "🕳️",
+          "hit": {
+            "x": 10,
+            "y": 28,
+            "w": 22,
+            "h": 28
+          },
+          "crop": {
+            "x": 7,
+            "y": 24,
+            "w": 28,
+            "h": 36
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is it dark in the cave?",
+              "fr": "Est-ce qu'il fait sombre dans la grotte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "icicle",
+          "word": "icicle",
+          "wordFr": "le glaçon",
+          "icon": "🧊",
+          "hit": {
+            "x": 14,
+            "y": 20,
+            "w": 19,
+            "h": 24
+          },
+          "crop": {
+            "x": 11,
+            "y": 16,
+            "w": 25,
+            "h": 32
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the icicle hot?",
+              "fr": "Est-ce que le glaçon est chaud ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 0,
+            "y": 70,
+            "w": 24,
+            "h": 26
+          },
+          "crop": {
+            "x": 0,
+            "y": 66,
+            "w": 30,
+            "h": 34
+          },
+          "stand": {
+            "x": 28,
+            "y": 90
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "snowy_rock",
+          "word": "snowy rock",
+          "wordFr": "le rocher enneigé",
+          "icon": "🪨",
+          "hit": {
+            "x": 82,
+            "y": 72,
+            "w": 18,
+            "h": 20
+          },
+          "crop": {
+            "x": 79,
+            "y": 68,
+            "w": 21,
+            "h": 28
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the snowy rock hot?",
+              "fr": "Est-ce que le rocher enneigé est chaud ?"
+            },
+            "yes": false
+          }
+        },
+        {
+          "id": "sea",
+          "word": "sea",
+          "wordFr": "la mer",
+          "icon": "🌊",
+          "hit": {
+            "x": 40,
+            "y": 48,
+            "w": 46,
+            "h": 17
+          },
+          "crop": {
+            "x": 37,
+            "y": 44,
+            "w": 52,
+            "h": 25
+          },
+          "tags": [
+            "sea"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sea blue?",
+              "fr": "Est-ce que la mer est bleue ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "wall",
+          "word": "ice wall",
+          "wordFr": "le mur de glace",
+          "icon": "🧊",
+          "hit": {
+            "x": 55,
+            "y": 30,
+            "w": 45,
+            "h": 15
+          },
+          "crop": {
+            "x": 52,
+            "y": 26,
+            "w": 48,
+            "h": 23
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the ice wall blue?",
+              "fr": "Est-ce que le mur de glace est bleu ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "🏔️",
+          "hit": {
+            "x": 70,
+            "y": 12,
+            "w": 30,
+            "h": 18
+          },
+          "crop": {
+            "x": 67,
+            "y": 8,
+            "w": 33,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain big?",
+              "fr": "Est-ce que la montagne est grande ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "cloud",
+          "wordFr": "le nuage",
+          "icon": "☁️",
+          "hit": {
+            "x": 21,
+            "y": 1,
+            "w": 26,
+            "h": 11
+          },
+          "crop": {
+            "x": 18,
+            "y": 0,
+            "w": 32,
+            "h": 19
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud white?",
+              "fr": "Est-ce que le nuage est blanc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "snow",
+          "word": "snow",
+          "wordFr": "la neige",
+          "icon": "❄️",
+          "hit": {
+            "x": 24,
+            "y": 70,
+            "w": 16,
+            "h": 26
+          },
+          "crop": {
+            "x": 21,
+            "y": 66,
+            "w": 22,
+            "h": 34
+          },
+          "stand": {
+            "x": 31,
+            "y": 88
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the snow white?",
+              "fr": "Est-ce que la neige est blanche ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 16,
+          "y": 66
+        },
+        {
+          "x": 26,
+          "y": 70
+        },
+        {
+          "x": 36,
+          "y": 66
+        },
+        {
+          "x": 14,
+          "y": 78
+        },
+        {
+          "x": 30,
+          "y": 80
+        },
+        {
+          "x": 37,
+          "y": 88
+        },
+        {
+          "x": 22,
+          "y": 92
+        },
+        {
+          "x": 34,
+          "y": 94
         }
       ]
     }
@@ -1519,6 +2799,74 @@
     "sun": {
       "en": "The sun",
       "fr": "Le soleil"
+    },
+    "starfish": {
+      "en": "A starfish",
+      "fr": "Une étoile de mer"
+    },
+    "seaweed": {
+      "en": "Seaweed",
+      "fr": "Des algues"
+    },
+    "wave": {
+      "en": "A wave",
+      "fr": "Une vague"
+    },
+    "sand": {
+      "en": "Sand",
+      "fr": "Du sable"
+    },
+    "grass": {
+      "en": "Grass",
+      "fr": "De l'herbe"
+    },
+    "flowers": {
+      "en": "Flowers",
+      "fr": "Des fleurs"
+    },
+    "island": {
+      "en": "An island",
+      "fr": "Une île"
+    },
+    "sunset": {
+      "en": "A sunset",
+      "fr": "Un coucher de soleil"
+    },
+    "rock pool": {
+      "en": "A rock pool",
+      "fr": "Une mare entre les rochers"
+    },
+    "barnacles": {
+      "en": "Barnacles",
+      "fr": "Des bernacles"
+    },
+    "cave": {
+      "en": "A cave",
+      "fr": "Une grotte"
+    },
+    "floe": {
+      "en": "A floe",
+      "fr": "Une plaque de glace"
+    },
+    "ice cliff": {
+      "en": "An ice cliff",
+      "fr": "Une falaise de glace"
+    },
+    "pink cloud": {
+      "en": "A pink cloud",
+      "fr": "Un nuage rose"
+    },
+    "northern lights": {
+      "en": "The northern lights",
+      "fr": "Les aurores boréales"
+    },
+    "ice wall": {
+      "en": "An ice wall",
+      "fr": "Un mur de glace"
+    },
+    "snowy rock": {
+      "en": "A snowy rock",
+      "fr": "Un rocher enneigé"
     }
   }
 }

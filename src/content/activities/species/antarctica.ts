@@ -25,6 +25,23 @@ const snowOf = (c: ActivityCtx) => {
   return a?.stand ? a : undefined;
 };
 
+/**
+ * Où le phoque se repose (2026-11-23) : sur la neige là où il y en a, sinon sur le sable, sinon sur un rocher.
+ * Le rivage de rochers et la plage du coucher de soleil n'ont pas de neige : rien n'y est « froid » ni « enneigé ».
+ */
+const REST_KINDS = [
+  { id: 'snow', en: 'snow', fr: 'la neige', onEn: 'on the snow', ice: true },
+  { id: 'sand', en: 'sand', fr: 'le sable', onEn: 'on the sand', ice: false },
+  { id: 'rock', en: 'rock', fr: 'le rocher', onEn: 'on a rock', ice: false },
+] as const;
+const restOf = (c: ActivityCtx) => {
+  for (const k of REST_KINDS) {
+    const a = anchor(c.place, k.id);
+    if (a?.stand) return { anchor: a, kind: k };
+  }
+  return undefined;
+};
+
 // ---------------------------------------------------------------------------
 // Le manchot — « Waddle and slide! » : se dandiner (waddle), les nageoires (flippers),
 // glisser sur le ventre (slide on the belly), le nid de cailloux, se serrer contre le froid (huddle)
@@ -129,11 +146,13 @@ export const penguinWaddle: ActivityDef = {
 
 export const sealWhiskers: ActivityDef = {
   id: 'seal_whiskers',
-  choices: (c) => (c.species.id === 'seal' && anchor(c.place, 'sea') && snowOf(c) ? ['whiskers'] : []),
+  choices: (c) => (c.species.id === 'seal' && anchor(c.place, 'sea') && restOf(c) ? ['whiskers'] : []),
   build(c, tier) {
     const sea = anchor(c.place, 'sea');
-    const snow = snowOf(c);
-    if (!sea || !snow) return undefined;
+    const rest = restOf(c);
+    if (!sea || !rest) return undefined;
+    const snow = rest.anchor;
+    const onIce = rest.kind.ice;
     const par = otherParent(c);
     const other = otherBaby(c);
     const cards: CommandOption[] = [
@@ -141,7 +160,9 @@ export const sealWhiskers: ActivityDef = {
       card('Dive!', 'Plonge !', '🤿', L('Splash! I dive into the water!', "Splash ! Je plonge dans l'eau !"), 'swim'),
       card('Climb!', 'Grimpe !', '🧗', L("Ha ha! Seals can't climb!", 'Ha ha ! Les phoques ne grimpent pas !')),
       card('Wiggle your whiskers!', 'Remue tes moustaches !', '〰️', L('Wiggle, wiggle! Look at my whiskers!', 'Je remue mes moustaches ! Regarde !'), 'wave'),
-      card('Rest on the ice!', 'Repose-toi sur la glace !', '😴', L('Ahh… I love a rest on the ice!', "Ahh… J'adore me reposer sur la glace !"), 'sleep'),
+      onIce
+        ? card('Rest on the ice!', 'Repose-toi sur la glace !', '😴', L('Ahh… I love a rest on the ice!', "Ahh… J'adore me reposer sur la glace !"), 'sleep')
+        : card(`Rest on the ${rest.kind.en}!`, `Repose-toi sur ${rest.kind.fr} !`, '😴', L(`Ahh… I love a rest on the ${rest.kind.en}!`, `Ahh… J'adore me reposer sur ${rest.kind.fr} !`), 'sleep'),
     ];
     return [
       isBaby(c)
@@ -155,24 +176,33 @@ export const sealWhiskers: ActivityDef = {
       }),
       tap('actor', "Let's dive! Touch the sea!", 'On plonge ! Touche la mer !', sea.id, ['Find the sea!', 'Cherche la mer !'], ['sea', 'seal_dive']),
       act('actor', 'swim', 'Splash! I dive into the sea!', 'Splash ! Je plonge dans la mer !'),
-      ask('actor', 'Where did I dive?', 'Où est-ce que j’ai plongé ?', [ok('Into the sea!', 'Dans la mer !', '🌊'), no('Into the snow!', 'Dans la neige !', '❄️'), no('Into a tree!', 'Dans un arbre !', '🌳')], ['Splash! In the water!', "Splash ! Dans l'eau !"], ['seal_dive', 'sea', 'where'], {
+      ask('actor', 'Where did I dive?', 'Où est-ce que j’ai plongé ?', [ok('Into the sea!', 'Dans la mer !', '🌊'), onIce ? no('Into the snow!', 'Dans la neige !', '❄️') : no(`Into the ${rest.kind.en}!`, `Dans ${rest.kind.fr} !`, rest.kind.id === 'sand' ? '🏖️' : '🪨'), no('Into a tree!', 'Dans un arbre !', '🌳')], ['Splash! In the water!', "Splash ! Dans l'eau !"], ['seal_dive', 'sea', 'where'], {
         minTier: 'intermediate',
         onCorrect: ['Yes! Into the sea! Seals are great divers!', 'Oui ! Dans la mer ! Les phoques plongent très bien !'],
       }),
       command('actor', 'Simon says! Touch a card, and I do it!', 'Jacques a dit ! Touche une carte, et je le fais !', cards, byTier(tier, 2, 3, 4), ['seal_clap', 'seal_dive', 'seal_whiskers', 'sleep'], { onCorrect: ['Clap, clap! You are a great boss!', 'Clap, clap ! Tu es une super cheffe !'] }),
-      tap('actor', "I'm tired. Let's rest on the snow! Touch the snow!", 'J’ai sommeil. Reposons-nous sur la neige ! Touche la neige !', snow.id, ['Find the snow!', 'Cherche la neige !'], ['snow', 'tired']),
+      onIce
+        ? tap('actor', "I'm tired. Let's rest on the snow! Touch the snow!", 'J’ai sommeil. Reposons-nous sur la neige ! Touche la neige !', snow.id, ['Find the snow!', 'Cherche la neige !'], ['snow', 'tired'])
+        : tap('actor', `I'm tired. Let's rest ${rest.kind.onEn}! Touch the ${rest.kind.en}!`, `J'ai sommeil. Reposons-nous sur ${rest.kind.fr} ! Touche ${rest.kind.fr} !`, snow.id, [`Find the ${rest.kind.en}!`, `Cherche ${rest.kind.fr} !`], [rest.kind.id, 'tired']),
       moveTo(snow.id, 'rest'),
-      say('actor', 'Ahh! I rest on the snow. What a nice rest!', 'Ahh ! Je me repose sur la neige. Quel bon repos !', {}, 'calm'),
+      onIce
+        ? say('actor', 'Ahh! I rest on the snow. What a nice rest!', 'Ahh ! Je me repose sur la neige. Quel bon repos !', {}, 'calm')
+        : say('actor', `Ahh! I rest ${rest.kind.onEn}. What a nice rest!`, `Ahh ! Je me repose sur ${rest.kind.fr}. Quel bon repos !`, {}, 'calm'),
       back(),
       ask('actor', 'A baby seal is a…', 'Un bébé phoque, c’est un…', [ok('A pup!', 'Un bébé phoque !', '🦭'), no('A chick!', 'Un poussin !', '🐣'), no('A cub!', 'Un ourson !', '🧸')], ['A little seal!', 'Un petit phoque !'], ['seal_pup', 'baby'], {
         minTier: 'intermediate',
         onCorrect: ['Yes! A baby seal is a pup!', 'Oui ! Un bébé phoque, en anglais, c’est un « pup » !'],
       }),
       say(other.speaker, "I'm a little pup! Clap, clap, clap!", 'Je suis un petit bébé phoque ! Clap, clap, clap !', { minTier: 'intermediate', needs: other.needs }, 'happy'),
-      ask('actor', 'Under the ice, I need air! Where do I breathe?', "Sous la glace, j'ai besoin d'air ! Où est-ce que je respire ?", [ok('At a breathing hole!', 'À un trou dans la glace !', '🕳️'), no('In a tree!', 'Dans un arbre !', '🌳'), no('In a nest!', 'Dans un nid !', '🪺')], ['A hole in the ice!', 'Un trou dans la glace !'], ['seal_hole'], {
-        minTier: 'expert',
-        onCorrect: ['Yes! A breathing hole in the ice! I pop up and breathe!', 'Oui ! Un trou dans la glace ! Je sors la tête et je respire !'],
-      }),
+      onIce
+        ? ask('actor', 'Under the ice, I need air! Where do I breathe?', "Sous la glace, j'ai besoin d'air ! Où est-ce que je respire ?", [ok('At a breathing hole!', 'À un trou dans la glace !', '🕳️'), no('In a tree!', 'Dans un arbre !', '🌳'), no('In a nest!', 'Dans un nid !', '🪺')], ['A hole in the ice!', 'Un trou dans la glace !'], ['seal_hole'], {
+            minTier: 'expert',
+            onCorrect: ['Yes! A breathing hole in the ice! I pop up and breathe!', 'Oui ! Un trou dans la glace ! Je sors la tête et je respire !'],
+          })
+        : ask('actor', 'After my dive, I need air! Where do I breathe?', "Après ma plongée, j'ai besoin d'air ! Où est-ce que je respire ?", [ok('At the top of the water!', "En haut, à la surface de l'eau !", '🌊'), no('In a tree!', 'Dans un arbre !', '🌳'), no('In a nest!', 'Dans un nid !', '🪺')], ['I pop up from the water!', "Je sors la tête de l'eau !"], ['seal_breathe', 'sea'], {
+            minTier: 'expert',
+            onCorrect: ['Yes! I pop up from the water and breathe!', "Oui ! Je sors la tête de l'eau et je respire !"],
+          }),
       ask('actor', `Look at ${par.name.en}! Does ${par.he.en} have whiskers?`, `Regarde ${par.name.fr} ! Est-ce qu'${par.he.fr} a des moustaches ?`, [ok(`Yes, ${par.does.en}!`, `Oui, ${par.does.fr} !`, '👍'), no(`No, ${par.he.en} doesn't!`, `Non !`, '👎')], [`Look at ${par.name.en}'s face!`, `Regarde le visage de ${par.name.fr} !`], ['seal_whiskers', par.who === 'father' ? 'he_is' : 'she_is'], {
         minTier: 'expert',
         keepOrder: true,
