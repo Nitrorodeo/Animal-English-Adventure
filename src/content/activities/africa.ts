@@ -51,6 +51,7 @@ const WATER_SPOTS: Readonly<Record<string, readonly [number, number, number]>> =
   savanna: [2, 5, 3],
   // 2026-11-21 : mêmes jeux au bord des lacs, étangs et rivières des autres continents [cible, autre, poisson dans l'eau]
   europe_lake: [2, 3, 4],
+  europe_hog_lake: [8, 9, 10], // 2026-11-23 : les trois emplacements dans l'eau du lac de montagne
   sa_waterfall: [1, 2, 3],
   sa_wetland: [1, 2, 3],
   sa_river: [3, 5, 4],
@@ -205,6 +206,8 @@ const ECHO_AT: Readonly<Record<string, { anchor: string; fem: boolean }>> = {
   asia_mountain: { anchor: 'mountain', fem: true },
   asia_snow_den: { anchor: 'mountain', fem: true },
   europe_alps: { anchor: 'mountain', fem: true },
+  europe_hog_lake: { anchor: 'mountain', fem: true },
+  europe_owl_moon: { anchor: 'hills', fem: true },
   an_ice_cave: { anchor: 'cave', fem: true },
 };
 
@@ -277,6 +280,8 @@ const TRAILS: Readonly<Record<string, { prints: readonly number[]; end: number; 
   // 2026-11-22 : ni empreinte ni animal du bout posés sur Papa ou Maman (test dans ecran.test.ts)
   na_prairie: { prints: [0, 1, 2, 3, 4], end: 5, animal: 'rabbit', legs: 4, others: ['duck', 'frog', 'bird'], print: 'footprint' },
   europe_forest: { prints: [7, 2, 3, 4, 5], end: 1, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  // 2026-11-23 : la tanière sous la neige du renard (la piste monte du bas vers la berge ; le lapin attend au bout)
+  europe_fox_snow: { prints: [0, 1, 2, 3, 4], end: 5, animal: 'rabbit', legs: 4, others: ['duck', 'frog', 'bird'], print: 'footprint' },
   an_snowfield: { prints: [5, 0, 1, 2, 3], end: 6, animal: 'penguin', legs: 2, others: ['fish', 'bird'], print: 'birdprint' },
   na_redwoods: { prints: [0, 1, 2, 3, 4], end: 6, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
   na_redwood_trail: { prints: [7, 4, 5, 1, 2], end: 0, animal: 'deer', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
@@ -487,6 +492,16 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   europe_coast: ['cypress', 'sea', 'arch', 'house'],
   europe_lake: ['island', 'mist', 'lake', 'mountain'],
   europe_farm: ['appletree', 'village', 'castle', 'house'],
+  // 2026-11-23 : décors de chaque famille d'Europe (renard)
+  europe_fox_glade: ['birch', 'boulder', 'den', 'mountain'],
+  europe_fox_autumn: ['straw', 'den', 'mapleleaf', 'sunbeam'],
+  europe_fox_snow: ['prints', 'den', 'oak', 'mountain'],
+  europe_owl_nest: ['hole', 'twignest', 'branch', 'sunlight'],
+  europe_owl_moon: ['moon', 'branch', 'oldoak', 'stones'],
+  europe_owl_oak: ['hollow', 'acorns', 'bigbranch', 'clearing'],
+  europe_hog_stream: ['tunnel', 'strawberries', 'fall', 'log'],
+  europe_hog_lake: ['pine', 'fall', 'mountain', 'lupins'],
+  europe_hog_log: ['trunk', 'hollowlog', 'blueberries', 'hill'],
   na_redwoods: ['redwood', 'fern', 'root', 'sunbeam'],
   na_prairie: ['hill', 'mountain', 'flower', 'boulder'],
   na_lake: ['canoe', 'maple', 'waterfall', 'reflection'],

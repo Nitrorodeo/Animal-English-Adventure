@@ -84,6 +84,16 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   europe_coast: { horizonY: 47, farY: [[0, 70], [25, 68], [55, 68], [60, 64], [65, 58], [70, 53], [78, 52], [100, 62]] },
   europe_lake: { horizonY: 47, farY: 60, water: [[[12, 44], [80, 44], [78, 52], [70, 58], [55, 60], [35, 59], [25, 55], [15, 50]]] },
   europe_farm: { horizonY: 38, farY: 56, water: [[[70, 55], [86, 54], [86, 60], [95, 66], [93, 71], [80, 70], [68, 66], [66, 62]]] },
+  // Europe, décors de chaque famille (2026-11-23) : renard
+  europe_fox_glade: { horizonY: 45, farY: 56 },
+  europe_fox_autumn: { horizonY: 38, farY: 50, water: [[[76, 53], [90, 50], [100, 50], [100, 66], [88, 67], [78, 63]]] },
+  europe_fox_snow: { horizonY: 45, farY: 60, water: [[[27, 59], [34, 56], [43, 54], [44, 60], [38, 64], [30, 64]]] },
+  europe_owl_nest: { horizonY: 45, farY: 60 },
+  europe_owl_moon: { horizonY: 50, farY: 62 },
+  europe_owl_oak: { horizonY: 50, farY: 62 },
+  europe_hog_stream: { horizonY: 38, farY: 52, water: [[[65, 57], [72, 53], [80, 47], [90, 43], [100, 42], [100, 65], [92, 67], [82, 65], [70, 62]]] },
+  europe_hog_lake: { horizonY: 38, farY: 48, water: [[[28, 42], [60, 40], [85, 40], [93, 43], [91, 53], [80, 59], [66, 62], [52, 62], [40, 60], [33, 56], [29, 50]]] },
+  europe_hog_log: { horizonY: 45, farY: 58 },
   // Amérique du Nord
   na_redwoods: { horizonY: 55, farY: 60 },
   na_prairie: { horizonY: 42, farY: 46 },

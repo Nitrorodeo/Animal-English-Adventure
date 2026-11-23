@@ -118,7 +118,7 @@ describe('décors et objets corrigés (2026-11-22)', () => {
   const shown = (st: readonly QuestStep[]) => st.flatMap((s) => (s.kind === 'props' ? s.show : []));
 
   it('empreintes : sabots pour le zèbre et le cerf, trois doigts pour le manchot, jamais dans la mare', () => {
-    for (const [sp, place, print] of [['giraffe', 'africa_plains', 'hoofprint'], ['elephant', 'africa_acacia_plain', 'hoofprint'], ['giraffe', 'africa_green_meadow', 'hoofprint'], ['fox', 'europe_forest', 'hoofprint'], ['penguin', 'an_snowfield', 'birdprint']] as const) {
+    for (const [sp, place, print] of [['giraffe', 'africa_plains', 'hoofprint'], ['elephant', 'africa_acacia_plain', 'hoofprint'], ['giraffe', 'africa_green_meadow', 'hoofprint'], ['fox', 'europe_fox_snow', 'footprint'], ['penguin', 'an_snowfield', 'birdprint']] as const) {
       for (const tier of ['beginner', 'intermediate', 'expert'] as const) {
         const st = steps('follow_tracks', sp, place, tier);
         const prints = shown(st).filter((p) => p.id.startsWith('fp'));
@@ -135,7 +135,7 @@ describe('décors et objets corrigés (2026-11-22)', () => {
   });
 
   it('aucune empreinte ni l’animal du bout de la piste n’est posé sur Papa ou Maman', () => {
-    for (const place of ['africa_plains', 'africa_acacia_plain', 'africa_green_meadow', 'na_prairie', 'europe_forest', 'an_snowfield', 'na_redwoods', 'na_redwood_trail']) {
+    for (const place of ['africa_plains', 'africa_acacia_plain', 'africa_green_meadow', 'na_prairie', 'europe_fox_snow', 'an_snowfield', 'na_redwoods', 'na_redwood_trail']) {
       const sp = SPECIES.find((x) => x.allowedBiomes.includes(place))!.id;
       for (const tier of ['beginner', 'intermediate', 'expert'] as const) {
         const st = steps('follow_tracks', sp, place, tier);

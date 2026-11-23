@@ -23,6 +23,7 @@ import { activityVariants, STRUCTURAL_CONFIGS } from './variants';
 
 const EUROPE_PLACES = Object.values(PLACES).filter((p) => p.continentId === 'europe').map((p) => p.id);
 const TIERS: readonly Tier[] = ['beginner', 'intermediate', 'expert'];
+const RETIRED_PLACES = ['europe_forest', 'europe_farm', 'europe_alps', 'europe_lake', 'europe_coast'];
 
 /** Jeu de chaque espèce, et les mots propres qu'on doit entendre (débutant, puis en plus à l'expert). */
 const GAMES = [
@@ -164,11 +165,29 @@ describe('jeux propres aux espèces d’Europe', () => {
     expect(getSpecies('hedgehog').can).not.toContain('jump');
   });
 
-  it('le renard touche sa tanière dessinée dans la forêt, et une tanière posée ailleurs', () => {
+  it('le renard touche sa tanière dessinée dans chacun de ses 3 décors, et une tanière posée si le décor n’en a pas', () => {
     const arch = getArchetype('fox_tricks');
     const steps = (p: string) => buildQuest(arch, ctx(family('fox', 0, 'little', 'beginner'), 'fox', p, actorOf('fox', 'father')))!.script.steps;
-    expect(steps('europe_forest').some((s) => s.kind === 'tapAnchor' && s.anchor === 'den')).toBe(true);
-    expect(steps('europe_farm').some((s) => s.kind === 'props' && s.show.some((x) => x.prop === 'den'))).toBe(true);
+    for (const p of ['europe_fox_glade', 'europe_fox_autumn', 'europe_fox_snow']) expect(steps(p).some((s) => s.kind === 'tapAnchor' && s.anchor === 'den'), p).toBe(true);
+    // 2026-11-23 : plus aucun décor du renard sans tanière ; le repli (tanière posée) est vérifié sur un décor privé de la sienne
+    const bare = { ...getBiome('europe_fox_glade'), anchors: getBiome('europe_fox_glade').anchors.filter((a) => a.id !== 'den') };
+    const q = buildQuest(arch, { ...ctx(family('fox', 0, 'little', 'beginner'), 'fox', 'europe_fox_glade', actorOf('fox', 'father')), biome: bare })!;
+    expect(q.script.steps.some((s) => s.kind === 'props' && s.show.some((x) => x.prop === 'den'))).toBe(true);
+  });
+});
+
+describe('le hibou la nuit', () => {
+  it('au décor déjà nocturne : aucune lune ni étoile ajoutée, aucun changement de décor, on touche la lune dessinée', () => {
+    const arch = getArchetype('owl_night');
+    for (const tier of TIERS) {
+      const steps = buildQuest(arch, ctx(family('owl', 0, 'little', tier), 'owl', 'europe_owl_moon', actorOf('owl', 'mother')))!.script.steps;
+      expect(steps.some((s) => s.kind === 'scene'), tier).toBe(false);
+      expect(JSON.stringify(steps), tier).not.toContain('owl_moon');
+      expect(steps.some((s) => s.kind === 'tapAnchor' && s.anchor === 'moon'), tier).toBe(true);
+    }
+    // aux deux autres décors du hibou, la nuit tombe bien (lune posée dans le ciel)
+    const day = buildQuest(arch, ctx(family('owl', 0, 'little', 'beginner'), 'owl', 'europe_owl_nest', actorOf('owl', 'mother')))!.script.steps;
+    expect(day.some((s) => s.kind === 'scene')).toBe(true);
   });
 });
 
@@ -176,7 +195,9 @@ describe('vocabulaire propre à chaque décor d’Europe', () => {
   it('chaque décor d’Europe a au moins 2 mots qu’aucun autre décor du jeu n’a', () => {
     const where = new Map<string, Set<string>>();
     for (const p of Object.values(PLACES)) for (const a of p.anchors) where.set(a.word, (where.get(a.word) ?? new Set()).add(p.id));
-    for (const id of EUROPE_PLACES) {
+    // 2026-11-23 : les 5 anciens décors sont sortis des parcours (ils gardent leurs mots, mais les décors des
+    // familles en reprennent certains : « den », « acorn »…) ; on ne mesure que les décors joués.
+    for (const id of EUROPE_PLACES.filter((p) => !RETIRED_PLACES.includes(p))) {
       const own = [...new Set(PLACES[id]!.anchors.map((a) => a.word))].filter((w) => where.get(w)!.size === 1);
       expect(own.length, `${id} : ${own.join(', ')}`).toBeGreaterThanOrEqual(2);
     }
@@ -184,6 +205,15 @@ describe('vocabulaire propre à chaque décor d’Europe', () => {
 
   it('les nouveaux mots des décors se nomment, ont leur question, et se photographient', () => {
     const expected: Record<string, { words: string[]; photo: string }> = {
+      europe_fox_glade: { words: ['birch tree', 'mossy rock', 'berry bush'], photo: 'birch' },
+      europe_fox_autumn: { words: ['straw', 'maple leaf', 'sunbeam'], photo: 'straw' },
+      europe_fox_snow: { words: ['fox tracks', 'orange bush'], photo: 'prints' },
+      europe_owl_nest: { words: ['tree hole', 'twig nest', 'toadstool'], photo: 'hole' },
+      europe_owl_moon: { words: ['old oak', 'night cloud', 'dark hills'], photo: 'moon' },
+      europe_owl_oak: { words: ['hollow', 'acorns', 'bluebells'], photo: 'hollow' },
+      europe_hog_stream: { words: ['root tunnel', 'leaf bed', 'spotted mushroom'], photo: 'tunnel' },
+      europe_hog_lake: { words: ['big pine', 'snowy mountain', 'lupins'], photo: 'pine' },
+      europe_hog_log: { words: ['big trunk', 'hollow log', 'blueberries'], photo: 'trunk' },
       europe_forest: { words: ['den'], photo: 'den' },
       europe_alps: { words: ['edelweiss', 'meadow'], photo: 'edelweiss' },
       europe_coast: { words: ['cypress tree', 'window'], photo: 'cypress' },

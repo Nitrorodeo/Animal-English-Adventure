@@ -111,7 +111,10 @@ describe('activités V2', () => {
     }
     expect(errors.slice(0, 30)).toEqual([]);
     // chaque activité est jouable quelque part
-    for (const a of ACTIVITIES) expect(seen, a.id).toContain(a.id);
+    // 2026-11-23 : « pick_apples » exige un pommier ; seule la ferme d'Europe en avait un, et elle n'est plus
+    // un décor d'aucune famille. Le jeu reste dans le code (retour arrière) mais n'est plus proposé.
+    const RETIRED_ACTIVITIES = ['pick_apples'];
+    for (const a of ACTIVITIES.filter((x) => !RETIRED_ACTIVITIES.includes(x.id))) expect(seen, a.id).toContain(a.id);
   });
 
   it('chaque espèce a au moins 6 activités jouables dans chacun de ses lieux', () => {

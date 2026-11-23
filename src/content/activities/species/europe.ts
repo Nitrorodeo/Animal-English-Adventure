@@ -125,14 +125,24 @@ export const owlNight: ActivityDef = {
     const n = byTier(tier, 2, 3, 4);
     const feathers = land.slice(0, n).map((s, i) => prop(`owl_feather${i}`, 'feather', s));
     const parent = c.actorKind === 'adult';
+    // décor déjà nocturne (europe_owl_moon) : ni lune ni étoiles ajoutées, on touche la lune dessinée
+    const drawnMoon = c.place.id === 'europe_owl_moon' ? anchor(c.place, 'moon') : undefined;
+    const makeNight: QuestStep[] = drawnMoon
+      ? [
+          say('actor', "Hoo-hoo! It's night. Owls wake up at night!", "Hou-hou ! C'est la nuit. Les hiboux se réveillent la nuit !", {}, 'happy'),
+          tap('actor', "It's night! Touch the moon!", "C'est la nuit ! Touche la lune !", drawnMoon.id, ['The moon is big and round!', 'La lune est grande et ronde !'], ['moon', 'night'], { onCorrect: ['Yes! The moon! Good evening, moon!', 'Oui ! La lune ! Bonsoir, la lune !'] }),
+        ]
+      : [
+        say('actor', "Hoo-hoo! Owls wake up at night. Let's make it night!", 'Hou-hou ! Les hiboux se réveillent la nuit. Faisons venir la nuit !', {}, 'happy'),
+        scene(true),
+        props([skyProp('owl_moon', 'moon', 5), skyProp('owl_star0', 'star', 1), skyProp('owl_star1', 'star', 3)]),
+        tapProps('actor', "It's night! Touch the moon!", "C'est la nuit ! Touche la lune !", ['owl_moon'], ['The moon is big and round!', 'La lune est grande et ronde !'], ['moon', 'night'], {
+          wrong: { owl_star0: L("That's a star! Find the moon!", "Ça, c'est une étoile ! Cherche la lune !"), owl_star1: L("That's a star! Find the moon!", "Ça, c'est une étoile ! Cherche la lune !") },
+          onCorrect: L('Yes! The moon! Good evening, moon!', 'Oui ! La lune ! Bonsoir, la lune !'),
+        }),
+        ];
     return [
-      say('actor', "Hoo-hoo! Owls wake up at night. Let's make it night!", 'Hou-hou ! Les hiboux se réveillent la nuit. Faisons venir la nuit !', {}, 'happy'),
-      scene(true),
-      props([skyProp('owl_moon', 'moon', 5), skyProp('owl_star0', 'star', 1), skyProp('owl_star1', 'star', 3)]),
-      tapProps('actor', "It's night! Touch the moon!", "C'est la nuit ! Touche la lune !", ['owl_moon'], ['The moon is big and round!', 'La lune est grande et ronde !'], ['moon', 'night'], {
-        wrong: { owl_star0: L("That's a star! Find the moon!", "Ça, c'est une étoile ! Cherche la lune !"), owl_star1: L("That's a star! Find the moon!", "Ça, c'est une étoile ! Cherche la lune !") },
-        onCorrect: L('Yes! The moon! Good evening, moon!', 'Oui ! La lune ! Bonsoir, la lune !'),
-      }),
+      ...makeNight,
       ask('actor', 'What does an owl say?', 'Que dit le hibou ?', [ok('Hoot, hoot!', 'Hou, hou !', '🦉'), no('Yip, yip!', 'Yip, yip !', '🦊'), no('Moo!', 'Meuh !', '🐄'), no('Quack!', 'Coin-coin !', '🦆')], ['Listen! Hoot, hoot!', 'Écoute ! Hou, hou !'], ['owl_hoot'], { onCorrect: ['Yes! Hoot, hoot! That is my owl song!', "Oui ! Hou, hou ! C'est ma chanson de hibou !"] }),
       ask('actor', 'Look at my big eyes! Can owls see in the dark?', 'Regarde mes grands yeux ! Est-ce que les hiboux voient dans le noir ?', [ok('Yes, they can!', 'Oui !', '👀'), no("No, they can't.", 'Non.', '🙈')], ['My eyes are very big!', 'Mes yeux sont très grands !'], ['owl_eyes', 'can'], { keepOrder: true, onCorrect: ['Yes! My big eyes see in the dark!', 'Oui ! Mes grands yeux voient dans le noir !'] }),
       ask('actor', 'Owls can turn their heads! What can I turn?', 'Les hiboux peuvent tourner la tête ! Qu’est-ce que je peux tourner ?', [ok('Your head!', 'Ta tête !', '🔄'), no('Your tail!', 'Ta queue !', '〰️'), no('Your feet!', 'Tes pattes !', '🐾')], ['Look! Left… and right!', 'Regarde ! À gauche… et à droite !'], ['owl_head'], { minTier: 'intermediate', onCorrect: ['Yes! I turn my head… left… and right!', 'Oui ! Je tourne la tête… à gauche… et à droite !'] }),
@@ -145,8 +155,9 @@ export const owlNight: ActivityDef = {
       ask('actor', `Look at ${o.en}! Can ${o.he} fly?`, `Regarde ${o.fr} ! Est-ce qu'${o.il} sait voler ?`, [ok(`Yes, ${o.he} can!`, 'Oui !', '🪽'), no(`No, ${o.he} can't.`, 'Non.', '🙅')], [`${o.en} has got wings!`, `${o.fr} a des ailes !`], ['can', o.item], { minTier: 'expert', keepOrder: true, onCorrect: [`Yes! ${o.he === 'she' ? 'She' : 'He'} can fly!`, `Oui ! ${o.il === 'elle' ? 'Elle' : 'Il'} sait voler !`] }),
       ask('actor', 'Can an owl swim?', 'Est-ce que le hibou sait nager ?', [ok("No, it can't!", 'Non !', '🙅'), no('Yes, it can!', 'Oui !', '🏊')], ['Owls fly, but they don’t swim!', 'Les hiboux volent, mais ils ne nagent pas !'], ['cant', 'swim'], { minTier: 'expert', onCorrect: ["That's right! I fly, I don't swim!", "C'est ça ! Je vole, je ne nage pas !"] }),
       clearProps(),
-      scene(false),
-      say('actor', 'Look! The sun is up. Owls sleep in the day!', 'Regarde ! Le soleil se lève. Les hiboux dorment le jour !', {}, 'calm'),
+      ...(drawnMoon
+        ? [say('actor', 'Look! The moon is high. Owls play at night!', 'Regarde ! La lune est haute. Les hiboux jouent la nuit !', {}, 'calm')]
+        : [scene(false), say('actor', 'Look! The sun is up. Owls sleep in the day!', 'Regarde ! Le soleil se lève. Les hiboux dorment le jour !', {}, 'calm')]),
       act('actor', 'sleep', 'Yawn… Good night, hoot, hoot!', 'Bâille… Bonne nuit, hou, hou !', 'actor'),
       end('actor', 'Thank you for the night with me! Sweet dreams!', 'Merci pour cette nuit avec moi ! Fais de beaux rêves !'),
     ];

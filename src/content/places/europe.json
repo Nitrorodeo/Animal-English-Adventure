@@ -1844,6 +1844,2523 @@
           "y": 58
         }
       ]
+    },
+    {
+      "id": "europe_fox_glade",
+      "source": "Animaux/Europe/Renard",
+      "background": "europe_fox_glade",
+      "nameEn": "the fox glade",
+      "nameFr": "la clairière du renard",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "birch",
+          "word": "birch tree",
+          "wordFr": "le bouleau",
+          "icon": "🌳",
+          "hit": {
+            "x": 2,
+            "y": 2,
+            "w": 22,
+            "h": 64
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 30,
+            "h": 72
+          },
+          "stand": {
+            "x": 27,
+            "y": 66
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the birch tree white?",
+              "fr": "Est-ce que le bouleau est blanc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "fir",
+          "word": "fir tree",
+          "wordFr": "le sapin",
+          "icon": "🌲",
+          "hit": {
+            "x": 25,
+            "y": 10,
+            "w": 18,
+            "h": 40
+          },
+          "crop": {
+            "x": 23,
+            "y": 6,
+            "w": 22,
+            "h": 48
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the fir tree green?",
+              "fr": "Est-ce que le sapin est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 21,
+            "y": 47,
+            "w": 15,
+            "h": 12
+          },
+          "crop": {
+            "x": 17.2,
+            "y": 44.0,
+            "w": 22.5,
+            "h": 18.0
+          },
+          "stand": {
+            "x": 29,
+            "y": 62
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "boulder",
+          "word": "mossy rock",
+          "wordFr": "le rocher moussu",
+          "icon": "🪨",
+          "hit": {
+            "x": 2,
+            "y": 71,
+            "w": 23,
+            "h": 17
+          },
+          "crop": {
+            "x": 0,
+            "y": 66,
+            "w": 30,
+            "h": 28
+          },
+          "stand": {
+            "x": 30,
+            "y": 74
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the mossy rock big?",
+              "fr": "Est-ce que le rocher moussu est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "bush",
+          "word": "berry bush",
+          "wordFr": "le buisson de baies",
+          "icon": "🫐",
+          "hit": {
+            "x": 0,
+            "y": 46,
+            "w": 8,
+            "h": 18
+          },
+          "crop": {
+            "x": 0,
+            "y": 42,
+            "w": 16,
+            "h": 26
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the berries red?",
+              "fr": "Est-ce que les baies sont rouges ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sun",
+          "word": "sun",
+          "wordFr": "le soleil",
+          "icon": "☀️",
+          "hit": {
+            "x": 64,
+            "y": 26,
+            "w": 8,
+            "h": 9
+          },
+          "crop": {
+            "x": 61,
+            "y": 22,
+            "w": 14,
+            "h": 16
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sun yellow?",
+              "fr": "Est-ce que le soleil est jaune ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "🏔️",
+          "hit": {
+            "x": 40,
+            "y": 25,
+            "w": 18,
+            "h": 9
+          },
+          "crop": {
+            "x": 37,
+            "y": 20,
+            "w": 24,
+            "h": 18
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain far away?",
+              "fr": "Est-ce que la montagne est loin ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "lupine",
+          "word": "lupine",
+          "wordFr": "le lupin",
+          "icon": "🪻",
+          "hit": {
+            "x": 77,
+            "y": 48,
+            "w": 6,
+            "h": 12
+          },
+          "crop": {
+            "x": 74,
+            "y": 44,
+            "w": 12,
+            "h": 20
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the lupine purple?",
+              "fr": "Est-ce que le lupin est violet ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "pine",
+          "word": "pine tree",
+          "wordFr": "le pin",
+          "icon": "🌲",
+          "hit": {
+            "x": 90,
+            "y": 0,
+            "w": 10,
+            "h": 45
+          },
+          "crop": {
+            "x": 86,
+            "y": 0,
+            "w": 14,
+            "h": 50
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the pine tree tall?",
+              "fr": "Est-ce que le pin est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "den",
+          "word": "den",
+          "wordFr": "la tanière",
+          "icon": "🕳️",
+          "hit": {
+            "x": 80,
+            "y": 52,
+            "w": 15,
+            "h": 17
+          },
+          "crop": {
+            "x": 76,
+            "y": 46,
+            "w": 22,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the den dark inside?",
+              "fr": "Est-ce que la tanière est sombre à l'intérieur ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 6,
+          "y": 68
+        },
+        {
+          "x": 13,
+          "y": 68
+        },
+        {
+          "x": 20,
+          "y": 68
+        },
+        {
+          "x": 30,
+          "y": 66
+        },
+        {
+          "x": 37,
+          "y": 62
+        },
+        {
+          "x": 34,
+          "y": 73
+        },
+        {
+          "x": 37,
+          "y": 82
+        },
+        {
+          "x": 36,
+          "y": 92
+        }
+      ]
+    },
+    {
+      "id": "europe_fox_autumn",
+      "source": "Animaux/Europe/Renard",
+      "background": "europe_fox_autumn",
+      "nameEn": "the autumn burrow",
+      "nameFr": "le terrier d'automne",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "den",
+          "word": "den",
+          "wordFr": "la tanière",
+          "icon": "🕳️",
+          "hit": {
+            "x": 22,
+            "y": 43,
+            "w": 17,
+            "h": 16
+          },
+          "crop": {
+            "x": 19,
+            "y": 40,
+            "w": 23,
+            "h": 22
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the den dark?",
+              "fr": "Est-ce que la tanière est sombre ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "straw",
+          "word": "straw",
+          "wordFr": "la paille",
+          "icon": "🌾",
+          "hit": {
+            "x": 23,
+            "y": 60,
+            "w": 16,
+            "h": 12
+          },
+          "crop": {
+            "x": 20,
+            "y": 56,
+            "w": 22,
+            "h": 20
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the straw yellow?",
+              "fr": "Est-ce que la paille est jaune ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "tree",
+          "word": "tree",
+          "wordFr": "l'arbre",
+          "icon": "🌳",
+          "hit": {
+            "x": 0,
+            "y": 0,
+            "w": 28,
+            "h": 44
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 34,
+            "h": 52
+          },
+          "stand": {
+            "x": 10,
+            "y": 52
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the tree big?",
+              "fr": "Est-ce que l'arbre est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mushroom",
+          "word": "mushroom",
+          "wordFr": "le champignon",
+          "icon": "🍄",
+          "hit": {
+            "x": 14.5,
+            "y": 65,
+            "w": 9.5,
+            "h": 12
+          },
+          "crop": {
+            "x": 12.1,
+            "y": 62.0,
+            "w": 14.2,
+            "h": 18.0
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the mushroom red?",
+              "fr": "Est-ce que le champignon est rouge ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 49,
+            "y": 54,
+            "w": 22,
+            "h": 21
+          },
+          "crop": {
+            "x": 43.5,
+            "y": 48.8,
+            "w": 33.0,
+            "h": 31.5
+          },
+          "stand": {
+            "x": 46,
+            "y": 72
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "stream",
+          "word": "stream",
+          "wordFr": "le ruisseau",
+          "icon": "🏞️",
+          "hit": {
+            "x": 75,
+            "y": 47,
+            "w": 25,
+            "h": 21
+          },
+          "crop": {
+            "x": 68.8,
+            "y": 41.8,
+            "w": 31.2,
+            "h": 31.5
+          },
+          "stand": {
+            "x": 73,
+            "y": 69
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the stream cold?",
+              "fr": "Est-ce que le ruisseau est froid ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mapleleaf",
+          "word": "maple leaf",
+          "wordFr": "la feuille d'érable",
+          "icon": "🍁",
+          "hit": {
+            "x": 1,
+            "y": 84,
+            "w": 23,
+            "h": 15
+          },
+          "crop": {
+            "x": 0,
+            "y": 80,
+            "w": 30,
+            "h": 20
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the maple leaf orange?",
+              "fr": "Est-ce que la feuille d'érable est orange ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sunbeam",
+          "word": "sunbeam",
+          "wordFr": "le rayon de soleil",
+          "icon": "🌤️",
+          "hit": {
+            "x": 78,
+            "y": 8,
+            "w": 10,
+            "h": 24
+          },
+          "crop": {
+            "x": 74,
+            "y": 4,
+            "w": 18,
+            "h": 32
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sunbeam bright?",
+              "fr": "Est-ce que le rayon de soleil brille ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 6,
+          "y": 56
+        },
+        {
+          "x": 11,
+          "y": 63
+        },
+        {
+          "x": 14,
+          "y": 52
+        },
+        {
+          "x": 4,
+          "y": 68
+        },
+        {
+          "x": 37,
+          "y": 66
+        },
+        {
+          "x": 36,
+          "y": 76
+        },
+        {
+          "x": 37,
+          "y": 86
+        },
+        {
+          "x": 29,
+          "y": 95
+        }
+      ]
+    },
+    {
+      "id": "europe_fox_snow",
+      "source": "Animaux/Europe/Renard",
+      "background": "europe_fox_snow",
+      "nameEn": "the snowy den",
+      "nameFr": "la tanière sous la neige",
+      "weather": "cold",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "oak",
+          "word": "oak",
+          "wordFr": "le chêne",
+          "icon": "🌳",
+          "hit": {
+            "x": 0,
+            "y": 0,
+            "w": 20,
+            "h": 64
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 26,
+            "h": 72
+          },
+          "stand": {
+            "x": 23,
+            "y": 66
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the oak big?",
+              "fr": "Est-ce que le chêne est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "den",
+          "word": "den",
+          "wordFr": "la tanière",
+          "icon": "🕳️",
+          "hit": {
+            "x": 67.5,
+            "y": 40,
+            "w": 18.5,
+            "h": 17
+          },
+          "crop": {
+            "x": 64,
+            "y": 36,
+            "w": 26,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the den dark?",
+              "fr": "Est-ce que la tanière est sombre ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "prints",
+          "word": "fox tracks",
+          "wordFr": "les traces de renard",
+          "icon": "🐾",
+          "hit": {
+            "x": 50,
+            "y": 62,
+            "w": 30,
+            "h": 38
+          },
+          "crop": {
+            "x": 46,
+            "y": 58,
+            "w": 38,
+            "h": 42
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the tracks in the snow?",
+              "fr": "Est-ce que les traces sont dans la neige ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "bush",
+          "word": "orange bush",
+          "wordFr": "le buisson orange",
+          "icon": "🍊",
+          "hit": {
+            "x": 55,
+            "y": 40,
+            "w": 11,
+            "h": 17
+          },
+          "crop": {
+            "x": 52,
+            "y": 36,
+            "w": 17,
+            "h": 25
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the bush orange?",
+              "fr": "Est-ce que le buisson est orange ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "brook",
+          "word": "stream",
+          "wordFr": "le ruisseau",
+          "icon": "🏞️",
+          "hit": {
+            "x": 25,
+            "y": 54,
+            "w": 19,
+            "h": 11
+          },
+          "crop": {
+            "x": 22,
+            "y": 50,
+            "w": 25,
+            "h": 18
+          },
+          "stand": {
+            "x": 34,
+            "y": 68
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the stream thin?",
+              "fr": "Est-ce que le ruisseau est mince ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "birch",
+          "word": "tree",
+          "wordFr": "le bouleau",
+          "icon": "🌳",
+          "hit": {
+            "x": 88,
+            "y": 0,
+            "w": 12,
+            "h": 56
+          },
+          "crop": {
+            "x": 85,
+            "y": 0,
+            "w": 15,
+            "h": 62
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the tree white?",
+              "fr": "Est-ce que l'arbre est blanc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "fir",
+          "word": "pine tree",
+          "wordFr": "le sapin",
+          "icon": "🌲",
+          "hit": {
+            "x": 55,
+            "y": 0,
+            "w": 25,
+            "h": 45
+          },
+          "crop": {
+            "x": 53,
+            "y": 0,
+            "w": 29,
+            "h": 50
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the pine tree green?",
+              "fr": "Est-ce que le sapin est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "mountain",
+          "wordFr": "la montagne",
+          "icon": "🏔️",
+          "hit": {
+            "x": 30,
+            "y": 24,
+            "w": 23,
+            "h": 11
+          },
+          "crop": {
+            "x": 28,
+            "y": 18,
+            "w": 27,
+            "h": 20
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the mountain white?",
+              "fr": "Est-ce que la montagne est blanche ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sun",
+          "word": "sun",
+          "wordFr": "le soleil",
+          "icon": "☀️",
+          "hit": {
+            "x": 19,
+            "y": 21,
+            "w": 4,
+            "h": 7
+          },
+          "crop": {
+            "x": 16,
+            "y": 17,
+            "w": 10,
+            "h": 15
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sun small?",
+              "fr": "Est-ce que le soleil est petit ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 15,
+            "y": 61,
+            "w": 14,
+            "h": 13
+          },
+          "crop": {
+            "x": 12,
+            "y": 57,
+            "w": 20,
+            "h": 20
+          },
+          "stand": {
+            "x": 31,
+            "y": 66
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock white?",
+              "fr": "Est-ce que le rocher est blanc ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 27,
+          "y": 94
+        },
+        {
+          "x": 30,
+          "y": 88
+        },
+        {
+          "x": 33,
+          "y": 83
+        },
+        {
+          "x": 35,
+          "y": 78
+        },
+        {
+          "x": 37,
+          "y": 74
+        },
+        {
+          "x": 37,
+          "y": 66
+        },
+        {
+          "x": 23,
+          "y": 80
+        },
+        {
+          "x": 20,
+          "y": 86
+        }
+      ]
+    },
+    {
+      "id": "europe_owl_nest",
+      "source": "Animaux/Europe/Hibou",
+      "background": "europe_owl_nest",
+      "nameEn": "the owl's tree hole",
+      "nameFr": "le creux du hibou",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "hole",
+          "word": "tree hole",
+          "wordFr": "le creux de l'arbre",
+          "icon": "🕳️",
+          "hit": {
+            "x": 9.5,
+            "y": 23,
+            "w": 10,
+            "h": 17
+          },
+          "crop": {
+            "x": 7,
+            "y": 20,
+            "w": 15,
+            "h": 24
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the tree hole dark?",
+              "fr": "Est-ce que le creux est sombre ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "twignest",
+          "word": "twig nest",
+          "wordFr": "le nid de brindilles",
+          "icon": "🪺",
+          "hit": {
+            "x": 80,
+            "y": 25,
+            "w": 15,
+            "h": 11
+          },
+          "crop": {
+            "x": 77,
+            "y": 21,
+            "w": 21,
+            "h": 19
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the nest made of twigs?",
+              "fr": "Est-ce que le nid est en brindilles ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "branch",
+          "word": "branch",
+          "wordFr": "la branche",
+          "icon": "🌿",
+          "hit": {
+            "x": 22,
+            "y": 54,
+            "w": 28,
+            "h": 22
+          },
+          "crop": {
+            "x": 20,
+            "y": 50,
+            "w": 34,
+            "h": 30
+          },
+          "stand": {
+            "x": 38,
+            "y": 58
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the branch long?",
+              "fr": "Est-ce que la branche est longue ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "fern",
+          "word": "fern",
+          "wordFr": "la fougère",
+          "icon": "🌿",
+          "hit": {
+            "x": 0,
+            "y": 72,
+            "w": 17,
+            "h": 16
+          },
+          "crop": {
+            "x": 0,
+            "y": 68.0,
+            "w": 25.5,
+            "h": 24.0
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the fern green?",
+              "fr": "Est-ce que la fougère est verte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "toadstool",
+          "word": "toadstool",
+          "wordFr": "le champignon rouge",
+          "icon": "🍄",
+          "hit": {
+            "x": 3,
+            "y": 83,
+            "w": 10,
+            "h": 12
+          },
+          "crop": {
+            "x": 0.5,
+            "y": 80.0,
+            "w": 15.0,
+            "h": 18.0
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the toadstool red?",
+              "fr": "Est-ce que le champignon est rouge ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "trunk",
+          "word": "tree trunk",
+          "wordFr": "le tronc",
+          "icon": "🌳",
+          "hit": {
+            "x": 0,
+            "y": 0,
+            "w": 8,
+            "h": 22
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 14,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the trunk brown?",
+              "fr": "Est-ce que le tronc est marron ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "sunlight",
+          "word": "sunlight",
+          "wordFr": "la lumière du soleil",
+          "icon": "🌤️",
+          "hit": {
+            "x": 80,
+            "y": 47,
+            "w": 13,
+            "h": 15
+          },
+          "crop": {
+            "x": 76.8,
+            "y": 43.2,
+            "w": 19.5,
+            "h": 22.5
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the sunlight warm?",
+              "fr": "Est-ce que la lumière du soleil est chaude ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 14,
+          "y": 45
+        },
+        {
+          "x": 28,
+          "y": 63
+        },
+        {
+          "x": 33,
+          "y": 60
+        },
+        {
+          "x": 38,
+          "y": 58
+        },
+        {
+          "x": 6,
+          "y": 86
+        },
+        {
+          "x": 24,
+          "y": 90
+        },
+        {
+          "x": 31,
+          "y": 93
+        },
+        {
+          "x": 37,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "id": "europe_owl_moon",
+      "source": "Animaux/Europe/Hibou",
+      "background": "europe_owl_moon",
+      "nameEn": "the owl's moonlit branch",
+      "nameFr": "la branche du hibou au clair de lune",
+      "weather": "misty",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "moon",
+          "word": "moon",
+          "wordFr": "la lune",
+          "icon": "🌕",
+          "hit": {
+            "x": 71,
+            "y": 8,
+            "w": 9.5,
+            "h": 17
+          },
+          "crop": {
+            "x": 68,
+            "y": 5,
+            "w": 15,
+            "h": 23
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the moon round?",
+              "fr": "Est-ce que la lune est ronde ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "branch",
+          "word": "branch",
+          "wordFr": "la branche",
+          "icon": "🌿",
+          "hit": {
+            "x": 10,
+            "y": 50,
+            "w": 32,
+            "h": 22
+          },
+          "crop": {
+            "x": 8,
+            "y": 46,
+            "w": 40,
+            "h": 30
+          },
+          "stand": {
+            "x": 30,
+            "y": 56
+          },
+          "tags": [
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the branch thick?",
+              "fr": "Est-ce que la branche est épaisse ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "oldoak",
+          "word": "old oak",
+          "wordFr": "le vieux chêne",
+          "icon": "🌳",
+          "hit": {
+            "x": 0,
+            "y": 0,
+            "w": 30,
+            "h": 45
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 34,
+            "h": 50
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the old oak big?",
+              "fr": "Est-ce que le vieux chêne est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "stones",
+          "word": "stones",
+          "wordFr": "les pierres",
+          "icon": "🪨",
+          "hit": {
+            "x": 11,
+            "y": 80,
+            "w": 28,
+            "h": 20
+          },
+          "crop": {
+            "x": 4.0,
+            "y": 75.0,
+            "w": 42.0,
+            "h": 25.0
+          },
+          "stand": {
+            "x": 30,
+            "y": 82
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the stones grey?",
+              "fr": "Est-ce que les pierres sont grises ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "cloud",
+          "word": "night cloud",
+          "wordFr": "le nuage de nuit",
+          "icon": "☁️",
+          "hit": {
+            "x": 79,
+            "y": 16,
+            "w": 21,
+            "h": 14
+          },
+          "crop": {
+            "x": 73.8,
+            "y": 12.5,
+            "w": 26.2,
+            "h": 21.0
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the cloud fluffy?",
+              "fr": "Est-ce que le nuage est moelleux ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "firs",
+          "word": "fir trees",
+          "wordFr": "les sapins",
+          "icon": "🌲",
+          "hit": {
+            "x": 85,
+            "y": 25,
+            "w": 15,
+            "h": 50
+          },
+          "crop": {
+            "x": 81.2,
+            "y": 12.5,
+            "w": 18.8,
+            "h": 75.0
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the fir trees tall?",
+              "fr": "Est-ce que les sapins sont grands ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "hills",
+          "word": "dark hills",
+          "wordFr": "les collines sombres",
+          "icon": "🏔️",
+          "hit": {
+            "x": 60,
+            "y": 40,
+            "w": 27,
+            "h": 11
+          },
+          "crop": {
+            "x": 53.2,
+            "y": 37.2,
+            "w": 40.5,
+            "h": 16.5
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Are the hills far away?",
+              "fr": "Est-ce que les collines sont loin ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 13,
+          "y": 51
+        },
+        {
+          "x": 20,
+          "y": 53
+        },
+        {
+          "x": 27,
+          "y": 55
+        },
+        {
+          "x": 34,
+          "y": 57
+        },
+        {
+          "x": 15,
+          "y": 83
+        },
+        {
+          "x": 23,
+          "y": 82
+        },
+        {
+          "x": 31,
+          "y": 86
+        },
+        {
+          "x": 37,
+          "y": 91
+        }
+      ]
+    },
+    {
+      "id": "europe_owl_oak",
+      "source": "Animaux/Europe/Hibou",
+      "background": "europe_owl_oak",
+      "nameEn": "the owl's big oak",
+      "nameFr": "le grand chêne du hibou",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "hollow",
+          "word": "hollow",
+          "wordFr": "le creux",
+          "icon": "🕳️",
+          "hit": {
+            "x": 74,
+            "y": 18,
+            "w": 9,
+            "h": 15
+          },
+          "crop": {
+            "x": 71,
+            "y": 14,
+            "w": 15,
+            "h": 23
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the hollow dark?",
+              "fr": "Est-ce que le creux est sombre ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "acorns",
+          "word": "acorns",
+          "wordFr": "les glands",
+          "icon": "🌰",
+          "hit": {
+            "x": 9,
+            "y": 10,
+            "w": 6,
+            "h": 8
+          },
+          "crop": {
+            "x": 6,
+            "y": 7,
+            "w": 12,
+            "h": 14
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the acorns brown?",
+              "fr": "Est-ce que les glands sont marron ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "bigbranch",
+          "word": "big branch",
+          "wordFr": "la grosse branche",
+          "icon": "🌿",
+          "hit": {
+            "x": 15,
+            "y": 5,
+            "w": 40,
+            "h": 23
+          },
+          "crop": {
+            "x": 13,
+            "y": 2,
+            "w": 46,
+            "h": 30
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the branch big?",
+              "fr": "Est-ce que la branche est grosse ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "bluebells",
+          "word": "bluebells",
+          "wordFr": "les clochettes",
+          "icon": "🪻",
+          "hit": {
+            "x": 0,
+            "y": 56,
+            "w": 8,
+            "h": 20
+          },
+          "crop": {
+            "x": 0,
+            "y": 51.0,
+            "w": 12.0,
+            "h": 30.0
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the bluebells purple?",
+              "fr": "Est-ce que les clochettes sont violettes ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "rock",
+          "wordFr": "le rocher",
+          "icon": "🪨",
+          "hit": {
+            "x": 11,
+            "y": 56,
+            "w": 14,
+            "h": 12
+          },
+          "crop": {
+            "x": 7.5,
+            "y": 53.0,
+            "w": 21.0,
+            "h": 18.0
+          },
+          "stand": {
+            "x": 27,
+            "y": 66
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "spruce",
+          "word": "spruce",
+          "wordFr": "l'épicéa",
+          "icon": "🌲",
+          "hit": {
+            "x": 11,
+            "y": 25,
+            "w": 12,
+            "h": 30
+          },
+          "crop": {
+            "x": 8.0,
+            "y": 17.5,
+            "w": 18.0,
+            "h": 45.0
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the spruce green?",
+              "fr": "Est-ce que l'épicéa est vert ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "clearing",
+          "word": "clearing",
+          "wordFr": "la clairière",
+          "icon": "🍂",
+          "hit": {
+            "x": 15,
+            "y": 72,
+            "w": 28,
+            "h": 22
+          },
+          "crop": {
+            "x": 13,
+            "y": 68,
+            "w": 34,
+            "h": 28
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the clearing sunny?",
+              "fr": "Est-ce que la clairière est ensoleillée ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "redcaps",
+          "word": "red mushrooms",
+          "wordFr": "les champignons rouges",
+          "icon": "🍄",
+          "hit": {
+            "x": 86,
+            "y": 58,
+            "w": 10,
+            "h": 12
+          },
+          "crop": {
+            "x": 83.5,
+            "y": 55.0,
+            "w": 15.0,
+            "h": 18.0
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the mushrooms red?",
+              "fr": "Est-ce que les champignons sont rouges ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 17,
+          "y": 57
+        },
+        {
+          "x": 22,
+          "y": 58
+        },
+        {
+          "x": 33,
+          "y": 22
+        },
+        {
+          "x": 20,
+          "y": 78
+        },
+        {
+          "x": 28,
+          "y": 84
+        },
+        {
+          "x": 36,
+          "y": 80
+        },
+        {
+          "x": 30,
+          "y": 92
+        },
+        {
+          "x": 36,
+          "y": 90
+        }
+      ]
+    },
+    {
+      "id": "europe_hog_stream",
+      "source": "Animaux/Europe/Herisson",
+      "background": "europe_hog_stream",
+      "nameEn": "the hedgehog's stream",
+      "nameFr": "le ruisseau du hérisson",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "tunnel",
+          "word": "root tunnel",
+          "wordFr": "le tunnel de racines",
+          "icon": "🕳️",
+          "hit": {
+            "x": 13,
+            "y": 38,
+            "w": 20,
+            "h": 30
+          },
+          "crop": {
+            "x": 10,
+            "y": 34,
+            "w": 26,
+            "h": 38
+          },
+          "stand": {
+            "x": 32,
+            "y": 68
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the root tunnel dark?",
+              "fr": "Est-ce que le tunnel de racines est sombre ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "leafbed",
+          "word": "leaf bed",
+          "wordFr": "le lit de feuilles",
+          "icon": "🍂",
+          "hit": {
+            "x": 14,
+            "y": 54,
+            "w": 16,
+            "h": 12
+          },
+          "crop": {
+            "x": 11,
+            "y": 50,
+            "w": 22,
+            "h": 18
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the leaf bed dry?",
+              "fr": "Est-ce que le lit de feuilles est sec ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "redcap",
+          "word": "spotted mushroom",
+          "wordFr": "le champignon à pois",
+          "icon": "🍄",
+          "hit": {
+            "x": 0,
+            "y": 50,
+            "w": 13,
+            "h": 23
+          },
+          "crop": {
+            "x": 0,
+            "y": 46,
+            "w": 18,
+            "h": 30
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the mushroom spotted?",
+              "fr": "Est-ce que le champignon a des pois ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "daisies",
+          "word": "daisies",
+          "wordFr": "les marguerites",
+          "icon": "🌼",
+          "hit": {
+            "x": 2,
+            "y": 79,
+            "w": 13,
+            "h": 17
+          },
+          "crop": {
+            "x": 0,
+            "y": 75,
+            "w": 19,
+            "h": 24
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the daisies white?",
+              "fr": "Est-ce que les marguerites sont blanches ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "fall",
+          "word": "little waterfall",
+          "wordFr": "la petite cascade",
+          "icon": "💧",
+          "hit": {
+            "x": 72,
+            "y": 45,
+            "w": 13,
+            "h": 10
+          },
+          "crop": {
+            "x": 69,
+            "y": 41,
+            "w": 19,
+            "h": 18
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the waterfall small?",
+              "fr": "Est-ce que la cascade est petite ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "stream",
+          "word": "stream",
+          "wordFr": "le ruisseau",
+          "icon": "🏞️",
+          "hit": {
+            "x": 64,
+            "y": 56,
+            "w": 34,
+            "h": 12
+          },
+          "crop": {
+            "x": 62,
+            "y": 40,
+            "w": 38,
+            "h": 30
+          },
+          "stand": {
+            "x": 73,
+            "y": 69
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the stream cool?",
+              "fr": "Est-ce que le ruisseau est frais ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "strawberries",
+          "word": "strawberries",
+          "wordFr": "les fraises",
+          "icon": "🍓",
+          "hit": {
+            "x": 92,
+            "y": 58,
+            "w": 8,
+            "h": 14
+          },
+          "crop": {
+            "x": 89,
+            "y": 54,
+            "w": 11,
+            "h": 22
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the strawberries red?",
+              "fr": "Est-ce que les fraises sont rouges ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "log",
+          "word": "fallen log",
+          "wordFr": "le tronc couché",
+          "icon": "🪵",
+          "hit": {
+            "x": 66,
+            "y": 77,
+            "w": 34,
+            "h": 23
+          },
+          "crop": {
+            "x": 64,
+            "y": 74,
+            "w": 36,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the log brown?",
+              "fr": "Est-ce que le tronc est marron ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 21,
+          "y": 62
+        },
+        {
+          "x": 27,
+          "y": 66
+        },
+        {
+          "x": 34,
+          "y": 70
+        },
+        {
+          "x": 37,
+          "y": 78
+        },
+        {
+          "x": 29,
+          "y": 86
+        },
+        {
+          "x": 16,
+          "y": 78
+        },
+        {
+          "x": 36,
+          "y": 88
+        },
+        {
+          "x": 24,
+          "y": 92
+        }
+      ]
+    },
+    {
+      "id": "europe_hog_lake",
+      "source": "Animaux/Europe/Herisson",
+      "background": "europe_hog_lake",
+      "nameEn": "the mountain lake",
+      "nameFr": "le lac de montagne",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "pine",
+          "word": "big pine",
+          "wordFr": "le grand pin",
+          "icon": "🌲",
+          "hit": {
+            "x": 0,
+            "y": 0,
+            "w": 13,
+            "h": 70
+          },
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "w": 17,
+            "h": 74
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the pine tall?",
+              "fr": "Est-ce que le pin est grand ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "fall",
+          "word": "waterfall",
+          "wordFr": "la cascade",
+          "icon": "💧",
+          "hit": {
+            "x": 19,
+            "y": 32,
+            "w": 10,
+            "h": 15
+          },
+          "crop": {
+            "x": 16,
+            "y": 28,
+            "w": 16,
+            "h": 22
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the waterfall small?",
+              "fr": "Est-ce que la cascade est petite ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "lake",
+          "word": "lake",
+          "wordFr": "le lac",
+          "icon": "🏞️",
+          "hit": {
+            "x": 28,
+            "y": 40,
+            "w": 69,
+            "h": 25
+          },
+          "crop": {
+            "x": 26,
+            "y": 38,
+            "w": 72,
+            "h": 30
+          },
+          "stand": {
+            "x": 50,
+            "y": 67
+          },
+          "tags": [
+            "water"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the lake blue?",
+              "fr": "Est-ce que le lac est bleu ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "mountain",
+          "word": "snowy mountain",
+          "wordFr": "la montagne enneigée",
+          "icon": "🏔️",
+          "hit": {
+            "x": 38,
+            "y": 5,
+            "w": 52,
+            "h": 27
+          },
+          "crop": {
+            "x": 36,
+            "y": 2,
+            "w": 56,
+            "h": 34
+          },
+          "tags": [
+            "sky"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the mountain white on top?",
+              "fr": "Est-ce que le sommet de la montagne est blanc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "lupins",
+          "word": "lupins",
+          "wordFr": "les lupins",
+          "icon": "🪻",
+          "hit": {
+            "x": 0,
+            "y": 72,
+            "w": 12,
+            "h": 28
+          },
+          "crop": {
+            "x": 0,
+            "y": 68,
+            "w": 17,
+            "h": 32
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the lupins purple?",
+              "fr": "Est-ce que les lupins sont violets ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "rock",
+          "word": "grey rock",
+          "wordFr": "le rocher gris",
+          "icon": "🪨",
+          "hit": {
+            "x": 0,
+            "y": 48,
+            "w": 14,
+            "h": 18
+          },
+          "crop": {
+            "x": 0,
+            "y": 44,
+            "w": 20,
+            "h": 26
+          },
+          "stand": {
+            "x": 18,
+            "y": 66
+          },
+          "tags": [
+            "hide",
+            "climb"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the rock grey?",
+              "fr": "Est-ce que le rocher est gris ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "marigolds",
+          "word": "marigolds",
+          "wordFr": "les soucis",
+          "icon": "🌼",
+          "hit": {
+            "x": 14,
+            "y": 86,
+            "w": 10,
+            "h": 12
+          },
+          "crop": {
+            "x": 11,
+            "y": 82,
+            "w": 16,
+            "h": 18
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the marigolds orange?",
+              "fr": "Est-ce que les soucis sont orange ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "shrub",
+          "word": "red berry bush",
+          "wordFr": "le buisson de baies rouges",
+          "icon": "🍒",
+          "hit": {
+            "x": 88,
+            "y": 62,
+            "w": 11,
+            "h": 12
+          },
+          "crop": {
+            "x": 85,
+            "y": 58,
+            "w": 15,
+            "h": 20
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the bush red?",
+              "fr": "Est-ce que le buisson est rouge ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 20,
+          "y": 62
+        },
+        {
+          "x": 27,
+          "y": 66
+        },
+        {
+          "x": 34,
+          "y": 66
+        },
+        {
+          "x": 36,
+          "y": 74
+        },
+        {
+          "x": 24,
+          "y": 76
+        },
+        {
+          "x": 14,
+          "y": 82
+        },
+        {
+          "x": 30,
+          "y": 86
+        },
+        {
+          "x": 36,
+          "y": 92
+        },
+        {
+          "x": 32,
+          "y": 50
+        },
+        {
+          "x": 36,
+          "y": 53
+        },
+        {
+          "x": 38,
+          "y": 57
+        }
+      ]
+    },
+    {
+      "id": "europe_hog_log",
+      "source": "Animaux/Europe/Herisson",
+      "background": "europe_hog_log",
+      "nameEn": "the hollow log",
+      "nameFr": "le tronc creux",
+      "weather": "sunny",
+      "groundY": 78,
+      "anchors": [
+        {
+          "id": "trunk",
+          "word": "big trunk",
+          "wordFr": "le gros tronc",
+          "icon": "🌳",
+          "hit": {
+            "x": 5,
+            "y": 0,
+            "w": 14,
+            "h": 55
+          },
+          "crop": {
+            "x": 3,
+            "y": 0,
+            "w": 20,
+            "h": 58
+          },
+          "stand": {
+            "x": 22,
+            "y": 56
+          },
+          "tags": [
+            "hide"
+          ],
+          "check": {
+            "q": {
+              "en": "Is the trunk big?",
+              "fr": "Est-ce que le tronc est gros ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "stone",
+          "word": "mossy stone",
+          "wordFr": "la pierre moussue",
+          "icon": "🪨",
+          "hit": {
+            "x": 16,
+            "y": 34,
+            "w": 12,
+            "h": 14
+          },
+          "crop": {
+            "x": 14,
+            "y": 30,
+            "w": 17,
+            "h": 22
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the stone green?",
+              "fr": "Est-ce que la pierre est verte ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "redberries",
+          "word": "red berries",
+          "wordFr": "les baies rouges",
+          "icon": "🍒",
+          "hit": {
+            "x": 0,
+            "y": 60,
+            "w": 22,
+            "h": 25
+          },
+          "crop": {
+            "x": 0,
+            "y": 56,
+            "w": 26,
+            "h": 32
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the berries red?",
+              "fr": "Est-ce que les baies sont rouges ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "blueberries",
+          "word": "blueberries",
+          "wordFr": "les myrtilles",
+          "icon": "🫐",
+          "hit": {
+            "x": 88,
+            "y": 30,
+            "w": 12,
+            "h": 26
+          },
+          "crop": {
+            "x": 85,
+            "y": 26,
+            "w": 15,
+            "h": 34
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the blueberries blue?",
+              "fr": "Est-ce que les myrtilles sont bleues ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "hollowlog",
+          "word": "hollow log",
+          "wordFr": "le tronc creux",
+          "icon": "🪵",
+          "hit": {
+            "x": 60,
+            "y": 36,
+            "w": 35,
+            "h": 17
+          },
+          "crop": {
+            "x": 58,
+            "y": 32,
+            "w": 40,
+            "h": 25
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the log hollow?",
+              "fr": "Est-ce que le tronc est creux ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "woodcaps",
+          "word": "wood mushrooms",
+          "wordFr": "les champignons du bois",
+          "icon": "🍄",
+          "hit": {
+            "x": 76,
+            "y": 43,
+            "w": 6,
+            "h": 8
+          },
+          "crop": {
+            "x": 73,
+            "y": 39,
+            "w": 12,
+            "h": 16
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Do the mushrooms grow on the log?",
+              "fr": "Est-ce que les champignons poussent sur le tronc ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "yellowflowers",
+          "word": "yellow flowers",
+          "wordFr": "les fleurs jaunes",
+          "icon": "🌼",
+          "hit": {
+            "x": 86,
+            "y": 66,
+            "w": 14,
+            "h": 12
+          },
+          "crop": {
+            "x": 83,
+            "y": 62,
+            "w": 17,
+            "h": 20
+          },
+          "tags": [
+            "plant"
+          ],
+          "check": {
+            "q": {
+              "en": "Are the flowers yellow?",
+              "fr": "Est-ce que les fleurs sont jaunes ?"
+            },
+            "yes": true
+          }
+        },
+        {
+          "id": "hill",
+          "word": "green hill",
+          "wordFr": "la colline verte",
+          "icon": "⛰️",
+          "hit": {
+            "x": 27,
+            "y": 17,
+            "w": 21,
+            "h": 18
+          },
+          "crop": {
+            "x": 25,
+            "y": 13,
+            "w": 26,
+            "h": 26
+          },
+          "tags": [],
+          "check": {
+            "q": {
+              "en": "Is the hill far away?",
+              "fr": "Est-ce que la colline est loin ?"
+            },
+            "yes": true
+          }
+        }
+      ],
+      "spots": [
+        {
+          "x": 20,
+          "y": 58
+        },
+        {
+          "x": 28,
+          "y": 60
+        },
+        {
+          "x": 35,
+          "y": 64
+        },
+        {
+          "x": 30,
+          "y": 72
+        },
+        {
+          "x": 22,
+          "y": 80
+        },
+        {
+          "x": 26,
+          "y": 88
+        },
+        {
+          "x": 36,
+          "y": 84
+        },
+        {
+          "x": 36,
+          "y": 92
+        }
+      ]
     }
   ],
   "nouns": {
@@ -1990,6 +4507,218 @@
     "village": {
       "en": "A village",
       "fr": "Un village"
+    },
+    "birch tree": {
+      "en": "A birch tree",
+      "fr": "Un bouleau"
+    },
+    "fir tree": {
+      "en": "A fir tree",
+      "fr": "Un sapin"
+    },
+    "boulder": {
+      "en": "A boulder",
+      "fr": "Un gros rocher"
+    },
+    "berry bush": {
+      "en": "A berry bush",
+      "fr": "Un buisson de baies"
+    },
+    "straw": {
+      "en": "Straw",
+      "fr": "De la paille"
+    },
+    "maple leaf": {
+      "en": "A maple leaf",
+      "fr": "Une feuille d'érable"
+    },
+    "sunbeam": {
+      "en": "A sunbeam",
+      "fr": "Un rayon de soleil"
+    },
+    "fox tracks": {
+      "en": "Fox tracks",
+      "fr": "Des traces de renard"
+    },
+    "orange bush": {
+      "en": "An orange bush",
+      "fr": "Un buisson orange"
+    },
+    "oak": {
+      "en": "An oak",
+      "fr": "Un chêne"
+    },
+    "mossy rock": {
+      "en": "A mossy rock",
+      "fr": "Un rocher moussu"
+    },
+    "tree hole": {
+      "en": "A tree hole",
+      "fr": "Un creux d'arbre"
+    },
+    "twig nest": {
+      "en": "A twig nest",
+      "fr": "Un nid de brindilles"
+    },
+    "branch": {
+      "en": "A branch",
+      "fr": "Une branche"
+    },
+    "fern": {
+      "en": "A fern",
+      "fr": "Une fougère"
+    },
+    "toadstool": {
+      "en": "A toadstool",
+      "fr": "Un champignon rouge"
+    },
+    "tree trunk": {
+      "en": "A tree trunk",
+      "fr": "Un tronc d'arbre"
+    },
+    "sunlight": {
+      "en": "Sunlight",
+      "fr": "La lumière du soleil"
+    },
+    "moon": {
+      "en": "The moon",
+      "fr": "La lune"
+    },
+    "old oak": {
+      "en": "An old oak",
+      "fr": "Un vieux chêne"
+    },
+    "stones": {
+      "en": "Stones",
+      "fr": "Des pierres"
+    },
+    "night cloud": {
+      "en": "A night cloud",
+      "fr": "Un nuage de nuit"
+    },
+    "fir trees": {
+      "en": "Fir trees",
+      "fr": "Des sapins"
+    },
+    "dark hills": {
+      "en": "Dark hills",
+      "fr": "Des collines sombres"
+    },
+    "hollow": {
+      "en": "A hollow",
+      "fr": "Un creux"
+    },
+    "acorns": {
+      "en": "Acorns",
+      "fr": "Des glands"
+    },
+    "big branch": {
+      "en": "A big branch",
+      "fr": "Une grosse branche"
+    },
+    "bluebells": {
+      "en": "Bluebells",
+      "fr": "Des clochettes"
+    },
+    "spruce": {
+      "en": "A spruce",
+      "fr": "Un épicéa"
+    },
+    "clearing": {
+      "en": "A clearing",
+      "fr": "Une clairière"
+    },
+    "red mushrooms": {
+      "en": "Red mushrooms",
+      "fr": "Des champignons rouges"
+    },
+    "root tunnel": {
+      "en": "A root tunnel",
+      "fr": "Un tunnel de racines"
+    },
+    "leaf bed": {
+      "en": "A leaf bed",
+      "fr": "Un lit de feuilles"
+    },
+    "spotted mushroom": {
+      "en": "A spotted mushroom",
+      "fr": "Un champignon à pois"
+    },
+    "daisies": {
+      "en": "Daisies",
+      "fr": "Des marguerites"
+    },
+    "little waterfall": {
+      "en": "A little waterfall",
+      "fr": "Une petite cascade"
+    },
+    "strawberries": {
+      "en": "Strawberries",
+      "fr": "Des fraises"
+    },
+    "fallen log": {
+      "en": "A fallen log",
+      "fr": "Un tronc couché"
+    },
+    "big pine": {
+      "en": "A big pine",
+      "fr": "Un grand pin"
+    },
+    "waterfall": {
+      "en": "A waterfall",
+      "fr": "Une cascade"
+    },
+    "snowy mountain": {
+      "en": "A snowy mountain",
+      "fr": "Une montagne enneigée"
+    },
+    "lupins": {
+      "en": "Lupins",
+      "fr": "Des lupins"
+    },
+    "grey rock": {
+      "en": "A grey rock",
+      "fr": "Un rocher gris"
+    },
+    "marigolds": {
+      "en": "Marigolds",
+      "fr": "Des soucis"
+    },
+    "red berry bush": {
+      "en": "A red berry bush",
+      "fr": "Un buisson de baies rouges"
+    },
+    "big trunk": {
+      "en": "A big trunk",
+      "fr": "Un gros tronc"
+    },
+    "mossy stone": {
+      "en": "A mossy stone",
+      "fr": "Une pierre moussue"
+    },
+    "red berries": {
+      "en": "Red berries",
+      "fr": "Des baies rouges"
+    },
+    "blueberries": {
+      "en": "Blueberries",
+      "fr": "Des myrtilles"
+    },
+    "hollow log": {
+      "en": "A hollow log",
+      "fr": "Un tronc creux"
+    },
+    "wood mushrooms": {
+      "en": "Wood mushrooms",
+      "fr": "Des champignons du bois"
+    },
+    "yellow flowers": {
+      "en": "Yellow flowers",
+      "fr": "Des fleurs jaunes"
+    },
+    "green hill": {
+      "en": "A green hill",
+      "fr": "Une colline verte"
     }
   }
 }
