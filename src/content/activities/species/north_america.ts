@@ -65,6 +65,9 @@ export const bearHoney: ActivityDef = {
   build(c, tier) {
     const s = ground(c, 5, 'bear_honey');
     if (!s) return undefined;
+    // 2026-11-23 : la tanière enneigée est un décor d'hiver, sans miel ni baies : l'ours y flaire des pommes de pin
+    // (le reste du jeu, les pattes, les griffes, la fourrure, la tanière, est le même)
+    const winter = c.place.id === 'na_bear_den';
     const notHoney = (en: string, fr: string, berries: boolean): Line =>
       berries ? L(`I don't eat ${en}! I eat honey and berries!`, `Je ne mange pas ${fr} ! Je mange du miel et des baies !`) : L(`I don't eat ${en}! I eat honey!`, `Je ne mange pas ${fr} ! Je mange du miel !`);
     return [
@@ -73,27 +76,51 @@ export const bearHoney: ActivityDef = {
       ask('actor', "Look! What's on my paws?", "Regarde ! Qu'est-ce qu'il y a au bout de mes pattes ?", [ok('Long claws!', 'De longues griffes !', '🐻'), no('Feathers!', 'Des plumes !', '🪶'), no('Shells!', 'Des coquillages !', '🐚')], ['Look at the end of my paws!', 'Regarde le bout de mes pattes !'], ['bear_claws', 'long'], { onCorrect: ['Yes! Long claws! They help me climb.', "Oui ! De longues griffes ! Elles m'aident à grimper."] }),
       act('actor', 'climb', 'Up, up, up! I can climb!', 'Hop, hop, hop ! Je sais grimper !', 'actor'),
       ask('actor', 'Touch my fur! Is it soft?', 'Touche ma fourrure ! Elle est douce ?', [ok('Yes! Soft fur!', 'Oui ! Une fourrure douce !', '🧸'), no("No, it's spiky!", 'Non, elle pique !', '🌵')], ['Touch it! So soft!', 'Touche ! Trop douce !'], ['bear_fur'], { onCorrect: ['Soft and warm! I love my fur.', "Douce et chaude ! J'adore ma fourrure."] }),
-      say('actor', 'Sniff, sniff! I smell something sweet!', 'Snif, snif ! Ça sent le sucré !', {}, 'curious'),
-      // le miel (et les baies dès le niveau intermédiaire) ; de l'herbe et du bambou, que l'ours ne mange pas
-      props([prop('h', 'honey', s[0]!), prop('g', 'grass', s[1]!)], { maxTier: 'beginner' }),
-      props([prop('h', 'honey', s[0]!), prop('b1', 'berries', s[1]!), prop('g', 'grass', s[2]!), prop('b2', 'berries', s[3]!), prop('bb', 'bamboo', s[4]!)], { minTier: 'intermediate' }),
-      tapProps('actor', 'Sniff, sniff! Find the honey!', 'Snif, snif ! Trouve le miel !', ['h'], ['Honey is sweet and yellow!', 'Le miel est doux et jaune !'], ['honey', 'bear_sniff'], {
-        maxTier: 'beginner',
-        wrong: { g: notHoney('grass', "d'herbe", false) },
-        onCorrect: ['Yes! Honey! Yum!', 'Oui ! Du miel ! Miam !'],
-      }),
-      tapProps('actor', 'I eat honey and berries! Find the honey and the berries!', 'Je mange du miel et des baies ! Trouve le miel et les baies !', ['h', 'b1', 'b2'], ['Sniff, sniff! Honey and berries!', 'Snif, snif ! Du miel et des baies !'], ['honey', 'berries', 'bear_sniff'], {
-        minTier: 'intermediate',
-        count: true,
-        wrong: { g: notHoney('grass', "d'herbe", true), bb: notHoney('bamboo', 'de bambou', true) },
-        onCorrect: ['Yum! Honey and berries!', 'Miam ! Du miel et des baies !'],
-      }),
-      act('actor', 'eat', 'Yum, yum! Sweet honey!', 'Miam, miam ! Le miel, c’est doux !', 'actor'),
-      clearProps(),
-      ask('actor', 'Where do I find honey?', 'Où est-ce que je trouve du miel ?', [ok('In a tree!', 'Dans un arbre !', '🌳'), no('In the sea!', 'Dans la mer !', '🌊'), no('Under the sand!', 'Sous le sable !', '🏖️')], ['The bees live in a tree!', 'Les abeilles vivent dans un arbre !'], ['tree', 'where'], {
-        minTier: 'intermediate',
-        onCorrect: ['Yes! The bees make honey in a tree.', 'Oui ! Les abeilles font le miel dans un arbre.'],
-      }),
+      ...(winter
+        ? [
+            say('actor', 'Sniff, sniff! I smell a pine cone!', 'Snif, snif ! Ça sent la pomme de pin !', {}, 'curious'),
+            props([prop('pc', 'pinecone', s[0]!), prop('st', 'stick', s[1]!)], { maxTier: 'beginner' }),
+            props([prop('pc', 'pinecone', s[0]!), prop('pc2', 'pinecone', s[1]!), prop('st', 'stick', s[2]!), prop('pc3', 'pinecone', s[3]!), prop('st2', 'stick', s[4]!)], { minTier: 'intermediate' }),
+            tapProps('actor', 'Sniff, sniff! Find the pine cone!', 'Snif, snif ! Trouve la pomme de pin !', ['pc'], ['A pine cone falls from the pine tree!', 'Une pomme de pin tombe du sapin !'], ['pinecone', 'bear_sniff'], {
+              maxTier: 'beginner',
+              wrong: { st: L("That's a stick! Sniff again!", "C'est une branche ! Renifle encore !") },
+              onCorrect: ['Yes! A pine cone!', 'Oui ! Une pomme de pin !'],
+            }),
+            tapProps('actor', 'Find the pine cones! Not the sticks!', 'Trouve les pommes de pin ! Pas les branches !', ['pc', 'pc2', 'pc3'], ['Sniff, sniff! Pine cones!', 'Snif, snif ! Des pommes de pin !'], ['pinecone', 'bear_sniff'], {
+              minTier: 'intermediate',
+              count: true,
+              wrong: { st: L("That's a stick! I need pine cones.", "C'est une branche ! Il me faut des pommes de pin."), st2: L("That's a stick! I need pine cones.", "C'est une branche ! Il me faut des pommes de pin.") },
+              onCorrect: ['Three pine cones! Thank you!', 'Trois pommes de pin ! Merci !'],
+            }),
+            clearProps(),
+            ask('actor', 'Where do pine cones grow?', 'Où poussent les pommes de pin ?', [ok('On a pine tree!', 'Sur un sapin !', '🌲'), no('In the sea!', 'Dans la mer !', '🌊'), no('Under the sand!', 'Sous le sable !', '🏖️')], ['Look at the pine trees!', 'Regarde les sapins !'], ['pinecone', 'tree', 'where'], {
+              minTier: 'intermediate',
+              onCorrect: ['Yes! On a pine tree.', 'Oui ! Sur un sapin.'],
+            }),
+          ]
+        : [
+          say('actor', 'Sniff, sniff! I smell something sweet!', 'Snif, snif ! Ça sent le sucré !', {}, 'curious'),
+          // le miel (et les baies dès le niveau intermédiaire) ; de l'herbe et du bambou, que l'ours ne mange pas
+          props([prop('h', 'honey', s[0]!), prop('g', 'grass', s[1]!)], { maxTier: 'beginner' }),
+          props([prop('h', 'honey', s[0]!), prop('b1', 'berries', s[1]!), prop('g', 'grass', s[2]!), prop('b2', 'berries', s[3]!), prop('bb', 'bamboo', s[4]!)], { minTier: 'intermediate' }),
+          tapProps('actor', 'Sniff, sniff! Find the honey!', 'Snif, snif ! Trouve le miel !', ['h'], ['Honey is sweet and yellow!', 'Le miel est doux et jaune !'], ['honey', 'bear_sniff'], {
+            maxTier: 'beginner',
+            wrong: { g: notHoney('grass', "d'herbe", false) },
+            onCorrect: ['Yes! Honey! Yum!', 'Oui ! Du miel ! Miam !'],
+          }),
+          tapProps('actor', 'I eat honey and berries! Find the honey and the berries!', 'Je mange du miel et des baies ! Trouve le miel et les baies !', ['h', 'b1', 'b2'], ['Sniff, sniff! Honey and berries!', 'Snif, snif ! Du miel et des baies !'], ['honey', 'berries', 'bear_sniff'], {
+            minTier: 'intermediate',
+            count: true,
+            wrong: { g: notHoney('grass', "d'herbe", true), bb: notHoney('bamboo', 'de bambou', true) },
+            onCorrect: ['Yum! Honey and berries!', 'Miam ! Du miel et des baies !'],
+          }),
+          act('actor', 'eat', 'Yum, yum! Sweet honey!', 'Miam, miam ! Le miel, c’est doux !', 'actor'),
+          clearProps(),
+          ask('actor', 'Where do I find honey?', 'Où est-ce que je trouve du miel ?', [ok('In a tree!', 'Dans un arbre !', '🌳'), no('In the sea!', 'Dans la mer !', '🌊'), no('Under the sand!', 'Sous le sable !', '🏖️')], ['The bees live in a tree!', 'Les abeilles vivent dans un arbre !'], ['tree', 'where'], {
+            minTier: 'intermediate',
+            onCorrect: ['Yes! The bees make honey in a tree.', 'Oui ! Les abeilles font le miel dans un arbre.'],
+          }),
+        ]),
       command('actor', 'Your turn! Touch a card, and I do it!', 'À toi ! Touche une carte, et je le fais !', [
         card('Stand up tall!', 'Dresse-toi !', '🧍', L('Look! I stand up tall!', 'Regarde ! Je me dresse !'), 'climb'),
         card('Growl!', 'Grogne !', '🐻', L('Grrr! Grrr!', 'Grrr ! Grrr !'), 'roar'),
