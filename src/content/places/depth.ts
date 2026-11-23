@@ -52,6 +52,12 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   africa_desert: { horizonY: 33, farY: 36 },
   africa_canyon: { horizonY: 28, farY: 36 },
   africa_plains: { horizonY: 33, farY: 37 },
+  // 2026-11-23 : décors de l'éléphant et de la girafe (images de Animaux/Afrique/, quadrillées à 5 %)
+  africa_pond: { horizonY: 35, farY: 42, // pied des collines vers 35 ; l'herbe dorée derrière l'étang jusqu'à 42
+    water: [[[18, 52], [24, 48], [30, 46], [45, 45], [60, 45], [70, 46], [80, 47], [88, 50], [90, 55], [85, 58], [75, 61], [60, 61.5], [45, 61], [35, 60], [25, 57]]] },
+  africa_acacia_plain: { horizonY: 37, farY: 41 },
+  africa_forest: { horizonY: 50, farY: 59 }, // la clairière s'arrête au pied des buissons (y 57-60)
+  africa_green_meadow: { horizonY: 41, farY: 48 },
   // Antarctique
   ice_coast: { horizonY: 33, farY: 36, water: [[[0, 30], [30, 30], [60, 30], [88, 33], [95, 40], [80, 44], [72, 48], [70, 55], [60, 59], [45, 62], [30, 61], [18, 58], [10, 52], [0, 48]]] },
   an_ice_cave: { horizonY: 46, farY: 52 },

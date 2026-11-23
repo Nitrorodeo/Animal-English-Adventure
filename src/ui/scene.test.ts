@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { getFamily, newGameState } from '../engine/state';
 import { createBaby } from '../engine/family';
 import { PLACES } from '../content/places';
-import { cropStyle, hasStageSprite, homePlacement, spriteFor, tappedAnchor } from './scene';
+import { anchorAt, cropStyle, hasStageSprite, homePlacement, spriteFor, tappedAnchor } from './scene';
 
 describe('scene — sprites', () => {
   it('donne les parents lion et éléphant', () => {
@@ -10,9 +10,16 @@ describe('scene — sprites', () => {
     expect(spriteFor('elephant', { role: 'mother' })?.path).toMatch(/elephant_mother/);
   });
 
-  it('retombe sur le sprite unique du sexe quand le stade manque (lionceaux)', () => {
-    expect(hasStageSprite('lion', 'girl', 'young')).toBe(false);
-    expect(spriteFor('lion', { sex: 'girl', stage: 'young' })?.path).toMatch(/lion_girl/);
+  it('les lionceaux ont leurs 4 stades, découpés dans la planche « Famille de lions en évolution » (2026-11-23)', () => {
+    for (const sex of ['girl', 'boy'] as const)
+      for (const st of ['newborn', 'little', 'young', 'companion'] as const) {
+        expect(hasStageSprite('lion', sex, st), `${sex} ${st}`).toBe(true);
+        expect(spriteFor('lion', { sex, stage: st })?.path).toMatch(new RegExp(`lion_${sex}_${st}`));
+      }
+  });
+
+  it('retombe sur le sprite unique du sexe quand le stade manque', () => {
+    expect(hasStageSprite('nobody', 'girl', 'young')).toBe(false);
   });
 
   it('utilise le sprite dédié du stade quand il existe (éléphanteaux)', () => {
@@ -127,5 +134,27 @@ describe('scene — un même arbre sous deux mots (2026-11-23)', () => {
       }
     }
     expect(n).toBeGreaterThanOrEqual(10);
+  });
+});
+
+// Vu à l'écran (2026-11-23, prairie) : « Can you find the purple flower? », l'enfant touche la fleur violette
+// et entend « Try again! » : le buisson voisin captait le toucher. Chaque zone répond sur la moitié au moins
+// de sa surface (une zone qui porte le même mot, ou marquée « sameAs », compte comme elle).
+describe('scene — chaque zone à toucher répond là où on la touche', () => {
+  it('au moins la moitié de chaque zone, dans tous les décors', () => {
+    const errors: string[] = [];
+    for (const p of Object.values(PLACES)) {
+      for (const a of p.anchors) {
+        let ok = 0;
+        let n = 0;
+        for (let i = 0.5; i < 10; i++) for (let j = 0.5; j < 10; j++) {
+          const got = anchorAt(p.anchors, a.hit.x + (a.hit.w * i) / 10, a.hit.y + (a.hit.h * j) / 10);
+          n++;
+          if (got && (got.id === a.id || got.word === a.word || got.sameAs?.includes(a.id))) ok++;
+        }
+        if (ok / n < 0.5) errors.push(`${p.id} ${a.id} répond sur ${Math.round((ok / n) * 100)} %`);
+      }
+    }
+    expect(errors).toEqual([]);
   });
 });

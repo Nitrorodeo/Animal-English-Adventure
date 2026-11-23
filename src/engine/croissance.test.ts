@@ -4,7 +4,9 @@
  * progression conservée quand on change de décor. Les règles (src/engine/family.ts) ne sont
  * pas modifiées : ce fichier les vérifie avec les vraies activités du jeu.
  */
+// @ts-expect-error -- module Node sans types dans ce projet (les tests tournent sous Node)
 import { existsSync } from 'node:fs';
+// @ts-expect-error -- module Node sans types dans ce projet (les tests tournent sous Node)
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { SPECIES } from '../content/species';
@@ -23,11 +25,10 @@ const FAMILIES = SPECIES.filter((s) => s.playable && s.familyReady);
 const ORDER = [...GROWTH_STAGES];
 const rank = (s: string) => ORDER.indexOf(s as (typeof ORDER)[number]);
 /**
- * Anomalie relevée le 2026-11-23 (docs/CARTOGRAPHIE_PARCOURS.md) : les bébés lions n'ont qu'une image
- * par sexe, simplement agrandie avec l'âge. La planche « Famille de lions en évolution.png » existe :
- * à découper. Quand ce sera fait, retirer 'lion' d'ici (le test l'exigera).
+ * Familles dont les bébés n'ont qu'une image par sexe. Vide depuis le 2026-11-23 : la planche
+ * « Famille de lions en évolution.png » est découpée (autorisation du parent), ses 8 phases sont dans le jeu.
  */
-const ONE_SPRITE_ONLY = ['lion'];
+const ONE_SPRITE_ONLY: string[] = [];
 
 function answersFor(script: QuestScript): AnswerRecord[] {
   return script.steps.flatMap((s) => (s.kind === 'ask' || s.kind === 'tapAnchor' || s.kind === 'tapProps' || s.kind === 'seek' || s.kind === 'tapActor' ? [{ items: s.items, correct: true, aided: false }] : []));

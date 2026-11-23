@@ -427,6 +427,9 @@ export interface TreasureDef {
   nameEn: string;
   nameFr: string;
   icon: string;
+  /** Trésor d'une couleur précise (« an orange flower ») : dessiné en SVG dans cette couleur, comme les
+   *  objets des jeux. L'émoji seul change de couleur selon l'appareil (🌼 est mauve sous Windows). */
+  art?: { shape: PropShape; color: ColorId };
 }
 
 /** Petit objet des jeux (nourriture, objets à compter, objets colorés, habits). */

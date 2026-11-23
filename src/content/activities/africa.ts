@@ -47,6 +47,7 @@ const byTier = <T>(tier: Tier, b: T, i: T, e: T): T => (tier === 'beginner' ? b 
 /** Emplacements au bord de l'eau, par lieu. */
 const WATER_SPOTS: Readonly<Record<string, readonly [number, number, number]>> = {
   africa_waterhole: [2, 4, 5],
+  africa_pond: [2, 1, 3], // 2026-11-23 : canard et grenouille au bord, poisson sur la rive de l'étang (comme au point d'eau)
   savanna: [2, 5, 3],
   // 2026-11-21 : mêmes jeux au bord des lacs, étangs et rivières des autres continents [cible, autre, poisson dans l'eau]
   europe_lake: [2, 3, 4],
@@ -268,6 +269,9 @@ export const climbRock: ActivityDef = {
 /** `print` : trace de l'animal (sabots du zèbre et du cerf, pattes à trois doigts du manchot). */
 const TRAILS: Readonly<Record<string, { prints: readonly number[]; end: number; animal: string; legs: number; others: readonly string[]; print: string }>> = {
   africa_plains: { prints: [0, 1, 2, 3, 5], end: 6, animal: 'zebra', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  // 2026-11-23 : les plaines de l'éléphant et de la girafe (acacias : la piste monte du premier plan vers la gauche, loin des éléphants et de la bulle ; le zèbre attend au bout)
+  africa_acacia_plain: { prints: [7, 1, 0, 6], end: 8, animal: 'zebra', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
+  africa_green_meadow: { prints: [0, 1, 2, 8, 9], end: 7, animal: 'zebra', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
   savanna: { prints: [0, 1, 2, 3, 4], end: 7, animal: 'zebra', legs: 4, others: ['duck', 'frog', 'bird'], print: 'hoofprint' },
   // 2026-11-21 : une piste sur chaque continent qui a un grand espace ouvert
   // 2026-11-22 : ni empreinte ni animal du bout posés sur Papa ou Maman (test dans ecran.test.ts)
@@ -384,7 +388,7 @@ export const simonSays: ActivityDef = {
 // ---------------------------------------------------------------------------
 
 /** Décors sans ciel : pas d'étoiles à compter. */
-const NO_SKY = new Set(['an_ice_cave']);
+const NO_SKY = new Set(['an_ice_cave', 'africa_forest']); // 2026-11-23 : la forêt n'a pas de ciel visible
 
 export const bedtime: ActivityDef = {
   id: 'bedtime',
@@ -467,6 +471,10 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   africa_canyon: ['canyon', 'mountain', 'flower', 'valley'],
   africa_plains: ['termite_mound', 'tree', 'mountain', 'tall_grass'],
   savanna: ['acacia', 'waterfall', 'flower', 'acacia_far'],
+  africa_pond: ['pond', 'cattail', 'pebble', 'tree'],
+  africa_acacia_plain: ['volcano', 'acacia', 'dry_grass', 'cliff'],
+  africa_forest: ['big_leaf', 'forest', 'vine', 'flower'],
+  africa_green_meadow: ['pink_flower', 'yellow_flower', 'purple_flower', 'acacia'],
   // 2026-11-21 : tous les décors des autres continents
   asia_bamboo: ['bamboo', 'cherry_blossom', 'waterfall', 'sunray'],
   asia_pagoda: ['pagoda', 'lantern', 'bridge'],

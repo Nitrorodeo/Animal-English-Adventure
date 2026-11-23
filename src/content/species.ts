@@ -6,7 +6,11 @@ function sp(s: Base): SpeciesDef {
   return { playable: true, familyReady: true, drinkStyle: 'lap', ...s };
 }
 
-const AFRICA = ['savanna', 'africa_waterhole', 'africa_baobab', 'africa_desert', 'africa_canyon', 'africa_plains'];
+// 2026-11-23 (ordre de production du parent, docs/CARTOGRAPHIE_PARCOURS.md) : chaque famille garde ses 3 décors à elle,
+// jamais mélangés. La savane d'origine (savanna) reste dans le code mais ne fait plus partie d'un parcours.
+const AFRICA_LION = ['africa_baobab', 'africa_desert', 'africa_canyon'];
+const AFRICA_ELEPHANT = ['africa_pond', 'africa_acacia_plain', 'africa_forest'];
+const AFRICA_GIRAFFE = ['africa_waterhole', 'africa_plains', 'africa_green_meadow'];
 const ASIA_PANDA = ['asia_bamboo', 'asia_mountain', 'asia_arch', 'asia_garden', 'asia_pagoda'];
 /** la panthère des neiges ne vit que sur les hauteurs : ni bambous, ni jardin, ni pagode (demande du parent, 2026-11-21) */
 // + sa tanière enneigée, propre à elle seule (2026-11-21 : un 3e décor par animal, « mondes différents »)
@@ -19,9 +23,9 @@ const ASIA_HEIGHTS = ['asia_mountain', 'asia_arch', 'asia_snow_den'];
  * (jamais de panda qui mange du poisson, jamais de manchot qui vole).
  */
 export const SPECIES: readonly SpeciesDef[] = [
-  sp({ id: 'lion', nameEn: 'lion', nameFr: 'lion', continentId: 'africa', allowedBiomes: AFRICA, diet: 'carnivore', mobility: 'walk', icon: '🦁', drinkStyle: 'lap', foods: ['meat'], notFoods: ['bamboo', 'banana'], can: ['run', 'jump', 'roar', 'climb'], cannot: ['fly'], father: { name: 'Leo', personality: 'brave' }, mother: { name: 'Lola', personality: 'gentle' }, babyWord: { en: 'cub', fr: 'lionceau' } }),
-  sp({ id: 'elephant', nameEn: 'elephant', nameFr: 'éléphant', continentId: 'africa', allowedBiomes: AFRICA, diet: 'herbivore', mobility: 'walk', icon: '🐘', drinkStyle: 'trunk', foods: ['grass', 'leaves', 'mango'], notFoods: ['meat', 'fish'], can: ['swim', 'run'], cannot: ['fly', 'jump'], father: { name: 'Bongo', personality: 'funny' }, mother: { name: 'Ellie', personality: 'wise' }, babyWord: { en: 'calf', fr: 'éléphanteau' } }),
-  sp({ id: 'giraffe', nameEn: 'giraffe', nameFr: 'girafe', continentId: 'africa', allowedBiomes: AFRICA.filter((p) => p !== 'africa_canyon'), diet: 'herbivore', mobility: 'walk', icon: '🦒', drinkStyle: 'splay', foods: ['leaves'], notFoods: ['meat', 'fish'], can: ['run'], cannot: ['fly', 'climb'], father: { name: 'Gus', personality: 'calm' }, mother: { name: 'Gina', personality: 'curious' }, babyWord: { en: 'calf', fr: 'girafon' } }),
+  sp({ id: 'lion', nameEn: 'lion', nameFr: 'lion', continentId: 'africa', allowedBiomes: AFRICA_LION, diet: 'carnivore', mobility: 'walk', icon: '🦁', drinkStyle: 'lap', foods: ['meat'], notFoods: ['bamboo', 'banana'], can: ['run', 'jump', 'roar', 'climb'], cannot: ['fly'], father: { name: 'Leo', personality: 'brave' }, mother: { name: 'Lola', personality: 'gentle' }, babyWord: { en: 'cub', fr: 'lionceau' } }),
+  sp({ id: 'elephant', nameEn: 'elephant', nameFr: 'éléphant', continentId: 'africa', allowedBiomes: AFRICA_ELEPHANT, diet: 'herbivore', mobility: 'walk', icon: '🐘', drinkStyle: 'trunk', foods: ['grass', 'leaves', 'mango'], notFoods: ['meat', 'fish'], can: ['swim', 'run'], cannot: ['fly', 'jump'], father: { name: 'Bongo', personality: 'funny' }, mother: { name: 'Ellie', personality: 'wise' }, babyWord: { en: 'calf', fr: 'éléphanteau' } }),
+  sp({ id: 'giraffe', nameEn: 'giraffe', nameFr: 'girafe', continentId: 'africa', allowedBiomes: AFRICA_GIRAFFE, diet: 'herbivore', mobility: 'walk', icon: '🦒', drinkStyle: 'splay', foods: ['leaves'], notFoods: ['meat', 'fish'], can: ['run'], cannot: ['fly', 'climb'], father: { name: 'Gus', personality: 'calm' }, mother: { name: 'Gina', personality: 'curious' }, babyWord: { en: 'calf', fr: 'girafon' } }),
 
   sp({ id: 'giant_panda', nameEn: 'panda', nameFr: 'panda géant', continentId: 'asia', allowedBiomes: ASIA_PANDA, diet: 'bamboo', mobility: 'walk', icon: '🐼', foods: ['bamboo'], notFoods: ['fish', 'meat'], can: ['climb'], cannot: ['fly'], father: { name: 'Bao', personality: 'sleepy' }, mother: { name: 'Mei', personality: 'gentle' }, babyWord: { en: 'cub', fr: 'bébé panda' } }),
   sp({ id: 'tiger', nameEn: 'tiger', nameFr: 'tigre', continentId: 'asia', allowedBiomes: ['asia_bamboo', 'asia_mountain', 'asia_arch'], diet: 'carnivore', mobility: 'walk', icon: '🐯', foods: ['meat'], notFoods: ['bamboo', 'berries'], can: ['swim', 'run', 'jump', 'roar'], cannot: ['fly'], father: { name: 'Raj', personality: 'proud' }, mother: { name: 'Tara', personality: 'calm' }, babyWord: { en: 'cub', fr: 'bébé tigre' } }),

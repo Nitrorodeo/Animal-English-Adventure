@@ -13,6 +13,7 @@ import { favouriteMechanics, growthPercent, growthProgress, nextStageGoal } from
 import { itemStatus, type ItemStatus } from '../engine/skills';
 import type { GameState } from '../engine/state';
 import { assetUrl, background, spriteFor } from './scene';
+import { TreasureIcon } from './TreasureIcon';
 
 const STARS: Record<ItemStatus, string> = { new: '☆☆☆', recognised: '★☆☆', supported: '★★☆', independent: '★★★' };
 
@@ -54,7 +55,7 @@ export function Passport({ state, onClose }: { state: GameState; onClose: () => 
                     if (!t) return null;
                     return got ? (
                       <button key={id} className="chip treasure on" onClick={() => void speech.speak(say.treasure(t.nameEn))}>
-                        {t.icon} {t.nameEn}{fr && <small> · {t.nameFr}</small>}
+                        <TreasureIcon t={t} /> {t.nameEn}{fr && <small> · {t.nameFr}</small>}
                       </button>
                     ) : (
                       <span key={id} className="chip treasure locked" aria-label={fr ? 'Trésor à trouver' : 'Treasure to find'}>❔</span>

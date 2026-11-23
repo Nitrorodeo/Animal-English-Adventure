@@ -46,15 +46,15 @@ describe('la bulle ne cache pas ce qu’il faut voir', () => {
 
 describe('textes et images des jeux communs', () => {
   it('Papa ne parle pas de lui à la troisième personne (« And me? I’m Daddy! »)', () => {
-    const dad = buildQuest(getArchetype('quiz_intermediate'), ctx(withBaby('lion', 'young', 'expert'), 'lion', 'savanna', adult('lion', 'father')))!;
+    const dad = buildQuest(getArchetype('quiz_intermediate'), ctx(withBaby('lion', 'young', 'expert'), 'lion', 'africa_baobab', adult('lion', 'father')))!;
     expect(lines(dad.script.steps)).toContain("And me? I'm Daddy! He or she?");
-    const kid = buildQuest(getArchetype('quiz_intermediate'), ctx(withBaby('lion', 'companion', 'expert'), 'lion', 'savanna', { speciesId: 'lion', kind: 'baby', babyId: 'b1' }))!;
+    const kid = buildQuest(getArchetype('quiz_intermediate'), ctx(withBaby('lion', 'companion', 'expert'), 'lion', 'africa_baobab', { speciesId: 'lion', kind: 'baby', babyId: 'b1' }))!;
     expect(lines(kid.script.steps)).toContain('Look at Mummy! Do we say he or she?');
     expect(lines(kid.script.steps)).toContain('And Daddy? He or she?');
   });
 
   it('énigme : le papillon est en couleur, chaque réponse a une image, erreur sans « No! »', () => {
-    const q = buildQuest(getArchetype('solve_mystery'), ctx(withBaby('lion', 'young', 'expert'), 'lion', 'africa_waterhole', adult('lion', 'father')))!;
+    const q = buildQuest(getArchetype('solve_mystery'), ctx(withBaby('giraffe', 'young', 'expert'), 'giraffe', 'africa_waterhole', adult('giraffe', 'father')))!;
     const json = JSON.stringify(q.script.steps);
     expect(iconOf('butterfly')).toBe('🦋');
     const fly = q.script.steps.flatMap((s) => (s.kind === 'props' ? s.show : [])).find((p) => p.prop === 'butterfly');
@@ -118,7 +118,7 @@ describe('décors et objets corrigés (2026-11-22)', () => {
   const shown = (st: readonly QuestStep[]) => st.flatMap((s) => (s.kind === 'props' ? s.show : []));
 
   it('empreintes : sabots pour le zèbre et le cerf, trois doigts pour le manchot, jamais dans la mare', () => {
-    for (const [sp, place, print] of [['lion', 'savanna', 'hoofprint'], ['fox', 'europe_forest', 'hoofprint'], ['penguin', 'an_snowfield', 'birdprint']] as const) {
+    for (const [sp, place, print] of [['giraffe', 'africa_plains', 'hoofprint'], ['elephant', 'africa_acacia_plain', 'hoofprint'], ['giraffe', 'africa_green_meadow', 'hoofprint'], ['fox', 'europe_forest', 'hoofprint'], ['penguin', 'an_snowfield', 'birdprint']] as const) {
       for (const tier of ['beginner', 'intermediate', 'expert'] as const) {
         const st = steps('follow_tracks', sp, place, tier);
         const prints = shown(st).filter((p) => p.id.startsWith('fp'));
@@ -135,7 +135,7 @@ describe('décors et objets corrigés (2026-11-22)', () => {
   });
 
   it('aucune empreinte ni l’animal du bout de la piste n’est posé sur Papa ou Maman', () => {
-    for (const place of ['africa_plains', 'savanna', 'na_prairie', 'europe_forest', 'an_snowfield', 'na_redwoods', 'na_redwood_trail']) {
+    for (const place of ['africa_plains', 'africa_acacia_plain', 'africa_green_meadow', 'na_prairie', 'europe_forest', 'an_snowfield', 'na_redwoods', 'na_redwood_trail']) {
       const sp = SPECIES.find((x) => x.allowedBiomes.includes(place))!.id;
       for (const tier of ['beginner', 'intermediate', 'expert'] as const) {
         const st = steps('follow_tracks', sp, place, tier);

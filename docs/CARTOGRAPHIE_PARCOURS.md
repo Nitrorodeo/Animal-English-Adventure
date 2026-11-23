@@ -1,7 +1,7 @@
 # Cartographie des parcours — Animal English Adventure
 
-Snapshot du **2026-11-23**. Document de **proposition**, à valider par le parent avant toute production.
-Rien n'a été modifié dans le jeu : ni parcours, ni images, ni voix.
+Snapshot du **2026-11-23**. Validé par le parent le 2026-11-23 (« ordre de lancement de la production ») :
+c'est la base de travail. Le suivi de production par parcours est dans la section « Suivi de production » ci-dessous.
 Les anomalies consolidées, la croissance et la feuille de route sont dans `docs/ROADMAP_PARCOURS.md`.
 
 ## Ce qu'on compte
@@ -13,8 +13,8 @@ Les anomalies consolidées, la croissance et la feuille de route sont dans `docs
 | Décors | **69** | 21 × 3 + 3 × 2 |
 | Personnages par famille | 4 | Papa, Maman, Bébé fille, Bébé garçon. Les 4 phases des bébés ne sont pas des personnages en plus. |
 | Parcours personnage × décor | **276** | 69 × 4 |
-| Versions jouables décor × niveau | **138** | 69 × 2 : débutant, intermédiaire |
-| Séquences personnage × décor × niveau | 552 | 276 × 2 |
+| Versions jouables décor × niveau | **207** | 69 × 3 : débutant, intermédiaire, expert (l'expert existe déjà : il est conservé tel quel) |
+| Séquences personnage × décor × niveau | 828 | 276 × 3 |
 
 Sur les 69 décors, **32 sont déjà dans le jeu** : même image, place id existant. **37 sont nouveaux** :
 
@@ -63,6 +63,45 @@ Lecture des colonnes :
 | Tortue | *jardin corallien* (nouveau) | *canyon turquoise* (nouveau, ≈ paradis du dauphin) | — |
 
 **Une famille = ses décors.** Aujourd'hui, plusieurs familles partagent des décors : ours et castor, jaguar et paresseux, les trois familles d'Antarctique, kangourou et lézard. Avec ce tableau, chaque famille ne joue que dans ses trois décors.
+
+## Suivi de production
+
+Statuts : À analyser → Cartographié → En production → Intégré → Testé → Validé. « Testé » veut dire que les
+tests automatiques ont réellement tourné sur ce parcours, aux 3 niveaux ; la colonne « Écran » dit ce qui a
+en plus été rejoué à l'écran, et rien d'autre. « Validé » est réservé au parent, après ses essais.
+
+Snapshot du 2026-11-23, fin d'après-midi.
+
+### Afrique — 9 parcours, 27 versions (3 niveaux)
+
+| Famille | Décor | Statut | Écran (version construite) |
+|---|---|---|---|
+| Lion | `africa_baobab` le baobab | Testé | tests automatiques ; 8 images des lionceaux vérifiées (4 phases × 2) ; histoire non rejouée à l'écran |
+| Lion | `africa_desert` la savane sèche (nom de code inchangé) | Testé | tests automatiques ; histoire non rejouée à l'écran |
+| Lion | `africa_canyon` le sentier de la falaise | Testé | tests automatiques ; histoire non rejouée à l'écran |
+| Éléphant | `africa_pond` la mare aux roseaux | Testé | « Bath time at the pond » (cailloux qui tombaient sur Papa et Maman : corrigé) |
+| Éléphant | `africa_acacia_plain` la grande plaine | Testé | « The hot plain » (herbes du repas sous la bulle : corrigé) |
+| Éléphant | `africa_forest` la forêt ombragée | Testé | « A walk in the forest » (oiseau caché, cachette derrière Maman : corrigé) |
+| Girafe | `africa_waterhole` la mare aux nénuphars | Testé | décor et objets posés au bord de l'eau |
+| Girafe | `africa_plains` le chemin dans l'herbe dorée | Testé | tests automatiques ; histoire non rejouée à l'écran |
+| Girafe | `africa_green_meadow` la prairie verte | Testé | « Meadow flowers » en entier en expert, et en débutant jusqu'au comptage (2 réponses) ; naissance des 2 bébés |
+
+Tests automatiques qui couvrent ces 27 versions : rien posé sur la famille, rien de terrestre dans l'eau, aucun
+objet caché sous la bulle ni sous le panneau de 3 ou 4 réponses, chaque zone à toucher visible à moitié au moins
+et qui répond là où on la touche, aucune cachette derrière Papa ou Maman, garde-fou débutant (2 réponses,
+difficulté figée), croissance des bébés, décors propres à chaque famille, voix toutes présentes.
+
+### Autres zones
+
+| Zone | Parcours | Statut |
+|---|---|---|
+| Amérique du Nord | 9 | Cartographié |
+| Amérique du Sud | 9 | Cartographié |
+| Asie | 9 | Cartographié |
+| Antarctique | 9 | Cartographié |
+| Europe | 9 | Cartographié |
+| Océanie | 9 | Cartographié |
+| Océan | 6 | Cartographié (images des familles marines manquantes) |
 
 ## Comment lire chaque fiche
 

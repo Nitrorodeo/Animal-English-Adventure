@@ -152,7 +152,9 @@ export const anchorsWith = (place: PlaceDef, tag: AnchorTag) => place.anchors.fi
 export const anchor = (place: PlaceDef, id: string): Anchor | undefined => place.anchors.find((a) => a.id === id);
 
 /** Objets du décor qu'on peut nommer (mot validé). */
-export const nameable = (place: PlaceDef) => place.anchors.filter((a) => NOUNS[a.word]);
+/** Points nommables, un seul par mot (2026-11-23 : la prairie a deux touffes de fleurs violettes, marquées
+ *  « sameAs » ; elles ne doivent pas faire deux réponses identiques). */
+export const nameable = (place: PlaceDef) => place.anchors.filter((a, i, all) => NOUNS[a.word] && all.findIndex((b) => b.word === a.word) === i);
 
 /** Emplacements d'objets hors de l'eau dessinée du décor (on ne pose pas une pomme au milieu du lac). */
 export const landSpots = (place: PlaceDef): number[] => place.spots.flatMap((s, i) => (inWater(place.water, s.x, s.y) ? [] : [i]));

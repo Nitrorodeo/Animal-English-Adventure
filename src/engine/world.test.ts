@@ -63,29 +63,29 @@ describe('les autres continents', () => {
     expect(everyone('penguin', 'an_ice_cave').has('echo_canyon'), 'echo_canyon@an_ice_cave').toBe(true);
     // jamais de lanternes en Antarctique, ni de flocons dans la savane
     expect(everyone('penguin', 'an_snowfield').has('lanterns'), 'lanterns@an_snowfield').toBe(false);
-    expect(everyone('lion', 'savanna').has('snowflakes'), 'snowflakes@savanna').toBe(false);
+    expect(everyone('lion', 'africa_baobab').has('snowflakes'), 'snowflakes@africa_baobab').toBe(false);
   });
 
   it('les révisions 1.8, 2.8 et 3.8 existent et s’ouvrent en grandissant', () => {
     for (const skill of ['1.8', '2.8', '3.8']) expect(ARCHETYPES.some((a) => a.implemented && a.skillIds.includes(skill)), skill).toBe(true);
     const young = withBaby('lion', 'young');
     const comp = withBaby('lion', 'companion');
-    expect(offered(young, 'lion', 'savanna', mother('lion')).has('quiz_beginner')).toBe(true);
-    expect(offered(young, 'lion', 'savanna', father('lion')).has('solve_mystery')).toBe(true);
-    expect(offered(young, 'lion', 'savanna', baby('lion')).has('quiz_intermediate')).toBe(false);
-    expect(offered(comp, 'lion', 'savanna', father('lion')).has('quiz_intermediate')).toBe(true);
+    expect(offered(young, 'lion', 'africa_baobab', mother('lion')).has('quiz_beginner')).toBe(true);
+    expect(offered(young, 'lion', 'africa_baobab', father('lion')).has('solve_mystery')).toBe(true);
+    expect(offered(young, 'lion', 'africa_baobab', baby('lion')).has('quiz_intermediate')).toBe(false);
+    expect(offered(comp, 'lion', 'africa_baobab', father('lion')).has('quiz_intermediate')).toBe(true);
   });
 
   it('une révision ne passe pas devant les jeux du lieu tant qu’on a peu joué', () => {
     const st = withBaby('lion', 'young');
-    const c = ctx(st, 'lion', 'savanna', mother('lion'));
+    const c = ctx(st, 'lion', 'africa_baobab', mother('lion'));
     const q = buildQuest(getArchetype('quiz_beginner'), c)!;
     const played = { ...st, player: { ...st.player, history: Array.from({ length: 6 }, (_, i) => ({ ...(st.player.history[0] ?? {}), archetypeId: `x${i}`, actorId: 'none', mechanic: 'count', speciesId: 'lion' })) } } as GameState;
     expect(rankActivity(q, { ...c, rng: createRng(1) })).toBeLessThan(rankActivity(q, { ...c, state: played, rng: createRng(1) }));
   });
 
   it('l’énigme : la bonne réponse est l’animal décrit, et il est dans les choix', () => {
-    const q = buildQuest(getArchetype('solve_mystery'), ctx(withBaby('lion', 'young'), 'lion', 'africa_waterhole', father('lion')))!;
+    const q = buildQuest(getArchetype('solve_mystery'), ctx(withBaby('giraffe', 'young'), 'giraffe', 'africa_waterhole', father('giraffe')))!;
     const asks = q.script.steps.filter((s) => s.kind === 'ask' || s.kind === 'tapProps');
     expect(asks.length).toBeGreaterThan(0);
     // sans eau dessinée : un lapin au lieu du canard et de la grenouille ; sur la banquise sans eau, pas d'énigme (le poisson n'est pas posé sur la glace)

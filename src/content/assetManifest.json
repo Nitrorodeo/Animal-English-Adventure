@@ -40,6 +40,26 @@
       "width": 1672,
       "height": 941
     },
+    "africa_pond": {
+      "path": "assets/backgrounds/africa_pond.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "africa_acacia_plain": {
+      "path": "assets/backgrounds/africa_acacia_plain.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "africa_forest": {
+      "path": "assets/backgrounds/africa_forest.webp",
+      "width": 1672,
+      "height": 941
+    },
+    "africa_green_meadow": {
+      "path": "assets/backgrounds/africa_green_meadow.webp",
+      "width": 1672,
+      "height": 941
+    },
     "asia_bamboo": {
       "path": "assets/backgrounds/asia_bamboo.webp",
       "width": 1672,
@@ -251,6 +271,46 @@
       "path": "assets/characters/lion_girl.webp",
       "width": 487,
       "height": 720
+    },
+    "lion_boy_newborn": {
+      "path": "assets/characters/lion_boy_newborn.webp",
+      "width": 213,
+      "height": 211
+    },
+    "lion_boy_little": {
+      "path": "assets/characters/lion_boy_little.webp",
+      "width": 240,
+      "height": 276
+    },
+    "lion_boy_young": {
+      "path": "assets/characters/lion_boy_young.webp",
+      "width": 312,
+      "height": 294
+    },
+    "lion_boy_companion": {
+      "path": "assets/characters/lion_boy_companion.webp",
+      "width": 313,
+      "height": 318
+    },
+    "lion_girl_newborn": {
+      "path": "assets/characters/lion_girl_newborn.webp",
+      "width": 213,
+      "height": 231
+    },
+    "lion_girl_little": {
+      "path": "assets/characters/lion_girl_little.webp",
+      "width": 222,
+      "height": 263
+    },
+    "lion_girl_young": {
+      "path": "assets/characters/lion_girl_young.webp",
+      "width": 293,
+      "height": 287
+    },
+    "lion_girl_companion": {
+      "path": "assets/characters/lion_girl_companion.webp",
+      "width": 308,
+      "height": 309
     },
     "elephant_father": {
       "path": "assets/characters/elephant_father.webp",

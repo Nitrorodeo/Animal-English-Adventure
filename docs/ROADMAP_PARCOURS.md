@@ -20,7 +20,7 @@ Le détail décor par décor est dans `docs/CARTOGRAPHIE_PARCOURS.md`.
 |---|---|---|
 | Niveau débutant | `OPTION_COUNT.beginner = 2` réponses. Archétypes et mécaniques existants : `talk`, `guide`, `fetch`, `teach`, `count`, `identify`, `locate`, `observe`, `compare`, `sort`, `build`, `puzzle`, `plan`, `social`, `tell`. | **Intouchable.** Un test « garde-fou » figera les scripts débutant actuels (§ 6, étape 0). |
 | Intermédiaire | 3 réponses. Le jeu y passe tout seul dès que les mots d'un jeu sont acquis (`chooseTier`). Le parent peut forcer le niveau (`levelOverride`). | On l'enrichit. |
-| Expert | Il existe dans le code. `chooseTier` y passe tout seul après l'intermédiaire. | **À plafonner à l'intermédiaire** tant que l'expert n'est pas décidé (§ 6, étape 0). |
+| Expert | Il existe dans le code. `chooseTier` y passe tout seul après l'intermédiaire. | **Conservé tel quel** (ordre du parent du 2026-11-23 : « Le niveau expert existe déjà. Il doit être conservé. ») : ni supprimé, ni masqué, ni bloqué. |
 | Croissance | Voir § 3. | Inchangée : aucun défaut constaté dans les règles. |
 
 ## 3. Les quatre personnages et la croissance des bébés
@@ -175,7 +175,7 @@ La publication en ligne n'a lieu qu'avec votre accord.
 
 **Étape 0 — Socle, sans rien changer de visible pour l'enfant**
 - **Garde-fou débutant.** Un test fige les activités débutant actuelles : mécanique, 2 réponses, longueur des phrases, mots employés. Toute nouvelle phrase débutant doit rester dans ces bornes.
-- **Plafond des niveaux.** Le passage automatique s'arrête à l'intermédiaire, et l'espace parents ne propose que débutant et intermédiaire.
+- ~~Plafond des niveaux~~ : abandonné. L'expert est conservé tel quel (ordre du parent du 2026-11-23).
 - **Voix.**
   - Le script archive les voix au lieu de les supprimer.
   - Un mode « comparaison » compte, avant de générer, les phrases déjà vocalisées, les nouvelles et les retirées.
@@ -202,7 +202,7 @@ La publication en ligne n'a lieu qu'avec votre accord.
 | 7 | Océanie | 3 nouveaux ; plage du koala (A4) |
 | 8 | **Océan**, après les continents | Selon votre décision sur les 30 images |
 
-Après l'Afrique, on fait le point avec vos essais avant de lancer la suite. Les zones suivantes reprennent exactement le même modèle.
+Après l'Afrique, les zones suivantes s'enchaînent sans attendre (demande du parent du 2026-11-23 : « Une fois que tu as fini l'Afrique, si tout est OK, tu enchaînes sur les autres continents »). Les zones suivantes reprennent exactement le même modèle.
 
 ## 7. Est-ce faisable ?
 

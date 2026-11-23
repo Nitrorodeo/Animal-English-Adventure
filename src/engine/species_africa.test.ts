@@ -17,7 +17,8 @@ import { createRng } from './rng';
 import { actorId, getFamily, newGameState, withFamily, type ActorRef, type GameState } from './state';
 import { activityVariants, STRUCTURAL_CONFIGS } from './variants';
 
-const AFRICA_PLACES = Object.values(PLACES).filter((p) => p.continentId === 'africa').map((p) => p.id);
+// 2026-11-23 : les 9 décors des parcours (la savane d'origine reste dans le code mais n'est plus jouée)
+const AFRICA_PLACES = [...new Set(SPECIES.filter((s) => s.continentId === 'africa').flatMap((s) => s.allowedBiomes))];
 const TIERS: readonly Tier[] = ['beginner', 'intermediate', 'expert'];
 
 /** Jeu de chaque espèce, et les mots propres qu'on doit entendre (débutant, puis en plus à l'expert). */
@@ -144,9 +145,11 @@ describe('jeux propres aux espèces d’Afrique', () => {
   it('l’éléphant arrose dans un décor avec de l’eau, et se roule dans la poussière ailleurs', () => {
     const arch = getArchetype('elephant_trunk');
     const text = (p: string) => heard(buildQuest(arch, ctx(family('elephant', 0, 'little', 'beginner'), 'elephant', p, actorOf('elephant', 'mother')))!.script);
-    expect(text('africa_waterhole')).toContain('spray water');
-    expect(text('africa_desert')).toContain('dust');
-    expect(text('africa_desert')).not.toContain('spray water');
+    expect(text('africa_pond')).toContain('spray water');
+    for (const p of ['africa_acacia_plain', 'africa_forest']) {
+      expect(text(p), p).toContain('dust');
+      expect(text(p), p).not.toContain('spray water');
+    }
   });
 });
 
@@ -168,6 +171,10 @@ describe('vocabulaire propre à chaque décor d’Afrique', () => {
       africa_desert: ['sand dune', 'crack'],
       africa_canyon: ['valley', 'red boulder'],
       africa_plains: ['tall grass'],
+      africa_pond: ['cattail', 'pebble'],
+      africa_acacia_plain: ['volcano', 'dry grass'],
+      africa_forest: ['big leaf', 'forest'],
+      africa_green_meadow: ['pink flower', 'yellow flower'],
     };
     for (const [id, words] of Object.entries(expected)) {
       for (const w of words) {

@@ -356,6 +356,8 @@ small { font-weight: normal; opacity: 0.7; }
 .adv-meta { display: flex; gap: 8px; align-items: center; font-size: 14px; }
 .adv-away { background: #e3f0ff; border-radius: 99px; padding: 0 8px; }
 .adv-treasure { font-size: 22px; }
+.treasure-art { display: inline-block; width: 1em; height: 1em; vertical-align: -0.15em; }
+.treasure-art svg { width: 100%; height: 100%; display: block; }
 .adv-treasure.got { animation: bob 1.6s ease-in-out infinite; }
 .chip.treasure.on { background: #fff4c2; border: 2px solid #f5cf4a; }
 .chip.treasure.locked { background: #eee; color: #999; min-width: 40px; text-align: center; }

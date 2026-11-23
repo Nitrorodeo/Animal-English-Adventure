@@ -25,9 +25,10 @@ import { FamilyEvent, PhotoSnap } from './FamilyEvent';
 import { LiveSprite } from './LiveSprite';
 import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
+import { TreasureIcon } from './TreasureIcon';
 import { rigFor } from '../game/rigs';
 import { canFly, depthScale, farthestY, groundScale, horizonOf, perchAt, puppetClip, snapToLane, walkMs, WALK_MS } from '../game/staging';
-import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, type Placement } from './scene';
+import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { dragSpot, isDrag, type Spot } from './drag';
 import { placeActor, spotKey } from '../engine/spots';
@@ -278,7 +279,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
       <div className={`stage${night ? ' night bedtime' : ''}`}>
         <SceneBackground place={biome} />
         {night && <BedtimeSky />}
-        {biome.anchors.map((a) => (
+        {tapOrder(biome.anchors).map((a) => (
           <button key={a.id} className="anchor" style={rectStyle(a.hit)} aria-label={a.word} onClick={() => tapAnchorFree(biome, a.id)} />
         ))}
         {wordBubble && <WordBubble place={biome} anchorId={wordBubble.anchorId} text={wordBubble.text} />}
@@ -789,7 +790,7 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
                     {frenchHelp && <span className="fr">{o.adventure.titleFr}</span>}
                     <span className="adv-meta">
                       {away && <span className="adv-away">➜ {away.nameEn}</span>}
-                      {t && <span className={`adv-treasure${o.done ? ' got' : ''}`}>{o.done ? t.icon : '🎁'}</span>}
+                      {t && <span className={`adv-treasure${o.done ? ' got' : ''}`}>{o.done ? <TreasureIcon t={t} /> : '🎁'}</span>}
                     </span>
                   </button>
                   <button className="listen" aria-label="Écouter" onClick={() => void speech.speak(say.cardTitle(o.adventure.titleEn))}>🔊</button>
@@ -826,7 +827,7 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
                     <span className="opt-text">{o.adventure.titleEn}</span>
                     <span className="adv-away">➜ {place?.nameEn}</span>
                   </span>
-                  {t && <span className={`adv-treasure${o.done ? ' got' : ''}`}>{o.done ? t.icon : '🎁'}</span>}
+                  {t && <span className={`adv-treasure${o.done ? ' got' : ''}`}>{o.done ? <TreasureIcon t={t} /> : '🎁'}</span>}
                 </button>
               );
             })}
@@ -907,7 +908,7 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
           {state.settings.frenchHelp && <small>{place.nameFr}</small>}
         </div>
       )}
-      {place.anchors.map((a) => (
+      {tapOrder(place.anchors).map((a) => (
         <button
           key={`${place.id}:${a.id}`}
           className={`anchor${glow === a.id ? ' glow' : ''}${q.wantsAnchor ? ' wanted' : ''}`}
@@ -959,7 +960,7 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
       {treasure && (
         <div className="treasure-card" key={treasure.id}>
           <Confetti />
-          <span className="treasure-icon">{treasure.icon}</span>
+          <span className="treasure-icon"><TreasureIcon t={treasure} /></span>
           <span className="treasure-name">{treasure.nameEn}</span>
           {state.settings.frenchHelp && <span className="fr">{treasure.nameFr}</span>}
         </div>

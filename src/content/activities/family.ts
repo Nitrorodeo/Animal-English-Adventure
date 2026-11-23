@@ -57,9 +57,10 @@ export const rememberYesterday: ActivityDef = {
       const adv = ADVENTURES.find((a) => a.id === choice.slice(10));
       const t = adv && TREASURES[adv.treasure];
       if (!t) return undefined;
-      const others = Object.values(TREASURES).filter((x) => x.id !== t.id);
+      // 2026-11-23 : jamais une mauvaise réponse qui ressemble à la bonne (même icône ou même nom)
+      const others = Object.values(TREASURES).filter((x) => x.id !== t.id && x.icon !== t.icon && x.nameEn !== t.nameEn);
       const start = t.id.length % Math.max(1, others.length);
-      const wrong = [others[start], others[(start + 3) % others.length]].filter((x, i, arr) => x && arr.indexOf(x) === i);
+      const wrong = [others[start], others[(start + 3) % others.length]].filter((x, i, arr) => x && arr.findIndex((y) => y?.icon === x.icon) === i);
       question = ask('actor', 'Remember our adventure? What did we find?', 'Tu te souviens de notre aventure ? Qu’avons-nous trouvé ?', [ok(`We found ${t.nameEn}!`, `Nous avons trouvé ${t.nameFr} !`, t.icon), ...wrong.map((x) => no(`We found ${x!.nameEn}!`, `Nous avons trouvé ${x!.nameFr} !`, x!.icon)), no('We found a car!', 'Nous avons trouvé une voiture !', '🚗')], ['Look in your passport!', 'Regarde dans ton passeport !'], ['remember', 'we_found'], { onCorrect: L(`Yes! We found ${t.nameEn}!`, `Oui ! Nous avons trouvé ${t.nameFr} !`) });
     } else if (choice.startsWith('ate:')) {
       const p = PROPS[choice.slice(4)];

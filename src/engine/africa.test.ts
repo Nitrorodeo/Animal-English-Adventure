@@ -17,8 +17,9 @@ import { canAdvance, runAction, startRun, revealTarget, type RunResult } from '.
 import { migrate } from './save';
 import { getFamily, newGameState, withFamily, type ActorRef, type GameState } from './state';
 
-const AFRICA_PLACES = ['savanna', 'africa_waterhole', 'africa_baobab', 'africa_desert', 'africa_canyon', 'africa_plains'];
 const AFRICANS = SPECIES.filter((s) => s.continentId === 'africa');
+/** 2026-11-23 : les 9 décors des parcours d'Afrique (3 par famille, jamais mélangés). */
+const AFRICA_PLACES = [...new Set(AFRICANS.flatMap((s) => s.allowedBiomes))];
 
 function withBaby(speciesId: string, stage: GrowthStage, n: 1 | 2 = 1): GameState {
   let fam = getFamily(newGameState(), speciesId);
@@ -61,7 +62,7 @@ describe('Papa, Maman et les bébés ne proposent pas les mêmes jeux', () => {
 
   it('un nouveau-né ne propose que des jeux simples ; il en débloque en grandissant', () => {
     const seen: Record<string, Set<string>> = {};
-    for (const stage of GROWTH_STAGES) seen[stage] = offered(withBaby('lion', stage, 2), 'lion', 'africa_plains', baby('lion'));
+    for (const stage of GROWTH_STAGES) seen[stage] = offered(withBaby('lion', stage, 2), 'lion', 'africa_canyon', baby('lion'));
     expect(seen.newborn!.has('feelings')).toBe(false);
     expect(seen.newborn!.has('race')).toBe(false);
     expect(seen.little!.has('feelings')).toBe(true);
@@ -83,20 +84,27 @@ describe('Papa, Maman et les bébés ne proposent pas les mêmes jeux', () => {
 describe('jeux propres aux décors', () => {
   const state = withBaby('lion', 'companion');
   it('chaque décor d’Afrique a au moins un jeu qu’on ne trouve que là (ou presque)', () => {
-    for (const p of AFRICA_PLACES) {
-      const all = new Set([...offered(state, 'lion', p, father('lion')), ...offered(state, 'lion', p, mother('lion')), ...offered(state, 'lion', p, baby('lion'))]);
-      const inAfrica = (id: string) => getArchetype(id).allowedBiomes.filter((b) => AFRICA_PLACES.includes(b)).length;
-      const local = [...all].filter((id) => inAfrica(id) > 0 && inAfrica(id) < AFRICA_PLACES.length);
-      expect(local.length, p).toBeGreaterThan(0);
-    }
+    expect(AFRICA_PLACES).toHaveLength(9);
+    for (const sp of AFRICANS)
+      for (const p of sp.allowedBiomes) {
+        const st = withBaby(sp.id, 'companion');
+        const all = new Set([...offered(st, sp.id, p, father(sp.id)), ...offered(st, sp.id, p, mother(sp.id)), ...offered(st, sp.id, p, baby(sp.id))]);
+        const inAfrica = (id: string) => getArchetype(id).allowedBiomes.filter((b) => AFRICA_PLACES.includes(b)).length;
+        const local = [...all].filter((id) => inAfrica(id) > 0 && inAfrica(id) < AFRICA_PLACES.length);
+        expect(local.length, `${sp.id}@${p}`).toBeGreaterThan(0);
+      }
   });
 
   it('dans le menu, le jeu propre au lieu passe devant les jeux de tout le continent', () => {
-    const st = withFamily(state, { ...getFamily(state, 'lion'), memories: ['met_family'] });
-    const menu = (p: string, a: ActorRef) => selectActivities(ctx(st, 'lion', p, a)).map((x) => x.archetype.id);
-    expect(menu('africa_waterhole', mother('lion'))).toContain('who_in_water');
-    expect(menu('africa_baobab', mother('lion'))).toContain('baobab_nest');
-    expect(menu('africa_canyon', father('lion'))).toContain('echo_canyon');
+    const menu = (sp: string, p: string, a: ActorRef) => {
+      const s0 = withBaby(sp, 'companion');
+      const st = withFamily(s0, { ...getFamily(s0, sp), memories: ['met_family'] });
+      return selectActivities(ctx(st, sp, p, a)).map((x) => x.archetype.id);
+    };
+    expect(menu('giraffe', 'africa_waterhole', mother('giraffe'))).toContain('who_in_water');
+    expect(menu('elephant', 'africa_pond', mother('elephant'))).toContain('who_in_water');
+    expect(menu('lion', 'africa_baobab', mother('lion'))).toContain('baobab_nest');
+    expect(menu('lion', 'africa_canyon', father('lion'))).toContain('echo_canyon');
   });
 
   it('chaque lieu d’Afrique a son aventure, proposée en premier quand on y est', () => {
@@ -108,8 +116,8 @@ describe('jeux propres aux décors', () => {
     }
   });
 
-  it('au baobab, Papa a un jeu à lui (« Catch the leaves! »), quelle que soit l’espèce', () => {
-    for (const sp of AFRICANS) {
+  it('au baobab (décor du lion), Papa a un jeu à lui (« Catch the leaves! »)', () => {
+    for (const sp of AFRICANS.filter((s) => s.allowedBiomes.includes('africa_baobab'))) {
       const st = withBaby(sp.id, 'companion');
       const fam = withFamily(st, { ...getFamily(st, sp.id), memories: ['met_family'] });
       expect(offered(fam, sp.id, 'africa_baobab', father(sp.id)).has('windy_baobab'), sp.id).toBe(true);
@@ -119,11 +127,13 @@ describe('jeux propres aux décors', () => {
   });
 
   it('le nid seulement au baobab, l’écho seulement au canyon, les animaux de l’eau seulement près de l’eau', () => {
-    for (const p of AFRICA_PLACES) {
-      expect(offered(state, 'lion', p, mother('lion')).has('baobab_nest'), p).toBe(p === 'africa_baobab');
-      expect(offered(state, 'lion', p, father('lion')).has('echo_canyon'), p).toBe(p === 'africa_canyon');
-      expect(offered(state, 'lion', p, mother('lion')).has('who_in_water'), p).toBe(p === 'africa_waterhole' || p === 'savanna');
-    }
+    for (const sp of AFRICANS)
+      for (const p of sp.allowedBiomes) {
+        const st = withBaby(sp.id, 'companion');
+        expect(offered(st, sp.id, p, mother(sp.id)).has('baobab_nest'), p).toBe(p === 'africa_baobab');
+        expect(offered(st, sp.id, p, father(sp.id)).has('echo_canyon'), p).toBe(p === 'africa_canyon');
+        expect(offered(st, sp.id, p, mother(sp.id)).has('who_in_water'), p).toBe(p === 'africa_waterhole' || p === 'africa_pond');
+      }
   });
 
   it('seul un animal qui sait grimper monte sur le rocher', () => {

@@ -7,10 +7,16 @@
 - écrit src/content/assetManifest.json (liste des assets réellement disponibles).
 
 Usage : python tools/prepare_assets.py   (ou npm run assets)
+        python tools/prepare_assets.py --only lion_girl_newborn,africa_pond
+            ne (re)convertit que ces images (clé exacte, ou préfixe terminé par « _ » : lion_girl_) ;
+            toutes les autres gardent leur fichier et leur entrée du manifeste, octet pour octet.
+Une entrée de personnage peut porter "raw": true (image déjà détourée par decoupe_planche.py)
+même si le reste de l'espèce ne l'est pas (ex. lion : papa et maman d'origine, bébés de la planche).
 Dépendances : Pillow, numpy.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -112,7 +118,18 @@ def prepare_background(img: Image.Image, spec: dict) -> Image.Image:
     return img
 
 
-def main() -> int:
+def selected(key: str, only: list[str] | None) -> bool:
+    """Image à (re)convertir : toutes sans --only, sinon clé exacte ou préfixe terminé par « _ »."""
+    if not only:
+        return True
+    return any(key == o or (o.endswith("_") and key.startswith(o)) for o in only)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Prépare les images du jeu.")
+    parser.add_argument("--only", help="clés à convertir, séparées par des virgules (les autres ne sont pas touchées)")
+    opts = parser.parse_args(argv)
+    only = [o.strip() for o in opts.only.split(",") if o.strip()] if opts.only else None
     cfg = json.loads(SOURCES.read_text(encoding="utf-8"))
     (OUT_DIR / "backgrounds").mkdir(parents=True, exist_ok=True)
     (OUT_DIR / "characters").mkdir(parents=True, exist_ok=True)
@@ -124,9 +141,13 @@ def main() -> int:
         entry = old.get(kind, {}).get(key)
         if entry and (ROOT / "public" / entry["path"]).exists():
             manifest[kind][key] = entry
-            print(f"[conservé] {key} (image déjà convertie)")
+            if not only:
+                print(f"[conservé] {key} (image déjà convertie)")
 
     for name, spec in cfg.get("backgrounds", {}).items():
+        if not selected(name, only):
+            keep("backgrounds", name)
+            continue
         src = ROOT / spec["src"]
         if not src.exists():
             print(f"[manquant] fond {name}: {src}")
@@ -150,6 +171,9 @@ def main() -> int:
         for role, spec in roles.items():
             if role.startswith("_"):
                 continue
+            if not selected(f"{species}_{role}", only):
+                keep("characters", f"{species}_{role}")
+                continue
             if spec.get("sheet"):
                 if sheet is None:
                     keep("characters", f"{species}_{role}")
@@ -166,7 +190,7 @@ def main() -> int:
                     keep("characters", f"{species}_{role}")
                     continue
                 img = Image.open(p).convert("RGBA")
-            img = prepare_character(img, raw=bool(roles.get("_raw")))
+            img = prepare_character(img, raw=bool(spec.get("raw", roles.get("_raw"))))
             key = f"{species}_{role}"
             rel = f"assets/characters/{key}.webp"
             img.save(ROOT / "public" / rel, "WEBP", **CHAR_WEBP)

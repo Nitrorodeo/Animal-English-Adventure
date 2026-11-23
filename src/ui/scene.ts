@@ -104,3 +104,16 @@ export function tappedAnchor(place: { anchors: readonly Anchor[] }, tapped: stri
   if (!wanted || tapped === wanted) return tapped;
   return place.anchors.find((a) => a.id === tapped)?.sameAs?.includes(wanted) ? wanted : tapped;
 }
+
+/**
+ * Ordre d'empilement des zones à toucher (2026-11-23, vu à l'écran dans la prairie : le buisson recouvrait
+ * la fleur violette). Les plus grandes d'abord : une petite zone posée sur une grande reste au-dessus.
+ */
+export function tapOrder<T extends { hit: { w: number; h: number } }>(anchors: readonly T[]): T[] {
+  return [...anchors].sort((a, b) => b.hit.w * b.hit.h - a.hit.w * a.hit.h);
+}
+
+/** Zone qui reçoit un toucher en (x, y), en % du décor (la dernière empilée qui le contient). */
+export function anchorAt<T extends { hit: { x: number; y: number; w: number; h: number } }>(anchors: readonly T[], x: number, y: number): T | undefined {
+  return tapOrder(anchors).reverse().find((a) => x >= a.hit.x && x <= a.hit.x + a.hit.w && y >= a.hit.y && y <= a.hit.y + a.hit.h);
+}

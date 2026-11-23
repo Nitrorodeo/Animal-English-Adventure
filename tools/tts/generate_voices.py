@@ -1,21 +1,31 @@
 """Génère les enregistrements Kokoro de toutes les phrases du jeu.
 
-Usage : npm run voices   (exporte d'abord tools/tts/lines.json depuis le code du jeu)
+Usage : npm run voices          (exporte d'abord tools/tts/lines.json depuis le code du jeu)
+        npm run voices:plan     compte seulement : rien n'est généré, déplacé ni écrit
 Entrée : tools/tts/lines.json  [{voice, key, spoken}]
 Sorties :
   public/audio/voice/<empreinte>.mp3   un fichier par couple (voix, texte parlé)
   src/content/voiceManifest.json       {version, clips: {clé: chemin}}
-Incrémental : un fichier déjà présent n'est pas régénéré ; les fichiers qui ne servent plus
-sont supprimés (uniquement dans public/audio/voice/, dossier entièrement généré par ce script).
+  tools/tts/archive/<empreinte>.mp3    voix qui ne servent plus (jamais effacées, hors du site)
+  tools/tts/archive/index.json         {empreinte: {archived, voice?, spoken?}}
+Incrémental (consigne du parent, 2026-11-23 : « Une phrase inchangée ne doit jamais être régénérée.
+Ne supprime pas définitivement les fichiers audio devenus inutilisés. Archive-les. ») :
+  - un fichier déjà présent n'est pas régénéré ;
+  - une phrase qui revient est reprise de l'archive au lieu d'être régénérée ;
+  - un fichier qui ne sert plus est déplacé dans l'archive, jamais effacé.
 Tout tourne en local, sans internet, une fois le modèle placé dans tools/tts/models/.
 """
 from __future__ import annotations
 
+import argparse
+import datetime
 import hashlib
 import json
 import re
+import shutil
 import sys
 import time
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import numpy as np
@@ -26,6 +36,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 OUT = ROOT / "public" / "audio" / "voice"
 MANIFEST = ROOT / "src" / "content" / "voiceManifest.json"
+ARCHIVE = HERE / "archive"
 # Réglages d'écoute (le parent, 2026-11-18 : « plus lente et audible » pour une enfant de 7 ans).
 SPEED = 0.8  # débit de toutes les voix (1.0 = débit naturel de Kokoro)
 SENTENCE_PAUSE = 0.35  # secondes de silence entre deux phrases d'une même réplique
@@ -102,40 +113,116 @@ def file_name(voice: str, spoken: str) -> str:
     return f"{h}.mp3"
 
 
-def main() -> None:
-    lines = json.loads((HERE / "lines.json").read_text(encoding="utf-8"))
-    OUT.mkdir(parents=True, exist_ok=True)
-    kokoro = Kokoro(str(HERE / "models" / "kokoro-v1.0.onnx"), str(HERE / "models" / "voices-v1.0.bin"))
+@dataclass
+class Plan:
+    """Ce qu'une génération ferait, calculé sans rien toucher."""
 
-    clips: dict[str, str] = {}
-    wanted: set[str] = set()
-    made = skipped = 0
-    t0 = time.time()
-    for i, e in enumerate(lines, 1):
+    clips: dict[str, str] = field(default_factory=dict)
+    # empreinte -> (voix, texte parlé)
+    wanted: dict[str, tuple[str, str]] = field(default_factory=dict)
+    present: list[str] = field(default_factory=list)
+    restore: list[str] = field(default_factory=list)
+    render: list[str] = field(default_factory=list)
+    archive: list[str] = field(default_factory=list)
+
+
+def make_plan(lines: list[dict], out_dir: Path, archive_dir: Path) -> Plan:
+    plan = Plan()
+    for e in lines:
         name = file_name(e["voice"], e["spoken"])
-        clips[e["key"]] = f"audio/voice/{name}"
-        if name in wanted:
-            continue
-        wanted.add(name)
-        path = OUT / name
-        if path.exists():
-            skipped += 1
-            continue
-        samples, sr = render(kokoro, e["spoken"], e["voice"])
-        sf.write(path, samples, sr, format="MP3")
-        made += 1
-        if made % 25 == 0:
-            print(f"[{i}/{len(lines)}] {made} créés ({time.time() - t0:.0f} s)", flush=True)
+        plan.clips[e["key"]] = f"audio/voice/{name}"
+        if name in plan.wanted:
+            continue  # même voix, même texte : un seul fichier (pas de doublon)
+        plan.wanted[name] = (e["voice"], e["spoken"])
+        if (out_dir / name).exists():
+            plan.present.append(name)
+        elif (archive_dir / name).exists():
+            plan.restore.append(name)
+        else:
+            plan.render.append(name)
+    if out_dir.exists():
+        plan.archive = sorted(f.name for f in out_dir.glob("*.mp3") if f.name not in plan.wanted)
+    return plan
 
-    removed = 0
-    for f in OUT.glob("*.mp3"):
-        if f.name not in wanted:
-            f.unlink()
-            removed += 1
 
-    MANIFEST.write_text(json.dumps({"version": 1, "clips": dict(sorted(clips.items()))}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+def load_index(archive_dir: Path) -> dict:
+    p = archive_dir / "index.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+def archive_unused(plan: Plan, out_dir: Path, archive_dir: Path, known: dict[str, tuple[str, str]] | None = None, today: str | None = None) -> int:
+    """Déplace dans l'archive les voix qui ne servent plus ; n'efface jamais un son unique."""
+    if not plan.archive:
+        return 0
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    index = load_index(archive_dir)
+    today = today or datetime.date.today().isoformat()
+    for name in plan.archive:
+        src, dst = out_dir / name, archive_dir / name
+        if not dst.exists():
+            shutil.move(src, dst)
+        elif dst.read_bytes() == src.read_bytes():
+            src.unlink()  # copie identique déjà archivée
+        else:
+            shutil.move(src, archive_dir / f"{name[:-4]}.{today}.mp3")
+        entry: dict = {"archived": today}
+        if known and name in known:
+            entry["voice"], entry["spoken"] = known[name]
+        index[name] = {**index.get(name, {}), **entry}
+    (archive_dir / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    return len(plan.archive)
+
+
+def restore_from_archive(plan: Plan, out_dir: Path, archive_dir: Path) -> int:
+    """Une phrase revenue reprend sa voix archivée : pas de nouvelle génération."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for name in plan.restore:
+        shutil.copy2(archive_dir / name, out_dir / name)
+    return len(plan.restore)
+
+
+def describe(plan: Plan) -> str:
+    return (
+        f"{len(plan.wanted)} voix utiles : {len(plan.present)} déjà présentes, "
+        f"{len(plan.restore)} reprises de l'archive, {len(plan.render)} à générer ; "
+        f"{len(plan.archive)} à archiver (jamais effacées)"
+    )
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Génère les voix du jeu (incrémental, avec archive).")
+    parser.add_argument("--plan", action="store_true", help="compte seulement : ne génère, ne déplace et n'écrit rien")
+    opts = parser.parse_args(argv)
+    lines = json.loads((HERE / "lines.json").read_text(encoding="utf-8"))
+    plan = make_plan(lines, OUT, ARCHIVE)
+    print(describe(plan), flush=True)
+    if opts.plan:
+        for name in plan.render[:40]:
+            voice, spoken = plan.wanted[name]
+            print(f"  à générer  {name}  {voice}  {spoken}")
+        if len(plan.render) > 40:
+            print(f"  … et {len(plan.render) - 40} autres")
+        return
+
+    OUT.mkdir(parents=True, exist_ok=True)
+    restored = restore_from_archive(plan, OUT, ARCHIVE)
+    t0 = time.time()
+    made = 0
+    if plan.render:
+        kokoro = Kokoro(str(HERE / "models" / "kokoro-v1.0.onnx"), str(HERE / "models" / "voices-v1.0.bin"))
+        for name in plan.render:
+            voice, spoken = plan.wanted[name]
+            samples, sr = render(kokoro, spoken, voice)
+            sf.write(OUT / name, samples, sr, format="MP3")
+            made += 1
+            if made % 25 == 0:
+                print(f"[{made}/{len(plan.render)}] créés ({time.time() - t0:.0f} s)", flush=True)
+
+    archived = archive_unused(plan, OUT, ARCHIVE)
+
+    MANIFEST.write_text(json.dumps({"version": 1, "clips": dict(sorted(plan.clips.items()))}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     size = sum(f.stat().st_size for f in OUT.glob("*.mp3")) / 1e6
-    print(f"terminé : {made} créés, {skipped} déjà présents, {removed} supprimés, {len(wanted)} fichiers, {size:.1f} Mo, {time.time() - t0:.0f} s")
+    print(f"terminé : {made} créés, {restored} repris de l'archive, {len(plan.present)} déjà présents, {archived} archivés, {len(plan.wanted)} fichiers, {size:.1f} Mo, {time.time() - t0:.0f} s")
 
 
 if __name__ == "__main__":

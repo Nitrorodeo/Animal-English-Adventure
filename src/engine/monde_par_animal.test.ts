@@ -21,7 +21,9 @@ describe('un monde à soi pour chaque animal', () => {
       const w = a.word.toLowerCase();
       placesOf.set(w, (placesOf.get(w) ?? new Set()).add(p.id));
     }
-    for (const p of Object.values(PLACES)) {
+    // 2026-11-23 : seuls les décors joués par une famille comptent (la savane d'origine reste dans le code, hors parcours)
+    const played = new Set(SPECIES.flatMap((s) => s.allowedBiomes));
+    for (const p of Object.values(PLACES).filter((x) => played.has(x.id))) {
       const own = new Set(p.anchors.map((a) => a.word.toLowerCase()).filter((w) => placesOf.get(w)!.size === 1));
       expect([...own].length, `${p.id} : ${[...own].join(', ')}`).toBeGreaterThanOrEqual(2);
     }

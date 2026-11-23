@@ -14,23 +14,39 @@
       "maxWidth": 1400
     },
     "africa_waterhole": {
-      "src": "Continant/Afrique/Image ChatGPT 19 nov. 2026, 08_59_49-1.png",
+      "src": "Animaux/Afrique/Girafes/Image ChatGPT 19 nov. 2026, 08_59_49-1.png",
       "maxWidth": 1672
     },
     "africa_baobab": {
-      "src": "Continant/Afrique/Image ChatGPT 19 nov. 2026, 08_59_51-2.png",
+      "src": "Animaux/Afrique/Lions/Image ChatGPT 19 nov. 2026, 08_59_51-2.png",
       "maxWidth": 1672
     },
     "africa_desert": {
-      "src": "Continant/Afrique/Image ChatGPT 19 nov. 2026, 08_59_53-3.png",
+      "src": "Animaux/Afrique/Lions/Image ChatGPT 19 nov. 2026, 08_59_53-3.png",
       "maxWidth": 1672
     },
     "africa_canyon": {
-      "src": "Continant/Afrique/Image ChatGPT 19 nov. 2026, 08_59_56-4.png",
+      "src": "Animaux/Afrique/Lions/Image ChatGPT 19 nov. 2026, 08_59_56-4.png",
       "maxWidth": 1672
     },
     "africa_plains": {
-      "src": "Continant/Afrique/Image ChatGPT 19 nov. 2026, 09_00_00-5.png",
+      "src": "Animaux/Afrique/Girafes/Image ChatGPT 19 nov. 2026, 09_00_00-5.png",
+      "maxWidth": 1672
+    },
+    "africa_pond": {
+      "src": "Animaux/Afrique/Elephants/Image ChatGPT 22 nov. 2026, 09_50_19-1.png",
+      "maxWidth": 1672
+    },
+    "africa_acacia_plain": {
+      "src": "Animaux/Afrique/Elephants/Image ChatGPT 22 nov. 2026, 09_50_21-2.png",
+      "maxWidth": 1672
+    },
+    "africa_forest": {
+      "src": "Animaux/Afrique/Elephants/Image ChatGPT 22 nov. 2026, 09_50_26-3.png",
+      "maxWidth": 1672
+    },
+    "africa_green_meadow": {
+      "src": "Animaux/Afrique/Girafes/Image ChatGPT 22 nov. 2026, 09_50_57-3.png",
       "maxWidth": 1672
     },
     "asia_bamboo": {
@@ -204,6 +220,38 @@
       },
       "girl": {
         "src": "Animaux/Afrique/Lions/Image ChatGPT 18 nov. 2026, 10_50_23-7.png"
+      },
+      "boy_newborn": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_garcon_stade_1.png",
+        "raw": true
+      },
+      "boy_little": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_garcon_stade_2.png",
+        "raw": true
+      },
+      "boy_young": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_garcon_stade_3.png",
+        "raw": true
+      },
+      "boy_companion": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_garcon_stade_4.png",
+        "raw": true
+      },
+      "girl_newborn": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_fille_stade_1.png",
+        "raw": true
+      },
+      "girl_little": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_fille_stade_2.png",
+        "raw": true
+      },
+      "girl_young": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_fille_stade_3.png",
+        "raw": true
+      },
+      "girl_companion": {
+        "src": "Animaux/Afrique/Lions/lion/bebe_fille_stade_4.png",
+        "raw": true
       }
     },
     "elephant": {

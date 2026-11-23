@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc -b",
     "assets": "python tools/prepare_assets.py",
-    "voices": "vite-node tools/tts/export_lines.ts && node tools/tts/run_python.mjs tools/tts/generate_voices.py"
+    "voices": "vite-node tools/tts/export_lines.ts && node tools/tts/run_python.mjs tools/tts/generate_voices.py",
+    "voices:plan": "vite-node tools/tts/export_lines.ts && node tools/tts/run_python.mjs tools/tts/generate_voices.py --plan"
   },
   "dependencies": {
     "react": "19.3.1",

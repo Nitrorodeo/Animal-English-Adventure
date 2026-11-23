@@ -4,9 +4,31 @@ export { numberId, numberOptions } from '../activities/games';
 import { numberId, numberOptions } from '../activities/games';
 import { cap, clearProps, L, prop, props, tapProps, ask } from '../activities/kit';
 import { COLORS, colorFr, NUMBERS, PROPS } from '../props';
-import type { AdventureDef, ColorId, QuestStep, Speaker, Tier, TreasureDef } from '../types';
+import type { AdventureDef, ColorId, PropShape, QuestStep, Speaker, Tier, TreasureDef } from '../types';
 
-export const treasure = (id: string, nameEn: string, nameFr: string, icon: string): TreasureDef => ({ id, nameEn, nameFr, icon });
+/** Formes dessinables d'un trésor, repérées dans son nom anglais (la plus précise d'abord). */
+const TREASURE_SHAPES: readonly [string, PropShape][] = [
+  ['maple leaf', 'maple'],
+  ['flower', 'flower'],
+  ['feather', 'feather'],
+  ['pebble', 'pebble'],
+  ['leaf', 'leaf'],
+  ['shell', 'shell'],
+];
+
+/** Vu à l'écran (2026-11-23) : « an orange flower » montrait une fleur mauve (🌼 sous Windows), les plumes
+ *  jaune et bleue une plume grise. Un trésor qui porte une couleur et une forme connue est dessiné. */
+export function treasureArt(nameEn: string): TreasureDef['art'] {
+  const words = ` ${nameEn.toLowerCase().replace(/[^a-z ]/g, ' ')} `;
+  const color = (Object.keys(COLORS) as ColorId[]).find((c) => words.includes(` ${c} `));
+  const shape = TREASURE_SHAPES.find(([w]) => words.includes(` ${w} `))?.[1];
+  return color && shape ? { shape, color } : undefined;
+}
+
+export const treasure = (id: string, nameEn: string, nameFr: string, icon: string): TreasureDef => {
+  const art = treasureArt(nameEn);
+  return art ? { id, nameEn, nameFr, icon, art } : { id, nameEn, nameFr, icon };
+};
 
 /** Aventures d'un continent et leurs trésors, déclarés ensemble. */
 export interface AdventurePack {

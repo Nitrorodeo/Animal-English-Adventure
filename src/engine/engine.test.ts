@@ -57,6 +57,9 @@ const moves = (steps: QuestStep[] | undefined) => (steps ?? []).flatMap((x) => (
 
 const lionFather: ActorRef = { speciesId: 'lion', kind: 'adult', role: 'father' };
 const elephantMother: ActorRef = { speciesId: 'elephant', kind: 'adult', role: 'mother' };
+const giraffeFather: ActorRef = { speciesId: 'giraffe', kind: 'adult', role: 'father' };
+/** 2026-11-23 : premier décor de chaque famille (le lion n'habite plus la savane d'origine). */
+const HOME: Record<string, string> = { lion: 'africa_baobab', elephant: 'africa_pond', giraffe: 'africa_waterhole' };
 
 // ---------------------------------------------------------------------------
 
@@ -76,13 +79,14 @@ describe('Monde libre (MON-01, MON-02)', () => {
     }
   });
 
-  it("commencer par l'Antarctique ne bloque rien : la savane reste jouable ensuite", () => {
+  it("commencer par l'Antarctique ne bloque rien : l'Afrique reste jouable ensuite", () => {
     let state = newGameState();
     const penguin: ActorRef = { speciesId: 'penguin', kind: 'adult', role: 'father' };
     const g = selectActivities(ctx(state, 'penguin', 'ice_coast', penguin)).find((a) => a.archetype.id === 'greeting')!;
     state = play(state, g, penguin);
     // comme à l'écran : tant que la famille n'a pas trouvé d'eau ici, Papa a soif
-    const acts = selectActivities({ ...ctx(state, 'lion', 'savanna', lionFather), need: 'thirsty' });
+    // 2026-11-23 : chaque famille a ses décors ; le point d'eau est celui de la girafe
+    const acts = selectActivities({ ...ctx(state, 'giraffe', 'africa_waterhole', giraffeFather), need: 'thirsty' });
     expect(acts.map((a) => a.archetype.id)).toContain('find_water');
   });
 });
@@ -93,19 +97,19 @@ describe('Progression indépendante du lieu (EDU-01, EDU-02)', () => {
     // deux contextes différents (père lion, mère lion) → expressions "supported"
     for (const role of ['father', 'mother'] as const) {
       const actor: ActorRef = { speciesId: 'lion', kind: 'adult', role };
-      const g = { ...buildQuest(getArchetype('greeting'), ctx(state, 'lion', 'savanna', actor))!, score: 0 };
+      const g = { ...buildQuest(getArchetype('greeting'), ctx(state, 'lion', 'africa_baobab', actor))!, score: 0 };
       expect(g.script.tier).toBe('beginner');
       state = play(state, g, actor);
     }
     expect(itemStatus(state.player.items.hello)).toBe('supported');
-    const ele = buildQuest(getArchetype('greeting'), ctx(state, 'elephant', 'savanna', elephantMother))!;
+    const ele = buildQuest(getArchetype('greeting'), ctx(state, 'elephant', 'africa_pond', elephantMother))!;
     expect(ele.script.tier).toBe('intermediate');
   });
 
   it("répéter 10 fois la même quête ne rend pas une expression autonome (EDU-03)", () => {
     let state = newGameState();
     for (let i = 0; i < 10; i++) {
-      const g = buildQuest(getArchetype('greeting'), ctx(state, 'lion', 'savanna', lionFather))!;
+      const g = buildQuest(getArchetype('greeting'), ctx(state, 'lion', 'africa_baobab', lionFather))!;
       state = play(state, { ...g, score: 0 }, lionFather);
     }
     expect(itemStatus(state.player.items.hello)).toBe('recognised');
@@ -113,7 +117,7 @@ describe('Progression indépendante du lieu (EDU-01, EDU-02)', () => {
   });
 
   it('une expression compte au plus une fois par quête', () => {
-    const s = buildQuest(getArchetype('greeting'), ctx(newGameState(), 'lion', 'savanna', lionFather))!.script;
+    const s = buildQuest(getArchetype('greeting'), ctx(newGameState(), 'lion', 'africa_baobab', lionFather))!.script;
     let state = newGameState();
     state = applyQuestOutcome(state, { script: s, mechanic: 'talk', actor: lionFather, answers: [...answersFor(s), ...answersFor(s)], continentId: 'africa' }).state;
     for (const p of Object.values(state.player.items)) expect(p.seen).toBe(1);
@@ -135,7 +139,10 @@ describe('Cohérence habitat / espèce (QUE-01, QUE-02, QUE-04)', () => {
       }
     }
     expect(some).toBeGreaterThan(5);
-    expect(buildQuest(fw, ctx(state, 'lion', 'savanna', lionFather))).toBeDefined();
+    expect(buildQuest(fw, ctx(state, 'giraffe', 'africa_waterhole', giraffeFather))).toBeDefined();
+    expect(buildQuest(fw, ctx(state, 'elephant', 'africa_pond', elephantMother))).toBeDefined();
+    // 2026-11-23 : les décors du lion (baobab, savane sèche, canyon) n'ont pas d'eau dessinée : pas de quête d'eau inventée
+    for (const b of ['africa_baobab', 'africa_desert', 'africa_canyon']) expect(buildQuest(fw, ctx(state, 'lion', b, lionFather)), b).toBeUndefined();
   });
 
   it("un lion n'est jamais placé sur la banquise : seule la conversation de repli reste", () => {
@@ -148,18 +155,18 @@ describe('Cohérence habitat / espèce (QUE-01, QUE-02, QUE-04)', () => {
     for (const s of SPECIES) for (const b of s.allowedBiomes) expect(BIOMES[b]?.continentId, s.id).toBe(s.continentId);
   });
 
-  it("le même modèle find_water donne deux scènes différentes pour le lion et l'éléphant", () => {
+  it("le même modèle find_water donne deux scènes différentes pour la girafe et l'éléphant", () => {
     const state = newGameState();
-    const lion = buildQuest(getArchetype('find_water'), ctx(state, 'lion', 'savanna', lionFather))!.script;
-    const ele = buildQuest(getArchetype('find_water'), ctx(state, 'elephant', 'savanna', elephantMother))!.script;
-    expect(lion.archetypeId).toBe(ele.archetypeId);
-    expect(moves(lion.steps)).toContain('drink_lap');
+    const gir = buildQuest(getArchetype('find_water'), ctx(state, 'giraffe', 'africa_waterhole', giraffeFather))!.script;
+    const ele = buildQuest(getArchetype('find_water'), ctx(state, 'elephant', 'africa_pond', elephantMother))!.script;
+    expect(gir.archetypeId).toBe(ele.archetypeId);
+    expect(moves(gir.steps)).toContain('drink_splay');
     expect(moves(ele.steps)).toContain('drink_trunk');
-    expect(linesOf(lion).map((l) => l.en)).not.toEqual(linesOf(ele).map((l) => l.en));
+    expect(linesOf(gir).map((l) => l.en)).not.toEqual(linesOf(ele).map((l) => l.en));
   });
 
   it('la girafe réutilise find_water avec sa propre façon de boire (pattes écartées)', () => {
-    const c = ctx(newGameState(), 'giraffe', 'savanna', { speciesId: 'giraffe', kind: 'adult', role: 'father' });
+    const c = ctx(newGameState(), 'giraffe', 'africa_waterhole', giraffeFather);
     for (const tier of TIERS) expect(moves(rawSteps('find_water', c, tier)), tier).toContain('drink_splay');
   });
 
@@ -170,7 +177,7 @@ describe('Cohérence habitat / espèce (QUE-01, QUE-02, QUE-04)', () => {
 
   it('les archétypes réservés aux bébés ne sont jamais proposés à un parent', () => {
     const state = withBabies(newGameState(), 'lion', 2);
-    const acts = selectActivities(ctx(state, 'lion', 'savanna', lionFather), 20);
+    const acts = selectActivities(ctx(state, 'lion', 'africa_baobab', lionFather), 20);
     expect(acts.map((a) => a.archetype.id)).not.toContain('name_object');
   });
 });
@@ -207,7 +214,7 @@ describe('Famille (FAM-01 à FAM-05)', () => {
   it('chaque bébé a sa propre mémoire', () => {
     let state = withBabies(newGameState(), 'lion', 2);
     const mia: ActorRef = { speciesId: 'lion', kind: 'baby', babyId: 'b1' };
-    const q = buildQuest(getArchetype('name_object'), ctx(state, 'lion', 'savanna', mia))!;
+    const q = buildQuest(getArchetype('name_object'), ctx(state, 'lion', 'africa_baobab', mia))!;
     state = play(state, { ...q, score: 0 }, mia);
     const [b1, b2] = getFamily(state, 'lion').babies;
     expect(Object.keys(b1!.taughtWords)).toHaveLength(1);
@@ -243,7 +250,7 @@ describe('Croissance par apprentissage (FAM-06, EDU-03)', () => {
     let state = withBabies(newGameState(), 'lion', 1);
     const mia: ActorRef = { speciesId: 'lion', kind: 'baby', babyId: 'b1' };
     for (let i = 0; i < 40; i++) {
-      const q = buildQuest(getArchetype('name_object'), ctx(state, 'lion', 'savanna', mia, i))!;
+      const q = buildQuest(getArchetype('name_object'), ctx(state, 'lion', 'africa_baobab', mia, i))!;
       state = play(state, { ...q, score: 0 }, mia);
     }
     const baby = getFamily(state, 'lion').babies[0]!;
@@ -256,7 +263,7 @@ describe('Croissance par apprentissage (FAM-06, EDU-03)', () => {
     const mia: ActorRef = { speciesId: 'lion', kind: 'baby', babyId: 'b1' };
     const stages: string[] = [];
     for (let i = 0; i < 30; i++) {
-      const acts = selectActivities(ctx(state, 'lion', 'savanna', mia, i));
+      const acts = selectActivities(ctx(state, 'lion', 'africa_baobab', mia, i));
       state = play(state, acts[0]!, mia);
       stages.push(getFamily(state, 'lion').babies[0]!.stage);
     }
@@ -288,14 +295,15 @@ describe('Sélection et anti-répétition (QUE-03)', () => {
     const actors: ActorRef[] = [lionFather, { speciesId: 'lion', kind: 'adult', role: 'mother' }, { speciesId: 'lion', kind: 'baby', babyId: 'b1' }, { speciesId: 'lion', kind: 'baby', babyId: 'b2' }, elephantMother, { speciesId: 'elephant', kind: 'baby', babyId: 'b1' }];
     for (let i = 0; i < 100; i++) {
       const actor = rng.pick(actors);
-      const acts = selectActivities(ctx(state, actor.speciesId, 'savanna', actor, i));
+      const home = HOME[actor.speciesId]!;
+      const acts = selectActivities(ctx(state, actor.speciesId, home, actor, i));
       expect(acts.length).toBeGreaterThanOrEqual(1);
       expect(acts.length).toBeLessThanOrEqual(3);
       expect(new Set(acts.map((a) => a.archetype.id)).size).toBe(acts.length);
       for (const a of acts) {
         expect(a.script.speciesId).toBe(actor.speciesId);
         expect(a.archetype.actorKinds).toContain(actor.kind);
-        expect(validateScript(a.script, getBiome('savanna'))).toEqual([]);
+        expect(validateScript(a.script, getBiome(home))).toEqual([]);
       }
       state = play(state, rng.pick(acts), actor, rng.next() < 0.3);
     }
@@ -307,7 +315,7 @@ describe('Sélection et anti-répétition (QUE-03)', () => {
     const mia: ActorRef = { speciesId: 'lion', kind: 'baby', babyId: 'b1' };
     const mechanics: string[] = [];
     for (let i = 0; i < 20; i++) {
-      const top = selectActivities(ctx(state, 'lion', 'savanna', mia, i))[0]!;
+      const top = selectActivities(ctx(state, 'lion', 'africa_baobab', mia, i))[0]!;
       mechanics.push(top.archetype.mechanic);
       state = play(state, top, mia);
     }
@@ -316,27 +324,27 @@ describe('Sélection et anti-répétition (QUE-03)', () => {
 
   it('un besoin de soif met la quête eau en avant (une fois les présentations faites)', () => {
     let state = newGameState();
-    state = play(state, { ...buildQuest(getArchetype('greeting'), ctx(state, 'elephant', 'savanna', elephantMother))!, score: 0 }, elephantMother);
-    const c = { ...ctx(state, 'elephant', 'savanna', elephantMother), need: 'thirsty' as const };
+    state = play(state, { ...buildQuest(getArchetype('greeting'), ctx(state, 'elephant', 'africa_pond', elephantMother))!, score: 0 }, elephantMother);
+    const c = { ...ctx(state, 'elephant', 'africa_pond', elephantMother), need: 'thirsty' as const };
     expect(selectActivities(c)[0]!.archetype.id).toBe('find_water');
   });
 
   it('un bébé à qui il manque des mots pour grandir propose en premier d’apprendre un mot', () => {
     const state = withBabies(newGameState(), 'lion', 1);
     const mia: ActorRef = { speciesId: 'lion', kind: 'baby', babyId: 'b1' };
-    const greeted = play(state, { ...buildQuest(getArchetype('greeting'), ctx(state, 'lion', 'savanna', mia))!, score: 0 }, mia);
-    const top = selectActivities(ctx(greeted, 'lion', 'savanna', mia, 3)).map((a) => a.archetype.id);
+    const greeted = play(state, { ...buildQuest(getArchetype('greeting'), ctx(state, 'lion', 'africa_baobab', mia))!, score: 0 }, mia);
+    const top = selectActivities(ctx(greeted, 'lion', 'africa_baobab', mia, 3)).map((a) => a.archetype.id);
     expect(top).toContain('name_object');
   });
 });
 
 describe('Validation de tous les contenus (MOTEUR §11)', () => {
-  const lionAndElephant = SPECIES.filter((sp) => sp.id === 'lion' || sp.id === 'elephant');
+  const lionAndElephant = SPECIES.filter((sp) => sp.id === 'lion' || sp.id === 'elephant' || sp.id === 'giraffe');
   const allScripts = [...activityVariants(STRUCTURAL_CONFIGS, lionAndElephant)].map((v) => v.script);
 
-  it('il y a des scripts pour le lion et l’éléphant dans les 3 niveaux', () => {
+  it('il y a des scripts pour l’éléphant et la girafe dans les 3 niveaux', () => {
     expect(allScripts.length).toBeGreaterThan(40);
-    for (const sp of ['lion', 'elephant']) for (const t of TIERS) expect(allScripts.some((s) => s.speciesId === sp && s.tier === t && s.archetypeId === 'find_water'), `${sp} ${t}`).toBe(true);
+    for (const sp of ['elephant', 'giraffe']) for (const t of TIERS) expect(allScripts.some((s) => s.speciesId === sp && s.tier === t && s.archetypeId === 'find_water'), `${sp} ${t}`).toBe(true);
   });
 
   it('chaque script est valide (EN + FR, variables autorisées, points du décor existants, ≥1 bonne réponse tactile)', () => {
@@ -349,9 +357,9 @@ describe('Validation de tous les contenus (MOTEUR §11)', () => {
   });
 
   it('tous les mots enseignables du décor ont un groupe nominal validé', () => {
-    const savanna = getBiome('savanna');
+    const savanna = getBiome('africa_baobab');
     const mia: ActorRef = { speciesId: 'lion', kind: 'baby', babyId: 'b1' };
-    const taught = selectActivities(ctx(withBabies(newGameState(), 'lion', 1), 'lion', 'savanna', mia), 20).find((a) => a.archetype.id === 'name_object');
+    const taught = selectActivities(ctx(withBabies(newGameState(), 'lion', 1), 'lion', 'africa_baobab', mia), 20).find((a) => a.archetype.id === 'name_object');
     expect(taught?.teach).toBeDefined();
     expect(NOUNS[taught!.teach!.word]).toBeDefined();
     expect(savanna.anchors.filter((a) => NOUNS[a.word]).length).toBeGreaterThanOrEqual(3);
@@ -359,7 +367,7 @@ describe('Validation de tous les contenus (MOTEUR §11)', () => {
 
   it("chaque archétype implémenté a du contenu, les autres ne sont jamais proposés", () => {
     const state = newGameState();
-    for (const a of ARCHETYPES.filter((x) => !x.implemented)) expect(buildQuest(a, ctx(state, 'lion', 'savanna', lionFather))).toBeUndefined();
+    for (const a of ARCHETYPES.filter((x) => !x.implemented)) expect(buildQuest(a, ctx(state, 'lion', 'africa_baobab', lionFather))).toBeUndefined();
     for (const a of ARCHETYPES.filter((x) => x.implemented)) expect(ACTIVITY_BY_ID[a.id], a.id).toBeDefined();
   });
 }, 30000);
@@ -368,7 +376,7 @@ describe('Sauvegarde locale (SAV-01, SAV-02)', () => {
   it('sauvegarde puis restauration à l’identique', () => {
     const storage = memoryStorage();
     let state = withBabies(newGameState(), 'lion', 2);
-    const g = selectActivities(ctx(state, 'lion', 'savanna', lionFather))[0]!;
+    const g = selectActivities(ctx(state, 'lion', 'africa_baobab', lionFather))[0]!;
     state = play(state, g, lionFather);
     expect(saveGame(storage, state)).toBe(true);
     const back = loadGame(storage);
