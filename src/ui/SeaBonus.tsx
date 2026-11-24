@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { speech } from '../audio/speech';
 import type { VoiceRole } from '../audio/voiceKey';
-import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, seaDecor, SEA_DECORS, SEA_DECOR_NAMES, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
+import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, SEA_START, SEA_WIDTH, seaDecor, SEA_DECORS, SEA_DECOR_NAMES, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
 import type { Line } from '../content/types';
 import { currentRound, seaChoose, seaDone, seaNext, seaReward, startSea, type SeaState, type Utter } from '../engine/sea';
 import type { GameState } from '../engine/state';
@@ -31,10 +31,8 @@ const SPOTS = [
 /** où se pose la tortue, à côté de chaque place */
 const TURTLE_HOME = { x: 16, y: 10 };
 
-/** places de départ des animaux (coin haut-gauche, en % de la scène) ; l'enfant les déplace ensuite au doigt */
-const START = { whale: { x: 4, y: 20 }, dolphins: { x: 22, y: 6 } };
-/** largeur de chaque animal (en % de la scène) */
-const WIDTH = { whale: 40, dolphins: 56, turtle: 22 };
+const START = SEA_START;
+const WIDTH = SEA_WIDTH;
 
 type P = { x: number; y: number };
 

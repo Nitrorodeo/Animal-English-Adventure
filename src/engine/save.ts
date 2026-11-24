@@ -1,8 +1,7 @@
 import { parseNamePron } from './nameVoice';
 import { parseSpots } from './spots';
 import { parseGiftDay, parseGifts } from './gifts';
-import { toWideMap } from './stickers';
-import { clampSpeechSpeed, newGameState, SAVE_VERSION, type CircleRef, type GameState, type PlacedSticker } from './state';
+import { clampSpeechSpeed, newGameState, SAVE_VERSION, type CircleRef, type GameState } from './state';
 
 /** Adaptateur de stockage (localStorage dans le navigateur, mémoire en test). */
 export interface StorageLike {
@@ -29,9 +28,6 @@ export function memoryStorage(initial: Record<string, string> = {}): StorageLike
     },
   };
 }
-
-const isPlacedSticker = (v: unknown): v is PlacedSticker =>
-  isObj(v) && typeof v.id === 'string' && typeof v.continentId === 'string' && typeof v.x === 'number' && typeof v.y === 'number';
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 
@@ -72,7 +68,8 @@ export function migrate(raw: unknown): GameState | null {
       placesVisited: Array.isArray(p.placesVisited) ? (p.placesVisited as GameState['player']['placesVisited']) : [],
       words: isObj(p.words) ? (p.words as GameState['player']['words']) : {},
       photos: Array.isArray(p.photos) ? (p.photos as unknown[]).filter((x): x is string => typeof x === 'string') : [],
-      stickers: Array.isArray(p.stickers) ? (p.stickers as unknown[]).filter(isPlacedSticker).map(toWideMap) : [],
+      // anciens autocollants du jour retirés des parties : le cadeau du soir les remplace (« il reste les anciens stickers », 2026-11-24)
+      stickers: [],
       stickerDay: typeof p.stickerDay === 'string' ? p.stickerDay : null,
       gifts: parseGifts(p.gifts),
       giftDay: parseGiftDay(p.gifts, p.giftDay),

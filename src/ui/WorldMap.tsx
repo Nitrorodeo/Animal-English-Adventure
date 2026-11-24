@@ -7,7 +7,6 @@ import { say } from '../content/utterances';
 import type { BiomeId, ContinentId, SpeciesDef } from '../content/types';
 import { CONTINENTS } from '../content/world';
 import type { GameState } from '../engine/state';
-import { stickerDef } from '../engine/stickers';
 import { assetUrl, background, spriteFor } from './scene';
 import { isDrag } from './drag';
 import { labelY, mapFit, type MapFit } from './mapFit';
@@ -86,28 +85,7 @@ export function WorldMap({ state, onPick, onSea }: Props) {
             <button className="sea-offer-close" onClick={() => setSea(null)} aria-label="Fermer">✕</button>
           </div>
         )}
-        {state.player.stickers.map((st, i) => {
-          const def = stickerDef(st.id);
-          if (!def) return null;
-          const last = i === state.player.stickers.length - 1;
-          return (
-            <button
-              key={`${i}-${st.id}`}
-              className={`map-sticker${last ? ' newest' : ''}`}
-              style={{ left: `${st.x}%`, top: `${st.y}%`, rotate: `${((i * 47) % 30) - 15}deg` }}
-              aria-label={def.en}
-              onClick={(e) => {
-                const el = e.currentTarget;
-                el.classList.remove('wiggle');
-                void el.offsetWidth; // relance l'animation
-                el.classList.add('wiggle');
-                void speech.speak(say.sticker(def.en));
-              }}
-            >
-              {def.icon}
-            </button>
-          );
-        })}
+        {/* les anciens autocollants du jour ne s'affichent plus : le cadeau du soir les remplace (2026-11-24) */}
         {CONTINENTS.map((c) => (
           <span key={`l-${c.id}`} className="continent-label" style={{ left: `${c.label.x}%`, top: `${labelY(c.label.y, view.seen)}%` }}>
             {c.nameEn}

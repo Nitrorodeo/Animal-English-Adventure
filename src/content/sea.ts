@@ -207,3 +207,11 @@ export const DOLPHIN_ZONES: Readonly<Record<DolphinId, readonly { x: number; y: 
 
 /** « Big dolphin, jump! » */
 export const dolphinOrder = (d: DolphinId, m: DolphinMove): Line => L(`${DOLPHINS.name[d].en}, ${DOLPHINS.move[m].en}`, `${DOLPHINS.name[d].fr}, ${DOLPHINS.move[m].fr}`);
+
+/**
+ * Largeur de chaque animal dans son jeu, en % de la scène. Les dauphins sont plus petits que les baleines.
+ * Le 2026-11-24, ils passent de 56 à 34 (« les dauphins sont beaucoup trop gros »).
+ */
+export const SEA_WIDTH = { whale: 40, dolphins: 34, turtle: 22 } as const;
+/** places de départ (coin haut-gauche, en % de la scène) ; l'enfant les déplace ensuite au doigt */
+export const SEA_START = { whale: { x: 4, y: 20 }, dolphins: { x: 33, y: 22 } } as const;

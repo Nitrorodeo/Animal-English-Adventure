@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { clipFor } from '../audio/speech';
 import { itemInfo } from '../content/items';
-import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_THINGS, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
+import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_START, SEA_THINGS, SEA_WIDTH, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
 import { CONTINENTS } from '../content/world';
 import { currentRound, INTRO, numberChoices, OUTRO, seaChoose, seaDone, seaNext, seaReward, seaRounds, startSea, type SeaState } from './sea';
 import { newGameState } from './state';
@@ -221,5 +221,16 @@ describe('jeux bonus de la mer : contenu', () => {
     expect(whaleCount(3).en).toBe('One, Two, Three!');
     expect(SEA_THINGS.map((t) => t.find.en)).toEqual(['Find the fish!', 'Find the crab!', 'Find the shell!', 'Find the octopus!']);
     expect(TURTLE.end.en).toMatch(/Bye-bye/);
+  });
+});
+
+describe('jeux bonus de la mer : tailles', () => {
+  it('les dauphins plus petits que les baleines, et tout le groupe dans la scène au départ', () => {
+    expect(SEA_WIDTH.dolphins).toBeLessThan(SEA_WIDTH.whale);
+    expect(SEA_WIDTH.dolphins).toBeLessThanOrEqual(36);
+    // image des dauphins : 1300 × 681 ; scène 16/9 → hauteur en % de la scène
+    const h = (SEA_WIDTH.dolphins / (1300 / 681)) * (16 / 9);
+    expect(SEA_START.dolphins.x + SEA_WIDTH.dolphins).toBeLessThanOrEqual(100);
+    expect(SEA_START.dolphins.y + h).toBeLessThanOrEqual(100);
   });
 });

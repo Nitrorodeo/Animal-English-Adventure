@@ -114,8 +114,8 @@ describe('autocollant du jour', () => {
     expect(migrate(old)!.player.stickerDay).toBeNull();
     old.player.stickers = [{ id: 'star', continentId: 'asia', x: 70, y: 20 }, { id: 'star' }, 'x'];
     old.player.stickerDay = '2026-11-19';
-    // position de l'ancienne carte : recalée sur la carte élargie et recentrée, au même endroit de l'Asie
-    expect(migrate(old)!.player.stickers).toEqual([{ id: 'star', continentId: 'asia', x: 70.1, y: 20, map: 3 }]);
+    // 2026-11-24 : les anciens autocollants sont retirés des parties (le cadeau du soir les remplace)
+    expect(migrate(old)!.player.stickers).toEqual([]);
     expect(migrate(old)!.player.stickerDay).toBe('2026-11-19');
   });
 
