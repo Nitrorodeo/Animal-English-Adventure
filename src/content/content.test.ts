@@ -153,7 +153,9 @@ describe('activités V2', () => {
     // aucune aventure au sol ne garde le toucan
     for (const a of ADVENTURES.filter((x) => x.continentId === 'south_america' && !x.id.includes('canopy'))) expect(a.species, a.id).not.toContain('toucan');
   });
-  it('l’étang aux nénuphars a un point d’eau où boire', () => {
-    expect(PLACES.sa_wetland!.anchors.find((a) => a.id === 'water')?.stand).toBeDefined();
+  it('la clairière ensoleillée (ex-étang) est sèche : aucun point d’eau, un chemin où se tenir', () => {
+    const anchors = PLACES.sa_wetland!.anchors;
+    expect(anchors.some((a) => a.tags?.includes('water'))).toBe(false);
+    expect(anchors.find((a) => a.id === 'path')?.stand).toBeDefined();
   });
 });

@@ -12,7 +12,7 @@
  */
 import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
 import { itemStatus, type ItemStatus } from './skills';
-import { isFamilyCode } from './cloud';
+import { isFamilyCode, newFamilyCode } from './cloud';
 import type { StorageLike } from './save';
 import type { GameState } from './state';
 
@@ -57,6 +57,11 @@ export function summaryOf(state: GameState): Summary {
 /** Le résumé peut-il être publié ? Pas avant que l'enfant ait donné son prénom. */
 export function publishable(s: Summary): boolean {
   return s.name.trim() !== '' && s.name !== DEFAULT_PLAYER_NAME;
+}
+
+/** Code de cercle proposé (« amis-lion-mango-4271 ») : le parent peut l'effacer et choisir le sien. */
+export function newCircleCode(rand: () => number): string {
+  return `amis-${newFamilyCode(rand)}`;
 }
 
 /** Identifiant de famille dans le cercle. `rand` : 0 ≤ x < 1. */

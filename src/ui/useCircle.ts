@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { isFamilyCode, newFamilyCode, normalizeFamilyCode } from '../engine/cloud';
+import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
+import { isFamilyCode, normalizeFamilyCode } from '../engine/cloud';
 import {
   CIRCLE_DELAY_MS,
   circleBody,
   friendsList,
   markSeen,
+  newCircleCode,
   newFriendIds,
   newMemberId,
   parseCircle,
@@ -24,7 +25,7 @@ import { CLOUD_URL } from './useCloudSync';
 const PULL_EVERY_MS = 60_000;
 
 export type CircleStatus = 'off' | 'syncing' | 'ok' | 'offline' | 'full';
-export type CircleResult = { ok: true } | { ok: false; reason: 'code' | 'none' | 'offline' | 'name' | 'full' };
+export type CircleResult = { ok: true } | { ok: false; reason: 'code' | 'none' | 'offline' | 'name' | 'full' | 'taken' };
 
 export interface CircleInfo {
   /** le cercle est disponible (version en ligne) */
@@ -36,7 +37,10 @@ export interface CircleInfo {
   fresh: string[];
   /** prénom et chiffres de cette famille, tels que les amis les voient */
   me: { name: string; stars: number; adventures: number } | null;
-  create(): Promise<CircleResult>;
+  /** code proposé pour un nouveau cercle (le parent peut le changer) */
+  propose(): string;
+  /** crée le cercle sous ce code (choisi ou proposé) ; refusé si un cercle l'utilise déjà */
+  create(typed: string): Promise<CircleResult>;
   join(typed: string): Promise<CircleResult>;
   leave(): Promise<void>;
   /** l'écran des amis a été ouvert : les cartes ne sont plus « nouvelles » */
@@ -60,9 +64,14 @@ async function call(code: string, method: 'GET' | 'PUT' | 'DELETE', opts: { body
  * Cercle d'amis (engine/circle.ts) : on publie le petit résumé de cette famille (prénom, étoiles, aventures) et on
  * lit celui des amis. Sans réseau ou sans cercle, rien ne bloque et rien ne s'affiche.
  */
-export function useCircle(state: GameState, storage: StorageLike): CircleInfo {
+export function useCircle(state: GameState, setState: Dispatch<SetStateAction<GameState>>, storage: StorageLike): CircleInfo {
   const available = CLOUD_URL !== null;
-  const [meta, setMeta] = useState<CircleMeta>(() => (available ? readCircleMeta(storage) : null) ?? freshMeta());
+  // Le code et l'identifiant vivent dans la partie (state.circle) : ils restent définitivement, même si le navigateur est
+  // vidé, et suivent la partie partagée. Le stockage local ne garde que les cartes déjà vues (et une copie, pour migrer).
+  const [meta, setMeta] = useState<CircleMeta>(() => {
+    const base = (available ? readCircleMeta(storage) : null) ?? freshMeta();
+    return state.circle ? { ...base, code: state.circle.code, id: state.circle.id } : base;
+  });
   const [members, setMembers] = useState<Friend[]>([]);
   const [status, setStatus] = useState<CircleStatus>(meta.code ? 'syncing' : 'off');
   const metaRef = useRef(meta);
@@ -80,9 +89,27 @@ export function useCircle(state: GameState, storage: StorageLike): CircleInfo {
       metaRef.current = next;
       setMeta(next);
       writeCircleMeta(storage, next);
+      setState((s) => {
+        const cur = s.circle;
+        if (next.code) return cur && cur.code === next.code && cur.id === next.id ? s : { ...s, circle: { code: next.code, id: next.id } };
+        if (!cur) return s;
+        const { circle: _left, ...rest } = s;
+        return rest;
+      });
     },
-    [storage],
+    [storage, setState],
   );
+
+  // la partie et la copie locale restent d'accord : un cercle venu de la partie partagée est adopté ; un ancien cercle
+  // gardé seulement dans le navigateur est inscrit dans la partie (une seule fois)
+  useEffect(() => {
+    if (!available) return;
+    const c = state.circle;
+    const m = metaRef.current;
+    if (c) {
+      if (m.code !== c.code || m.id !== c.id) update({ ...m, code: c.code, id: c.id });
+    } else if (m.code) update(m);
+  }, [available, state.circle, update]);
 
   const push = useCallback(async (keepalive = false): Promise<'ok' | 'full' | 'offline' | 'skipped'> => {
     const m = metaRef.current;
@@ -174,11 +201,26 @@ export function useCircle(state: GameState, storage: StorageLike): CircleInfo {
     [pull, push, update],
   );
 
-  const create = useCallback(async (): Promise<CircleResult> => {
-    if (!available) return { ok: false, reason: 'offline' };
-    if (!publishable(latest.current)) return { ok: false, reason: 'name' };
-    return enter(`amis-${newFamilyCode(Math.random)}`);
-  }, [available, enter]);
+  const propose = useCallback(() => newCircleCode(Math.random), []);
+
+  const create = useCallback(
+    async (typed: string): Promise<CircleResult> => {
+      if (!available) return { ok: false, reason: 'offline' };
+      const code = normalizeFamilyCode(typed);
+      if (!isFamilyCode(code)) return { ok: false, reason: 'code' };
+      if (!publishable(latest.current)) return { ok: false, reason: 'name' };
+      try {
+        // un code déjà utilisé appartient à d'autres enfants : on ne s'y glisse pas par erreur
+        const r = await call(code, 'GET');
+        if (r.status === 200) return { ok: false, reason: 'taken' };
+        if (r.status !== 404) return { ok: false, reason: 'offline' };
+      } catch {
+        return { ok: false, reason: 'offline' };
+      }
+      return enter(code);
+    },
+    [available, enter],
+  );
 
   const join = useCallback(
     async (typed: string): Promise<CircleResult> => {
@@ -228,6 +270,7 @@ export function useCircle(state: GameState, storage: StorageLike): CircleInfo {
     friends,
     fresh: newFriendIds(friends, meta.seen),
     me: meta.code && publishable(summary) ? summary : null,
+    propose,
     create,
     join,
     leave,

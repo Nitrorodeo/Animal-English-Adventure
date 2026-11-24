@@ -75,15 +75,18 @@ export const FAR_SIZE = 0.55;
  * sol (`far`, sa partie la plus lointaine : la taille ne saute pas quand on glisse de côté). Décor sans mesure : le
  * fond prudent de `farthestY`.
  */
-export function sizeHorizon(homeY: number, horizon: number, far?: number | readonly (readonly [number, number])[]): number {
+export function sizeHorizon(homeY: number, horizon: number, far?: number | readonly (readonly [number, number])[], farSize?: number): number {
   const back = far === undefined ? horizon + UNMEASURED_FAR * Math.max(5, homeY - horizon) : typeof far === 'number' ? far : Math.min(...far.map((p) => p[1]));
   const f = Math.min(back, homeY - 5);
+  // taille au fond choisie sur le dessin du décor (places/depth.ts) : c'est elle qui compte, plus grande ou plus petite
+  // que la perspective calculée depuis l'horizon
+  if (farSize !== undefined) return (f - farSize * homeY) / (1 - farSize);
   return Math.min(horizon, (f - FAR_SIZE * homeY) / (1 - FAR_SIZE));
 }
 
 /** Échelle d'un animal posé au doigt dans ce décor (même calcul dans le jeu et dans les tests). */
-export function placeScale(place: { groundY: number; horizonY?: number; farY?: number | readonly (readonly [number, number])[] }, homeY: number): (fromY: number, toY: number) => number {
-  const hz = sizeHorizon(homeY, horizonOf(place.groundY, place.horizonY), place.farY);
+export function placeScale(place: { groundY: number; horizonY?: number; farY?: number | readonly (readonly [number, number])[]; farSize?: number }, homeY: number): (fromY: number, toY: number) => number {
+  const hz = sizeHorizon(homeY, horizonOf(place.groundY, place.horizonY), place.farY, place.farSize);
   return (from, to) => groundScale(from, to, hz);
 }
 
@@ -209,6 +212,8 @@ export function nearSeat(seats: readonly SeatLike[], naturalH: number, x: number
 export interface Perches {
   horizonY?: number;
   groundY: number;
+  /** fond du sol : derrière un rocher qui le dépasse, on ne va pas plus loin */
+  farY?: number | readonly (readonly [number, number])[];
   perches?: (Rect & { base: number })[];
   anchors?: readonly { id: string; hit: Rect; tags?: readonly string[] }[];
 }
@@ -217,21 +222,43 @@ export interface Perches {
 const SOLID = new Set(['rock', 'stone', 'log', 'iceberg', 'ice', 'arch']);
 
 /**
- * Animal posé sur un rocher (demande du parent : « je dois pouvoir le poser sur la Pierre ») : s'il est
- * lâché sur le dessus d'un gros rocher, renvoie le pied de ce rocher (sa profondeur : l'animal a la taille
- * qu'il aurait au pied du rocher, et on peut le poser plus haut que le sol). Sinon `undefined`.
- * Rochers mesurés (`perches`) et rochers « à escalader » du décor (moitié haute de leur zone).
+ * Animal posé sur un rocher (demande du parent : « je dois pouvoir le poser sur la Pierre ») : renvoie la profondeur
+ * (le « y du sol » qui donne sa taille) d'un animal posé sur un gros rocher, et l'on peut alors le poser plus haut que
+ * le sol. Sinon `undefined`. Rochers mesurés (`perches`) et rochers « à escalader » du décor (moitié haute de leur zone).
+ *
+ * Sans saut de taille (capture de l'ours sur les blocs de glace, 2026-11-24 : « il y a un problème de changement de
+ * taille, ça saute à ce niveau ») : avant, le dessus du rocher donnait d'un coup la taille de son pied, et le sol juste
+ * au-dessus ou juste en dessous une taille bien plus petite. Maintenant, en montant au doigt :
+ * - devant le pied du rocher : le sol, comme partout ;
+ * - sur la face du rocher (entre son pied et son dessus) : la taille de son pied ;
+ * - sur le dessus : la taille diminue régulièrement jusqu'à celle du sol juste derrière (ou du fond du sol) ;
+ * - au-delà : le sol. La taille ne fait que diminuer, sans jamais sauter.
+ * Une arche est creuse : sous elle, c'est le sol ; seul son dessus compte.
  */
 export function perchAt(place: Perches, x: number, y: number): number | undefined {
   const hz = horizonOf(place.groundY, place.horizonY);
-  const tops: { x: number; y: number; w: number; h: number; base: number }[] = [...(place.perches ?? [])];
+  const floor = place.farY === undefined ? hz : farAt(place.farY, x);
+  const tops: { x: number; y: number; w: number; h: number; base: number; hollow?: boolean }[] = [...(place.perches ?? [])];
   for (const a of place.anchors ?? []) {
     const base = a.hit.y + a.hit.h;
-    if (a.tags?.includes('climb') && SOLID.has(a.id) && base > hz + 2) tops.push({ x: a.hit.x, y: a.hit.y, w: a.hit.w, h: a.hit.h * 0.55, base });
+    if (a.tags?.includes('climb') && SOLID.has(a.id) && base > hz + 2) tops.push({ x: a.hit.x, y: a.hit.y, w: a.hit.w, h: a.hit.h * 0.55, base, hollow: a.id === 'arch' });
   }
   let best: number | undefined;
   for (const t of tops) {
-    if (x >= t.x && x <= t.x + t.w && y >= t.y && y <= t.y + t.h && y < t.base) best = Math.max(best ?? -1, t.base); // le plus proche devant
+    if (x < t.x || x > t.x + t.w || y < t.y || y >= t.base) continue;
+    const end = t.y + t.h;
+    // pied du rocher, jamais plus au fond que le sol (un rocher posé derrière le bord du sol a la taille du fond)
+    const foot = Math.max(t.base, Math.min(floor, 99.5));
+    let depth: number;
+    if (y >= end) {
+      if (t.hollow) continue; // sous l'arche : le sol
+      depth = foot; // sur la face : la taille du pied
+    } else {
+      // sur le dessus : du pied (bord de devant) au sol juste derrière (bord du fond)
+      const back = Math.min(foot, Math.max(t.y, floor));
+      depth = back + ((foot - back) * (y - t.y)) / Math.max(1e-6, t.h);
+    }
+    best = Math.max(best ?? -1, depth); // le plus proche devant
   }
   return best;
 }
@@ -241,13 +268,13 @@ export function perchAt(place: Perches, x: number, y: number): number | undefine
  * Demande du parent : « il faut bien que les animaux soient posés sur la terre et pas au milieu de l'eau ».
  * Lâché dans un lac ou une rivière, l'animal va sur la berge la plus proche (pas plus au fond que `floor`).
  */
-export function dryNear(water: Water | undefined, x: number, y: number, floor: (x: number) => number): { x: number; y: number } {
-  if (!inWater(water, x, y)) return { x, y };
+export function dryNear(water: Water | undefined, x: number, y: number, floor: (x: number) => number, floes?: Water): { x: number; y: number } {
+  if (!inWater(water, x, y, floes)) return { x, y };
   let best: { x: number; y: number; d: number } | undefined;
   for (let px = 3; px <= 97; px += 0.5) {
     const top = Math.min(floor(px), 99.5);
     for (let py = top; py <= 99.5; py += 0.5) {
-      if (inWater(water, px, py)) continue;
+      if (inWater(water, px, py, floes)) continue;
       const d = Math.hypot(px - x, (py - y) * (9 / 16));
       if (!best || d < best.d) best = { x: px, y: py, d };
     }

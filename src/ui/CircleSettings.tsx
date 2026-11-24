@@ -7,11 +7,12 @@ const WHY: Record<Exclude<CircleResult, { ok: true }>['reason'], string> = {
   offline: 'Pas de connexion au serveur. Vérifiez internet puis réessayez.',
   name: 'Donnez d’abord un prénom à la joueuse (écran de départ), pour que ses amis la reconnaissent.',
   full: 'Ce cercle a déjà 12 enfants.',
+  taken: 'Ce code est déjà utilisé par un autre cercle. Choisissez-en un autre, ou prenez « Rejoindre un cercle » si c’est le vôtre.',
 };
 
 /** Espace parents : créer, rejoindre ou quitter le cercle d'amis (engine/circle.ts). */
 export function CircleSettings({ circle }: { circle: CircleInfo }) {
-  const [mode, setMode] = useState<'idle' | 'join'>('idle');
+  const [mode, setMode] = useState<'idle' | 'join' | 'create'>('idle');
   const [typed, setTyped] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -91,6 +92,50 @@ export function CircleSettings({ circle }: { circle: CircleInfo }) {
             ← Retour
           </button>
         </form>
+      ) : mode === 'create' ? (
+        <form
+          className="family-form"
+          onSubmit={(e: FormEvent) => {
+            e.preventDefault();
+            void run(() => circle.create(typed));
+          }}
+        >
+          <p className="note">Voici un code proposé. Vous pouvez l’effacer et choisir le vôtre (par exemple « amis-lea-tom-2026 »).</p>
+          <input
+            className="access-input"
+            value={typed}
+            onChange={(e) => setTyped(e.target.value)}
+            placeholder="amis-lea-tom-2026"
+            autoComplete="off"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            aria-label="Code du cercle d’amis choisi"
+            aria-invalid={error !== null}
+            autoFocus
+          />
+          <p className="note">Lettres et chiffres, au moins 4 ; les espaces deviennent des tirets. Évitez un code facile à deviner : toute personne qui le connaît voit les cartes du cercle.</p>
+          {error && (
+            <p className="access-wrong" role="alert">
+              {error}
+            </p>
+          )}
+          <button className="ok" type="submit" disabled={busy || !typed.trim()}>
+            {busy ? '⏳' : 'Créer le cercle'}
+          </button>
+          <button type="button" disabled={busy} onClick={() => setTyped(circle.propose())}>
+            🎲 Un autre code proposé
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setMode('idle');
+              setError(null);
+            }}
+          >
+            ← Retour
+          </button>
+        </form>
       ) : (
         <>
           {error && (
@@ -98,13 +143,22 @@ export function CircleSettings({ circle }: { circle: CircleInfo }) {
               {error}
             </p>
           )}
-          <button className="ok" disabled={busy} onClick={() => void run(circle.create)}>
-            {busy ? '⏳' : 'Créer un cercle (première famille)'}
+          <button
+            className="ok"
+            disabled={busy}
+            onClick={() => {
+              setError(null);
+              setTyped(circle.propose());
+              setMode('create');
+            }}
+          >
+            Créer un cercle (première famille)
           </button>
           <button
             disabled={busy}
             onClick={() => {
               setError(null);
+              setTyped('');
               setMode('join');
             }}
           >

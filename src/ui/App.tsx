@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { speech } from '../audio/speech';
-import { getSpecies, SPECIES } from '../content/species';
+import { continentMates, getSpecies, SPECIES } from '../content/species';
 import { say } from '../content/utterances';
 import type { SeaGameId } from '../content/sea';
-import type { BiomeId, PlaceId } from '../content/types';
-import { getBiome, getContinent } from '../content/world';
+import type { BiomeId, PlaceId, SpeciesDef } from '../content/types';
+import { getBiome } from '../content/world';
 import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
 import { Friends } from './Friends';
 import { Habitat } from './Habitat';
@@ -89,31 +89,39 @@ export function App() {
   return (
     <div className="app">
       <nav className="topbar">
-        <button className="round" onClick={() => setScreen({ kind: 'map' })} aria-label="Carte du monde">
-          <Icon name="map" />
-        </button>
-        {screen.kind === 'habitat' && <WherePill speciesId={screen.speciesId} placeId={here ?? screen.biomeId} frenchHelp={state.settings.frenchHelp} />}
-        <span className="spacer" />
-        {screen.kind === 'map' && (
-          <button className="topbar-title" onClick={() => void speech.speak('World map!')} aria-label="World map">
-            <span className="topbar-orn">✦</span>
-            World Map
-            <span className="topbar-orn">✦</span>
+        <div className="tb-side">
+          <button className="round tb-map" onClick={() => setScreen({ kind: 'map' })} aria-label="Carte du monde">
+            <Icon name="map" />
           </button>
-        )}
-        <span className="spacer" />
-        <button className="round" onClick={() => open({ kind: 'passport' })} aria-label="Passeport">
+          {screen.kind === 'habitat' && (
+            <SpeciesHop
+              current={screen.speciesId}
+              onPick={(s) => {
+                if (s.id === screen.speciesId) return;
+                void speech.speak(say.speciesPick(s));
+                setHere(null);
+                setScreen({ kind: 'habitat', speciesId: s.id, biomeId: s.allowedBiomes[0]! });
+              }}
+            />
+          )}
+        </div>
+        {screen.kind === 'map' && <BarTitle text="World Map" onTap={() => void speech.speak('World map!')} />}
+        {screen.kind === 'habitat' && <PlaceTitle placeId={here ?? screen.biomeId} />}
+        {screen.kind !== 'map' && screen.kind !== 'habitat' && <span />}
+        <div className="tb-side tb-end">
+        <button className="round tb-bag" onClick={() => open({ kind: 'passport' })} aria-label="Passeport">
           <Icon name="bag" />
         </button>
         {circle.code && (
-          <button className="round friends-btn" onClick={() => open({ kind: 'friends' })} aria-label="Mes amis">
+          <button className="round tb-friends friends-btn" onClick={() => open({ kind: 'friends' })} aria-label="Mes amis">
             <Icon name="friends" />
             {circle.fresh.length > 0 && <span className="friends-dot" aria-hidden />}
           </button>
         )}
-        <button className="round small" onClick={() => open({ kind: 'parents' })} aria-label="Espace parents">
+        <button className="round small tb-gear" onClick={() => open({ kind: 'parents' })} aria-label="Espace parents">
           <Icon name="gear" />
         </button>
+        </div>
       </nav>
       {screen.kind === 'map' && <WorldMap state={state} onPick={(s, b) => setScreen({ kind: 'habitat', speciesId: s.id, biomeId: b })} onSea={(game) => setScreen({ kind: 'sea', game })} />}
       {screen.kind === 'sea' && <SeaBonus key={screen.game} state={state} setState={setState} game={screen.game} onClose={() => setScreen({ kind: 'map' })} />}
@@ -138,24 +146,43 @@ export function App() {
   );
 }
 
-/** Bandeau : vignette du décor, nom du lieu (touché = lu à voix haute), continent et espèce. */
-function WherePill({ speciesId, placeId, frenchHelp }: { speciesId: string; placeId: PlaceId; frenchHelp: boolean }) {
-  const place = getBiome(placeId);
-  const species = getSpecies(speciesId);
-  const bg = background(place.background);
+/** Titre au milieu du bandeau ; touché, il est lu à voix haute. */
+function BarTitle({ text, onTap }: { text: string; onTap: () => void }) {
   return (
-    <button className="where" onClick={() => void speech.speak(say.placeName(place))} aria-label={place.nameEn}>
-      <span className="where-thumb" style={bg ? { backgroundImage: `url("${assetUrl(bg)}")` } : { background: place.placeholderGradient }}>
-        <span className="where-species">{species.icon}</span>
-      </span>
-      <span className="where-text">
-        <b>{place.nameEn}</b>
-        <small>
-          {getContinent(place.continentId).nameEn}
-          {frenchHelp && <> · {place.nameFr}</>}
-        </small>
-      </span>
+    <button className="topbar-title" onClick={onTap} aria-label={text}>
+      <span className="topbar-orn">✦</span>
+      <span className="topbar-text">{text}</span>
+      <span className="topbar-orn">✦</span>
     </button>
+  );
+}
+
+/** Dans un décor, son nom seul, au milieu du bandeau (demande du parent, 2026-11-24 : « mettre proprement le nom du tableau au milieu du bandeau »). */
+function PlaceTitle({ placeId }: { placeId: PlaceId }) {
+  const place = getBiome(placeId);
+  return <BarTitle text={place.nameEn.charAt(0).toUpperCase() + place.nameEn.slice(1)} onTap={() => void speech.speak(say.placeName(place))} />;
+}
+
+/**
+ * Les autres animaux du continent, en portraits ronds (demande du parent, 2026-11-24 : « quand nous sommes dans un
+ * continent, il y ait le logo des autres animaux pour pouvoir passer de l'un à l'autre facilement, sans avoir à
+ * ressortir jusqu'à la MAP principale »). L'animal joué est entouré de jaune ; un toucher ouvre l'autre, comme la carte.
+ */
+export function SpeciesHop({ current, onPick }: { current: string; onPick: (s: SpeciesDef) => void }) {
+  const list = continentMates(current);
+  if (list.length < 2) return null;
+  return (
+    <div className="hop" role="group" aria-label="Animals">
+      {list.map((s) => {
+        const art = spriteFor(s.id, { role: 'father' });
+        const here = s.id === current;
+        return (
+          <button key={s.id} className={`hop-btn${here ? ' here' : ''}`} onClick={() => onPick(s)} aria-label={s.nameEn} aria-current={here ? 'true' : undefined} title={s.nameEn}>
+            {art ? <img src={assetUrl(art)} alt="" draggable={false} /> : <span>{s.icon}</span>}
+          </button>
+        );
+      })}
+    </div>
   );
 }
 

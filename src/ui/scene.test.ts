@@ -176,3 +176,25 @@ describe('scene — chaque zone à toucher répond là où on la touche', () => 
     expect(errors).toEqual([]);
   });
 });
+
+describe('scene — taille de départ propre à un décor', () => {
+  // 2026-11-24 (demande du parent) : « Ce décor n'est pas du tout proportionné au Jaguar » — « trop grand »
+  // (l'étang d'alors a été remplacé par la clairière : le réglage reste, testé avec un plan à la main)
+  it('un décor à taille réduite réduit toute la famille, bébés compris, et les autres décors gardent la taille habituelle', () => {
+    const river = PLACES.sa_river!;
+    const wet = { ...PLACES.sa_wetland!, homeScale: 0.7 };
+    expect(river.homeScale).toBeUndefined();
+    const b = createBaby(getFamily(newGameState(), 'jaguar'), 'girl', 'Mia', 'jaguar-b1');
+    if (!b.ok) throw new Error(b.error);
+    const actors = [
+      { kind: 'adult', speciesId: 'jaguar', role: 'father' },
+      { kind: 'adult', speciesId: 'jaguar', role: 'mother' },
+      { kind: 'baby', speciesId: 'jaguar', babyId: 'jaguar-b1' },
+    ] as const;
+    for (const a of actors) {
+      const usual = homePlacement(a, b.family, wet.groundY, wet.lane, river).h;
+      const here = homePlacement(a, b.family, wet.groundY, wet.lane, wet).h;
+      expect(here / usual, a.kind).toBeCloseTo(wet.homeScale!, 5);
+    }
+  });
+});

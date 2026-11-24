@@ -53,7 +53,6 @@ const WATER_SPOTS: Readonly<Record<string, readonly [number, number, number]>> =
   europe_lake: [2, 3, 4],
   europe_hog_lake: [8, 9, 10], // 2026-11-23 : les trois emplacements dans l'eau du lac de montagne
   sa_waterfall: [1, 2, 3],
-  sa_wetland: [1, 2, 3],
   sa_river: [3, 5, 4],
   oc_fern_forest: [1, 2, 3],
   oc_gorge: [7, 6, 4],
@@ -533,7 +532,7 @@ const PHOTO_SUBJECTS: Readonly<Record<string, readonly string[]>> = {
   sa_waterfall: ['waterfall', 'mountain', 'vine', 'pool'],
   sa_river: ['ruins', 'river', 'water_lily', 'staircase'],
   sa_andes: ['mountain', 'ruins', 'snow', 'terrace'],
-  sa_wetland: ['water', 'tree', 'mountain', 'liana'],
+  sa_wetland: ['tree', 'liana', 'sunlight', 'flower'],
   sa_canopy_branch: ['branch', 'vine', 'waterfall', 'blossom'],
   sa_canopy_treehouse: ['treehouse', 'orchid', 'bridge', 'platform'],
   sa_canopy_sunrise: ['orchid', 'fruit', 'sun', 'mango'],

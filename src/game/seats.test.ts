@@ -3,7 +3,7 @@ import { PLACES } from '../content/places';
 import type { ActorRef, FamilyState } from '../engine/state';
 import { dragSpot } from '../ui/drag';
 import { homePlacement } from '../ui/scene';
-import { nearSeat, SEAT_REACH, seatAt, snapToSeats } from './staging';
+import { farAt, nearSeat, placeScale, SEAT_REACH, seatAt, snapToSeats } from './staging';
 
 // demande du parent (2026-11-23, nid des hiboux) : « je veux pouvoir déplacer les oiseaux sur les endroits
 // stratégiques, c'est-à-dire la pierre où est Olive, toute la branche où est Oscar avec un effet de profondeur
@@ -77,9 +77,9 @@ describe('nid des hiboux : on se pose sur le rocher, la branche ou un nid', () =
 
   it('les autres décors ne sont pas touchés', () => {
     const withSeats = Object.values(PLACES).filter((p) => p.seats?.length).map((p) => p.id).sort();
-    expect(withSeats).toEqual(['europe_owl_moon', 'europe_owl_nest', 'europe_owl_oak', 'sa_canopy_treehouse', 'sa_sloth_refuge']);
+    expect(withSeats).toEqual(['europe_owl_moon', 'europe_owl_nest', 'europe_owl_oak', 'na_beaver_pond', 'na_bison_canyon', 'sa_canopy_treehouse', 'sa_river', 'sa_sloth_refuge']);
     const groundToo = Object.values(PLACES).filter((p) => p.groundToo).map((p) => p.id).sort();
-    expect(groundToo).toEqual(['europe_owl_oak', 'sa_canopy_treehouse', 'sa_sloth_refuge']);
+    expect(groundToo).toEqual(['europe_owl_oak', 'na_beaver_pond', 'na_bison_canyon', 'sa_canopy_treehouse', 'sa_river', 'sa_sloth_refuge']);
   });
 });
 
@@ -223,3 +223,71 @@ describe('refuge des paresseux : dans le creux de l’arbre, à la taille du nid
 function xy(p: { x: number; y: number }): [number, number] {
   return [p.x, p.y];
 }
+
+// demande du parent (2026-11-24) : castors « jusqu'au toit de leur nid, rentrer le castor dans le petit trou » ; bison
+// « au fond, au bord de la falaise, proportionnellement adapté » ; jaguar « il doit pouvoir aller jusque là » (les ruines)
+describe('perchoirs de décors au sol : le sol reste libre, la hutte, la falaise et les ruines s’y ajoutent', () => {
+  const cases = [
+    { place: 'na_beaver_pond', species: 'beaver', ground: [50, 88], drops: [{ at: [74, 36], seat: 'roof', y: [37, 40], big: 0.4 }, { at: [69, 50], seat: 'entrance', y: [50, 51.5], big: 0.3 }] },
+    { place: 'na_bison_canyon', species: 'bison', ground: [60, 88], drops: [{ at: [20, 41], seat: 'cliff', y: [41, 47], big: 0.4 }] },
+    { place: 'sa_river', species: 'jaguar', ground: [30, 92], drops: [{ at: [47, 36], seat: 'ruin', y: [38, 41], big: 0.4 }] },
+  ];
+  for (const c of cases) {
+    const place = PLACES[c.place]!;
+    const actor = { kind: 'adult', speciesId: c.species, role: 'father' } as ActorRef;
+    const nat = homePlacement(actor, family, place.groundY).h;
+    const home = homePlacement(actor, family, place.groundY, place.lane, place);
+    const move = (x: number, y: number) => dragSpot(home, { x, y }, 0, placeScale(place, home.y), 0, undefined, undefined, undefined, { list: place.seats!, naturalH: nat, groundToo: true });
+
+    it(`${c.place} : la place de départ au sol ne change pas`, () => {
+      expect(place.groundToo).toBe(true);
+      expect(home).toEqual(homePlacement(actor, family, place.groundY));
+    });
+
+    it(`${c.place} : glissé au sol, il reste au sol comme avant`, () => {
+      const [x, y] = c.ground as [number, number];
+      expect(nearSeat(place.seats!, nat, x, y, SEAT_REACH)).toBeUndefined();
+      expect(move(x, y)).toEqual(dragSpot(home, { x, y }, 0, placeScale(place, home.y), 0));
+    });
+
+    for (const d of c.drops)
+      it(`${c.place} : lâché près de « ${d.seat} », il s’y pose, à la taille de cet endroit`, () => {
+        const [x, y] = d.at as [number, number];
+        const s = move(x, y);
+        expect(s.y).toBeGreaterThanOrEqual(d.y[0]!);
+        expect(s.y).toBeLessThanOrEqual(d.y[1]!);
+        expect(s.h).toBeLessThan(home.h * d.big);
+        // jamais plus grand qu'au fond du sol : l'endroit est derrière
+        const far = placeScale(place, home.y)(home.y, farAt(place.farY!, s.x)) * home.h;
+        expect(s.h).toBeLessThanOrEqual(far * 1.05);
+      });
+  }
+
+  it('hutte des castors : le toit est plus haut que le fond du sol, l’entrée est au ras de l’eau', () => {
+    const lodge = PLACES.na_beaver_pond!;
+    const roof = seatAt(lodge.seats!.find((x) => x.id === 'roof')!, 75);
+    const door = seatAt(lodge.seats!.find((x) => x.id === 'entrance')!, 69);
+    expect(roof.front).toBeLessThan(42);
+    expect(door.back).toBeGreaterThan(roof.front);
+    expect(door.front).toBeLessThanOrEqual(52);
+    expect(door.scale).toBeLessThan(roof.scale);
+  });
+});
+
+// demande du parent (2026-11-24, capture des ours) : « les proportions et l'emplacement ne sont pas du tout logiques »
+describe('forêt de séquoias : les ours restent sur le chemin, pas dans les buissons au pied des troncs', () => {
+  const wood = PLACES.na_redwoods!;
+  it('le fond du sol est le bout du chemin (y 66), plus bas que le pied des troncs', () => {
+    expect(farAt(wood.farY!, 55)).toBe(66);
+    expect(farAt(wood.farY!, 70)).toBe(66);
+    expect(wood.horizonY).toBeLessThan(66);
+  });
+  it('au bout du chemin, l’ours est nettement plus petit qu’au premier plan, sans être minuscule', () => {
+    const scale = placeScale(wood, 78)(78, 66);
+    expect(scale).toBeGreaterThan(0.3);
+    expect(scale).toBeLessThan(0.45);
+  });
+  it('sur la gauche, le sol remonte moins loin : les grosses racines ne sont pas un sol', () => {
+    expect(farAt(wood.farY!, 20)).toBeGreaterThan(farAt(wood.farY!, 50));
+  });
+});

@@ -131,9 +131,8 @@
       "maxWidth": 1672
     },
     "sa_wetland": {
-      "src": "Continant/Amerique du sud/Clairière tropicale et cascade enchantée-1.png",
-      "maxWidth": 1672,
-      "flip": true
+      "src": "Animaux/Amerique du Sud/Jaguars/Clairière tropicale ensoleillée de jungle.png",
+      "maxWidth": 1672
     },
     "sa_canopy_branch": {
       "src": "Animaux/Amerique du Sud/Toucans/Image ChatGPT 21 nov. 2026, 08_22_35-1.png",

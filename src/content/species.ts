@@ -79,6 +79,11 @@ export function speciesOfContinent(continentId: SpeciesDef['continentId']): Spec
   return SPECIES.filter((s) => s.continentId === continentId);
 }
 
+/** Animaux jouables du même continent, dans l'ordre de la carte (barre du haut : passer de l'un à l'autre). */
+export function continentMates(speciesId: string): SpeciesDef[] {
+  return speciesOfContinent(getSpecies(speciesId).continentId).filter((s) => s.playable);
+}
+
 /** Espèces qui peuvent vivre dans un lieu. */
 export function speciesOfPlace(placeId: string): SpeciesDef[] {
   return SPECIES.filter((s) => s.allowedBiomes.includes(placeId));

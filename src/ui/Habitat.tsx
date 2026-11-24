@@ -27,7 +27,7 @@ import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
 import { TreasureIcon } from './TreasureIcon';
 import { rigFor } from '../game/rigs';
-import { canFly, depthScale, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, walkMs, WALK_MS } from '../game/staging';
+import { canFly, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { dragSpot, isDrag, type Spot } from './drag';
@@ -311,7 +311,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             state={state}
             species={species}
             place={spotOf(a) ?? homePlacement(a, family, biome.groundY, biome.lane, biome)}
-            baseH={biome.seats?.length && !biome.groundToo ? homePlacement(a, family, biome.groundY).h : homePlacement(a, family, biome.groundY, biome.lane).h}
+            baseH={biome.seats?.length && !biome.groundToo ? homePlacement(a, family, biome.groundY).h : homePlacement(a, family, biome.groundY, biome.lane, biome).h}
             face={spotOf(a)?.f}
             dim={!!night}
             paused={showFamily || !!grow || !!stickerPick}
@@ -321,7 +321,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
                 : (pointer, grabDy) => {
                     const home = homePlacement(a, family, biome.groundY, biome.lane, biome);
                     const hz = horizonOf(biome.groundY, biome.horizonY);
-                    const next = dragSpot(home, pointer, grabDy, placeScale(biome, home.y), (x) => farthestY(home.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y), biome.lane, biome.water, biome.seats && { list: biome.seats, naturalH: homePlacement(a, family, biome.groundY).h, groundToo: biome.groundToo });
+                    const next = dragSpot(home, pointer, grabDy, placeScale(biome, home.y), (x) => farthestY(home.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y), biome.lane, biome.water, biome.seats && { list: biome.seats, naturalH: homePlacement(a, family, biome.groundY).h, groundToo: biome.groundToo }, biome.floes);
                     // il regarde vers où on l'emmène, et garde ce sens une fois posé
                     const prev: Spot = (liveRef.current?.id === actorId(a) ? liveRef.current.spot : undefined) ?? spotOf(a) ?? { x: home.x, y: home.y, h: home.h };
                     const dx = next.x - prev.x;
@@ -954,7 +954,10 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
         // décor à percher : il va se poser sur l'endroit le plus proche de ce qu'il va voir (rocher, branche, nid)
         const seat = target && place.seats?.length ? (place.groundToo ? nearSeat(place.seats, natural, toX, toY, SEAT_REACH) : snapToSeats(place.seats, natural, toX, toY)) : undefined;
         const perched = seat ? (({ seat: _seat, ...on }: typeof seat) => ({ ...home, ...on }))(seat) : undefined;
-        const pos = perched ?? (target ? { ...home, x: toX, y: toY, h: place.lane ? home.h : home.h * depthScale(home.y, toY) } : home);
+        // même perspective que l'animal posé au doigt (taille au fond choisie sur le dessin du décor, places/depth.ts) ;
+        // sur un rocher, la taille de son pied ; jamais plus petit qu'au fond du sol
+        const sizeY = Math.max(perchAt(place, toX, toY) ?? toY, place.farY === undefined ? toY : Math.min(farAt(place.farY, toX), home.y));
+        const pos = perched ?? (target ? { ...home, x: toX, y: toY, h: place.lane ? home.h : home.h * placeScale(place, home.y)(home.y, sizeY) } : home);
         const acting = run.acting && mySpeakers.includes(run.acting.who) ? run.acting.action : undefined;
         const speaking = !!run.bubble && mySpeakers.includes(run.bubble.who) && !move;
         const worn = mySpeakers.flatMap((sp) => run.wearing[sp] ?? []);

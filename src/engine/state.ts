@@ -130,6 +130,17 @@ export interface GameState {
   settings: Settings;
   /** l'introduction (prénom de la joueuse) a été vue */
   onboarded: boolean;
+  /**
+   * Cercle d'amis de la famille (engine/circle.ts), gardé DANS la partie : une fois entré, le code reste, même si le
+   * navigateur est vidé, et suit la partie partagée sur tous les appareils. Absent = aucun cercle.
+   */
+  circle?: CircleRef;
+}
+
+/** Le cercle rejoint : son code et l'identifiant de cette famille dedans (une seule carte par enfant, quel que soit l'appareil). */
+export interface CircleRef {
+  code: string;
+  id: string;
 }
 
 export function newGameState(): GameState {

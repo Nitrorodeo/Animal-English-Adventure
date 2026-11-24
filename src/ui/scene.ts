@@ -76,6 +76,8 @@ export interface SeatPlan {
   seats?: readonly SeatLike[];
   seatHome?: Record<'father' | 'mother' | 'baby1' | 'baby2', readonly [string, number]>;
   groundToo?: boolean;
+  /** taille de départ de la famille dans ce décor, en fraction de la taille habituelle de l'espèce */
+  homeScale?: number;
 }
 
 /** Rôle d'un personnage dans la famille : papa, maman, premier ou second bébé. */
@@ -94,7 +96,7 @@ export function homePlacement(actor: ActorRef, family: FamilyState, groundY = RE
     const { seat: _s, ...spot } = snapToSeats([seat], natural, x, (S.back + S.front) / 2);
     return spot;
   }
-  const adultH = ADULT_HEIGHT[actor.speciesId] ?? 34;
+  const adultH = (ADULT_HEIGHT[actor.speciesId] ?? 34) * (lane ? 1 : plan?.homeScale ?? 1);
   if (lane) {
     // décor perché : toute la famille est sur la branche, taille normale
     const baby = actor.kind === 'adult' ? undefined : family.babies.find((b) => b.id === actor.babyId);

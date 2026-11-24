@@ -89,7 +89,8 @@ export function useGame() {
     resetGame(storage.current);
     sendBackup('DELETE');
     setRestored(false);
-    setState(newGameState());
+    // la remise à zéro n'efface pas le cercle d'amis : le code reste, la carte se remet à jour avec le nouveau prénom
+    setState((s) => ({ ...newGameState(), ...(s.circle ? { circle: s.circle } : {}) }));
   }, []);
 
   // phrases dites avec le prénom de la joueuse, préparées par l'ordinateur (engine/nameVoice.ts)
@@ -99,7 +100,7 @@ export function useGame() {
   const cloud = useCloudSync(state, setState, storage.current);
 
   // version en ligne : le petit tableau de bord des amis (engine/circle.ts)
-  const circle = useCircle(state, storage.current);
+  const circle = useCircle(state, setState, storage.current);
 
   return { state, setState, loadStatus, restored, reset, nameVoice, cloud, circle };
 }

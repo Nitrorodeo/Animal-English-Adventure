@@ -5,6 +5,7 @@ import {
   cleanName,
   friendsList,
   markSeen,
+  newCircleCode,
   newFriendIds,
   newMemberId,
   parseCircle,
@@ -16,6 +17,8 @@ import {
   type CircleMeta,
   type Friend,
 } from './circle';
+import { isFamilyCode, normalizeFamilyCode } from './cloud';
+import { migrate } from './save';
 import { createRng } from './rng';
 import { memoryStorage } from './save';
 import { newGameState, type GameState } from './state';
@@ -65,6 +68,22 @@ describe('le petit tableau de bord d’un enfant', () => {
     expect(summaryKey(a)).toBe(summaryKey({ ...a }));
     expect(summaryKey(a)).not.toBe(summaryKey({ ...a, stars: a.stars + 1 }));
     expect(summaryKey(a)).not.toBe(summaryKey({ ...a, name: 'Lila' }));
+  });
+});
+
+describe('code du cercle', () => {
+  it('le code proposé est valide, reconnaissable (amis-…) et varie', () => {
+    const rng = createRng(11);
+    const a = newCircleCode(rng.next);
+    expect(a).toMatch(/^amis-[a-z]+-[a-z]+-\d{4}$/);
+    expect(isFamilyCode(a)).toBe(true);
+    expect(newCircleCode(rng.next)).not.toBe(a);
+  });
+
+  it('un code choisi à la main est nettoyé comme celui de la famille', () => {
+    expect(normalizeFamilyCode('  Amis Léa & Tom 2026 ')).toBe('amis-lea-tom-2026');
+    expect(isFamilyCode(normalizeFamilyCode('amis léa tom'))).toBe(true);
+    expect(isFamilyCode(normalizeFamilyCode('ab'))).toBe(false);
   });
 });
 
@@ -230,5 +249,25 @@ describe('service en ligne : cercle d’amis (cloud/worker.mjs)', () => {
     expect(r.status).toBe(204);
     expect(r.headers.get('Access-Control-Allow-Headers')).toContain('X-Circle');
     expect(r.headers.get('Access-Control-Allow-Methods')).toContain('DELETE');
+  });
+});
+
+describe('le cercle reste dans la partie (définitif)', () => {
+  it('le code et l’identifiant survivent à la sauvegarde et à la partie partagée', () => {
+    const st = { ...newGameState(), circle: { code: 'amis-lea-tom-2026', id: 'abcd1234efgh5678' } };
+    const back = migrate(JSON.parse(JSON.stringify(st)));
+    expect(back!.circle).toEqual({ code: 'amis-lea-tom-2026', id: 'abcd1234efgh5678' });
+  });
+  it('une ancienne partie sans cercle reste sans cercle', () => {
+    const back = migrate(JSON.parse(JSON.stringify(newGameState())));
+    expect(back).not.toBeNull();
+    expect('circle' in back!).toBe(false);
+  });
+  it('un cercle abîmé est ignoré sans casser la partie', () => {
+    for (const bad of [{ code: 'a', id: 'abcd1234efgh5678' }, { code: 'amis-lea', id: 'X!' }, 'amis-lea', null]) {
+      const back = migrate({ ...JSON.parse(JSON.stringify(newGameState())), circle: bad });
+      expect(back).not.toBeNull();
+      expect(back!.circle).toBeUndefined();
+    }
   });
 });

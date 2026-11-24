@@ -91,6 +91,10 @@ export interface BiomeDef {
   horizonY?: number;
   /** sol le plus au fond où l'on peut poser un animal (%) */
   farY?: number | [number, number][];
+  /** taille d'un animal tout au fond du sol, choisie sur le dessin (voir places/depth.ts) */
+  farSize?: number;
+  /** blocs de banquise dans l'eau où l'on peut se poser (voir places/depth.ts) */
+  floes?: [number, number][][];
   /** décor perché (toucans) : le seul sol possible est le dessus d'une branche, `[x, fond, devant]` en % (voir places/depth.ts) */
   lane?: [number, number, number][];
   /** eau dessinée au sol (lac, rivière) : on n'y pose aucun animal (voir places/depth.ts) */
@@ -101,6 +105,8 @@ export interface BiomeDef {
   seatHome?: Record<'father' | 'mother' | 'baby1' | 'baby2', [string, number]>;
   /** le sol reste libre ; les `seats` s'ajoutent (un animal lâché tout près s'y pose) */
   groundToo?: boolean;
+  /** taille de départ de la famille dans ce décor, en fraction de la taille habituelle (voir places/depth.ts) */
+  homeScale?: number;
   /** l'image est déjà une scène de nuit : pas de bouton « Bonne nuit » (demande du parent, 2026-11-23) */
   nightImage?: boolean;
   /** dessus de gros rochers du décor où l'on peut poser un animal ; `base` = pied du rocher */

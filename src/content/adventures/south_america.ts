@@ -101,32 +101,32 @@ const oldStones = (sp: SpeciesDef): QuestStep[] => {
 };
 
 // ---------------------------------------------------------------------------
-// 3. L'étang de la jungle — de la rivière à l'étang (jaguar, paresseux)
+// 3. La clairière de la jungle — de la rivière à la clairière ensoleillée (jaguar)
+//    2026-11-24 : l'étang et sa cascade sont remplacés par une clairière sans eau (demande du parent) ;
+//    l'aventure garde son identifiant (les passeports la connaissent) mais ne parle plus d'eau.
 // ---------------------------------------------------------------------------
 
-const lilyPond = (sp: SpeciesDef): QuestStep[] => [
-  say('narrator', 'Plip, plop! There is a little pond in the jungle.', 'Plip, plop ! Il y a un petit étang dans la jungle.', {}, 'curious'),
-  tap('mother', 'Follow the path to the pond! Where is the path?', "Suivons le chemin jusqu'à l'étang ! Où est le chemin ?", 'path', ['Look down! Find the path!', 'Regarde en bas ! Trouve le chemin !'], ['path', 'follow_the_path']),
+const toTheClearing = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'Look! There is a sunny clearing in the jungle.', 'Regarde ! Il y a une clairière ensoleillée dans la jungle.', {}, 'curious'),
+  tap('mother', 'Follow the path to the clearing! Where is the path?', "Suivons le chemin jusqu'à la clairière ! Où est le chemin ?", 'path', ['Look down! Find the path!', 'Regarde en bas ! Trouve le chemin !'], ['path', 'follow_the_path']),
   moveTo('path', 'walk', 'mother'),
-  go('sa_wetland', 'mother', "Let's go to the pond!", "Allons à l'étang !"),
-  say('narrator', 'Welcome to the jungle pond! The water is blue.', "Bienvenue à l'étang de la jungle ! L'eau est bleue.", {}, 'happy'),
-  tap('father', 'Where is the little waterfall? Show me!', 'Où est la petite cascade ? Montre-moi !', 'waterfall', ['The water falls from the rocks!', "L'eau tombe des rochers !"], ['waterfall', 'where']),
-  tap('mother', 'And where is the water of the pond?', "Et où est l'eau de l'étang ?", 'water', ['It is blue and calm!', 'Elle est bleue et calme !'], ['water', 'where']),
-  ask('father', 'What colour is the flower?', 'De quelle couleur est la fleur ?', [ok('Pink!', 'Rose !', '🩷'), no('Black!', 'Noir !', '⚫'), no('Orange!', 'Orange !', '🟠'), no('Blue!', 'Bleu !', '🔵')], ['Look at the flower!', 'Regarde la fleur !'], ['pink', 'flower'], { pointAt: 'flower' }),
-  say('narrator', 'Ribbit, ribbit! Frogs jump on the rocks!', 'Coa, coa ! Des grenouilles sautent sur les rochers !', {}, 'happy'),
-  ...countScene('mother', 'frog', [0, 1, 2, 4, 5], { beginner: 3, intermediate: 4, expert: 5 }, 'frog'),
-  say('baby', 'Hello, little frogs!', 'Bonjour, petites grenouilles !', { needs: 'baby' }, 'happy'),
-  act('actor', 'swim', 'I swim in the pond! Splash, splash!', "Je nage dans l'étang ! Splash, splash !", 'actor'),
-  act('baby', 'splash', 'Splash! The pond is so nice!', "Splash ! L'étang est trop bien !", 'baby', { needs: 'baby' }),
-  tap('father', 'Where is the big tree? Look up high!', 'Où est le grand arbre ? Regarde en haut !', 'tree', ['It is very tall!', 'Il est très grand !'], ['tree', 'tall', 'where'], { minTier: 'intermediate' }),
+  go('sa_wetland', 'mother', "Let's go to the clearing!", 'Allons à la clairière !'),
+  say('narrator', 'Welcome to the sunny clearing! The sun is warm.', 'Bienvenue dans la clairière ensoleillée ! Le soleil est chaud.', {}, 'happy'),
+  tap('father', 'Where is the big tree? Look up high!', 'Où est le grand arbre ? Regarde en haut !', 'tree', ['It is very tall!', 'Il est très grand !'], ['tree', 'tall', 'where']),
+  tap('mother', 'And where is the sunlight? Look up!', 'Et où est la lumière du soleil ? Regarde en haut !', 'sunlight', ['It shines through the trees!', 'Elle brille à travers les arbres !'], ['sunlight', 'where']),
+  ask('father', 'What colour is the flower?', 'De quelle couleur est la fleur ?', [ok('Purple!', 'Violette !', '🟣'), no('Black!', 'Noire !', '⚫'), no('Orange!', 'Orange !', '🟠'), no('Blue!', 'Bleue !', '🔵')], ['Look at the flower!', 'Regarde la fleur !'], ['purple', 'flower'], { pointAt: 'flower' }),
+  say('narrator', 'Look! Green leaves are everywhere!', 'Regarde ! Il y a des feuilles vertes partout !', {}, 'happy'),
+  ...countScene('mother', 'leaf', [0, 1, 2, 4, 5], { beginner: 3, intermediate: 4, expert: 5 }, 'clleaf'),
+  say('baby', 'Hello, little leaves!', 'Bonjour, petites feuilles !', { needs: 'baby' }, 'happy'),
+  ...(canDo(sp, 'climb') ? [act('actor', 'climb', 'I climb the big tree! Up, up, up!', 'Je grimpe au grand arbre ! Hop, hop, hop !', 'actor')] : []),
   ask('mother', 'Is the leaf green?', 'Est-ce que la feuille est verte ?', yesNo(true), ['Look at the leaf!', 'Regarde la feuille !'], ['leaf', 'green'], { minTier: 'intermediate', pointAt: 'leaf', keepOrder: true }),
-  ask('father', 'Is the flower pink?', 'Est-ce que la fleur est rose ?', yesNo(true), ['Look at the flower!', 'Regarde la fleur !'], ['flower', 'pink'], { minTier: 'expert', pointAt: 'flower', keepOrder: true }),
+  ask('father', 'Is the flower purple?', 'Est-ce que la fleur est violette ?', yesNo(true), ['Look at the flower!', 'Regarde la fleur !'], ['flower', 'purple'], { minTier: 'expert', pointAt: 'flower', keepOrder: true }),
   say('actor', "I'm hungry! Time for a snack!", "J'ai faim ! C'est l'heure du goûter !", {}, 'thirsty'),
-  ...eatScene(sp, [7, 2, 1, 0], 'actor', 'pond'),
-  say('narrator', 'Look! Pretty flowers around the pond!', "Regarde ! De jolies fleurs autour de l'étang !", {}, 'happy'),
+  ...eatScene(sp, [7, 2, 1, 0], 'actor', 'clearing'),
+  say('narrator', 'Look! Pretty flowers in the clearing!', 'Regarde ! De jolies fleurs dans la clairière !', {}, 'happy'),
   ...colorHunt('mother', 'flower', 'pink', ['yellow', 'red', 'white'], [4, 5, 6, 7], 'lilyflower'),
-  reward('sa_golden_frog', 'father', 'A little golden frog! It is our treasure!', 'Une petite grenouille dorée ! C’est notre trésor !'),
-  end('mother', 'What a happy day at the jungle pond!', "Quelle journée joyeuse à l'étang de la jungle !"),
+  reward('sa_clearing_flower', 'father', 'A purple flower from the clearing! It is our treasure!', 'Une fleur violette de la clairière ! C’est notre trésor !'),
+  end('mother', 'What a happy day in the sunny clearing!', 'Quelle journée joyeuse dans la clairière ensoleillée !'),
 ];
 
 // ---------------------------------------------------------------------------
@@ -239,18 +239,18 @@ const canopyGoldenFruit = (sp: SpeciesDef): QuestStep[] => [
 // 8. Les marais frais — au bord de l'eau, sans rien chasser (jaguar)
 // ---------------------------------------------------------------------------
 
-const coolWetland = (sp: SpeciesDef): QuestStep[] => [
-  say('narrator', 'It is a hot day. We go to the cool water!', "C'est une journée chaude. Nous allons dans l'eau fraîche !", {}, 'happy'),
-  tap('father', 'Where is the water? Show me!', "Où est l'eau ? Montre-moi !", 'water', ['It is blue, at the bottom!', 'Elle est bleue, en bas !'], ['water', 'where']),
-  ask('mother', 'Is the water cold?', "Est-ce que l'eau est froide ?", yesNo(true), ['Look! It is cool and fresh!', 'Regarde ! Elle est fraîche !'], ['water', 'cold'], { minTier: 'intermediate', pointAt: 'water', keepOrder: true }),
-  tap('mother', 'And where is the little waterfall?', 'Et où est la petite cascade ?', 'waterfall', ['The water falls from the rocks!', "L'eau tombe des rochers !"], ['waterfall', 'where']),
-  ...(canDo(sp, 'swim') ? [act('actor', 'swim', 'I swim in the cool water! Splash!', "Je nage dans l'eau fraîche ! Splash !", 'actor')] : []),
-  act('baby', 'splash', 'Splash! The water is so cool!', "Splash ! L'eau est si fraîche !", 'baby', { needs: 'baby' }),
+const sunnyClearing = (sp: SpeciesDef): QuestStep[] => [
+  say('narrator', 'It is a sunny day in the jungle. We go to the clearing!', "C'est une journée ensoleillée dans la jungle. Nous allons dans la clairière !", {}, 'happy'),
+  tap('father', 'Where is the path? Show me!', 'Où est le chemin ? Montre-moi !', 'path', ['Look down! Find the path!', 'Regarde en bas ! Trouve le chemin !'], ['path', 'where']),
+  ask('mother', 'Is the flower purple?', 'Est-ce que la fleur est violette ?', yesNo(true), ['Look at the flower!', 'Regarde la fleur !'], ['flower', 'purple'], { minTier: 'intermediate', pointAt: 'flower', keepOrder: true }),
+  tap('mother', 'And where is the big tree?', 'Et où est le grand arbre ?', 'tree', ['It is very tall!', 'Il est très grand !'], ['tree', 'tall', 'where']),
+  ...(canDo(sp, 'climb') ? [act('actor', 'climb', 'I climb the big tree! Up, up, up!', 'Je grimpe au grand arbre ! Hop, hop, hop !', 'actor')] : []),
+  say('baby', "I want to do it too!", 'Je veux le faire aussi !', { needs: 'baby' }, 'proud'),
   say('narrator', 'Look! Little butterflies dance in the sunlight!', 'Regarde ! De petits papillons dansent dans le soleil !', {}, 'happy'),
   ...countScene('mother', 'butterfly', [0, 1, 2, 3, 4], { beginner: 3, intermediate: 4, expert: 5 }, 'wlbutterfly'),
   tap('father', 'Where is the sunlight? Look up!', 'Où est la lumière du soleil ? Regarde en haut !', 'sunlight', ['It shines through the trees!', 'Elle brille à travers les arbres !'], ['sunlight', 'where'], { minTier: 'intermediate' }),
   tap('mother', 'Look at the long liana! Where is the liana?', 'Regarde la longue liane ! Où est la liane ?', 'liana', ['It hangs from the tree!', "Elle pend de l'arbre !"], ['liana', 'where'], { minTier: 'intermediate' }),
-  say('narrator', 'Oh! There are feathers by the water!', "Oh ! Il y a des plumes au bord de l'eau !", {}, 'curious'),
+  say('narrator', 'Oh! There are feathers on the path!', 'Oh ! Il y a des plumes sur le chemin !', {}, 'curious'),
   ...colorHunt('father', 'feather', 'blue', ['red', 'yellow', 'green'], [0, 1, 2, 3], 'wlfeather'),
   seek('mother', 'sibling', 'tree', {
     line: ['Oh! Somebody is hiding! Can you find them?', "Oh ! Quelqu'un se cache ! Tu peux le trouver ?"],
@@ -258,8 +258,8 @@ const coolWetland = (sp: SpeciesDef): QuestStep[] => [
     notHere: ['Not here! Try again!', 'Pas ici ! Essaie encore !'],
     found: ['Peekaboo! You found me!', 'Coucou ! Tu m’as trouvé !'],
   }, ['hide_and_seek', 'behind'], { needs: 'sibling', minTier: 'intermediate' }),
-  reward('sa_cool_pebble', 'mother', 'A blue pebble from the cool water! It is our treasure!', "Un caillou bleu de l'eau fraîche ! C'est notre trésor !"),
-  end('father', 'What a cool, happy day!', 'Quelle journée fraîche et joyeuse !'),
+  reward('sa_sun_feather', 'mother', 'A blue feather from the sunny clearing! It is our treasure!', 'Une plume bleue de la clairière ensoleillée ! C’est notre trésor !'),
+  end('father', 'What a sunny, happy day!', 'Quelle journée ensoleillée et joyeuse !'),
 ];
 
 // ---------------------------------------------------------------------------
@@ -364,8 +364,8 @@ const slothNap = (sp: SpeciesDef): QuestStep[] => [
 
 export const SOUTH_AMERICA: AdventurePack = {
   adventures: [
-    { id: 'south_america_cool_wetland', continentId: 'south_america', titleEn: 'The cool wetland', titleFr: 'Les marais frais', icon: '💧', start: 'sa_wetland', species: ['jaguar'], skillIds: ['1.3', '1.2', '1.6'], steps: coolWetland, treasure: 'sa_cool_pebble', order: 1 },
-    { id: 'south_america_lily_pond', continentId: 'south_america', titleEn: 'The jungle pond', titleFr: "L'étang de la jungle", icon: '🐸', start: 'sa_river', species: ['jaguar'], skillIds: ['1.3', '1.6', '1.2'], steps: lilyPond, treasure: 'sa_golden_frog', order: 2 },
+    { id: 'south_america_cool_wetland', continentId: 'south_america', titleEn: 'The sunny clearing', titleFr: 'La clairière ensoleillée', icon: '☀️', start: 'sa_wetland', species: ['jaguar'], skillIds: ['1.3', '1.2', '1.6'], steps: sunnyClearing, treasure: 'sa_sun_feather', order: 1 },
+    { id: 'south_america_lily_pond', continentId: 'south_america', titleEn: 'The jungle clearing', titleFr: 'La clairière de la jungle', icon: '🌺', start: 'sa_river', species: ['jaguar'], skillIds: ['1.3', '1.6', '1.2'], steps: toTheClearing, treasure: 'sa_clearing_flower', order: 2 },
     { id: 'south_america_old_stones', continentId: 'south_america', titleEn: 'The old stones', titleFr: 'Les vieilles pierres', icon: '🏛️', start: 'sa_river', species: ['jaguar'], skillIds: ['2.2', '1.3', '1.2'], steps: oldStones, treasure: 'sa_carved_stone', order: 3 },
     { id: 'south_america_stone_terraces', continentId: 'south_america', titleEn: 'The stone terraces', titleFr: 'Les terrasses de pierre', icon: '⛰️', start: 'sa_andes', species: ['jaguar'], skillIds: ['2.2', '1.3', '1.6'], steps: stoneTerraces, treasure: 'sa_terrace_flower', order: 4 },
     { id: 'south_america_sloth_high_up', continentId: 'south_america', titleEn: 'Slowly, high up', titleFr: 'Doucement, tout en haut', icon: '🦥', start: 'sa_sloth_canopy', species: ['sloth'], skillIds: ['1.6', '2.2', '1.2'], steps: slothHighUp, treasure: 'sa_sloth_flower', order: 5 },
@@ -384,6 +384,8 @@ export const SOUTH_AMERICA: AdventurePack = {
     treasure('sa_rope_feather', 'a red feather', 'une plume rouge', '🪶'),
     treasure('sa_gold_fruit', 'a golden fruit', 'un fruit doré', '🍊'),
     treasure('sa_cool_pebble', 'a blue pebble', 'un caillou bleu', '🪨'),
+    treasure('sa_sun_feather', 'a blue feather', 'une plume bleue', '🪶'),
+    treasure('sa_clearing_flower', 'a purple flower', 'une fleur violette', '🌸'),
     treasure('sa_terrace_flower', 'a red flower', 'une fleur rouge', '🌺'),
     treasure('sa_sloth_flower', 'a red flower', 'une fleur rouge', '🌺'),
     treasure('sa_green_leaf', 'a green leaf', 'une feuille verte', '🍃'),

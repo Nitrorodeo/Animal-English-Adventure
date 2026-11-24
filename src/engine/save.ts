@@ -1,7 +1,7 @@
 import { parseNamePron } from './nameVoice';
 import { parseSpots } from './spots';
 import { toWideMap } from './stickers';
-import { clampSpeechSpeed, newGameState, SAVE_VERSION, type GameState, type PlacedSticker } from './state';
+import { clampSpeechSpeed, newGameState, SAVE_VERSION, type CircleRef, type GameState, type PlacedSticker } from './state';
 
 /** Adaptateur de stockage (localStorage dans le navigateur, mémoire en test). */
 export interface StorageLike {
@@ -44,11 +44,19 @@ function migrateSettings(base: GameState['settings'], raw: unknown): GameState['
  * Migration vers le format courant. Les champs manquants reprennent leur valeur par défaut ;
  * une sauvegarde d'une version future ou sans joueuse est refusée (rien n'est écrasé à l'aveugle).
  */
+/** Cercle d'amis gardé dans la partie ; mêmes règles que engine/cloud.ts (code) et engine/circle.ts (identifiant). */
+function parseCircleRef(v: unknown): CircleRef | null {
+  if (!isObj(v) || typeof v.code !== 'string' || typeof v.id !== 'string') return null;
+  const codeOk = /^(?=.{4,40}$)[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v.code);
+  return codeOk && /^[a-z0-9]{8,32}$/.test(v.id) ? { code: v.code, id: v.id } : null;
+}
+
 export function migrate(raw: unknown): GameState | null {
   if (!isObj(raw) || typeof raw.version !== 'number' || raw.version > SAVE_VERSION) return null;
   if (!isObj(raw.player) || !isObj(raw.families)) return null;
   const base = newGameState();
   const p = raw.player;
+  const circle = parseCircleRef(raw.circle);
   return {
     version: SAVE_VERSION,
     player: {
@@ -70,6 +78,7 @@ export function migrate(raw: unknown): GameState | null {
     families: raw.families as GameState['families'],
     settings: migrateSettings(base.settings, raw.settings),
     onboarded: raw.onboarded === true,
+    ...(circle ? { circle } : {}),
   };
 }
 

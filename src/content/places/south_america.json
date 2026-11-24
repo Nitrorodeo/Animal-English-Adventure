@@ -1508,93 +1508,33 @@
     },
     {
       "id": "sa_wetland",
-      "source": "Continant/Amerique du sud/Clairière tropicale et cascade enchantée-1.png",
+      "source": "Animaux/Amerique du Sud/Jaguars/Clairière tropicale ensoleillée de jungle.png",
       "background": "sa_wetland",
-      "nameEn": "the jungle pond",
-      "nameFr": "l'étang de la jungle",
-      "weather": "sunny",
+      "nameEn": "the sunny jungle clearing",
+      "nameFr": "la clairière ensoleillée de la jungle",
+      "weather": "hot",
       "groundY": 80,
       "anchors": [
-        {
-          "id": "water",
-          "word": "water",
-          "wordFr": "l'eau",
-          "icon": "💧",
-          "hit": {
-            "x": 5,
-            "y": 59,
-            "w": 35,
-            "h": 10
-          },
-          "crop": {
-            "x": 0,
-            "y": 52,
-            "w": 50,
-            "h": 34
-          },
-          "stand": {
-            "x": 30,
-            "y": 84
-          },
-          "tags": [
-            "water"
-          ],
-          "check": {
-            "q": {
-              "en": "Is the water green?",
-              "fr": "Est-ce que l'eau est verte ?"
-            },
-            "yes": false
-          }
-        },
-        {
-          "id": "waterfall",
-          "word": "waterfall",
-          "wordFr": "la cascade",
-          "icon": "💦",
-          "hit": {
-            "x": 18,
-            "y": 33,
-            "w": 16,
-            "h": 24
-          },
-          "crop": {
-            "x": 12,
-            "y": 26,
-            "w": 28,
-            "h": 36
-          },
-          "tags": [
-            "water"
-          ],
-          "check": {
-            "q": {
-              "en": "Is the waterfall small?",
-              "fr": "Est-ce que la cascade est petite ?"
-            },
-            "yes": true
-          }
-        },
         {
           "id": "tree",
           "word": "tree",
           "wordFr": "l'arbre",
           "icon": "🌳",
           "hit": {
-            "x": 72,
-            "y": 5,
-            "w": 22,
+            "x": 1,
+            "y": 2,
+            "w": 27,
             "h": 55
           },
           "crop": {
-            "x": 58,
+            "x": 0,
             "y": 0,
-            "w": 42,
-            "h": 78
+            "w": 40,
+            "h": 66
           },
           "stand": {
-            "x": 72,
-            "y": 79
+            "x": 24,
+            "y": 66
           },
           "tags": [
             "climb",
@@ -1609,62 +1549,29 @@
           }
         },
         {
-          "id": "rock",
-          "word": "rock",
-          "wordFr": "le rocher",
-          "icon": "🪨",
-          "hit": {
-            "x": 43,
-            "y": 61,
-            "w": 13,
-            "h": 9
-          },
-          "crop": {
-            "x": 38,
-            "y": 55,
-            "w": 24,
-            "h": 22
-          },
-          "stand": {
-            "x": 50,
-            "y": 77
-          },
-          "tags": [
-            "hide",
-            "climb"
-          ],
-          "check": {
-            "q": {
-              "en": "Is the rock pink?",
-              "fr": "Est-ce que le rocher est rose ?"
-            },
-            "yes": false
-          }
-        },
-        {
           "id": "flower",
           "word": "flower",
           "wordFr": "la fleur",
           "icon": "🌺",
           "hit": {
-            "x": 0,
-            "y": 40,
-            "w": 12,
-            "h": 20
+            "x": 92,
+            "y": 52,
+            "w": 8,
+            "h": 11
           },
           "crop": {
-            "x": 0,
-            "y": 34,
-            "w": 20,
-            "h": 32
+            "x": 84,
+            "y": 44,
+            "w": 16,
+            "h": 26
           },
           "tags": [
             "plant"
           ],
           "check": {
             "q": {
-              "en": "Is the flower pink?",
-              "fr": "Est-ce que la fleur est rose ?"
+              "en": "Is the flower purple?",
+              "fr": "Est-ce que la fleur est violette ?"
             },
             "yes": true
           }
@@ -1675,16 +1582,16 @@
           "wordFr": "la feuille",
           "icon": "🍃",
           "hit": {
-            "x": 0,
-            "y": 6,
-            "w": 18,
-            "h": 28
+            "x": 1,
+            "y": 63,
+            "w": 15,
+            "h": 20
           },
           "crop": {
             "x": 0,
-            "y": 0,
-            "w": 26,
-            "h": 40
+            "y": 56,
+            "w": 24,
+            "h": 36
           },
           "tags": [
             "plant"
@@ -1698,45 +1605,19 @@
           }
         },
         {
-          "id": "mountain",
-          "word": "mountain",
-          "wordFr": "la montagne",
-          "icon": "⛰️",
-          "hit": {
-            "x": 16,
-            "y": 19,
-            "w": 22,
-            "h": 8
-          },
-          "crop": {
-            "x": 12,
-            "y": 12,
-            "w": 30,
-            "h": 22
-          },
-          "tags": [],
-          "check": {
-            "q": {
-              "en": "Is the mountain blue?",
-              "fr": "Est-ce que la montagne est bleue ?"
-            },
-            "yes": false
-          }
-        },
-        {
           "id": "cloud",
           "word": "cloud",
           "wordFr": "le nuage",
           "icon": "☁️",
           "hit": {
-            "x": 25,
-            "y": 12,
-            "w": 9,
-            "h": 6
+            "x": 55,
+            "y": 8,
+            "w": 8,
+            "h": 7
           },
           "crop": {
-            "x": 20,
-            "y": 6,
+            "x": 50,
+            "y": 4,
             "w": 20,
             "h": 16
           },
@@ -1757,20 +1638,20 @@
           "wordFr": "le chemin",
           "icon": "🛤️",
           "hit": {
-            "x": 26,
-            "y": 86,
-            "w": 26,
-            "h": 10
+            "x": 25,
+            "y": 52,
+            "w": 55,
+            "h": 20
           },
           "crop": {
-            "x": 24,
-            "y": 74,
-            "w": 40,
-            "h": 26
+            "x": 22,
+            "y": 56,
+            "w": 50,
+            "h": 40
           },
           "stand": {
-            "x": 45,
-            "y": 91
+            "x": 48,
+            "y": 66
           },
           "tags": [
             "path"
@@ -1789,16 +1670,16 @@
           "wordFr": "la lumière du soleil",
           "icon": "🌤️",
           "hit": {
-            "x": 55,
-            "y": 12,
-            "w": 14,
-            "h": 26
+            "x": 66,
+            "y": 13,
+            "w": 18,
+            "h": 24
           },
           "crop": {
-            "x": 48,
-            "y": 4,
-            "w": 28,
-            "h": 42
+            "x": 60,
+            "y": 6,
+            "w": 30,
+            "h": 40
           },
           "tags": [
             "sky"
@@ -1817,16 +1698,16 @@
           "wordFr": "la liane",
           "icon": "🌿",
           "hit": {
-            "x": 15,
-            "y": 1,
-            "w": 13,
-            "h": 15
+            "x": 57,
+            "y": 2,
+            "w": 26,
+            "h": 18
           },
           "crop": {
-            "x": 10,
+            "x": 52,
             "y": 0,
-            "w": 26,
-            "h": 26
+            "w": 36,
+            "h": 30
           },
           "tags": [
             "plant"
@@ -1842,35 +1723,35 @@
       ],
       "spots": [
         {
-          "x": 5,
-          "y": 64
+          "x": 33,
+          "y": 58
+        },
+        {
+          "x": 26,
+          "y": 61
         },
         {
           "x": 36,
-          "y": 68
+          "y": 67
         },
         {
           "x": 24,
-          "y": 73
+          "y": 69
         },
         {
-          "x": 14,
-          "y": 77
+          "x": 33,
+          "y": 75
         },
         {
-          "x": 32,
-          "y": 86
+          "x": 28,
+          "y": 81
         },
         {
-          "x": 20,
-          "y": 88
+          "x": 34,
+          "y": 87
         },
         {
-          "x": 66,
-          "y": 44
-        },
-        {
-          "x": 36,
+          "x": 30,
           "y": 93
         }
       ]

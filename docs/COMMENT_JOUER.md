@@ -28,7 +28,7 @@ Sur chaque carte, le petit haut-parleur 🔊 lit le titre à voix haute. Les ✓
 
 ## Les amis (version en ligne)
 
-Si les parents de deux amis le veulent, les enfants peuvent se voir sans se mettre en concurrence : un bouton à deux petits personnages 👥 apparaît en haut. Il ouvre **Mes amis** : une carte par enfant avec deux chiffres, ses ⭐ étoiles et ses 🗺️ aventures. La carte de l'enfant qui joue est en premier, les autres en ordre alphabétique (jamais du plus fort au plus faible). Chaque nouvel enfant arrive avec une pastille « New! ». Les parents créent ou rejoignent le cercle dans l'espace parents ⚙️, section « Cercle d'amis », avec un code à se donner. Seuls le prénom et ces deux chiffres sont partagés, jamais la partie.
+Si les parents de deux amis le veulent, les enfants peuvent se voir sans se mettre en concurrence : un bouton à deux petits personnages 👥 apparaît en haut. Il ouvre **Mes amis** : une carte par enfant avec deux chiffres, ses ⭐ étoiles et ses 🗺️ aventures. La carte de l'enfant qui joue est en premier, les autres en ordre alphabétique (jamais du plus fort au plus faible). Chaque nouvel enfant arrive avec une pastille « New! ». Les parents créent ou rejoignent le cercle dans l'espace parents ⚙️, section « Cercle d'amis », avec un code à se donner : le jeu en propose un, qu'on peut effacer pour écrire le sien. Une fois entré, le cercle reste dans la partie (même sur l'autre appareil de la famille) jusqu'à ce qu'on clique sur « Quitter le cercle ». Seuls le prénom et ces deux chiffres sont partagés, jamais la partie.
 
 ## Les 3 niveaux
 

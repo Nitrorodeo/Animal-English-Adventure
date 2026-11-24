@@ -59,6 +59,7 @@ export function dragSpot(
   lane?: Lane,
   water?: Water,
   seats?: { list: readonly SeatLike[]; naturalH: number; groundToo?: boolean },
+  floes?: Water,
 ): Spot {
   // décor à percher (hiboux) : seulement sur le rocher, la branche ou un nid, l'endroit le plus proche du doigt ;
   // si le sol reste libre (chêne), seulement quand on le lâche tout près du nid
@@ -87,8 +88,8 @@ export function dragSpot(
     y = Math.max(y, h + 1);
   }
   // jamais dans l'eau d'un lac ou d'une rivière (sauf sur un rocher qui en sort) : sur la berge la plus proche
-  if (inWater(water, x, y) && perchAt?.(x, y) === undefined) {
-    const dry = dryNear(water, x, y, (px) => (typeof minY === 'number' ? minY : minY(px)));
+  if (inWater(water, x, y, floes) && perchAt?.(x, y) === undefined) {
+    const dry = dryNear(water, x, y, (px) => (typeof minY === 'number' ? minY : minY(px)), floes);
     return { x: dry.x, y: dry.y, h: home.h * scaleFor(home.y, dry.y) };
   }
   return { x, y, h };
