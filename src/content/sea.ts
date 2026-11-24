@@ -48,6 +48,16 @@ export const SEA_DECORS: Readonly<Record<SeaGameId, readonly [string, string]>> 
   turtle: ['bg_turtle_1', 'bg_turtle_2'],
 };
 
+/** nom (anglais) de chaque décor, sous sa vignette : l'enfant peut changer de fond à tout moment */
+export const SEA_DECOR_NAMES: Readonly<Record<string, string>> = {
+  bg_whale_1: 'the ice cathedral',
+  bg_whale_2: 'the polar sea',
+  bg_dolphins_1: 'the bright paradise',
+  bg_dolphins_2: 'the kelp canyon',
+  bg_turtle_1: 'the coral garden',
+  bg_turtle_2: 'the turquoise canyon',
+};
+
 /** décor de la manche `index` (−1 = l'introduction : le premier décor) : un puis l'autre, en alternance */
 export const seaDecor = (game: SeaGameId, index: number): string => SEA_DECORS[game][Math.max(index, 0) % 2]!;
 

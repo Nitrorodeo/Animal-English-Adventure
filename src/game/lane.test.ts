@@ -81,7 +81,7 @@ describe('toucans : seulement sur la branche', () => {
 
   it('les autres animaux ne sont pas concernés : aucun autre décor n\'a de branche', () => {
     for (const p of Object.values(PLACES)) {
-      if (!toucanPlaces.includes(p)) expect(p.lane, p.id).toBeUndefined();
+      if (!toucanPlaces.includes(p) && p.id !== 'sa_sloth_canopy') expect(p.lane, p.id).toBeUndefined();
     }
   });
 });

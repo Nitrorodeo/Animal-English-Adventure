@@ -77,9 +77,9 @@ describe('nid des hiboux : on se pose sur le rocher, la branche ou un nid', () =
 
   it('les autres décors ne sont pas touchés', () => {
     const withSeats = Object.values(PLACES).filter((p) => p.seats?.length).map((p) => p.id).sort();
-    expect(withSeats).toEqual(['europe_owl_moon', 'europe_owl_nest', 'europe_owl_oak', 'na_beaver_pond', 'na_bison_canyon', 'sa_canopy_treehouse', 'sa_river', 'sa_sloth_refuge']);
+    expect(withSeats).toEqual(['asia_mountain', 'europe_fox_glade', 'europe_hog_log', 'europe_owl_moon', 'europe_owl_nest', 'europe_owl_oak', 'na_beaver_falls', 'na_beaver_pond', 'na_bison_canyon', 'sa_canopy_treehouse', 'sa_river', 'sa_sloth_canopy', 'sa_sloth_refuge']);
     const groundToo = Object.values(PLACES).filter((p) => p.groundToo).map((p) => p.id).sort();
-    expect(groundToo).toEqual(['europe_owl_oak', 'na_beaver_pond', 'na_bison_canyon', 'sa_canopy_treehouse', 'sa_river', 'sa_sloth_refuge']);
+    expect(groundToo).toEqual(['asia_mountain', 'europe_fox_glade', 'europe_hog_log', 'europe_owl_oak', 'na_beaver_falls', 'na_beaver_pond', 'na_bison_canyon', 'sa_canopy_treehouse', 'sa_river', 'sa_sloth_canopy', 'sa_sloth_refuge']);
   });
 });
 
@@ -229,6 +229,10 @@ function xy(p: { x: number; y: number }): [number, number] {
 describe('perchoirs de décors au sol : le sol reste libre, la hutte, la falaise et les ruines s’y ajoutent', () => {
   const cases = [
     { place: 'na_beaver_pond', species: 'beaver', ground: [50, 88], drops: [{ at: [74, 36], seat: 'roof', y: [37, 40], big: 0.4 }, { at: [69, 50], seat: 'entrance', y: [50, 51.5], big: 0.3 }] },
+    { place: 'na_beaver_falls', species: 'beaver', ground: [50, 86], drops: [{ at: [19, 35], seat: 'big_rock', y: [34, 37.5], big: 0.4 }, { at: [43, 48], seat: 'mid_rock_left', y: [47, 49], big: 0.4 }, { at: [66, 51], seat: 'mid_rock_right', y: [50, 52], big: 0.4 }, { at: [58, 43], seat: 'falls_rock', y: [42, 44], big: 0.4 }] },
+    { place: 'asia_mountain', species: 'tiger', ground: [40, 88], drops: [{ at: [80, 54], seat: 'stairs_low', y: [51, 57], big: 0.6 }, { at: [78, 29.5], seat: 'stairs_high', y: [27, 32], big: 0.4 }] },
+    { place: 'europe_fox_glade', species: 'fox', ground: [60, 86], drops: [{ at: [28, 51], seat: 'big_rock', y: [49, 54], big: 0.7 }] },
+    { place: 'europe_hog_log', species: 'hedgehog', ground: [50, 88], drops: [{ at: [22, 36], seat: 'stone', y: [34, 38], big: 0.5 }, { at: [90, 49], seat: 'hollow', y: [47.5, 51], big: 0.5 }] },
     { place: 'na_bison_canyon', species: 'bison', ground: [60, 88], drops: [{ at: [20, 41], seat: 'cliff', y: [41, 47], big: 0.4 }] },
     { place: 'sa_river', species: 'jaguar', ground: [30, 92], drops: [{ at: [47, 36], seat: 'ruin', y: [38, 41], big: 0.4 }] },
   ];

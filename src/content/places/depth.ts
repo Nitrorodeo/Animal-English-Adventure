@@ -83,21 +83,21 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   // Afrique
   savanna: { horizonY: 31, farY: 35, // le chemin se perd vers y 41, la plaine continue jusqu'à 35
     water: [[[17, 52], [20, 49], [30, 49], [45, 50], [52, 52], [53, 57], [48, 61], [38, 64], [25, 63], [17, 60]]] }, // la mare sous la cascade
-  africa_waterhole: { farSize: 0.2, horizonY: 27, farY: 31, water: [[[27, 40], [35, 38], [50, 38], [65, 38], [72, 41], [74, 50], [70, 58], [60, 62], [45, 63], [35, 61], [28, 56], [26, 48]]] },
-  africa_baobab: { farSize: 0.35, horizonY: 52, farY: 56 },
-  africa_desert: { farSize: 0.2, horizonY: 33, farY: 36 },
+  africa_waterhole: { farSize: 0.2, horizonY: 27, farY: 37.5, water: [[[27, 40], [35, 38], [50, 38], [65, 38], [72, 41], [74, 50], [70, 58], [60, 62], [45, 63], [35, 61], [28, 56], [26, 48]]] },
+  africa_baobab: { farSize: 0.35, horizonY: 52, farY: 61 },
+  africa_desert: { farSize: 0.2, horizonY: 33, farY: 41.5 },
   africa_canyon: { farSize: 0.25, horizonY: 28, farY: 36 },
-  africa_plains: { farSize: 0.22, horizonY: 33, farY: 37 },
+  africa_plains: { farSize: 0.22, horizonY: 33, farY: 43.5 },
   // 2026-11-23 : décors de l'éléphant et de la girafe (images de Animaux/Afrique/, quadrillées à 5 %)
   africa_pond: { farSize: 0.25, horizonY: 35, farY: 42, // pied des collines vers 35 ; l'herbe dorée derrière l'étang jusqu'à 42
     water: [[[18, 52], [24, 48], [30, 46], [45, 45], [60, 45], [70, 46], [80, 47], [88, 50], [90, 55], [85, 58], [75, 61], [60, 61.5], [45, 61], [35, 60], [25, 57]]] },
-  africa_acacia_plain: { farSize: 0.22, horizonY: 37, farY: 41 },
+  africa_acacia_plain: { farSize: 0.22, horizonY: 37, farY: 47 },
   africa_forest: { farSize: 0.42, horizonY: 50, farY: 59 }, // la clairière s'arrête au pied des buissons (y 57-60)
-  africa_green_meadow: { farSize: 0.3, horizonY: 41, farY: 48 },
+  africa_green_meadow: { farSize: 0.3, horizonY: 41, farY: 53.5 },
   // Antarctique
-  ice_coast: { farSize: 0.25, horizonY: 33, farY: 36, water: [[[0, 30], [30, 30], [60, 30], [88, 33], [95, 40], [80, 44], [72, 48], [70, 55], [60, 59], [45, 62], [30, 61], [18, 58], [10, 52], [0, 48]]] },
-  an_ice_cave: { farSize: 0.35, horizonY: 46, farY: 52 },
-  an_snowfield: { farSize: 0.2, horizonY: 35, farY: 38 },
+  ice_coast: { farSize: 0.25, horizonY: 33, farY: 46, water: [[[0, 30], [30, 30], [60, 30], [88, 33], [95, 40], [80, 44], [72, 48], [70, 55], [60, 59], [45, 62], [30, 61], [18, 58], [10, 52], [0, 48]]] },
+  an_ice_cave: { farSize: 0.35, horizonY: 46, farY: 60 },
+  an_snowfield: { farSize: 0.2, horizonY: 35, farY: 45 },
   // 2026-11-24 (demande du parent, photo de la banquise à gauche) : le pingouin va sur les blocs de banquise, jusqu'à la
   // grande plaque tout au fond à gauche (y 45) ; il y est tout petit
   open_sea: { farSize: 0.22, horizonY: 43, farY: [[0, 45], [22, 45], [25, 53], [100, 53]],
@@ -116,16 +116,22 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
       [[65, 62.5], [84, 62.5], [84, 70], [65, 70]], // le grand bloc de droite
     ],
     water: [[[10, 48], [30, 48], [60, 48], [90, 50], [97, 55], [88, 62], [85, 70], [70, 73], [50, 73], [30, 72], [18, 70], [12, 62]]] },
-  an_aurora: { farSize: 0.22, horizonY: 47, farY: 50 },
+  an_aurora: { farSize: 0.22, horizonY: 47, farY: 55.5 },
   // Antarctique : décors du phoque et du manchot (2026-11-23)
-  an_seal_aurora: { farSize: 0.3, horizonY: 36, farY: 40, water: [[[44, 40], [100, 40], [100, 68], [80, 68], [60, 64], [48, 58], [44, 50]]] },
-  an_seal_rocks: { farSize: 0.3, horizonY: 32, farY: 36, water: [[[44, 34], [100, 34], [100, 63], [80, 63], [65, 60], [45, 50]], [[24, 72], [40, 70], [57, 72], [58, 86], [45, 92], [26, 90]]] },
-  an_seal_sunset: { farSize: 0.3, horizonY: 38, farY: 42, water: [[[34, 40], [100, 40], [100, 70], [85, 70], [70, 66], [55, 62], [40, 57], [34, 52]]] },
-  an_penguin_cave: { farSize: 0.35, horizonY: 44, farY: 48, water: [[[40, 46], [100, 46], [100, 67], [80, 67], [60, 65], [44, 60], [40, 54]]] },
+  an_seal_aurora: { farSize: 0.3, horizonY: 36, farY: 51, water: [[[44, 40], [100, 40], [100, 68], [80, 68], [60, 64], [48, 58], [44, 50]]] },
+  an_seal_rocks: { farSize: 0.3, horizonY: 32, farY: 48, water: [[[44, 34], [100, 34], [100, 63], [80, 63], [65, 60], [45, 50]], [[24, 72], [40, 70], [57, 72], [58, 86], [45, 92], [26, 90]]] },
+  an_seal_sunset: { farSize: 0.3, horizonY: 38, farY: 52.5, water: [[[34, 40], [100, 40], [100, 70], [85, 70], [70, 66], [55, 62], [40, 57], [34, 52]]] },
+  an_penguin_cave: { farSize: 0.35, horizonY: 44, farY: 58.5, water: [[[40, 46], [100, 46], [100, 67], [80, 67], [60, 65], [44, 60], [40, 54]]] },
   // Asie
   asia_bamboo: { farSize: 0.35, horizonY: 52, farY: 57, water: [[[20, 50], [30, 50], [40, 51], [46, 57], [42, 60], [30, 61], [22, 60]]] },
   asia_pagoda: { farSize: 0.35, horizonY: 38, farY: 50, water: [[[18, 46], [30, 46], [45, 46], [52, 52], [45, 55], [30, 57], [20, 56]]] },
-  asia_mountain: { farSize: 0.5, horizonY: 35, farY: 58 },
+  // 2026-11-24 (demande du parent : « les tigres peuvent monter jusque là-haut ») : l'escalier de pierre du chemin de
+  // montagne, en deux volées (la première monte vers la droite, la seconde revient vers le fond) ; le sol reste libre.
+  asia_mountain: { farSize: 0.5, horizonY: 35, farY: 58, groundToo: true,
+    seats: [
+      { id: 'stairs_low', band: [[73, 62, 65, 0.5], [88, 42, 45, 0.3]] },
+      { id: 'stairs_high', band: [[68, 19, 22, 0.15], [88, 37, 40, 0.27]] },
+    ] },
   asia_arch: { farSize: 0.33, horizonY: 45, farY: 52 },
   asia_garden: { farSize: 0.45, horizonY: 42, farY: 58, water: [[[20, 48], [45, 47], [50, 52], [42, 57], [25, 58], [20, 55]]] },
   // tanière de la panthère des neiges (2026-11-21) : pied des montagnes et mer de nuages vers y 45 ; le sol va
@@ -139,7 +145,7 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   // 2026-11-23 : les trois décors nouveaux de l'Asie (mesurés sur les images quadrillées)
   // pavillon rouge : la rivière sort de la petite chute sous le pont (x 50-62, y 65-75) et coule vers l'avant jusqu'au bas (x 55-78, y 76-90)
   // la clairière : le pré s'arrête au pied des bambous et des rochers du fond, vers y 42 %
-  asia_clearing: { farSize: 0.3, horizonY: 42, farY: 48 },
+  asia_clearing: { farSize: 0.3, horizonY: 42, farY: 54.5 },
   asia_pavilion: { horizonY: 50, farY: 62, water: [[[50, 65], [62, 65], [64, 70], [70, 75], [78, 77], [78, 90], [72, 91], [68, 86], [65, 79], [56, 72]]] },
   // cascade de la jungle : bassin turquoise au pied de la chute (x 55-96, y 53-74) ; le sol de terre commence vers y 72
   asia_jungle_falls: { farSize: 0.55, horizonY: 52, farY: 62, water: [[[55, 58], [72, 53], [88, 52], [95, 56], [96, 66], [88, 71], [78, 74], [66, 72], [55, 70]]] },
@@ -152,7 +158,12 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   europe_lake: { horizonY: 47, farY: 60, water: [[[12, 44], [80, 44], [78, 52], [70, 58], [55, 60], [35, 59], [25, 55], [15, 50]]] },
   europe_farm: { horizonY: 38, farY: 56, water: [[[70, 55], [86, 54], [86, 60], [95, 66], [93, 71], [80, 70], [68, 66], [66, 62]]] },
   // Europe, décors de chaque famille (2026-11-23) : renard
-  europe_fox_glade: { farSize: 0.4, horizonY: 45, farY: 56 },
+  // 2026-11-24 (demande du parent : « les renards peuvent monter jusqu'à cette pierre ») : le dessus de la grosse pierre
+  // à gauche ; le sol reste libre.
+  europe_fox_glade: { farSize: 0.4, horizonY: 45, farY: 56, groundToo: true,
+    seats: [
+      { id: 'big_rock', band: [[24, 49.5, 52, 0.4], [33, 50.5, 53, 0.4]] },
+    ] },
   europe_fox_autumn: { farSize: 0.45, horizonY: 38, farY: 50, water: [[[76, 53], [90, 50], [100, 50], [100, 66], [88, 67], [78, 63]]] },
   europe_fox_snow: { farSize: 0.45, horizonY: 45, farY: 60, water: [[[27, 59], [34, 56], [43, 54], [44, 60], [38, 64], [30, 64]]] },
   // 2026-11-23 : le hibou se pose sur le rocher, sur toute la grosse branche (plus petit vers le bout, qui s'éloigne),
@@ -190,7 +201,13 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   },
   europe_hog_stream: { farSize: 0.45, horizonY: 38, farY: 52, water: [[[65, 57], [72, 53], [80, 47], [90, 43], [100, 42], [100, 65], [92, 67], [82, 65], [70, 62]]] },
   europe_hog_lake: { farSize: 0.35, horizonY: 38, farY: 48, water: [[[28, 42], [60, 40], [85, 40], [93, 43], [91, 53], [80, 59], [66, 62], [52, 62], [40, 60], [33, 56], [29, 50]]] },
-  europe_hog_log: { farSize: 0.45, horizonY: 45, farY: 58 },
+  // 2026-11-24 (demande du parent : « les hérissons peuvent monter sur cette pierre et rentrer dans ce trou du tronc ») :
+  // le dessus de la grosse pierre sous le grand arbre et l'ouverture du tronc creux, à droite ; le sol reste libre.
+  europe_hog_log: { farSize: 0.45, horizonY: 45, farY: 58, groundToo: true,
+    seats: [
+      { id: 'stone', band: [[19, 34.5, 37.5, 0.38], [25, 35, 38, 0.38]] },
+      { id: 'hollow', band: [[89, 48, 50, 0.34], [92, 48.5, 50.5, 0.34]] },
+    ] },
   // Amérique du Nord
   // 2026-11-24 (demande du parent, capture des ours : « les proportions et l'emplacement ne sont pas du tout logiques ») :
   // ils étaient posés dans les buissons, au pied des troncs (y 60), minuscules. Le sol du dessin finit au bout du chemin
@@ -219,7 +236,7 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   // 2026-11-23 : les décors des familles d'Amérique du Nord (tanière de l'ours, trois décors du bison, chutes du castor)
   na_bear_den: { farSize: 0.45, horizonY: 40, farY: 58 },
   // le ruisseau du fond à droite, à gauche de la famille ; l'herbe commence sous les collines (y 47)
-  na_bison_prairie: { farSize: 0.25, horizonY: 47, farY: 50, water: [[[68, 58], [100, 58], [100, 70], [92, 72], [78, 72], [68, 66]]] },
+  na_bison_prairie: { farSize: 0.25, horizonY: 47, farY: 55, water: [[[68, 58], [100, 58], [100, 70], [92, 72], [78, 72], [68, 66]]] },
   // la rivière aux rapides (droite) et le petit lac devant la forêt de sapins
   na_bison_alpine: { farSize: 0.45, horizonY: 40, farY: 58, water: [[[55, 55], [100, 55], [100, 72], [92, 73], [75, 72], [62, 70], [55, 64]], [[38, 47], [52, 47], [52, 52], [40, 52]]] },
   // la rivière turquoise en méandre, du fond à la rive devant la famille
@@ -233,9 +250,19 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
       { id: 'cliff', band: [[6, 44, 47, 0.38], [12, 43, 46, 0.36], [20, 41.5, 44.5, 0.34], [28, 41, 44, 0.33], [32, 42.5, 45.5, 0.34]] },
     ] },
   // le torrent au pied de la cascade ; la clairière de terre rouge commence vers y 60
-  na_beaver_falls: { farSize: 0.42, horizonY: 45, farY: 60, water: [[[28, 43], [78, 43], [78, 58], [60, 59], [40, 58], [28, 53]]] },
+  // 2026-11-24 (demande du parent : « les castors sur les 2 pierres au milieu de l'eau et la grosse pierre ») : le sol reste libre,
+  // et quatre pierres s'y ajoutent — la grosse pierre moussue à gauche, les deux pierres au milieu du torrent et la pierre
+  // au pied de la cascade. Taille = celle qu'aurait l'animal au pied de la pierre.
+  na_beaver_falls: { farSize: 0.42, horizonY: 45, farY: 60, water: [[[28, 43], [78, 43], [78, 58], [60, 59], [40, 58], [28, 53]]],
+    groundToo: true,
+    seats: [
+      { id: 'big_rock', band: [[14, 34, 37, 0.33], [24, 34.5, 37.5, 0.33]] },
+      { id: 'mid_rock_left', band: [[40.5, 47.4, 48.8, 0.27], [46, 47.2, 48.6, 0.27]] },
+      { id: 'mid_rock_right', band: [[62, 50, 51.6, 0.32], [69, 50.4, 52, 0.32]] },
+      { id: 'falls_rock', band: [[55, 42.2, 43.8, 0.21], [62, 42.4, 44, 0.21]] },
+    ] },
   // Océanie
-  oc_outback: { farSize: 0.25, horizonY: 47, farY: 50 },
+  oc_outback: { farSize: 0.25, horizonY: 47, farY: 56 },
   oc_eucalyptus: { farSize: 0.35, horizonY: 52, farY: 60, water: [[[40, 64], [55, 63], [65, 56], [75, 55], [80, 58], [78, 64], [68, 70], [55, 71], [42, 69]]] },
   oc_gorge: { farSize: 0.4, horizonY: 48, farY: 60, water: [[[33, 57], [50, 52], [70, 52], [78, 55], [70, 60], [60, 64], [48, 65], [36, 62]]] },
   // la grosse pierre ronde à gauche, au fond de la plage : dessus vers y 33–42, pied à y 50
@@ -247,7 +274,7 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
     water: [[[26, 52], [30, 48], [60, 47], [100, 47], [100, 62], [92, 66], [80, 70], [76, 74], [75, 80], [70, 82], [60, 78], [50, 70], [40, 64], [30, 58], [27, 55]]] },
   oc_fern_forest: { horizonY: 48, farY: 62, water: [[[12, 52], [32, 52], [33, 60], [30, 66], [42, 70], [55, 72], [60, 78], [60, 88], [65, 95], [65, 100], [10, 100], [10, 88], [15, 80], [12, 70], [14, 62]]] },
   // bois d'eucalyptus : la prairie dorée va jusqu'au pied des collines (y 59)
-  oc_gum_woodland: { farSize: 0.3, horizonY: 55, farY: 59 },
+  oc_gum_woodland: { farSize: 0.3, horizonY: 55, farY: 64.5 },
   // crique aux rochers (image retournée) : bord de la mer tracé point par point ; les gros rochers du fond
   // (dessus vers y 36–46, pied à y 50)
   oc_rocky_cove: { farSize: 0.4,
@@ -257,7 +284,7 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   // plaine rouge du kangourou : l'herbe jaune commence vers y 52, au pied des collines
   oc_red_plain: { farSize: 0.3, horizonY: 46, farY: 54 },
   // point d'eau du kangourou : l'étang occupe le centre droit (rive gauche vers x 48–58, nénuphars jusqu'à y 80)
-  oc_waterhole: { farSize: 0.3, horizonY: 46, farY: 52, water: [[[50, 57], [60, 53], [100, 52], [100, 80], [88, 79], [76, 74], [66, 72], [57, 70], [51, 65]]] },
+  oc_waterhole: { farSize: 0.3, horizonY: 46, farY: 57.5, water: [[[50, 57], [60, 53], [100, 52], [100, 80], [88, 79], [76, 74], [66, 72], [57, 70], [51, 65]]] },
   // brousse côtière du kangourou : la mer au fond à droite, la prairie s'étend jusqu'aux rochers roses (y 50)
   oc_bush_coast: { farSize: 0.33, horizonY: 40, farY: 52 },
   // Amérique du Sud
@@ -266,7 +293,7 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   // 2026-11-24 (demande du parent, capture du jaguar au pied des ruines) : « il doit pouvoir aller jusque là ». Le sol
   // reste libre ; lâché près des ruines, le jaguar monte sur la terrasse de pierre, au sommet des marches (mesuré sur
   // l'image quadrillée), à la taille de cet endroit : il est derrière les grosses racines, au fond du sol (y 50).
-  sa_river: { farSize: 0.35, horizonY: 45, farY: 50, water: [[[55, 52], [68, 45], [70, 40], [78, 40], [80, 46], [88, 50], [85, 56], [95, 62], [100, 64], [95, 72], [85, 78], [78, 85], [70, 85], [62, 82], [55, 80], [45, 78], [42, 72], [48, 66], [55, 60], [52, 56]]],
+  sa_river: { farSize: 0.35, horizonY: 45, farY: 59.5, water: [[[55, 52], [68, 45], [70, 40], [78, 40], [80, 46], [88, 50], [85, 56], [95, 62], [100, 64], [95, 72], [85, 78], [78, 85], [70, 85], [62, 82], [55, 80], [45, 78], [42, 72], [48, 66], [55, 60], [52, 56]]],
     groundToo: true,
     seats: [
       { id: 'ruin', band: [[38, 38.5, 41, 0.37], [47, 38, 40.5, 0.36], [57, 38.5, 41, 0.35]] },
@@ -275,7 +302,7 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
   // 2026-11-24 (demande du parent : « change cette image par Clairière tropicale ensoleillée de jungle ») : l'étang et sa cascade
   // laissent la place à une clairière sans eau. Le sol de terre commence à y≈49 (herbe, puis buissons) ; les arbres géants
   // restent au loin, donc le fond est petit. Plus d'eau : tout le sol est libre.
-  sa_wetland: { farSize: 0.4, horizonY: 46, farY: 52 },
+  sa_wetland: { farSize: 0.4, horizonY: 46, farY: 60.5 },
   // canopée (2026-11-21) : le sol est le dessus d'une grosse branche, bord arrière de l'écorce tracé point par point
   sa_canopy_branch: {
     horizonY: 38,
@@ -299,9 +326,17 @@ export const PLACE_DEPTH: Record<string, PlaceDepth> = {
     lane: [[20, 66, 74], [28, 63, 72], [36, 62, 71], [45, 63, 70], [55, 66, 71], [65, 67, 72], [75, 64, 70], [82, 59, 66], [88, 54, 62], [94, 47, 56], [98, 43, 52]] },
   // paresseux (2026-11-23) : la branche moussue (la famille y marche, comme sur les branches du toucan), le pied des racines
   // géantes (rivière à droite) et le refuge au creux de l'arbre (bassin au pied de la cascade, ruisseau en bas à gauche)
+  // 2026-11-24 (demande du parent : « les paresseux doivent rester seulement sur la branche et le petit bout de la branche du
+  // haut ») : plus de sol libre. Le dessus de la grosse branche moussue (bande `lane`, tracée sur l'image) et, lâché tout près,
+  // le petit bout de la branche du haut, sous les orchidées (`seats`), plus loin donc plus petit.
   sa_sloth_canopy: { farSize: 0.5,
     horizonY: 40,
-    farY: [[0, 66], [20, 66], [30, 66], [44, 66], [60, 64], [74, 61], [88, 56], [100, 52]] },
+    farY: [[0, 66], [20, 66], [30, 66], [44, 66], [60, 64], [74, 61], [88, 56], [100, 52]],
+    lane: [[18, 69, 76], [25, 69.5, 79], [34, 70, 81], [47, 71, 80], [61, 69, 77], [71, 67, 76], [81, 64, 75], [88, 61, 76], [96, 57, 72]],
+    groundToo: true,
+    seats: [
+      { id: 'upper_branch', band: [[24, 12.2, 14.6, 0.4], [30, 12, 14.4, 0.4], [36, 11.8, 14.2, 0.4]] },
+    ] },
   sa_sloth_roots: { farSize: 0.45, horizonY: 50, farY: 62, water: [[[70, 50], [80, 49], [92, 52], [98, 56], [98, 62], [90, 63], [80, 62], [72, 60], [68, 55]]] },
   sa_sloth_refuge: {
     farSize: 0.5,

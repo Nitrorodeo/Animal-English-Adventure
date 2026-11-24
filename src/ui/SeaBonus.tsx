@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { speech } from '../audio/speech';
 import type { VoiceRole } from '../audio/voiceKey';
-import { DOLPHINS, seaDecor, SEA_DECORS, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
+import { DOLPHINS, seaDecor, SEA_DECORS, SEA_DECOR_NAMES, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
 import type { Line } from '../content/types';
 import { currentRound, seaChoose, seaDone, seaNext, seaReward, startSea, type SeaState, type Utter } from '../engine/sea';
 import type { GameState } from '../engine/state';
@@ -51,6 +51,8 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
   const [beat, setBeat] = useState(0);
   const [shake, setShake] = useState<string | null>(null);
   const rewarded = useRef(false);
+  /** fond choisi par l'enfant (vignettes en haut) : sinon les deux fonds alternent d'une manche à l'autre */
+  const [chosenDecor, setChosenDecor] = useState<string | null>(null);
 
   const talk = (say: Utter[]) => {
     if (!say.length) return;
@@ -109,8 +111,19 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
       <div className={`stage sea-stage sea-${game}`}>
         {/* les deux décors de l'animal, l'un sur l'autre : celui de la manche se fond en douceur dans l'autre */}
         {SEA_DECORS[game].map((name) => (
-          <img key={name} className={`sea-bg${name === seaDecor(game, sea.index) ? ' on' : ''}`} src={decorUrl(name)} alt="" draggable={false} aria-hidden />
+          <img key={name} className={`sea-bg${name === (chosenDecor ?? seaDecor(game, sea.index)) ? ' on' : ''}`} src={decorUrl(name)} alt="" draggable={false} aria-hidden />
         ))}
+        <div className="place-strip sea-decors" role="group" aria-label="Backgrounds">
+          {SEA_DECORS[game].map((name) => {
+            const here = name === (chosenDecor ?? seaDecor(game, sea.index));
+            return (
+              <button key={name} className={`place-chip${here ? ' here' : ''}`} onClick={() => setChosenDecor(name)} aria-label={SEA_DECOR_NAMES[name]} aria-current={here ? 'true' : undefined}>
+                <span className="place-thumb" style={{ backgroundImage: `url("${decorUrl(name)}")` }} />
+                <span className="place-name">{SEA_DECOR_NAMES[name]}</span>
+              </button>
+            );
+          })}
+        </div>
         <div className="sea-water" aria-hidden>
           {[0, 1, 2, 3, 4, 5].map((i) => <i key={i} className="bubble" style={{ left: `${8 + i * 16}%`, animationDelay: `${i * 1.3}s` }} />)}
         </div>
