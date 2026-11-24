@@ -18,6 +18,22 @@ famille** (ex. `lion-mango-4271`) créé sur le premier appareil puis tapé une 
 - La version de la veille, 60 jours, au cas où un appareil enverrait une mauvaise partie.
 - Rien d'autre : ni compte, ni e-mail, ni adresse IP.
 
+## Cercle d'amis (2026-11-24)
+
+Demande du parent : « que ma fille voie la progression de ses amis, pas pour les mettre en concurrence, juste pour les
+motiver » ; « à chaque nouvel enfant inscrit, un petit tableau de bord très simple ».
+
+Même service, deux routes de plus (`/v1/circle`, en-tête `X-Circle: <code du cercle>`) : `GET` (les cartes du cercle,
+404 si le cercle n'existe pas), `PUT` (la carte d'une famille : identifiant aléatoire, prénom, étoiles, aventures ;
+le premier envoi crée le cercle), `DELETE ?id=` (quitter). 12 enfants au plus. **Seuls le prénom (20 caractères) et
+deux nombres sont gardés**, jamais la partie ; la clé est l'empreinte du code du cercle. Décisions côté jeu :
+`src/engine/circle.ts` ; échanges : `src/ui/useCircle.ts` ; écran : `src/ui/Friends.tsx` ; réglages (créer, rejoindre,
+quitter) : espace parents, `src/ui/CircleSettings.tsx`. Tests : `src/engine/circle.test.ts`.
+
+**Mettre en ligne dans cet ordre** : d'abord le service (`cd cloud` puis `npx wrangler@4 deploy` : ajout seulement,
+les parties déjà rangées ne bougent pas), ensuite le site (envoi sur `main`). Dans l'autre sens, le cercle
+répondrait « pas de connexion » jusqu'au déploiement du service.
+
 ## Limites connues
 
 - Deux appareils qui jouent **en même temps** : la dernière partie envoyée l'emporte.

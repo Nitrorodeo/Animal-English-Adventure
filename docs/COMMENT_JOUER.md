@@ -26,6 +26,10 @@ Sur chaque carte, le petit haut-parleur 🔊 lit le titre à voix haute. Les ✓
 - **⏪** : revenir à la question d'avant. La question est redite et on peut y répondre autrement.
 - **La barre en haut** montre où on en est dans l'histoire.
 
+## Les amis (version en ligne)
+
+Si les parents de deux amis le veulent, les enfants peuvent se voir sans se mettre en concurrence : un bouton à deux petits personnages 👥 apparaît en haut. Il ouvre **Mes amis** : une carte par enfant avec deux chiffres, ses ⭐ étoiles et ses 🗺️ aventures. La carte de l'enfant qui joue est en premier, les autres en ordre alphabétique (jamais du plus fort au plus faible). Chaque nouvel enfant arrive avec une pastille « New! ». Les parents créent ou rejoignent le cercle dans l'espace parents ⚙️, section « Cercle d'amis », avec un code à se donner. Seuls le prénom et ces deux chiffres sont partagés, jamais la partie.
+
 ## Les 3 niveaux
 
 Le jeu choisit tout seul, d'après tes réussites : **débutant** (2 réponses), **intermédiaire** (3 réponses) et **expert** (4 réponses, plus de questions). Il n'y a jamais de note, de classement ni d'obligation de jouer chaque jour.

@@ -6,6 +6,7 @@ import type { SeaGameId } from '../content/sea';
 import type { BiomeId, PlaceId } from '../content/types';
 import { getBiome, getContinent } from '../content/world';
 import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
+import { Friends } from './Friends';
 import { Habitat } from './Habitat';
 import { NameSetup } from './NameSetup';
 import { ParentArea } from './ParentArea';
@@ -18,10 +19,10 @@ import { WorldMap } from './WorldMap';
 /** un animal par continent, pour l'écran titre */
 const TITLE_ANIMALS = SPECIES.filter((sp, i, all) => all.findIndex((x) => x.continentId === sp.continentId) === i).slice(0, 7);
 
-type Screen = { kind: 'title' } | { kind: 'name' } | { kind: 'map' } | { kind: 'habitat'; speciesId: string; biomeId: BiomeId } | { kind: 'passport' } | { kind: 'parents' } | { kind: 'sea'; game: SeaGameId };
+type Screen = { kind: 'title' } | { kind: 'name' } | { kind: 'map' } | { kind: 'habitat'; speciesId: string; biomeId: BiomeId } | { kind: 'passport' } | { kind: 'friends' } | { kind: 'parents' } | { kind: 'sea'; game: SeaGameId };
 
 export function App() {
-  const { state, setState, loadStatus, restored, reset, nameVoice, cloud } = useGame();
+  const { state, setState, loadStatus, restored, reset, nameVoice, cloud, circle } = useGame();
   const [screen, setScreen] = useState<Screen>({ kind: 'title' });
   const [back, setBack] = useState<Screen>({ kind: 'map' });
   /** lieu à l'écran (peut différer du lieu de la famille pendant une aventure) */
@@ -104,6 +105,12 @@ export function App() {
         <button className="round" onClick={() => open({ kind: 'passport' })} aria-label="Passeport">
           <Icon name="bag" />
         </button>
+        {circle.code && (
+          <button className="round friends-btn" onClick={() => open({ kind: 'friends' })} aria-label="Mes amis">
+            <Icon name="friends" />
+            {circle.fresh.length > 0 && <span className="friends-dot" aria-hidden />}
+          </button>
+        )}
         <button className="round small" onClick={() => open({ kind: 'parents' })} aria-label="Espace parents">
           <Icon name="gear" />
         </button>
@@ -112,12 +119,14 @@ export function App() {
       {screen.kind === 'sea' && <SeaBonus key={screen.game} state={state} setState={setState} game={screen.game} onClose={() => setScreen({ kind: 'map' })} />}
       {screen.kind === 'habitat' && <Habitat key={screen.speciesId} state={state} setState={setState} species={getSpecies(screen.speciesId)} biome={getBiome(screen.biomeId)} onPlace={(b) => setScreen({ kind: 'habitat', speciesId: screen.speciesId, biomeId: b })} onWhere={setHere} />}
       {screen.kind === 'passport' && <Passport state={state} onClose={() => setScreen(back)} />}
+      {screen.kind === 'friends' && <Friends circle={circle} fr={state.settings.frenchHelp} onClose={() => setScreen(back)} />}
       {screen.kind === 'parents' && (
         <ParentArea
           state={state}
           setState={setState}
           nameVoice={nameVoice}
           cloud={cloud}
+          circle={circle}
           onReset={() => {
             reset();
             setScreen({ kind: 'title' });
@@ -151,13 +160,21 @@ function WherePill({ speciesId, placeId, frenchHelp }: { speciesId: string; plac
 }
 
 /** Icônes du bandeau, dessinées en traits dorés (nettes à toutes les tailles, pas d'émoji). */
-function Icon({ name }: { name: 'map' | 'bag' | 'gear' }) {
+function Icon({ name }: { name: 'map' | 'bag' | 'gear' | 'friends' }) {
   const common = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
   if (name === 'map')
     return (
       <svg {...common}>
         <path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z" />
         <path d="M9 4v13.5M15 6.5V20" />
+      </svg>
+    );
+  if (name === 'friends')
+    return (
+      <svg {...common}>
+        <circle cx="8.5" cy="8" r="3" />
+        <circle cx="16.5" cy="9" r="2.5" />
+        <path d="M3 19.5a5.5 5.5 0 0 1 11 0M14.5 14.2a4.6 4.6 0 0 1 6.5 4.3" />
       </svg>
     );
   if (name === 'bag')

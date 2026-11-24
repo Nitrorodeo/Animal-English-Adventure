@@ -11,6 +11,8 @@ import { NameSetup } from './NameSetup';
 import type { NameVoiceState } from './useNameVoices';
 import { CLOUD_URL, type CloudInfo } from './useCloudSync';
 import { resetFamilyChoice } from './FamilyGate';
+import { CircleSettings } from './CircleSettings';
+import type { CircleInfo } from './useCircle';
 
 const PRON_LABEL = { fr: 'à la française', en: 'à l’anglaise', spelled: 'comme écrit' } as const;
 
@@ -39,12 +41,13 @@ interface Props {
   setState: (fn: (s: GameState) => GameState) => void;
   nameVoice: NameVoiceState;
   cloud: CloudInfo;
+  circle: CircleInfo;
   onReset: () => void;
   onClose: () => void;
 }
 
 /** Espace parents, ouvert directement (pas de verrou : décision du parent du 2026-11-19) : réglages, suivi, remise à zéro. */
-export function ParentArea({ state, setState, nameVoice, cloud, onReset, onClose }: Props) {
+export function ParentArea({ state, setState, nameVoice, cloud, circle, onReset, onClose }: Props) {
   const [editName, setEditName] = useState(false);
   const [confirmReset, setConfirmReset] = useState(0);
   const [offline, setOffline] = useState(offlineStatus);
@@ -194,6 +197,8 @@ export function ParentArea({ state, setState, nameVoice, cloud, onReset, onClose
           <p className="note">Conseil : réserver une adresse fixe pour l'ordinateur dans la box, et ouvrir le jeu sur la tablette toujours depuis le même favori.</p>
         </section>
         )}
+
+        {circle.available && <CircleSettings circle={circle} />}
 
         <section>
           <h3>Jouer sans internet</h3>

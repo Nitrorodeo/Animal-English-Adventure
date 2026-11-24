@@ -6,6 +6,7 @@ import { loadGame, memoryStorage, resetGame, saveGame, type LoadStatus, type Sto
 import { newGameState, variableNames, type GameState } from '../engine/state';
 import { useNameVoices } from './useNameVoices';
 import { useCloudSync } from './useCloudSync';
+import { useCircle } from './useCircle';
 
 function browserStorage(): StorageLike {
   try {
@@ -97,5 +98,8 @@ export function useGame() {
   // version en ligne : même partie sur tous les appareils de la famille (engine/cloud.ts)
   const cloud = useCloudSync(state, setState, storage.current);
 
-  return { state, setState, loadStatus, restored, reset, nameVoice, cloud };
+  // version en ligne : le petit tableau de bord des amis (engine/circle.ts)
+  const circle = useCircle(state, storage.current);
+
+  return { state, setState, loadStatus, restored, reset, nameVoice, cloud, circle };
 }
