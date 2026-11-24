@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="76.4 73.5 470.3 523.8">
+<defs>
+<filter id="backpack-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="6" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.2  0 0 0 0 0.1  0 0 0 1.9 -.7" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="backpack-bl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="backpack-bl3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="backpack-bl1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.3"/></filter><filter id="backpack-fz" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+<path id="backpack-main" d="M110,150 C110,80 410,80 410,150 C440,300 450,470 420,560 C380,606 140,606 100,560 C70,470 80,300 110,150Z"/><path id="backpack-flap" d="M96,150 C100,64 420,64 424,150 C428,200 400,250 262,258 C124,250 92,200 96,150Z"/><path id="backpack-pock" d="M130,380 C140,356 380,356 392,380 C410,450 410,540 396,572 C340,596 180,596 124,572 C110,540 112,450 130,380Z"/><path id="backpack-can" d="M440,300 C440,276 470,260 502,262 C530,268 540,290 540,314 L540,470 C540,520 490,538 470,538 C440,534 436,510 436,480Z"/>
+<clipPath id="backpack-cm"><path d="M110,150 C110,80 410,80 410,150 C440,300 450,470 420,560 C380,606 140,606 100,560 C70,470 80,300 110,150Z"/></clipPath><radialGradient id="backpack-mb" cx="30%" cy="26%" r="95%"><stop offset="0" stop-color="#8fe85e"/><stop offset=".45" stop-color="#44b83c"/><stop offset="1" stop-color="#1f7a34"/></radialGradient>
+<radialGradient id="backpack-ms" cx="30%" cy="26%" r="88%"><stop offset=".5" stop-color="#14502e" stop-opacity="0"/><stop offset=".88" stop-color="#14502e" stop-opacity=".3"/><stop offset="1" stop-color="#14502e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="backpack-ma" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#0e4a2a" stop-opacity="0"/><stop offset="1" stop-color="#0e4a2a" stop-opacity=".5"/></linearGradient>
+<linearGradient id="backpack-mr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe6a8" stop-opacity=".9"/><stop offset=".08" stop-color="#ffe6a8" stop-opacity=".4"/><stop offset=".22" stop-color="#ffe6a8" stop-opacity="0"/></linearGradient><radialGradient id="backpack-fb" cx="30%" cy="26%" r="95%"><stop offset="0" stop-color="#9af066"/><stop offset=".45" stop-color="#52c540"/><stop offset="1" stop-color="#2a8c38"/></radialGradient>
+<radialGradient id="backpack-fs" cx="30%" cy="26%" r="88%"><stop offset=".5" stop-color="#14502e" stop-opacity="0"/><stop offset=".88" stop-color="#14502e" stop-opacity=".3"/><stop offset="1" stop-color="#14502e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="backpack-fa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#0e4a2a" stop-opacity="0"/><stop offset="1" stop-color="#0e4a2a" stop-opacity=".5"/></linearGradient>
+<linearGradient id="backpack-fr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe6a8" stop-opacity=".9"/><stop offset=".08" stop-color="#ffe6a8" stop-opacity=".4"/><stop offset=".22" stop-color="#ffe6a8" stop-opacity="0"/></linearGradient><radialGradient id="backpack-pb" cx="30%" cy="26%" r="95%"><stop offset="0" stop-color="#80de56"/><stop offset=".45" stop-color="#3ca836"/><stop offset="1" stop-color="#1c7430"/></radialGradient>
+<radialGradient id="backpack-ps" cx="30%" cy="26%" r="88%"><stop offset=".5" stop-color="#14502e" stop-opacity="0"/><stop offset=".88" stop-color="#14502e" stop-opacity=".3"/><stop offset="1" stop-color="#14502e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="backpack-pa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#0e4a2a" stop-opacity="0"/><stop offset="1" stop-color="#0e4a2a" stop-opacity=".5"/></linearGradient>
+<linearGradient id="backpack-pr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe6a8" stop-opacity=".9"/><stop offset=".08" stop-color="#ffe6a8" stop-opacity=".4"/><stop offset=".22" stop-color="#ffe6a8" stop-opacity="0"/></linearGradient><radialGradient id="backpack-cb" cx="28%" cy="22%" r="95%"><stop offset="0" stop-color="#ffe8a0"/><stop offset=".45" stop-color="#f2b84a"/><stop offset="1" stop-color="#b86c1c"/></radialGradient>
+<radialGradient id="backpack-cs" cx="28%" cy="22%" r="88%"><stop offset=".5" stop-color="#7a3e10" stop-opacity="0"/><stop offset=".88" stop-color="#7a3e10" stop-opacity=".3"/><stop offset="1" stop-color="#7a3e10" stop-opacity=".55"/></radialGradient>
+<linearGradient id="backpack-ca" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3410" stop-opacity="0"/><stop offset="1" stop-color="#6a3410" stop-opacity=".5"/></linearGradient>
+<linearGradient id="backpack-cr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff0c0" stop-opacity=".9"/><stop offset=".08" stop-color="#fff0c0" stop-opacity=".4"/><stop offset=".22" stop-color="#fff0c0" stop-opacity="0"/></linearGradient>
+<linearGradient id="backpack-lea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2a468"/><stop offset=".5" stop-color="#b8723a"/><stop offset="1" stop-color="#7e4a26"/></linearGradient>
+<linearGradient id="backpack-met" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffbe8"/><stop offset=".4" stop-color="#e8d8a0"/><stop offset="1" stop-color="#a88a48"/></linearGradient>
+<linearGradient id="backpack-cap" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e2a468"/><stop offset="1" stop-color="#8a5028"/></linearGradient>
+</defs>
+<g filter="url(#backpack-fz)">
+<g>
+<path d="M432,300 C432,270 478,254 512,262" fill="none" stroke="#b86c1c" stroke-width="10" stroke-linecap="round"/>
+<path d="M452,266 C448,226 470,210 500,222" fill="none" stroke="url(#backpack-lea)" stroke-width="12" stroke-linecap="round"/>
+<rect x="452" y="238" width="62" height="36" rx="10" fill="url(#backpack-cap)"/><rect x="458" y="242" width="40" height="8" rx="4" fill="#fff0c0" opacity=".6"/>
+</g>
+<use href="#backpack-can" fill="url(#backpack-cb)"/>
+<use href="#backpack-can" fill="url(#backpack-cs)"/>
+<use href="#backpack-can" fill="url(#backpack-ca)"/>
+<use href="#backpack-can" fill="url(#backpack-cr)"/>
+<use href="#backpack-can" fill="#000" filter="url(#backpack-grain)" opacity="0.3"/>
+<path d="M470,330 C470,300 520,290 530,330 L530,490 C520,520 480,520 470,490Z" fill="#fff" opacity=".18"/>
+<path d="M450,360 C490,372 530,372 540,360 M446,420 C490,432 530,432 540,420" stroke="#b86c1c" stroke-opacity=".5" stroke-width="4" fill="none"/>
+<path d="M452,300 C452,284 476,276 496,278" stroke="#fff8d8" stroke-opacity=".9" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#backpack-bl1)"/>
+<use href="#backpack-main" fill="url(#backpack-mb)"/>
+<use href="#backpack-main" fill="url(#backpack-ms)"/>
+<use href="#backpack-main" fill="url(#backpack-ma)"/>
+<use href="#backpack-main" fill="url(#backpack-mr)"/>
+<use href="#backpack-main" fill="#000" filter="url(#backpack-grain)" opacity="0.4"/>
+<g clip-path="url(#backpack-cm)">
+<path d="M110,200 C90,320 100,470 130,560" stroke="#14502e" stroke-opacity=".3" stroke-width="26" fill="none" filter="url(#backpack-bl)"/>
+<path d="M160,250 C200,300 300,300 360,250" stroke="#d8ffa8" stroke-opacity=".3" stroke-width="22" fill="none" filter="url(#backpack-bl)"/>
+</g>
+<rect x="84" y="440" width="22" height="108" rx="8" fill="url(#backpack-lea)" opacity=".0"/>
+<rect x="104" y="396" width="26" height="80" rx="8" fill="url(#backpack-lea)"/>
+<rect x="390" y="396" width="26" height="80" rx="8" fill="url(#backpack-lea)"/>
+<rect x="108" y="400" width="8" height="70" rx="4" fill="#fff0c0" opacity=".5"/><rect x="394" y="400" width="8" height="70" rx="4" fill="#fff0c0" opacity=".4"/>
+<use href="#backpack-pock" fill="url(#backpack-pb)"/>
+<use href="#backpack-pock" fill="url(#backpack-ps)"/>
+<use href="#backpack-pock" fill="url(#backpack-pa)"/>
+<use href="#backpack-pock" fill="url(#backpack-pr)"/>
+<use href="#backpack-pock" fill="#000" filter="url(#backpack-grain)" opacity="0.4"/>
+<path d="M142,388 C220,368 300,368 380,388" stroke="#14502e" stroke-opacity=".45" stroke-width="4" fill="none"/>
+<path d="M146,392 C220,374 300,374 376,392" stroke="#d8ffa8" stroke-opacity=".7" stroke-width="3" fill="none" stroke-dasharray="9 6"/>
+<rect x="238" y="400" width="48" height="16" rx="8" fill="url(#backpack-met)"/>
+<g stroke="#14502e" stroke-opacity=".3" stroke-width="3" fill="none" stroke-dasharray="8 6"><path d="M136,570 C190,590 330,590 386,570"/><path d="M130,420 C124,480 128,540 136,566"/><path d="M388,420 C394,480 390,540 384,566"/></g>
+<path d="M150,540 C200,566 320,566 372,540" stroke="#14502e" stroke-opacity=".3" stroke-width="16" fill="none" filter="url(#backpack-bl3)"/>
+<use href="#backpack-flap" fill="url(#backpack-fb)"/>
+<use href="#backpack-flap" fill="url(#backpack-fs)"/>
+<use href="#backpack-flap" fill="url(#backpack-fa)"/>
+<use href="#backpack-flap" fill="url(#backpack-fr)"/>
+<use href="#backpack-flap" fill="#000" filter="url(#backpack-grain)" opacity="0.4"/>
+<path d="M110,158 C150,230 380,230 414,158" fill="none" stroke="#14502e" stroke-opacity=".35" stroke-width="12" filter="url(#backpack-bl3)" transform="translate(0 12)"/>
+<path d="M104,160 C150,238 380,238 420,160" fill="none" stroke="#d8ffa8" stroke-opacity=".6" stroke-width="4" stroke-dasharray="9 6" transform="translate(0 -6)"/>
+<path d="M120,106 C180,76 340,76 400,106" stroke="#e8ffc0" stroke-opacity=".7" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#backpack-bl1)"/>
+<rect x="150" y="196" width="30" height="94" rx="9" fill="#6a3a22" opacity=".3" transform="translate(5 6)" filter="url(#backpack-bl3)"/>
+<rect x="340" y="196" width="30" height="94" rx="9" fill="#6a3a22" opacity=".3" transform="translate(5 6)" filter="url(#backpack-bl3)"/>
+<rect x="150" y="190" width="30" height="92" rx="9" fill="url(#backpack-lea)"/><rect x="340" y="190" width="30" height="92" rx="9" fill="url(#backpack-lea)"/>
+<rect x="154" y="194" width="9" height="82" rx="4" fill="#fff0c0" opacity=".5"/><rect x="344" y="194" width="9" height="82" rx="4" fill="#fff0c0" opacity=".5"/>
+<rect x="138" y="262" width="54" height="40" rx="9" fill="#6a3a22" opacity=".3" transform="translate(4 5)" filter="url(#backpack-bl3)"/>
+<rect x="328" y="262" width="54" height="40" rx="9" fill="#6a3a22" opacity=".3" transform="translate(4 5)" filter="url(#backpack-bl3)"/>
+<rect x="138" y="258" width="54" height="40" rx="9" fill="url(#backpack-met)"/><rect x="152" y="270" width="26" height="16" rx="4" fill="#7a4a1a" opacity=".8"/>
+<rect x="328" y="258" width="54" height="40" rx="9" fill="url(#backpack-met)"/><rect x="342" y="270" width="26" height="16" rx="4" fill="#7a4a1a" opacity=".8"/>
+<rect x="142" y="262" width="22" height="7" rx="3" fill="#fff" opacity=".8"/><rect x="332" y="262" width="22" height="7" rx="3" fill="#fff" opacity=".8"/>
+<rect x="228" y="120" width="64" height="22" rx="11" fill="url(#backpack-lea)"/><rect x="236" y="124" width="40" height="6" rx="3" fill="#fff0c0" opacity=".6"/>
+</g>
+</svg>

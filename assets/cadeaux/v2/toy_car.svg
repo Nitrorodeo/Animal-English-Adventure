@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="32 140 946 500">
+<defs>
+<linearGradient id="toy_car-r" x1="0" y1="0" x2="0.35" y2="1" ><stop offset="0" stop-color="#ff5a44"/><stop offset="0.4" stop-color="#e8261c"/><stop offset="1" stop-color="#a50e1c"/></linearGradient>
+<linearGradient id="toy_car-rl" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#a01020" stop-opacity="0.0"/><stop offset="0.55" stop-color="#8a1030" stop-opacity="0.0"/><stop offset="1" stop-color="#6a0a30" stop-opacity="0.3"/></linearGradient>
+<radialGradient id="toy_car-bn" cx=".6" cy="1" r=".55" ><stop offset="0" stop-color="#ffb870" stop-opacity="0.3"/><stop offset="1" stop-color="#ffb870" stop-opacity="0"/></radialGradient>
+<linearGradient id="toy_car-gl" x1="0" y1="0" x2="1" y2="1" ><stop offset="0" stop-color="#d6f2ff"/><stop offset="0.5" stop-color="#86c8f4"/><stop offset="1" stop-color="#4a98dc"/></linearGradient>
+<radialGradient id="toy_car-wh" cx=".4" cy=".3" r=".8" ><stop offset="0" stop-color="#4a4a5a"/><stop offset="0.5" stop-color="#22222e"/><stop offset="1" stop-color="#0c0c14"/></radialGradient>
+<radialGradient id="toy_car-hub" cx=".38" cy=".3" r=".8" ><stop offset="0" stop-color="#ffffff"/><stop offset="0.6" stop-color="#eef0f8"/><stop offset="1" stop-color="#b8bcd8"/></radialGradient>
+<radialGradient id="toy_car-hl" cx=".4" cy=".35" r=".7" ><stop offset="0" stop-color="#fffbd0"/><stop offset="0.5" stop-color="#ffe05a"/><stop offset="1" stop-color="#e8a010"/></radialGradient>
+<linearGradient id="toy_car-bp" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d0d4ea"/></linearGradient>
+<path id="toy_car-body" d="M50,470 C40,400 80,362 150,347 C190,341 215,322 250,272 C300,205 360,152 470,148 C590,144 660,172 705,237 C730,272 752,322 802,337 C900,347 962,392 962,462 C962,507 932,527 882,527 L120,527 C70,527 52,507 50,470Z"/><clipPath id="toy_car-bc"><use href="#toy_car-body"/></clipPath>
+<clipPath id="toy_car-w1"><path d="M280,300 C310,230 380,195 463,190 L463,306 L270,306Z"/></clipPath>
+<clipPath id="toy_car-w2"><path d="M502,190 C595,188 645,215 678,262 C694,285 703,298 708,306 L502,306Z"/></clipPath>
+<filter id="toy_car-b3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="toy_car-b8" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="toy_car-b16" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="16"/></filter>
+<filter id="toy_car-pl" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="18" result="b"/><feSpecularLighting in="b" surfaceScale="10" specularConstant="0.4" specularExponent="28" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s2"/></feMerge></filter>
+</defs>
+<g filter="url(#toy_car-pl)"><use href="#toy_car-body" fill="url(#toy_car-r)"/></g>
+<g clip-path="url(#toy_car-bc)">
+<use href="#toy_car-body" fill="url(#toy_car-rl)"/>
+<ellipse cx="560" cy="600" rx="470" ry="130" fill="url(#toy_car-bn)"/>
+<path d="M60,505 L960,505" stroke="#7a0a2a" stroke-opacity=".35" stroke-width="30" filter="url(#toy_car-b8)"/>
+<circle cx="270" cy="528" r="132" fill="#2a0612" fill-opacity=".92"/><circle cx="745" cy="528" r="132" fill="#2a0612" fill-opacity=".92"/>
+<path d="M940,380 C975,430 970,490 940,520" fill="none" stroke="#ffd0a0" stroke-opacity=".6" stroke-width="18" filter="url(#toy_car-b8)"/>
+<path d="M705,237 C730,272 752,322 802,337 C860,342 900,360 930,385" fill="none" stroke="#7a0a2a" stroke-opacity=".28" stroke-width="12" filter="url(#toy_car-b3)"/>
+<path d="M120,430 C300,415 700,415 900,430" fill="none" stroke="#fff" stroke-opacity=".0"/>
+<path d="M95,395 C120,372 160,360 205,355" fill="none" stroke="#ffd8cc" stroke-opacity=".8" stroke-width="14" stroke-linecap="round" filter="url(#toy_car-b3)"/>
+<path d="M280,262 C320,200 380,165 460,162" fill="none" stroke="#ffe0d6" stroke-opacity=".85" stroke-width="16" stroke-linecap="round" filter="url(#toy_car-b3)"/>
+<path d="M60,462 C70,440 90,425 110,420" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="8" stroke-linecap="round" filter="url(#toy_car-b3)"/>
+</g>
+<use href="#toy_car-body" fill="none" stroke="#6a0a1a" stroke-opacity=".3" stroke-width="3"/>
+<!-- vitres -->
+<g>
+<path d="M280,300 C310,230 380,195 463,190 L463,306 L270,306Z" fill="#4a0a2a" fill-opacity=".45" transform="translate(0 4)" filter="url(#toy_car-b3)"/>
+<path d="M280,300 C310,230 380,195 463,190 L463,306 L270,306Z" fill="url(#toy_car-gl)"/>
+<g clip-path="url(#toy_car-w1)"><path d="M300,320 L360,190 L395,190 L335,320Z" fill="#fff" fill-opacity=".6"/><path d="M405,320 L445,190 L458,190 L420,320Z" fill="#fff" fill-opacity=".4"/><rect x="260" y="270" width="210" height="40" fill="#2a60b0" fill-opacity=".35"/></g>
+<path d="M502,190 C595,188 645,215 678,262 C694,285 703,298 708,306 L502,306Z" fill="#4a0a2a" fill-opacity=".45" transform="translate(0 4)" filter="url(#toy_car-b3)"/>
+<path d="M502,190 C595,188 645,215 678,262 C694,285 703,298 708,306 L502,306Z" fill="url(#toy_car-gl)"/>
+<g clip-path="url(#toy_car-w2)"><path d="M520,320 L565,190 L600,190 L555,320Z" fill="#fff" fill-opacity=".55"/><rect x="480" y="270" width="240" height="40" fill="#2a60b0" fill-opacity=".35"/></g>
+<path d="M280,300 C310,230 380,195 463,190 L463,306 L270,306Z" fill="none" stroke="#4a0a20" stroke-opacity=".3" stroke-width="3"/>
+<path d="M502,190 C595,188 645,215 678,262 C694,285 703,298 708,306 L502,306Z" fill="none" stroke="#4a0a20" stroke-opacity=".3" stroke-width="3"/>
+<rect x="456" y="184" width="54" height="126" rx="12" fill="url(#toy_car-r)"/>
+<rect x="456" y="184" width="14" height="120" rx="7" fill="#ffd0c4" fill-opacity=".5" filter="url(#toy_car-b3)"/>
+</g>
+<!-- phare et pare-chocs -->
+<ellipse cx="925" cy="425" rx="32" ry="40" fill="#8a0a20" fill-opacity=".35" transform="translate(3 4)"/>
+<ellipse cx="925" cy="425" rx="32" ry="40" fill="url(#toy_car-hl)"/>
+<ellipse cx="917" cy="410" rx="11" ry="16" fill="#fff" fill-opacity=".85"/>
+<path d="M880,504 C920,504 958,498 960,478 L960,505 C960,522 940,530 900,530 L860,530Z" fill="url(#toy_car-bp)"/>
+<path d="M866,510 C920,512 950,505 958,488" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/>
+<path d="M140,516 L220,516 M820,516 L900,516" stroke="#7a0a2a" stroke-opacity=".0"/>
+<g>
+<ellipse cx="270" cy="540" rx="116" ry="100" fill="#3a0a20" fill-opacity=".0"/>
+<circle cx="276" cy="534" r="112" fill="#3a0a18" fill-opacity=".35" filter="url(#toy_car-b8)"/>
+<g filter="url(#toy_car-pl)"><circle cx="270" cy="528" r="112" fill="url(#toy_car-wh)"/></g>
+<circle cx="270" cy="528" r="112" fill="none" stroke="#6a6a80" stroke-opacity=".5" stroke-width="5" transform="translate(-2 -2)" clip-path="none" opacity=".6"/>
+<path d="M174,500 A100,100 0 0 1 250,432" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="9" stroke-linecap="round" filter="url(#toy_car-b3)"/>
+<circle cx="270" cy="528" r="58" fill="url(#toy_car-hub)"/>
+<circle cx="270" cy="528" r="58" fill="none" stroke="#7a7aa0" stroke-opacity=".45" stroke-width="4"/>
+<circle cx="270" cy="528" r="24" fill="#c4c8e0"/><circle cx="265" cy="522" r="10" fill="#fff"/>
+<g stroke="#8a8ab0" stroke-opacity=".5" stroke-width="5" stroke-linecap="round">
+<path d="M270,528 L308,542"/><path d="M270,528 L269,568"/><path d="M270,528 L232,539"/><path d="M270,528 L248,495"/><path d="M270,528 L295,496"/>
+</g></g>
+<g>
+<ellipse cx="745" cy="540" rx="116" ry="100" fill="#3a0a20" fill-opacity=".0"/>
+<circle cx="751" cy="534" r="112" fill="#3a0a18" fill-opacity=".35" filter="url(#toy_car-b8)"/>
+<g filter="url(#toy_car-pl)"><circle cx="745" cy="528" r="112" fill="url(#toy_car-wh)"/></g>
+<circle cx="745" cy="528" r="112" fill="none" stroke="#6a6a80" stroke-opacity=".5" stroke-width="5" transform="translate(-2 -2)" clip-path="none" opacity=".6"/>
+<path d="M649,500 A100,100 0 0 1 725,432" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="9" stroke-linecap="round" filter="url(#toy_car-b3)"/>
+<circle cx="745" cy="528" r="58" fill="url(#toy_car-hub)"/>
+<circle cx="745" cy="528" r="58" fill="none" stroke="#7a7aa0" stroke-opacity=".45" stroke-width="4"/>
+<circle cx="745" cy="528" r="24" fill="#c4c8e0"/><circle cx="740" cy="522" r="10" fill="#fff"/>
+<g stroke="#8a8ab0" stroke-opacity=".5" stroke-width="5" stroke-linecap="round">
+<path d="M745,528 L783,542"/><path d="M745,528 L744,568"/><path d="M745,528 L707,539"/><path d="M745,528 L723,495"/><path d="M745,528 L770,496"/>
+</g></g>
+</svg>

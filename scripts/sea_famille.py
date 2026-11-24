@@ -10,8 +10,9 @@ Sources (`Animaux/Ocean map/<animal>/`) :
   dauphin : paradis lumineux + canyon de kelp ; tortue : jardin corallien + canyon turquoise).
 
 Sorties dans `public/assets/sea/` : `whale_family_hd` (maman + baleineau), `turtle_mother_hd`, `turtle_baby_hd`
-(fond vert retiré ; les deux tortues séparées) et `bg_<jeu>_<1|2>.webp` (fonds). Les dauphins gardent leurs images
-(`scripts/sea_hd.py`) ; les petites découpes de la carte du monde ne changent pas.
+(fond vert retiré ; les deux tortues séparées), `dolphin_family_hd` (planche
+« Dauphins joyeux » : la maman et son petit qui nagent, gardés ensemble) et `bg_<jeu>_<1|2>.webp` (fonds). Les anciennes images des dauphins
+(`scripts/sea_hd.py`, sautant hors de l'eau) restent sur le disque, plus utilisées par le jeu ; les petites découpes de la carte du monde ne changent pas.
 
 Lancement : python scripts/sea_famille.py
 """
@@ -28,10 +29,16 @@ import sea_hd as h  # noqa: E402
 
 SRC = h.SRC
 OUT = h.OUT
-MAX_W = {"whale_family_hd": 1400, "turtle_mother_hd": 1000, "turtle_baby_hd": 600}
+MAX_W = {"whale_family_hd": 1400, "turtle_mother_hd": 1000, "turtle_baby_hd": 600, "dolphin_family_hd": 1300}
 BG_W = 1600
 
-SHEETS = {"whale": ("Baleine", "Baleines à bosse complices.png"), "turtle": ("Tortue", "Tortues de mer joyeuses en nageant.png")}
+SHEETS = {
+    "whale": ("Baleine", "Baleines à bosse complices.png"),
+    "turtle": ("Tortue", "Tortues de mer joyeuses en nageant.png"),
+    # 2026-11-24 : « termine les 3 animaux des océans correctement » — les dauphins de la carte sautaient hors de l'eau
+    # avec leur flaque, posés en plein fond marin ; la planche « Dauphins joyeux » les montre nageant sous l'eau
+    "dolphin": ("Dauphin", "Dauphins joyeux dans l’océan.png"),
+}
 BACKGROUNDS = {
     "whale": ("Baleine", ["Cathédrale de glace sous-marine-2.png", "Panorama sous-marin de l’Antarctique-1.png"]),
     "dolphins": ("Dauphin", ["Paradis sous-marin lumineux pour dauphins.png", "Canyon sous-marin enchanté aux forêts de kelp.png"]),
@@ -70,6 +77,11 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     for game, (folder, name) in SHEETS.items():
         rgba = chroma_key(np.asarray(Image.open(SRC / folder / name).convert("RGB")))
+        if game == "dolphin":
+            # la maman et son petit se chevauchent (la tête du petit cache le ventre de la maman) : gardés ENSEMBLE,
+            # comme les baleines (« ce n'est pas grave si les 2 restent ensemble », 2026-11-24)
+            print("dolphin_family_hd", save(rgba, "dolphin_family_hd"))
+            continue
         if game == "whale":
             # la maman et son baleineau se chevauchent (le petit cache le ventre de la maman) : on les garde ENSEMBLE,
             # exactement comme sur la planche, plutôt que de couper la maman suivant le contour du petit

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15.8 25.2 669.7 324.6">
+<defs>
+<filter id="cowboy_hat-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.3  0 0 0 0 0.15  0 0 0 0 0.05  0 0 0 1.9 -.7" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="cowboy_hat-bl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="cowboy_hat-bl3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="cowboy_hat-bl1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.3"/></filter><filter id="cowboy_hat-fz" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+<path id="cowboy_hat-brim" d="M24,128 C34,250 180,348 350,348 C520,348 666,250 676,128 C690,88 640,70 600,92 C560,50 140,50 100,92 C60,70 10,88 24,128Z"/><path id="cowboy_hat-crown" d="M206,222 C196,150 200,56 252,34 C290,20 330,40 350,60 C370,40 410,20 448,34 C500,56 504,150 494,222 C440,262 260,262 206,222Z"/><path id="cowboy_hat-band" d="M203,214 C260,268 440,268 497,214 L493,172 C440,226 260,226 207,172Z"/>
+<clipPath id="cowboy_hat-cc"><path d="M206,222 C196,150 200,56 252,34 C290,20 330,40 350,60 C370,40 410,20 448,34 C500,56 504,150 494,222 C440,262 260,262 206,222Z"/></clipPath><radialGradient id="cowboy_hat-bb" cx="40%" cy="20%" r="95%"><stop offset="0" stop-color="#e0a468"/><stop offset=".45" stop-color="#b87238"/><stop offset="1" stop-color="#7a4420"/></radialGradient>
+<radialGradient id="cowboy_hat-bs" cx="40%" cy="20%" r="88%"><stop offset=".5" stop-color="#5a2e14" stop-opacity="0"/><stop offset=".88" stop-color="#5a2e14" stop-opacity=".3"/><stop offset="1" stop-color="#5a2e14" stop-opacity=".55"/></radialGradient>
+<linearGradient id="cowboy_hat-ba" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#4a2410" stop-opacity="0"/><stop offset="1" stop-color="#4a2410" stop-opacity=".5"/></linearGradient>
+<linearGradient id="cowboy_hat-br" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe0a8" stop-opacity=".9"/><stop offset=".08" stop-color="#ffe0a8" stop-opacity=".4"/><stop offset=".22" stop-color="#ffe0a8" stop-opacity="0"/></linearGradient><radialGradient id="cowboy_hat-cb" cx="34%" cy="22%" r="95%"><stop offset="0" stop-color="#e8b078"/><stop offset=".45" stop-color="#c0803f"/><stop offset="1" stop-color="#85502a"/></radialGradient>
+<radialGradient id="cowboy_hat-cs" cx="34%" cy="22%" r="88%"><stop offset=".5" stop-color="#5a2e14" stop-opacity="0"/><stop offset=".88" stop-color="#5a2e14" stop-opacity=".3"/><stop offset="1" stop-color="#5a2e14" stop-opacity=".55"/></radialGradient>
+<linearGradient id="cowboy_hat-ca" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#4a2410" stop-opacity="0"/><stop offset="1" stop-color="#4a2410" stop-opacity=".5"/></linearGradient>
+<linearGradient id="cowboy_hat-cr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe0a8" stop-opacity=".9"/><stop offset=".08" stop-color="#ffe0a8" stop-opacity=".4"/><stop offset=".22" stop-color="#ffe0a8" stop-opacity="0"/></linearGradient><radialGradient id="cowboy_hat-db" cx="34%" cy="22%" r="95%"><stop offset="0" stop-color="#8a5a3a"/><stop offset=".45" stop-color="#5e3a22"/><stop offset="1" stop-color="#3a2012"/></radialGradient>
+<radialGradient id="cowboy_hat-ds" cx="34%" cy="22%" r="88%"><stop offset=".5" stop-color="#2a1408" stop-opacity="0"/><stop offset=".88" stop-color="#2a1408" stop-opacity=".3"/><stop offset="1" stop-color="#2a1408" stop-opacity=".55"/></radialGradient>
+<linearGradient id="cowboy_hat-da" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#2a1408" stop-opacity="0"/><stop offset="1" stop-color="#2a1408" stop-opacity=".5"/></linearGradient>
+<linearGradient id="cowboy_hat-dr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#e0a068" stop-opacity=".9"/><stop offset=".08" stop-color="#e0a068" stop-opacity=".4"/><stop offset=".22" stop-color="#e0a068" stop-opacity="0"/></linearGradient>
+<linearGradient id="cowboy_hat-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2b0"/><stop offset=".5" stop-color="#e8b83a"/><stop offset="1" stop-color="#a87a1a"/></linearGradient>
+</defs>
+<g filter="url(#cowboy_hat-fz)">
+<use href="#cowboy_hat-brim" fill="url(#cowboy_hat-bb)"/>
+<use href="#cowboy_hat-brim" fill="url(#cowboy_hat-bs)"/>
+<use href="#cowboy_hat-brim" fill="url(#cowboy_hat-ba)"/>
+<use href="#cowboy_hat-brim" fill="url(#cowboy_hat-br)"/>
+<use href="#cowboy_hat-brim" fill="#000" filter="url(#cowboy_hat-grain)" opacity="0.45"/>
+<path d="M40,130 C60,230 190,318 350,318 C510,318 640,230 660,130" fill="none" stroke="#e8b078" stroke-opacity=".55" stroke-width="8" filter="url(#cowboy_hat-bl1)"/>
+<path d="M34,128 C80,200 190,252 350,254 C510,252 620,200 666,128" fill="none" stroke="#4a2410" stroke-opacity=".28" stroke-width="30" filter="url(#cowboy_hat-bl)"/>
+<path d="M60,100 C100,120 130,150 150,190 M640,100 C600,120 570,150 550,190" stroke="#4a2410" stroke-opacity=".3" stroke-width="22" fill="none" filter="url(#cowboy_hat-bl)"/>
+<ellipse cx="350" cy="222" rx="170" ry="40" fill="#3a1c0c" opacity=".4" filter="url(#cowboy_hat-bl)"/>
+<path d="M34,134 C60,92 120,60 150,84 M666,134 C640,92 580,60 550,84" stroke="#ffe0a8" stroke-opacity=".55" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#cowboy_hat-bl1)"/>
+<path d="M60,160 C150,300 560,300 640,160" fill="none" stroke="#4a2410" stroke-opacity=".3" stroke-width="2.4" stroke-dasharray="9 6" transform="translate(0 -8)"/>
+<use href="#cowboy_hat-crown" fill="url(#cowboy_hat-cb)"/>
+<use href="#cowboy_hat-crown" fill="url(#cowboy_hat-cs)"/>
+<use href="#cowboy_hat-crown" fill="url(#cowboy_hat-ca)"/>
+<use href="#cowboy_hat-crown" fill="url(#cowboy_hat-cr)"/>
+<use href="#cowboy_hat-crown" fill="#000" filter="url(#cowboy_hat-grain)" opacity="0.45"/>
+<g clip-path="url(#cowboy_hat-cc)">
+<ellipse cx="350" cy="64" rx="26" ry="60" fill="#4a2410" opacity=".35" filter="url(#cowboy_hat-bl3)"/>
+<path d="M240,60 C260,34 300,36 330,62" stroke="#fff0d0" stroke-opacity=".55" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#cowboy_hat-bl3)"/>
+<path d="M214,120 C210,170 214,200 222,214" stroke="#fff0d0" stroke-opacity=".45" stroke-width="9" fill="none" filter="url(#cowboy_hat-bl3)"/>
+<path d="M480,60 C500,100 500,170 490,214" stroke="#3a1c0c" stroke-opacity=".3" stroke-width="22" fill="none" filter="url(#cowboy_hat-bl)"/>
+</g>
+<path d="M350,60 C330,42 292,22 252,34" stroke="#6a3c1e" stroke-opacity=".6" stroke-width="3" fill="none"/>
+<path d="M350,60 C370,42 408,22 448,34" stroke="#6a3c1e" stroke-opacity=".6" stroke-width="3" fill="none"/>
+<use href="#cowboy_hat-band" fill="url(#cowboy_hat-db)"/>
+<use href="#cowboy_hat-band" fill="url(#cowboy_hat-ds)"/>
+<use href="#cowboy_hat-band" fill="url(#cowboy_hat-da)"/>
+<use href="#cowboy_hat-band" fill="url(#cowboy_hat-dr)"/>
+<use href="#cowboy_hat-band" fill="#000" filter="url(#cowboy_hat-grain)" opacity="0.4"/>
+<path d="M210,180 C260,228 440,228 490,180" stroke="#c89060" stroke-opacity=".7" stroke-width="3" fill="none" stroke-dasharray="8 6"/>
+<path d="M214,176 C260,222 430,224 476,186" stroke="#d8a878" stroke-opacity=".6" stroke-width="4" fill="none" filter="url(#cowboy_hat-bl1)"/>
+<rect x="326" y="206" width="48" height="44" rx="8" fill="#3a1c0c" opacity=".35" transform="translate(3 4)" filter="url(#cowboy_hat-bl3)"/>
+<rect x="326" y="204" width="48" height="44" rx="8" fill="url(#cowboy_hat-gold)"/><rect x="336" y="214" width="28" height="24" rx="4" fill="#5e3a22"/>
+<rect x="330" y="208" width="20" height="6" rx="3" fill="#fff" opacity=".8"/>
+</g>
+</svg>

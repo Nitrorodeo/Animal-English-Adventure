@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 18 452 882">
+<defs>
+<filter id="skis-soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.6"/></filter>
+<filter id="skis-b3" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="skis-b6" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+<filter id="skis-b14" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<filter id="skis-wob" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".8"/></filter>
+<filter id="skis-drw" x="-5%" y="-30%" width="110%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".022 .04" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.2"/></filter>
+<filter id="skis-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 9 -5.2"/></filter>
+<filter id="skis-grain2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .8  0 0 0 8 -5.0"/></filter>
+<filter id="skis-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .22" numOctaves="3" seed="6" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 .05  0 0 0 0 .08  0 0 0 5 -2.4"/></filter>
+<filter id="skis-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.5"/></filter>
+<radialGradient id="skis-snow" cx="32%" cy="22%" r="85%"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#e8f2fc"/><stop offset=".8" stop-color="#c9d4f2"/><stop offset="1" stop-color="#a99fdc"/></radialGradient>
+<radialGradient id="skis-light" cx="28%" cy="20%" r="60%"><stop offset="0" stop-color="#fff9ee" stop-opacity=".85"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<radialGradient id="skis-shade" cx="30%" cy="22%" r="95%"><stop offset=".45" stop-color="#6a6ad0" stop-opacity="0"/><stop offset=".8" stop-color="#6d63c6" stop-opacity=".28"/><stop offset="1" stop-color="#4b46a8" stop-opacity=".58"/></radialGradient>
+<linearGradient id="skis-rimr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffc6e6" stop-opacity=".95"/><stop offset=".08" stop-color="#ffd6ee" stop-opacity=".45"/><stop offset=".25" stop-color="#ffd6ee" stop-opacity="0"/></linearGradient>
+<linearGradient id="skis-aob" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#5a56b8" stop-opacity="0"/><stop offset="1" stop-color="#4a4ab0" stop-opacity=".4"/></linearGradient>
+<linearGradient id="skis-drift" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e6ecfa"/><stop offset="1" stop-color="#b9b6ec"/></linearGradient>
+
+<linearGradient id="skis-ski" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6a52"/><stop offset=".35" stop-color="#ea2f33"/><stop offset=".8" stop-color="#bd1727"/><stop offset="1" stop-color="#8f0f24"/></linearGradient>
+<linearGradient id="skis-tip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a5132a"/><stop offset="1" stop-color="#ee3a36"/></linearGradient>
+<linearGradient id="skis-bind" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a6c9a"/><stop offset=".5" stop-color="#3a3c64"/><stop offset="1" stop-color="#22234a"/></linearGradient>
+<linearGradient id="skis-pole" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f4f6ff"/><stop offset=".5" stop-color="#aab4d8"/><stop offset="1" stop-color="#6c76a8"/></linearGradient>
+<linearGradient id="skis-grip" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3f9ad8"/><stop offset=".6" stop-color="#2260ae"/><stop offset="1" stop-color="#173a82"/></linearGradient>
+<clipPath id="skis-mc"><path d="M14,860 Q18,800 54,772 Q94,744 140,752 Q190,726 250,736 Q310,722 360,748 Q420,744 444,790 Q462,830 446,862 Q452,884 430,892 Q410,899 388,893 Q366,899 344,893 Q320,900 296,893 Q272,899 248,893 Q224,899 200,893 Q176,899 152,893 Q128,899 104,892 Q80,898 58,890 Q30,884 14,860 Z"/></clipPath>
+</defs>
+
+<clipPath id="skis-skiclip"><rect x="0" y="0" width="460" height="900"/></clipPath>
+<g transform="rotate(-2.2 130.0 800)">
+<rect x="104" y="30" width="52" height="790" rx="14" fill="#5a0818" opacity=".32" filter="url(#skis-b3)" transform="translate(5 4)"/>
+<path d="M104,820 L104,96 C104,40 115.44,24 130.0,24 C144.56,24 156,40 156,96 L156,820 Z" fill="url(#skis-ski)"/>
+<path d="M104,120 Q104,46 130.0,22 Q156,46 156,120 Q130.0,84 104,120 Z" fill="url(#skis-tip)"/>
+<path d="M107,98 Q130.0,76 153,98" fill="none" stroke="#ffd0c0" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>
+<path d="M111,128 L111,800" stroke="#ffc2b0" stroke-opacity=".7" stroke-width="4.5" stroke-linecap="round" filter="url(#skis-soft)"/>
+<path d="M130.0,150 L130.0,800" stroke="#fff1d6" stroke-opacity=".6" stroke-width="5"/>
+<rect x="104" y="30" width="52" height="790" filter="url(#skis-wood)" opacity=".18" clip-path="url(#skis-skiclip)"/>
+<rect x="147" y="60" width="9" height="760" fill="#ffb4c8" opacity=".25"/>
+<!-- bindings -->
+<rect x="108" y="500" width="44" height="40" rx="8" fill="#14122a" opacity=".35" filter="url(#skis-soft)" transform="translate(2 3)"/>
+<rect x="107" y="496" width="46" height="38" rx="9" fill="url(#skis-bind)"/>
+<rect x="110" y="500" width="40" height="8" rx="4" fill="#fff" opacity=".28"/>
+<rect x="114" y="522" width="32" height="5" rx="2.5" fill="#ffd23a" opacity=".9"/>
+<rect x="107" y="598" width="46" height="44" rx="10" fill="url(#skis-bind)"/>
+<rect x="110" y="602" width="40" height="8" rx="4" fill="#fff" opacity=".28"/>
+<rect x="114" y="628" width="32" height="5" rx="2.5" fill="#ffd23a" opacity=".9"/>
+</g>
+<g transform="rotate(1.8 202.0 800)">
+<rect x="176" y="30" width="52" height="790" rx="14" fill="#5a0818" opacity=".32" filter="url(#skis-b3)" transform="translate(5 4)"/>
+<path d="M176,820 L176,96 C176,40 187.44,24 202.0,24 C216.56,24 228,40 228,96 L228,820 Z" fill="url(#skis-ski)"/>
+<path d="M176,120 Q176,46 202.0,22 Q228,46 228,120 Q202.0,84 176,120 Z" fill="url(#skis-tip)"/>
+<path d="M179,98 Q202.0,76 225,98" fill="none" stroke="#ffd0c0" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>
+<path d="M183,128 L183,800" stroke="#ffc2b0" stroke-opacity=".7" stroke-width="4.5" stroke-linecap="round" filter="url(#skis-soft)"/>
+<path d="M202.0,150 L202.0,800" stroke="#fff1d6" stroke-opacity=".6" stroke-width="5"/>
+<rect x="176" y="30" width="52" height="790" filter="url(#skis-wood)" opacity=".18" clip-path="url(#skis-skiclip)"/>
+<rect x="219" y="60" width="9" height="760" fill="#ffb4c8" opacity=".25"/>
+<!-- bindings -->
+<rect x="180" y="500" width="44" height="40" rx="8" fill="#14122a" opacity=".35" filter="url(#skis-soft)" transform="translate(2 3)"/>
+<rect x="179" y="496" width="46" height="38" rx="9" fill="url(#skis-bind)"/>
+<rect x="182" y="500" width="40" height="8" rx="4" fill="#fff" opacity=".28"/>
+<rect x="186" y="522" width="32" height="5" rx="2.5" fill="#ffd23a" opacity=".9"/>
+<rect x="179" y="598" width="46" height="44" rx="10" fill="url(#skis-bind)"/>
+<rect x="182" y="602" width="40" height="8" rx="4" fill="#fff" opacity=".28"/>
+<rect x="186" y="628" width="32" height="5" rx="2.5" fill="#ffd23a" opacity=".9"/>
+</g>
+<path d="M300,800 L424,336" stroke="#14122a" stroke-opacity=".28" stroke-width="10" stroke-linecap="round" transform="translate(4 3)" filter="url(#skis-soft)"/>
+<path d="M300,800 L424,336" stroke="url(#skis-pole)" stroke-width="8" stroke-linecap="round"/>
+<path d="M298.4,800 L422.4,336" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
+<ellipse cx="318.1" cy="732.4" rx="30" ry="9" fill="#2a2c58" transform="rotate(15.0 318.1 732.4)" opacity="0"/>
+<g transform="translate(318.1 732.4) rotate(-165.0)"><ellipse cx="0" cy="0" rx="26" ry="8" fill="#2a2c58"/><ellipse cx="0" cy="-2" rx="20" ry="5" fill="#6a6ea0"/><path d="M-26,0 Q0,16 26,0" fill="none" stroke="#8a8ec6" stroke-opacity=".6" stroke-width="2"/></g>
+<path d="M402.3,417.2 L424,336" stroke="#14122a" stroke-opacity=".3" stroke-width="22" stroke-linecap="round" transform="translate(3 3)" filter="url(#skis-soft)"/>
+<path d="M402.3,417.2 L424,336" stroke="#173a82" stroke-width="20" stroke-linecap="round"/>
+<path d="M405.7,418.1 L427.4,336.9" stroke="#4aa8e8" stroke-width="6" stroke-linecap="round"/>
+<path d="M398.4,416.1 L420.1,335.0" stroke="#0e2660" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"/>
+<path d="M430,800 L296,346" stroke="#14122a" stroke-opacity=".28" stroke-width="10" stroke-linecap="round" transform="translate(4 3)" filter="url(#skis-soft)"/>
+<path d="M430,800 L296,346" stroke="url(#skis-pole)" stroke-width="8" stroke-linecap="round"/>
+<path d="M428.4,800 L294.4,346" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
+<ellipse cx="410.2" cy="732.9" rx="30" ry="9" fill="#2a2c58" transform="rotate(-16.4 410.2 732.9)" opacity="0"/>
+<g transform="translate(410.2 732.9) rotate(-196.4)"><ellipse cx="0" cy="0" rx="26" ry="8" fill="#2a2c58"/><ellipse cx="0" cy="-2" rx="20" ry="5" fill="#6a6ea0"/><path d="M-26,0 Q0,16 26,0" fill="none" stroke="#8a8ec6" stroke-opacity=".6" stroke-width="2"/></g>
+<path d="M319.8,426.6 L296,346" stroke="#14122a" stroke-opacity=".3" stroke-width="22" stroke-linecap="round" transform="translate(3 3)" filter="url(#skis-soft)"/>
+<path d="M319.8,426.6 L296,346" stroke="#173a82" stroke-width="20" stroke-linecap="round"/>
+<path d="M323.1,425.6 L299.4,345.0" stroke="#4aa8e8" stroke-width="6" stroke-linecap="round"/>
+<path d="M315.9,427.7 L292.2,347.1" stroke="#0e2660" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"/>
+<g filter="url(#skis-drw)"><path d="M14,860 Q18,800 54,772 Q94,744 140,752 Q190,726 250,736 Q310,722 360,748 Q420,744 444,790 Q462,830 446,862 Q452,884 430,892 Q410,899 388,893 Q366,899 344,893 Q320,900 296,893 Q272,899 248,893 Q224,899 200,893 Q176,899 152,893 Q128,899 104,892 Q80,898 58,890 Q30,884 14,860 Z" fill="#6a63c0" opacity=".3" transform="translate(3 -3)"/></g>
+<g filter="url(#skis-drw)"><path d="M14,860 Q18,800 54,772 Q94,744 140,752 Q190,726 250,736 Q310,722 360,748 Q420,744 444,790 Q462,830 446,862 Q452,884 430,892 Q410,899 388,893 Q366,899 344,893 Q320,900 296,893 Q272,899 248,893 Q224,899 200,893 Q176,899 152,893 Q128,899 104,892 Q80,898 58,890 Q30,884 14,860 Z" fill="url(#skis-drift)"/></g>
+<g clip-path="url(#skis-mc)">
+<path d="M14,860 Q18,800 54,772 Q94,744 140,752 Q190,726 250,736 Q310,722 360,748 Q420,744 444,790 Q462,830 446,862 Q452,884 430,892 Q410,899 388,893 Q366,899 344,893 Q320,900 296,893 Q272,899 248,893 Q224,899 200,893 Q176,899 152,893 Q128,899 104,892 Q80,898 58,890 Q30,884 14,860 Z" fill="url(#skis-light)" opacity=".8"/>
+<path d="M14,860 Q18,800 54,772 Q94,744 140,752 Q190,726 250,736 Q310,722 360,748 Q420,744 444,790 Q462,830 446,862 Q452,884 430,892 Q410,899 388,893 Q366,899 344,893 Q320,900 296,893 Q272,899 248,893 Q224,899 200,893 Q176,899 152,893 Q128,899 104,892 Q80,898 58,890 Q30,884 14,860 Z" fill="url(#skis-shade)" opacity=".45"/>
+<rect x="340" y="700" width="140" height="220" fill="url(#skis-rimr)" opacity=".8"/>
+<rect x="0" y="720" width="460" height="180" filter="url(#skis-grain)" opacity=".22"/>
+</g>
+<path d="M60,790 Q96,764 140,772 M200,746 Q250,738 300,742" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="5" stroke-linecap="round" filter="url(#skis-soft)"/>
+<ellipse cx="170" cy="772" rx="70" ry="9" fill="#4f48b0" opacity=".22" filter="url(#skis-b6)"/>
+<ellipse cx="365" cy="790" rx="48" ry="9" fill="#4f48b0" opacity=".22" filter="url(#skis-b6)"/>
+<g fill="#fff"><circle cx="70" cy="420" r="5" opacity=".6" filter="url(#skis-glow)"/><circle cx="70" cy="420" r="2" opacity=".95"/><circle cx="260" cy="250" r="6" opacity=".6" filter="url(#skis-glow)"/><path d="M260,238 L262,250 L260,262 L258,250Z M248,250 L260,248 L272,250 L260,252Z" opacity=".95"/></g>
+
+</svg>

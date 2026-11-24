@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="38 96 366 798">
+<defs>
+<filter id="birdhouse-b9" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter><filter id="birdhouse-b4" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter><filter id="birdhouse-b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.5"/></filter><filter id="birdhouse-gh" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".008 .13" numOctaves="3" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .40  0 0 0 0 .21  0 0 0 0 .07  0 0 0 2.4 -1.05"/><feComposite in2="SourceAlpha" operator="in"/></filter><filter id="birdhouse-gv" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".13 .008" numOctaves="3" seed="6" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .40  0 0 0 0 .21  0 0 0 0 .07  0 0 0 2.4 -1.05"/><feComposite in2="SourceAlpha" operator="in"/></filter><filter id="birdhouse-gloss" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="2" seed="5" result="n"/><feSpecularLighting in="n" surfaceScale="9" specularConstant="1.1" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="48"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter><filter id="birdhouse-disp2" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="birdhouse-disp" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".07" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
+<linearGradient id="birdhouse-wF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbdc9c"/><stop offset="0.5" stop-color="#eab767"/><stop offset="1" stop-color="#c98a42"/></linearGradient>
+<linearGradient id="birdhouse-wT" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fff0c4"/><stop offset="1" stop-color="#f6cf86"/></linearGradient>
+<linearGradient id="birdhouse-wS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c98a4a"/><stop offset="1" stop-color="#96562a"/></linearGradient>
+<linearGradient id="birdhouse-wV" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fbdc9c"/><stop offset="0.5" stop-color="#e8b062"/><stop offset="1" stop-color="#b6743a"/></linearGradient>
+<linearGradient id="birdhouse-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a2c26" stop-opacity="0"/><stop offset="1" stop-color="#5a2c26" stop-opacity="0.5"/></linearGradient>
+<linearGradient id="birdhouse-roof" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ae070"/><stop offset="0.5" stop-color="#4cbc42"/><stop offset="1" stop-color="#2a8a3a"/></linearGradient>
+<linearGradient id="birdhouse-roofS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fae3e"/><stop offset="1" stop-color="#1f7436"/></linearGradient>
+<linearGradient id="birdhouse-board" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ad65a"/><stop offset="0.5" stop-color="#3aa83a"/><stop offset="1" stop-color="#1f7436"/></linearGradient>
+<radialGradient id="birdhouse-hole" cx="0.5" cy="0.35" r="0.7"><stop offset="0" stop-color="#6a4a78"/><stop offset="0.5" stop-color="#3a2448"/><stop offset="1" stop-color="#1a1030"/></radialGradient>
+<linearGradient id="birdhouse-pole" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fbdc9c"/><stop offset="0.3" stop-color="#e8b062"/><stop offset="0.75" stop-color="#c98a42"/><stop offset="1" stop-color="#8a4e26"/></linearGradient>
+<linearGradient id="birdhouse-earth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b87a44"/><stop offset="1" stop-color="#6a3a24"/></linearGradient>
+<linearGradient id="birdhouse-grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ae070"/><stop offset="1" stop-color="#3a9a38"/></linearGradient>
+<clipPath id="birdhouse-pc"><rect x="149" y="480" width="62" height="400" rx="12"/></clipPath>
+<clipPath id="birdhouse-swc"><path d="M280.0,278.0 Q280.0,270.0 287.3,266.7 L352.7,237.3 Q360.0,234.0 360.0,242.0 L360.0,426.0 Q360.0,434.0 352.7,437.3 L287.3,466.7 Q280.0,470.0 280.0,462.0 Z"/></clipPath>
+<clipPath id="birdhouse-fwc"><path d="M90.0,470.0 Q80.0,470.0 80.0,460.0 L80.0,280.0 Q80.0,270.0 86.4,262.3 L173.6,157.7 Q180.0,150.0 186.4,157.7 L273.6,262.3 Q280.0,270.0 280.0,280.0 L280.0,460.0 Q280.0,470.0 270.0,470.0 Z"/></clipPath>
+<clipPath id="birdhouse-rc"><path d="M169.8,152.7 Q166.0,148.0 171.5,145.5 L264.5,103.5 Q270.0,101.0 273.8,105.7 L393.2,253.3 Q397.0,258.0 391.5,260.5 L298.5,302.5 Q293.0,305.0 289.2,300.3 Z"/></clipPath>
+</defs>
+<rect x="149" y="480" width="62" height="400" rx="12" fill="url(#birdhouse-pole)"/>
+<g clip-path="url(#birdhouse-pc)"><rect x="149" y="480" width="62" height="400" filter="url(#birdhouse-gv)" opacity=".55"/><rect x="149" y="492" width="62" height="60" fill="url(#birdhouse-ao)"/><rect x="196" y="480" width="15" height="400" fill="#ffd9a8" opacity=".35"/></g>
+<rect x="158" y="520" width="9" height="330" rx="4.5" fill="#fff" opacity=".4" filter="url(#birdhouse-b1)"/>
+<path d="M72,872 C100,846 150,852 180,852 C220,852 262,846 298,872 C300,886 250,890 180,890 C120,890 70,886 72,872 Z" fill="url(#birdhouse-earth)"/>
+<path d="M84,868 C110,850 150,858 180,858 C220,858 256,850 288,868" fill="none" stroke="#ffd9a8" stroke-opacity=".45" stroke-width="4" filter="url(#birdhouse-b1)"/>
+<path d="M104,862 Q108,836 112,832 Q114,849.0 118,862 Z" fill="url(#birdhouse-grass)"/>
+<path d="M124,862 Q128,828 132,824 Q134,845.0 138,862 Z" fill="url(#birdhouse-grass)"/>
+<path d="M226,862 Q230,832 234,828 Q236,847.0 240,862 Z" fill="url(#birdhouse-grass)"/>
+<path d="M250,862 Q254,838 258,834 Q260,850.0 264,862 Z" fill="url(#birdhouse-grass)"/>
+<path d="M144,862 Q148,842 152,838 Q154,852.0 158,862 Z" fill="url(#birdhouse-grass)"/>
+<path d="M204,862 Q208,840 212,836 Q214,851.0 218,862 Z" fill="url(#birdhouse-grass)"/>
+<path d="M290.0,478.0 Q290.0,470.0 297.3,466.7 L362.7,437.3 Q370.0,434.0 370.0,442.0 L370.0,450.0 Q370.0,458.0 362.7,461.3 L297.3,490.7 Q290.0,494.0 290.0,486.0 Z" fill="url(#birdhouse-wS)"/>
+<path d="M70.0,480.0 Q70.0,470.0 80.0,470.0 L280.0,470.0 Q290.0,470.0 290.0,480.0 L290.0,484.0 Q290.0,494.0 280.0,494.0 L80.0,494.0 Q70.0,494.0 70.0,484.0 Z" fill="url(#birdhouse-wF)"/>
+<rect x="76" y="474" width="208" height="5" rx="2.5" fill="#fff" opacity=".6" filter="url(#birdhouse-b1)"/>
+<path d="M280.0,278.0 Q280.0,270.0 287.3,266.7 L352.7,237.3 Q360.0,234.0 360.0,242.0 L360.0,426.0 Q360.0,434.0 352.7,437.3 L287.3,466.7 Q280.0,470.0 280.0,462.0 Z" fill="url(#birdhouse-wS)"/>
+<g clip-path="url(#birdhouse-swc)"><rect x="280" y="230" width="90" height="250" filter="url(#birdhouse-gv)" opacity=".45"/><path d="M280,300 L360,264 M280,350 L360,314 M280,400 L360,364" stroke="#5a2c26" stroke-opacity=".3" stroke-width="3"/><rect x="280" y="440" width="90" height="40" fill="url(#birdhouse-ao)"/></g>
+<path d="M90.0,470.0 Q80.0,470.0 80.0,460.0 L80.0,280.0 Q80.0,270.0 86.4,262.3 L173.6,157.7 Q180.0,150.0 186.4,157.7 L273.6,262.3 Q280.0,270.0 280.0,280.0 L280.0,460.0 Q280.0,470.0 270.0,470.0 Z" fill="url(#birdhouse-wF)"/>
+<g clip-path="url(#birdhouse-fwc)"><rect x="70" y="140" width="220" height="340" filter="url(#birdhouse-gh)" opacity=".5"/><path d="M80,330 L280,330 M80,390 L280,390 M80,440 L280,440" stroke="#8a4a24" stroke-opacity=".28" stroke-width="3"/><path d="M84,332 L280,332" stroke="#fff" stroke-opacity=".35" stroke-width="2"/><rect x="80" y="440" width="200" height="30" fill="url(#birdhouse-ao)" opacity=".7"/><rect x="256" y="150" width="30" height="330" fill="#ffd9a8" opacity=".25"/><ellipse cx="120" cy="300" rx="22" ry="70" fill="#fff" opacity=".4" filter="url(#birdhouse-b9)"/></g>
+<circle cx="182" cy="356" r="52" fill="#5a2c26" opacity=".35" filter="url(#birdhouse-b4)"/>
+<circle cx="180" cy="352" r="48" fill="url(#birdhouse-wV)"/>
+<circle cx="180" cy="352" r="38" fill="url(#birdhouse-hole)"/>
+<ellipse cx="176" cy="372" rx="26" ry="9" fill="#fff" opacity=".1"/>
+<path d="M142,340 A40,40 0 0 1 205,318" fill="none" stroke="#2a1030" stroke-opacity=".5" stroke-width="8" filter="url(#birdhouse-b4)"/>
+<path d="M136,364 A46,46 0 0 0 218,380" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="4" stroke-linecap="round" filter="url(#birdhouse-b1)"/>
+<path d="M184,416 L184,452" stroke="#5a2c26" stroke-opacity=".4" stroke-width="18" stroke-linecap="round" transform="translate(4 4)" filter="url(#birdhouse-b4)"/>
+<rect x="170" y="408" width="20" height="40" rx="10" fill="url(#birdhouse-pole)"/><ellipse cx="180" cy="448" rx="10" ry="6" fill="#ffe2a6"/><ellipse cx="180" cy="448" rx="5" ry="3" fill="#a8672c"/>
+<path d="M169.8,152.7 Q166.0,148.0 171.5,145.5 L264.5,103.5 Q270.0,101.0 273.8,105.7 L393.2,253.3 Q397.0,258.0 391.5,260.5 L298.5,302.5 Q293.0,305.0 289.2,300.3 Z" fill="url(#birdhouse-roof)"/>
+<g clip-path="url(#birdhouse-rc)">
+<path d="M187.2,174.2 L291.2,127.2" stroke="#1f7436" stroke-opacity=".45" stroke-width="4"/><path d="M187.2,178.2 L291.2,131.2" stroke="#d8ffb0" stroke-opacity=".5" stroke-width="2"/>
+<path d="M208.3,200.3 L312.3,153.3" stroke="#1f7436" stroke-opacity=".45" stroke-width="4"/><path d="M208.3,204.3 L312.3,157.3" stroke="#d8ffb0" stroke-opacity=".5" stroke-width="2"/>
+<path d="M229.5,226.5 L333.5,179.5" stroke="#1f7436" stroke-opacity=".45" stroke-width="4"/><path d="M229.5,230.5 L333.5,183.5" stroke="#d8ffb0" stroke-opacity=".5" stroke-width="2"/>
+<path d="M250.7,252.7 L354.7,205.7" stroke="#1f7436" stroke-opacity=".45" stroke-width="4"/><path d="M250.7,256.7 L354.7,209.7" stroke="#d8ffb0" stroke-opacity=".5" stroke-width="2"/>
+<path d="M271.8,278.8 L375.8,231.8" stroke="#1f7436" stroke-opacity=".45" stroke-width="4"/><path d="M271.8,282.8 L375.8,235.8" stroke="#d8ffb0" stroke-opacity=".5" stroke-width="2"/>
+<path d="M293,305 L397,258" stroke="#1f6a30" stroke-opacity=".6" stroke-width="12" filter="url(#birdhouse-b4)"/>
+<path d="M176,154 L276,106" stroke="#e6ffc4" stroke-opacity=".8" stroke-width="7" stroke-linecap="round" filter="url(#birdhouse-b1)"/>
+<ellipse cx="240" cy="190" rx="40" ry="14" transform="rotate(-24 240 190)" fill="#fff" opacity=".35" filter="url(#birdhouse-b4)"/>
+<rect x="150" y="90" width="260" height="230" filter="url(#birdhouse-gloss)" opacity=".18"/>
+</g>
+<path d="M180,148 L55,300" stroke="#2a1030" stroke-opacity=".3" stroke-width="30" stroke-linecap="round" transform="translate(3 9)" filter="url(#birdhouse-b4)"/>
+<path d="M180,148 L55,300" stroke="#2a8a3a" stroke-width="28" stroke-linecap="round"/>
+<path d="M178,145 L53,297" stroke="url(#birdhouse-board)" stroke-width="22" stroke-linecap="round"/>
+<path d="M176,140 L51,292" stroke="#d8ffb0" stroke-opacity=".7" stroke-width="5" stroke-linecap="round"/>
+<path d="M166,146 L293,305" stroke="#2a1030" stroke-opacity=".3" stroke-width="30" stroke-linecap="round" transform="translate(3 9)" filter="url(#birdhouse-b4)"/>
+<path d="M166,146 L293,305" stroke="#2a8a3a" stroke-width="28" stroke-linecap="round"/>
+<path d="M164,143 L291,302" stroke="url(#birdhouse-board)" stroke-width="22" stroke-linecap="round"/>
+<path d="M162,138 L289,297" stroke="#d8ffb0" stroke-opacity=".7" stroke-width="5" stroke-linecap="round"/>
+<circle cx="176" cy="142" r="14" fill="url(#birdhouse-wV)"/><ellipse cx="172" cy="137" rx="5" ry="3" fill="#fff" opacity=".8"/>
+</svg>

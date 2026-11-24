@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 18 700 982">
+<defs>
+<linearGradient id="spade-sh" x1="0" y1="0" x2="1" y2="0" ><stop offset="0" stop-color="#8fd0ff"/><stop offset="0.25" stop-color="#3d9cf6"/><stop offset="0.65" stop-color="#2279e0"/><stop offset="1" stop-color="#1448a8"/></linearGradient>
+<linearGradient id="spade-bl" x1="0" y1="0" x2="0.7" y2="1" ><stop offset="0" stop-color="#7ec4ff"/><stop offset="0.45" stop-color="#2f8cf0"/><stop offset="1" stop-color="#1a52b6"/></linearGradient>
+<linearGradient id="spade-bl2" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#5aaaf8"/><stop offset="1" stop-color="#2060c8"/></linearGradient>
+<linearGradient id="spade-ao" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#2a1a6a" stop-opacity="0.0"/><stop offset="1" stop-color="#2a1a6a" stop-opacity="0.4"/></linearGradient>
+<radialGradient id="spade-sa" cx=".4" cy=".2" r=".9" ><stop offset="0" stop-color="#ffe9a8"/><stop offset="0.5" stop-color="#f4c870"/><stop offset="1" stop-color="#d89a48"/></radialGradient>
+<linearGradient id="spade-sa2" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#fff0b8"/><stop offset="1" stop-color="#e0a458"/></linearGradient>
+<path id="spade-bladep" d="M290,545 C290,520 330,505 400,505 C470,505 510,520 510,545 L552,690 C560,770 490,835 400,850 C310,835 240,770 248,690Z"/>
+<clipPath id="spade-bc"><use href="#spade-bladep"/></clipPath>
+<path id="spade-gripp" d="M300,60 Q300,30 335,30 L465,30 Q500,30 500,60 L500,200 Q500,235 465,235 L440,235 L440,285 L360,285 L360,235 L335,235 Q300,235 300,200Z M350,85 Q350,76 360,76 L440,76 Q450,76 450,85 L450,175 Q450,190 435,190 L365,190 Q350,190 350,175Z" fill-rule="evenodd"/>
+<filter id="spade-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .6  0 0 0 0 .38  0 0 0 0 .14  0 0 0 1.6 -.7" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in" result="g2"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="g2"/></feMerge></filter>
+<filter id="spade-disp" x="-10%" y="-20%" width="120%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".03 .06" numOctaves="3" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="22"/></filter>
+<filter id="spade-b3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="spade-b8" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="spade-b16" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="16"/></filter>
+<filter id="spade-pl" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="12" result="b"/><feSpecularLighting in="b" surfaceScale="8" specularConstant="0.8" specularExponent="28" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s2"/></feMerge></filter>
+</defs>
+<g transform="rotate(15 400 840)">
+<g filter="url(#spade-pl)">
+<rect x="360" y="270" width="80" height="260" rx="12" fill="url(#spade-sh)"/>
+<use href="#spade-gripp" fill="url(#spade-bl)"/>
+<use href="#spade-bladep" fill="url(#spade-bl)"/>
+</g>
+<path d="M360,285 L360,520 Q360,530 372,530 L372,285Z" fill="#fff" fill-opacity=".25"/>
+<path d="M300,60 Q300,30 335,30 L465,30 Q500,30 500,60 L500,200" fill="none" stroke="#bfe4ff" stroke-opacity=".6" stroke-width="10" transform="translate(-2 -1)" filter="url(#spade-b3)"/>
+<path d="M300,200 Q300,235 335,235 L360,235" fill="none" stroke="#143a90" stroke-opacity=".3" stroke-width="10" filter="url(#spade-b3)"/>
+<rect x="420" y="285" width="20" height="245" fill="#143a90" fill-opacity=".22" filter="url(#spade-b3)"/>
+<ellipse cx="400" cy="262" rx="62" ry="26" fill="#143a90" fill-opacity=".35" filter="url(#spade-b8)"/>
+<g clip-path="url(#spade-bc)">
+<path d="M290,545 C290,520 330,505 400,505 C470,505 510,520 510,545 L552,690 C560,770 490,835 400,850 C310,835 240,770 248,690Z" fill="url(#spade-ao)"/>
+<path d="M290,545 C290,520 330,505 400,505 C470,505 510,520 510,545" fill="none" stroke="#143a90" stroke-opacity=".4" stroke-width="30" filter="url(#spade-b8)"/>
+<path d="M290,545 C290,520 330,505 400,505 C470,505 510,520 510,545 L552,690 C560,770 490,835 400,850 C310,835 240,770 248,690Z" fill="none" stroke="#143a90" stroke-opacity=".5" stroke-width="34" filter="url(#spade-b8)" transform="translate(0 0)"/>
+<path d="M300,560 L262,690 C256,750 316,808 400,826 C484,808 544,750 538,690 L500,560Z" fill="url(#spade-bl2)" fill-opacity=".55"/>
+<path d="M264,700 C272,760 330,815 400,830" fill="none" stroke="#ffc890" stroke-opacity=".55" stroke-width="16" filter="url(#spade-b8)" transform="translate(40 -8)"/>
+<path d="M520,540 L552,690 C556,760 500,820 440,840" fill="none" stroke="#ffd0a0" stroke-opacity=".6" stroke-width="14" filter="url(#spade-b8)"/>
+<path d="M300,560 C292,600 280,650 276,700" fill="none" stroke="#e8f6ff" stroke-opacity=".7" stroke-width="12" stroke-linecap="round" filter="url(#spade-b3)"/>
+<path d="M385,540 L385,800 M415,540 L415,800" stroke="#143a90" stroke-opacity=".0" stroke-width="2"/>
+<path d="M400,545 L400,820" stroke="#0e3a9a" stroke-opacity=".3" stroke-width="30" filter="url(#spade-b8)"/>
+<path d="M400,545 C330,545 290,610 285,690 C285,760 335,805 400,822 C465,805 515,760 515,690 C510,610 470,545 400,545Z" transform="translate(0 0)" fill="none" stroke="#bfe4ff" stroke-opacity=".5" stroke-width="7"/>
+<path d="M382,560 L382,780" stroke="#cfeaff" stroke-opacity=".55" stroke-width="10" stroke-linecap="round" filter="url(#spade-b3)"/>
+</g>
+<path d="M312,528 C340,515 460,515 488,528" fill="none" stroke="#e4f4ff" stroke-opacity=".85" stroke-width="9" stroke-linecap="round" filter="url(#spade-b3)"/>
+<ellipse cx="338" cy="68" rx="30" ry="12" transform="rotate(-28 338 68)" fill="#fff" fill-opacity=".75" filter="url(#spade-b3)"/>
+<use href="#spade-gripp" fill="none" stroke="#12348a" stroke-opacity=".3" stroke-width="3"/>
+<use href="#spade-bladep" fill="none" stroke="#12348a" stroke-opacity=".3" stroke-width="3"/>
+</g>
+<g filter="url(#spade-grain)"><path d="M60,955 C85,850 220,745 385,740 C550,738 690,830 722,955 C722,985 650,997 390,997 C130,997 60,985 60,955Z" fill="url(#spade-sa)"/></g>
+<path d="M60,955 C85,850 220,745 385,740 C550,738 690,830 722,955 C722,985 650,997 390,997 C130,997 60,985 60,955Z" fill="url(#spade-sa2)" fill-opacity=".15"/>
+<clipPath id="spade-mc"><path d="M60,955 C85,850 220,745 385,740 C550,738 690,830 722,955 C722,985 650,997 390,997 C130,997 60,985 60,955Z"/></clipPath>
+<g clip-path="url(#spade-mc)">
+<ellipse cx="400" cy="1010" rx="360" ry="70" fill="#b0642a" fill-opacity=".5" filter="url(#spade-b16)"/>
+<path d="M110,935 C190,850 290,790 380,772" fill="none" stroke="#fff6cc" stroke-opacity=".7" stroke-width="16" stroke-linecap="round" filter="url(#spade-b8)"/>
+<path d="M570,790 C660,840 705,910 714,960" fill="none" stroke="#c0702e" stroke-opacity=".4" stroke-width="22" filter="url(#spade-b8)"/>
+<ellipse cx="415" cy="752" rx="125" ry="20" fill="#a85a20" fill-opacity=".4" filter="url(#spade-b8)"/>
+</g>
+<ellipse cx="170" cy="960" rx="12" ry="6" fill="#fff6cc" fill-opacity=".6"/><ellipse cx="620" cy="935" rx="10" ry="5" fill="#fff6cc" fill-opacity=".5"/><ellipse cx="280" cy="975" rx="9" ry="4" fill="#a05820" fill-opacity=".4"/>
+</svg>

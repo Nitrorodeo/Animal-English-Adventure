@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 8 702 334">
+<defs>
+<filter id="skates-soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.6"/></filter>
+<filter id="skates-b3" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="skates-b6" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+<filter id="skates-b14" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<filter id="skates-wob" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".8"/></filter>
+<filter id="skates-drw" x="-5%" y="-30%" width="110%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".022 .04" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.2"/></filter>
+<filter id="skates-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 9 -5.2"/></filter>
+<filter id="skates-grain2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .8  0 0 0 8 -5.0"/></filter>
+<filter id="skates-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .22" numOctaves="3" seed="6" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 .05  0 0 0 0 .08  0 0 0 5 -2.4"/></filter>
+<filter id="skates-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.5"/></filter>
+<radialGradient id="skates-snow" cx="32%" cy="22%" r="85%"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#e8f2fc"/><stop offset=".8" stop-color="#c9d4f2"/><stop offset="1" stop-color="#a99fdc"/></radialGradient>
+<radialGradient id="skates-light" cx="28%" cy="20%" r="60%"><stop offset="0" stop-color="#fff9ee" stop-opacity=".85"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<radialGradient id="skates-shade" cx="30%" cy="22%" r="95%"><stop offset=".45" stop-color="#6a6ad0" stop-opacity="0"/><stop offset=".8" stop-color="#6d63c6" stop-opacity=".28"/><stop offset="1" stop-color="#4b46a8" stop-opacity=".58"/></radialGradient>
+<linearGradient id="skates-rimr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffc6e6" stop-opacity=".95"/><stop offset=".08" stop-color="#ffd6ee" stop-opacity=".45"/><stop offset=".25" stop-color="#ffd6ee" stop-opacity="0"/></linearGradient>
+<linearGradient id="skates-aob" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#5a56b8" stop-opacity="0"/><stop offset="1" stop-color="#4a4ab0" stop-opacity=".4"/></linearGradient>
+<linearGradient id="skates-drift" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e6ecfa"/><stop offset="1" stop-color="#b9b6ec"/></linearGradient>
+
+<linearGradient id="skates-lea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#eef1fb"/><stop offset="1" stop-color="#c3c6ee"/></linearGradient>
+<radialGradient id="skates-lea2" cx="30%" cy="25%" r="85%"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#eaeefb"/><stop offset="1" stop-color="#b3b6e6"/></radialGradient>
+<linearGradient id="skates-blue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fc3ff"/><stop offset=".5" stop-color="#2f8fe8"/><stop offset="1" stop-color="#1f5cc0"/></linearGradient>
+<linearGradient id="skates-blade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#cfd6ee"/><stop offset=".7" stop-color="#8f98c4"/><stop offset="1" stop-color="#6a72a8"/></linearGradient>
+<linearGradient id="skates-hold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8ecfa"/><stop offset="1" stop-color="#8a92c0"/></linearGradient>
+<linearGradient id="skates-sole" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aaef5"/><stop offset="1" stop-color="#2159bd"/></linearGradient>
+<clipPath id="skates-bootc"><path id="skates-bp" d="M262,18 Q312,14 326,40 Q342,120 332,205 Q330,248 322,282 L24,282 Q4,278 6,254 Q10,224 46,212 Q100,196 128,166 Q150,140 156,92 Q158,50 164,28 Q210,14 262,18 Z"/></clipPath>
+
+</defs>
+
+<g transform="translate(0 0)">
+<!-- blade -->
+<path d="M-4,326 L330,326" stroke="#4a4aa0" stroke-opacity=".28" stroke-width="16" stroke-linecap="round" transform="translate(3 4)" filter="url(#skates-soft)"/>
+<path d="M54,284 L62,318 L82,318 L84,284 Z M246,284 L250,318 L276,318 L282,284 Z" fill="url(#skates-hold)"/>
+<path d="M56,290 L64,316 M250,290 L254,316" stroke="#fff" stroke-opacity=".8" stroke-width="2.4"/>
+<path d="M-6,330 Q-12,310 10,306 L18,314 Q8,316 12,322 L22,326 L330,326 Q338,326 338,332 Q338,338 328,338 L26,338 Q0,338 -6,330 Z" fill="url(#skates-blade)"/>
+<path d="M12,320 Q14,314 20,317 L324,331" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M26,336 L326,336" stroke="#4a4aa0" stroke-opacity=".45" stroke-width="2"/>
+<!-- boot -->
+<path d="M262,18 Q312,14 326,40 Q342,120 332,205 Q330,248 322,282 L24,282 Q4,278 6,254 Q10,224 46,212 Q100,196 128,166 Q150,140 156,92 Q158,50 164,28 Q210,14 262,18 Z" fill="url(#skates-lea2)"/>
+<g clip-path="url(#skates-bootc)">
+<ellipse cx="190" cy="120" rx="130" ry="110" fill="url(#skates-light)" opacity=".8"/>
+<rect x="0" y="0" width="360" height="300" fill="url(#skates-shade)" opacity=".26"/>
+<rect x="280" y="0" width="80" height="300" fill="url(#skates-rimr)" opacity=".9"/>
+<path d="M10,258 Q60,238 120,248 L330,262 L330,300 L0,300 Z" fill="#5a56b8" opacity=".22" filter="url(#skates-b6)"/>
+<!-- tongue and lacing area -->
+<path d="M164,26 Q150,100 138,168 Q110,192 62,212 L90,232 Q150,206 190,172 Q212,100 214,30 Z" fill="#e6e9fa" opacity=".9"/>
+<path d="M164,26 Q150,100 138,168 Q110,192 62,212" fill="none" stroke="#9aa0d8" stroke-opacity=".5" stroke-width="3"/>
+<!-- sole -->
+<path d="M6,262 L330,274 L322,286 L24,286 Q4,284 6,262Z" fill="url(#skates-sole)"/>
+<path d="M10,262 L328,272" stroke="#bfe4ff" stroke-opacity=".8" stroke-width="3"/>
+<!-- heel counter seam -->
+<path d="M214,170 Q290,170 326,150" fill="none" stroke="#9aa0d8" stroke-opacity=".5" stroke-width="3"/>
+<path d="M232,262 Q244,190 316,168" fill="none" stroke="#9aa0d8" stroke-opacity=".35" stroke-width="3"/>
+<rect x="0" y="0" width="360" height="300" filter="url(#skates-grain)" opacity=".18"/>
+</g>
+<!-- cuff -->
+<path d="M160,34 Q210,6 266,12 Q318,12 330,42 Q300,44 262,34 Q208,26 160,52 Z" fill="url(#skates-blue)"/>
+<path d="M162,38 Q210,14 262,18 Q306,18 322,36" fill="none" stroke="#c6e8ff" stroke-opacity=".8" stroke-width="3.4" stroke-linecap="round"/>
+<!-- laces -->
+<g stroke-linecap="round" fill="none">
+<path d="M168,72 L206,64 M166,98 L204,90 M160,124 L198,116 M150,150 L188,142 M130,174 L168,166" stroke="#1f5cc0" stroke-width="9" transform="translate(1 2)" opacity=".35"/>
+<path d="M168,72 L206,64 M166,98 L204,90 M160,124 L198,116 M150,150 L188,142 M130,174 L168,166" stroke="url(#skates-blue)" stroke-width="7"/>
+<path d="M172,66 L196,80 M200,64 L172,84 M170,92 L194,106 M198,90 L170,110 M162,118 L186,132 M192,116 L162,136 M150,144 L174,158 M182,142 L152,162" stroke="#2f8fe8" stroke-width="5"/>
+<path d="M172,66 L196,80 M170,92 L194,106 M162,118 L186,132 M150,144 L174,158" stroke="#bfe4ff" stroke-opacity=".7" stroke-width="1.6"/>
+</g>
+<g fill="#f4f6ff" stroke="#8a90c8" stroke-opacity=".6" stroke-width="1.5"><circle cx="168" cy="72" r="4"/><circle cx="206" cy="64" r="4"/><circle cx="166" cy="98" r="4"/><circle cx="204" cy="90" r="4"/><circle cx="160" cy="124" r="4"/><circle cx="198" cy="116" r="4"/><circle cx="150" cy="150" r="4"/><circle cx="188" cy="142" r="4"/></g>
+<!-- bow -->
+<path d="M130,176 Q98,166 94,194 Q110,196 130,176 Z M130,176 Q150,214 120,220 Q112,200 130,176 Z" fill="url(#skates-blue)"/>
+<path d="M130,176 Q150,184 168,170" stroke="#2f8fe8" stroke-width="6" fill="none" stroke-linecap="round"/>
+<!-- toe highlight -->
+<path d="M20,246 Q30,226 62,220" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="5" stroke-linecap="round" filter="url(#skates-soft)"/>
+<path d="M254,28 Q300,26 316,50" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+</g>
+<g><rect x="0" y="0" width="0" height="0"/></g>
+<g transform="translate(346 0)">
+<!-- blade -->
+<path d="M-4,326 L330,326" stroke="#4a4aa0" stroke-opacity=".28" stroke-width="16" stroke-linecap="round" transform="translate(3 4)" filter="url(#skates-soft)"/>
+<path d="M54,284 L62,318 L82,318 L84,284 Z M246,284 L250,318 L276,318 L282,284 Z" fill="url(#skates-hold)"/>
+<path d="M56,290 L64,316 M250,290 L254,316" stroke="#fff" stroke-opacity=".8" stroke-width="2.4"/>
+<path d="M-6,330 Q-12,310 10,306 L18,314 Q8,316 12,322 L22,326 L330,326 Q338,326 338,332 Q338,338 328,338 L26,338 Q0,338 -6,330 Z" fill="url(#skates-blade)"/>
+<path d="M12,320 Q14,314 20,317 L324,331" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M26,336 L326,336" stroke="#4a4aa0" stroke-opacity=".45" stroke-width="2"/>
+<!-- boot -->
+<path d="M262,18 Q312,14 326,40 Q342,120 332,205 Q330,248 322,282 L24,282 Q4,278 6,254 Q10,224 46,212 Q100,196 128,166 Q150,140 156,92 Q158,50 164,28 Q210,14 262,18 Z" fill="url(#skates-lea2)"/>
+<g clip-path="url(#skates-bootc)">
+<ellipse cx="190" cy="120" rx="130" ry="110" fill="url(#skates-light)" opacity=".8"/>
+<rect x="0" y="0" width="360" height="300" fill="url(#skates-shade)" opacity=".26"/>
+<rect x="280" y="0" width="80" height="300" fill="url(#skates-rimr)" opacity=".9"/>
+<path d="M10,258 Q60,238 120,248 L330,262 L330,300 L0,300 Z" fill="#5a56b8" opacity=".22" filter="url(#skates-b6)"/>
+<!-- tongue and lacing area -->
+<path d="M164,26 Q150,100 138,168 Q110,192 62,212 L90,232 Q150,206 190,172 Q212,100 214,30 Z" fill="#e6e9fa" opacity=".9"/>
+<path d="M164,26 Q150,100 138,168 Q110,192 62,212" fill="none" stroke="#9aa0d8" stroke-opacity=".5" stroke-width="3"/>
+<!-- sole -->
+<path d="M6,262 L330,274 L322,286 L24,286 Q4,284 6,262Z" fill="url(#skates-sole)"/>
+<path d="M10,262 L328,272" stroke="#bfe4ff" stroke-opacity=".8" stroke-width="3"/>
+<!-- heel counter seam -->
+<path d="M214,170 Q290,170 326,150" fill="none" stroke="#9aa0d8" stroke-opacity=".5" stroke-width="3"/>
+<path d="M232,262 Q244,190 316,168" fill="none" stroke="#9aa0d8" stroke-opacity=".35" stroke-width="3"/>
+<rect x="0" y="0" width="360" height="300" filter="url(#skates-grain)" opacity=".18"/>
+</g>
+<!-- cuff -->
+<path d="M160,34 Q210,6 266,12 Q318,12 330,42 Q300,44 262,34 Q208,26 160,52 Z" fill="url(#skates-blue)"/>
+<path d="M162,38 Q210,14 262,18 Q306,18 322,36" fill="none" stroke="#c6e8ff" stroke-opacity=".8" stroke-width="3.4" stroke-linecap="round"/>
+<!-- laces -->
+<g stroke-linecap="round" fill="none">
+<path d="M168,72 L206,64 M166,98 L204,90 M160,124 L198,116 M150,150 L188,142 M130,174 L168,166" stroke="#1f5cc0" stroke-width="9" transform="translate(1 2)" opacity=".35"/>
+<path d="M168,72 L206,64 M166,98 L204,90 M160,124 L198,116 M150,150 L188,142 M130,174 L168,166" stroke="url(#skates-blue)" stroke-width="7"/>
+<path d="M172,66 L196,80 M200,64 L172,84 M170,92 L194,106 M198,90 L170,110 M162,118 L186,132 M192,116 L162,136 M150,144 L174,158 M182,142 L152,162" stroke="#2f8fe8" stroke-width="5"/>
+<path d="M172,66 L196,80 M170,92 L194,106 M162,118 L186,132 M150,144 L174,158" stroke="#bfe4ff" stroke-opacity=".7" stroke-width="1.6"/>
+</g>
+<g fill="#f4f6ff" stroke="#8a90c8" stroke-opacity=".6" stroke-width="1.5"><circle cx="168" cy="72" r="4"/><circle cx="206" cy="64" r="4"/><circle cx="166" cy="98" r="4"/><circle cx="204" cy="90" r="4"/><circle cx="160" cy="124" r="4"/><circle cx="198" cy="116" r="4"/><circle cx="150" cy="150" r="4"/><circle cx="188" cy="142" r="4"/></g>
+<!-- bow -->
+<path d="M130,176 Q98,166 94,194 Q110,196 130,176 Z M130,176 Q150,214 120,220 Q112,200 130,176 Z" fill="url(#skates-blue)"/>
+<path d="M130,176 Q150,184 168,170" stroke="#2f8fe8" stroke-width="6" fill="none" stroke-linecap="round"/>
+<!-- toe highlight -->
+<path d="M20,246 Q30,226 62,220" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="5" stroke-linecap="round" filter="url(#skates-soft)"/>
+<path d="M254,28 Q300,26 316,50" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+</g>
+<g fill="#fff"><circle cx="338" cy="130" r="5" opacity=".6" filter="url(#skates-glow)"/><circle cx="338" cy="130" r="2" opacity=".95"/><path d="M90,40 L91.8,50 L90,60 L88.2,50Z M80,50 L90,48.2 L100,50 L90,51.8Z" opacity=".95"/></g>
+
+</svg>

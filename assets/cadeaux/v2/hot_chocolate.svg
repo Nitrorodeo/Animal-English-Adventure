@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="34 0 354 413">
+<defs>
+<filter id="hot_chocolate-soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.6"/></filter>
+<filter id="hot_chocolate-b3" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="hot_chocolate-b6" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+<filter id="hot_chocolate-b14" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<filter id="hot_chocolate-wob" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".8"/></filter>
+<filter id="hot_chocolate-drw" x="-5%" y="-30%" width="110%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".022 .04" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.2"/></filter>
+<filter id="hot_chocolate-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 9 -5.2"/></filter>
+<filter id="hot_chocolate-grain2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .8  0 0 0 8 -5.0"/></filter>
+<filter id="hot_chocolate-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .22" numOctaves="3" seed="6" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 .05  0 0 0 0 .08  0 0 0 5 -2.4"/></filter>
+<filter id="hot_chocolate-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.5"/></filter>
+<radialGradient id="hot_chocolate-snow" cx="32%" cy="22%" r="85%"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#e8f2fc"/><stop offset=".8" stop-color="#c9d4f2"/><stop offset="1" stop-color="#a99fdc"/></radialGradient>
+<radialGradient id="hot_chocolate-light" cx="28%" cy="20%" r="60%"><stop offset="0" stop-color="#fff9ee" stop-opacity=".85"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<radialGradient id="hot_chocolate-shade" cx="30%" cy="22%" r="95%"><stop offset=".45" stop-color="#6a6ad0" stop-opacity="0"/><stop offset=".8" stop-color="#6d63c6" stop-opacity=".28"/><stop offset="1" stop-color="#4b46a8" stop-opacity=".58"/></radialGradient>
+<linearGradient id="hot_chocolate-rimr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffc6e6" stop-opacity=".95"/><stop offset=".08" stop-color="#ffd6ee" stop-opacity=".45"/><stop offset=".25" stop-color="#ffd6ee" stop-opacity="0"/></linearGradient>
+<linearGradient id="hot_chocolate-aob" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#5a56b8" stop-opacity="0"/><stop offset="1" stop-color="#4a4ab0" stop-opacity=".4"/></linearGradient>
+<linearGradient id="hot_chocolate-drift" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e6ecfa"/><stop offset="1" stop-color="#b9b6ec"/></linearGradient>
+
+<filter id="hot_chocolate-st" x="-100%" y="-50%" width="300%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+<linearGradient id="hot_chocolate-mug" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6a56"/><stop offset=".3" stop-color="#ee2f33"/><stop offset=".75" stop-color="#bf1527"/><stop offset="1" stop-color="#8c0e24"/></linearGradient>
+<linearGradient id="hot_chocolate-mugv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#5a0818" stop-opacity=".45"/></linearGradient>
+<linearGradient id="hot_chocolate-rim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a64"/><stop offset=".5" stop-color="#e82c32"/><stop offset="1" stop-color="#a8122a"/></linearGradient>
+<radialGradient id="hot_chocolate-choc" cx="50%" cy="30%" r="80%"><stop offset="0" stop-color="#9a5028"/><stop offset=".6" stop-color="#5e2a14"/><stop offset="1" stop-color="#3a160c"/></radialGradient>
+<radialGradient id="hot_chocolate-cream" cx="35%" cy="25%" r="85%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#fff3e6"/><stop offset=".85" stop-color="#f6d8c6"/><stop offset="1" stop-color="#e2b2b0"/></radialGradient>
+<linearGradient id="hot_chocolate-hand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5a48"/><stop offset=".5" stop-color="#d81f2c"/><stop offset="1" stop-color="#8c0e24"/></linearGradient>
+<clipPath id="hot_chocolate-bc"><path d="M40,184 Q44,330 62,372 Q100,411 170,411 Q240,411 278,372 Q296,330 300,184 Z"/></clipPath>
+<clipPath id="hot_chocolate-cc"><ellipse cx="170" cy="184" rx="112" ry="30"/></clipPath>
+
+</defs>
+
+<!-- handle -->
+<path d="M290,222 C392,206 396,334 276,350" fill="none" stroke="#4a0618" stroke-opacity=".3" stroke-width="40" stroke-linecap="round" transform="translate(5 6)" filter="url(#hot_chocolate-b3)"/>
+<path d="M290,222 C392,206 396,334 276,350" fill="none" stroke="#8c0e24" stroke-width="38" stroke-linecap="round"/>
+<path d="M290,222 C392,206 396,334 276,350" fill="none" stroke="url(#hot_chocolate-hand)" stroke-width="32" stroke-linecap="round"/>
+<path d="M296,212 C376,198 380,314 284,336" fill="none" stroke="#ffc2b0" stroke-opacity=".75" stroke-width="5" stroke-linecap="round"/>
+<!-- body -->
+<path d="M40,184 Q44,330 62,372 Q100,411 170,411 Q240,411 278,372 Q296,330 300,184 Z" fill="url(#hot_chocolate-mug)"/>
+<g clip-path="url(#hot_chocolate-bc)">
+<rect x="30" y="170" width="280" height="250" fill="url(#hot_chocolate-mugv)"/>
+<rect x="30" y="170" width="280" height="250" filter="url(#hot_chocolate-wood)" opacity="0"/>
+<ellipse cx="170" cy="222" rx="125" ry="34" fill="#5a0818" opacity=".35" filter="url(#hot_chocolate-b6)"/>
+<rect x="262" y="170" width="50" height="250" fill="url(#hot_chocolate-rimr)" opacity=".85"/>
+<rect x="266" y="190" width="20" height="200" fill="#4a0618" opacity=".25" filter="url(#hot_chocolate-b6)" transform="translate(8 0)"/>
+<path d="M62,214 Q66,300 82,350" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="12" stroke-linecap="round" filter="url(#hot_chocolate-soft)"/>
+<path d="M92,380 Q120,394 160,396" fill="none" stroke="#ffb09a" stroke-opacity=".5" stroke-width="6" stroke-linecap="round" filter="url(#hot_chocolate-soft)"/>
+<rect x="30" y="170" width="280" height="250" filter="url(#hot_chocolate-grain)" opacity=".08"/>
+</g>
+<path d="M90,396 Q130,408 170,408 Q210,408 252,396" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="3"/>
+<!-- rim -->
+<ellipse cx="170" cy="184" rx="130" ry="40" fill="url(#hot_chocolate-rim)"/>
+<ellipse cx="170" cy="180" rx="130" ry="40" fill="none" stroke="#ffd0c0" stroke-opacity=".7" stroke-width="3" transform="translate(0 -1)" clip-path="url(#hot_chocolate-cc)" opacity="0"/>
+<path d="M44,178 Q60,148 120,142" fill="none" stroke="#ffd8cc" stroke-opacity=".8" stroke-width="4" stroke-linecap="round" filter="url(#hot_chocolate-soft)" transform="translate(0 6)"/>
+<ellipse cx="170" cy="186" rx="113" ry="31" fill="#5a0818" opacity=".45" filter="url(#hot_chocolate-soft)"/>
+<ellipse cx="170" cy="188" rx="112" ry="30" fill="url(#hot_chocolate-choc)"/>
+<g clip-path="url(#hot_chocolate-cc)">
+<ellipse cx="150" cy="176" rx="70" ry="10" fill="#d89060" opacity=".35" filter="url(#hot_chocolate-b3)"/>
+<ellipse cx="170" cy="214" rx="120" ry="14" fill="#1a0806" opacity=".35" filter="url(#hot_chocolate-b3)"/>
+</g>
+<!-- cream -->
+<ellipse cx="172" cy="188" rx="96" ry="28" fill="#3a160c" opacity=".35" filter="url(#hot_chocolate-b6)"/>
+<g filter="url(#hot_chocolate-wob)"><circle cx="118" cy="150" r="44" fill="url(#hot_chocolate-cream)"/><circle cx="176" cy="124" r="52" fill="url(#hot_chocolate-cream)"/><circle cx="232" cy="152" r="44" fill="url(#hot_chocolate-cream)"/><circle cx="150" cy="172" r="40" fill="url(#hot_chocolate-cream)"/><circle cx="208" cy="172" r="40" fill="url(#hot_chocolate-cream)"/><circle cx="172" cy="86" r="34" fill="url(#hot_chocolate-cream)"/><circle cx="132" cy="120" r="30" fill="url(#hot_chocolate-cream)"/><circle cx="222" cy="118" r="30" fill="url(#hot_chocolate-cream)"/></g>
+<ellipse cx='214' cy='170' rx='40' ry='34' fill='#d9a2a6' opacity='.28' filter='url(#hot_chocolate-b6)'/>
+<ellipse cx='120' cy='128' rx='34' ry='28' fill='#fff' opacity='.55' filter='url(#hot_chocolate-b6)'/>
+<circle cx='178' cy='56' r='17' fill='url(#hot_chocolate-cream)'/>
+<path d="M96,148 Q106,126 132,116" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="5" stroke-linecap="round" filter="url(#hot_chocolate-soft)"/>
+<path d="M150,108 Q164,84 190,76" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="5" stroke-linecap="round" filter="url(#hot_chocolate-soft)"/>
+<!-- steam -->
+<g fill="none" stroke-linecap="round">
+<path d="M140,60 C120,40 160,28 140,6" stroke="#f4eaff" stroke-opacity=".5" stroke-width="14" filter="url(#hot_chocolate-st)"/>
+<path d="M186,50 C166,30 206,18 186,4" stroke="#f4eaff" stroke-opacity=".5" stroke-width="14" filter="url(#hot_chocolate-st)"/>
+<path d="M232,62 C212,42 252,30 232,8" stroke="#f4eaff" stroke-opacity=".5" stroke-width="14" filter="url(#hot_chocolate-st)"/>
+<path d="M140,58 C122,40 158,28 142,10" stroke="#fff" stroke-opacity=".75" stroke-width="4"/>
+<path d="M186,48 C168,30 204,18 188,8" stroke="#fff" stroke-opacity=".75" stroke-width="4"/>
+<path d="M232,60 C214,42 250,30 234,12" stroke="#fff" stroke-opacity=".75" stroke-width="4"/>
+</g>
+<g fill="#fff"><circle cx="258" cy="120" r="5" opacity=".6" filter="url(#hot_chocolate-glow)"/><path d="M258,108 L260,120 L258,132 L256,120Z M246,120 L258,118 L270,120 L258,122Z" opacity=".95"/></g>
+
+</svg>

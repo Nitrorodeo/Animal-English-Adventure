@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6.9 30.6 909.3 639.9">
+<defs>
+<filter id="tent-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.2  0 0 0 0 0.1  0 0 0 1.9 -.7" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="tent-bl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="tent-bl3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="tent-bl1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.3"/></filter><filter id="tent-fz" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="3" seed="5" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<path id="tent-face" d="M330,70 L570,640 L60,640 Z"/><path id="tent-side" d="M330,70 L620,105 L820,592 L570,640 Z"/><path id="tent-door" d="M330,180 L470,640 L190,640Z"/>
+<path id="tent-fl" d="M330,180 C300,300 250,420 250,440 C230,520 205,580 186,640 L120,640 C190,500 250,350 330,180Z"/><path id="tent-fr" d="M330,180 C360,300 410,420 410,440 C430,520 455,580 474,640 L540,640 C470,500 410,350 330,180Z"/>
+<clipPath id="tent-cf"><path d="M330,70 L570,640 L60,640 Z"/></clipPath><clipPath id="tent-cs"><path d="M330,70 L620,105 L820,592 L570,640 Z"/></clipPath><clipPath id="tent-cd"><path d="M330,180 L470,640 L190,640Z"/></clipPath>
+<linearGradient id="tent-gf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fe85e"/><stop offset=".5" stop-color="#4cc23c"/><stop offset="1" stop-color="#2a9438"/></linearGradient>
+<linearGradient id="tent-gs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5ed04a"/><stop offset=".5" stop-color="#2fa23c"/><stop offset="1" stop-color="#17702f"/></linearGradient>
+<linearGradient id="tent-gfl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a4f070"/><stop offset=".6" stop-color="#58cc40"/><stop offset="1" stop-color="#2c9a3a"/></linearGradient>
+<linearGradient id="tent-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a5a46"/><stop offset=".6" stop-color="#274436"/><stop offset="1" stop-color="#3a3a30"/></linearGradient>
+<radialGradient id="tent-sg" cx="50%" cy="20%" r="70%"><stop offset="0" stop-color="#ffe6a8" stop-opacity=".35"/><stop offset="1" stop-color="#ffe6a8" stop-opacity="0"/></radialGradient>
+<linearGradient id="tent-ao" x1="0" y1="0" x2="0" y2="1"><stop offset=".78" stop-color="#14502e" stop-opacity="0"/><stop offset="1" stop-color="#14502e" stop-opacity=".55"/></linearGradient>
+<linearGradient id="tent-shd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#14503a" stop-opacity="0"/><stop offset="1" stop-color="#14503a" stop-opacity=".4"/></linearGradient>
+<linearGradient id="tent-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe6a8" stop-opacity=".7"/><stop offset=".06" stop-color="#ffe6a8" stop-opacity=".25"/><stop offset=".16" stop-color="#ffe6a8" stop-opacity="0"/></linearGradient>
+<linearGradient id="tent-rope" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0c0"/><stop offset="1" stop-color="#d9a860"/></linearGradient>
+<linearGradient id="tent-peg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffd6a0"/><stop offset="1" stop-color="#c8783a"/></linearGradient>
+</defs>
+<g filter="url(#tent-fz)">
+<g stroke="url(#tent-rope)" stroke-width="4" stroke-linecap="round" fill="none">
+<path d="M196,372 Q110,520 30,664"/><path d="M742,346 Q820,520 900,658"/>
+<path d="M330,78 Q180,380 74,664" stroke-opacity="0"/></g>
+<path d="M196,372 Q110,520 30,664" stroke="#14503a" stroke-opacity=".0" fill="none"/>
+<g><path d="M24,644 L38,666 L32,668 L16,646Z" fill="url(#tent-peg)"/><circle cx="27" cy="645" r="8" fill="none" stroke="#fff0c0" stroke-width="3.6"/></g><g><path d="M894,638 L908,660 L902,662 L886,640Z" fill="url(#tent-peg)"/><circle cx="897" cy="639" r="8" fill="none" stroke="#fff0c0" stroke-width="3.6"/></g>
+<use href="#tent-side" fill="url(#tent-gs)"/>
+<g clip-path="url(#tent-cs)">
+<g stroke="#14502e" stroke-opacity=".22" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#tent-bl3)"><path d="M560,230 Q528.0,340.0 520,450"/><path d="M660,330 Q638.0,425.0 640,520"/><path d="M500,150 Q458.0,240.0 440,330"/><path d="M720,420 Q698.0,490.0 700,560"/></g>
+<path d="M330,70 L620,105 L820,592 L570,640Z" fill="url(#tent-sg)"/>
+<use href="#tent-side" fill="url(#tent-shd)"/><use href="#tent-side" fill="url(#tent-ao)"/><use href="#tent-side" fill="url(#tent-rim)"/>
+<use href="#tent-side" fill="#000" filter="url(#tent-grain)" opacity=".4"/>
+<path d="M330,70 L570,640" stroke="#14502e" stroke-opacity=".5" stroke-width="5"/>
+<path d="M336,72 L620,107 " stroke="#d8ffa8" stroke-opacity=".7" stroke-width="4" filter="url(#tent-bl1)"/>
+<path d="M475.0,87.5 L695.0,616.0" stroke="#14502e" stroke-opacity=".3" stroke-width="3" stroke-dasharray="10 7" fill="none"/>
+</g>
+<use href="#tent-face" fill="url(#tent-gf)"/>
+<g clip-path="url(#tent-cf)">
+<use href="#tent-door" fill="url(#tent-in)"/>
+<g clip-path="url(#tent-cd)"><ellipse cx="330" cy="560" rx="120" ry="60" fill="#ffd9a0" opacity=".28" filter="url(#tent-bl)"/>
+<path d="M330,180 L470,640 L190,640Z" fill="none" stroke="#0e1a14" stroke-opacity=".35" stroke-width="30" filter="url(#tent-bl)"/></g>
+<use href="#tent-fl" fill="url(#tent-gfl)"/><use href="#tent-fr" fill="url(#tent-gfl)"/>
+<path d="M330,180 C300,300 250,420 250,440 C230,520 205,580 186,640 L120,640 C190,500 250,350 330,180Z" fill="none" stroke="#14502e" stroke-opacity=".3" stroke-width="3"/><path d="M330,180 C360,300 410,420 410,440 C430,520 455,580 474,640 L540,640 C470,500 410,350 330,180Z" fill="none" stroke="#14502e" stroke-opacity=".3" stroke-width="3"/>
+<g stroke="#14502e" stroke-opacity=".22" stroke-width="9" fill="none" stroke-linecap="round" filter="url(#tent-bl3)"><path d="M250,330 Q239.0,425.0 200,520"/><path d="M300,250 Q319.0,335.0 310,420"/><path d="M390,330 Q424.0,445.0 430,560"/><path d="M200,450 Q184.0,530.0 140,610"/></g>
+<path d="M300,300 C285,380 262,420 252,440" stroke="#e8ffc0" stroke-opacity=".7" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#tent-bl1)"/>
+<path d="M360,300 C375,380 398,420 408,440" stroke="#14502e" stroke-opacity=".25" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#tent-bl3)"/>
+<use href="#tent-face" fill="url(#tent-ao)"/>
+<use href="#tent-face" fill="url(#tent-rim)" opacity=".5"/>
+<use href="#tent-face" fill="#000" filter="url(#tent-grain)" opacity=".4"/>
+<path d="M330,74 L566,638" stroke="#d8ffa8" stroke-opacity=".6" stroke-width="4" filter="url(#tent-bl1)"/>
+<path d="M330,74 L64,638" stroke="#d8ffa8" stroke-opacity=".7" stroke-width="5" filter="url(#tent-bl1)"/>
+</g>
+<g><path d="M236,436 C270,452 298,452 330,440 C362,452 392,452 424,436 L424,456 C392,472 362,472 330,462 C298,472 270,472 236,456Z" fill="url(#tent-rope)"/>
+<path d="M330,452 C312,476 300,490 306,512 M330,452 C348,476 360,490 354,512" stroke="url(#tent-rope)" stroke-width="8" fill="none" stroke-linecap="round"/>
+<circle cx="330" cy="452" r="13" fill="#e8c078"/><circle cx="326" cy="448" r="5" fill="#fff6d8"/></g>
+<path d="M318,72 L330,40 L342,72Z" fill="#c8783a"/><circle cx="330" cy="46" r="9" fill="url(#tent-peg)"/>
+</g>
+</svg>

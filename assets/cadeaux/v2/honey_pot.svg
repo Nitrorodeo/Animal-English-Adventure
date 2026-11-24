@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="71.3 92.5 421.0 466.8">
+<defs>
+<radialGradient id="honey_pot-shade" cx="30%" cy="24%" r="95%"><stop offset=".45" stop-color="#5a2210" stop-opacity="0"/><stop offset=".85" stop-color="#5a2210" stop-opacity=".30"/><stop offset="1" stop-color="#5a2210" stop-opacity=".55"/></radialGradient>
+<linearGradient id="honey_pot-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a2210" stop-opacity="0"/><stop offset="1" stop-color="#5a2210" stop-opacity=".5"/></linearGradient>
+<linearGradient id="honey_pot-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd890" stop-opacity=".95"/><stop offset=".07" stop-color="#ffd890" stop-opacity=".45"/><stop offset=".2" stop-color="#ffd890" stop-opacity="0"/></linearGradient>
+<radialGradient id="honey_pot-bounce" cx="60%" cy="100%" r="55%"><stop offset="0" stop-color="#ffc080" stop-opacity=".6"/><stop offset="1" stop-color="#ffc080" stop-opacity="0"/></radialGradient>
+<filter id="honey_pot-b9" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8.0"/></filter>
+<filter id="honey_pot-b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.0"/></filter>
+<filter id="honey_pot-b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2"/></filter>
+<filter id="honey_pot-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .2" numOctaves="3" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="honey_pot-woodv" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".2 .012" numOctaves="3" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="honey_pot-gloss" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="2" seed="5" result="n"/><feSpecularLighting in="n" surfaceScale="8" specularConstant="1.0" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="48"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter>
+<filter id="honey_pot-rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9.0" xChannelSelector="R" yChannelSelector="G"/></filter>
+<linearGradient id="honey_pot-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2a8"/><stop offset=".45" stop-color="#ffcf3a"/><stop offset="1" stop-color="#d98a12"/></linearGradient>
+<linearGradient id="honey_pot-goldh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe680"/><stop offset=".45" stop-color="#f6b92a"/><stop offset="1" stop-color="#c47a10"/></linearGradient>
+<linearGradient id="honey_pot-steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b6c0d2"/><stop offset="1" stop-color="#6f7a95"/></linearGradient>
+<linearGradient id="honey_pot-steelv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b0bbd0"/><stop offset="1" stop-color="#6a7592"/></linearGradient>
+<linearGradient id="honey_pot-woodg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d98a42"/><stop offset=".5" stop-color="#b8662a"/><stop offset="1" stop-color="#8a431a"/></linearGradient>
+<linearGradient id="honey_pot-woodv2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e4a05a"/><stop offset=".5" stop-color="#bf6e30"/><stop offset="1" stop-color="#8d471c"/></linearGradient>
+<radialGradient id="honey_pot-clay" cx="30%" cy="26%" r="95%"><stop offset="0" stop-color="#e49058"/><stop offset=".4" stop-color="#bf6630"/><stop offset="1" stop-color="#7c3414"/></radialGradient>
+<linearGradient id="honey_pot-honey" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe46a"/><stop offset=".5" stop-color="#ffbc1c"/><stop offset="1" stop-color="#e07c08"/></linearGradient>
+<linearGradient id="honey_pot-woodh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0b878"/><stop offset=".5" stop-color="#c88444"/><stop offset="1" stop-color="#8d521c"/></linearGradient>
+<pattern id="honey_pot-gh" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(8)"><rect width="46" height="46" fill="#fff4e6"/><rect width="23" height="46" fill="#e0302a" opacity=".78"/><rect width="46" height="23" fill="#e0302a" opacity=".78"/></pattern>
+<path id="honey_pot-body" d="M118,226 C56,300 62,460 150,520 C220,560 310,560 380,520 C466,460 474,300 408,226 Q263,262 118,226Z"/>
+<clipPath id="honey_pot-bodyc"><use href="#honey_pot-body"/></clipPath>
+<path id="honey_pot-cloth" d="M112,214 C108,128 190,98 262,98 C336,98 416,128 414,214 C426,232 420,250 404,246 C392,262 372,252 360,262 C340,268 322,256 304,266 C282,270 266,258 246,266 C226,266 212,256 192,262 C170,262 160,250 138,250 C112,246 100,230 112,214Z"/>
+<clipPath id="honey_pot-clothc"><use href="#honey_pot-cloth"/></clipPath>
+<radialGradient id="honey_pot-clothsh" cx="32%" cy="26%" r="90%"><stop offset=".4" stop-color="#7a1010" stop-opacity="0"/><stop offset="1" stop-color="#6a0c10" stop-opacity=".5"/></radialGradient>
+<path id="honey_pot-honeyp" d="M122,230 C170,256 240,262 304,256 C308,274 300,286 294,294 C290,326 294,368 284,388 C274,410 240,408 236,382 C232,360 238,328 232,298 C228,284 214,280 204,286 C200,326 204,376 190,398 C176,420 138,416 136,388 C134,364 140,330 136,296 C134,282 126,270 120,258 Z"/>
+</defs>
+<path d="M420,500 L462,290" stroke="#5a2a10" stroke-opacity=".28" stroke-width="22" stroke-linecap="round" transform="translate(5 3)" filter="url(#honey_pot-b3)"/>
+<path d="M452,505 L468,330" stroke="url(#honey_pot-woodh)" stroke-width="18" stroke-linecap="round"/>
+<path d="M446,500 L461,336" stroke="#ffeec8" stroke-width="4" stroke-linecap="round" opacity=".6" filter="url(#honey_pot-b1)"/>
+<g transform="translate(462 296)"><ellipse rx="22" ry="30" fill="#5a2a10" opacity=".25" transform="translate(4 5)" filter="url(#honey_pot-b3)"/><ellipse rx="22" ry="30" fill="url(#honey_pot-woodh)"/><ellipse cx="-4" cy="2" rx="12" ry="20" fill="#ffbc1c" opacity=".0"/><ellipse cx="-8" cy="-10" rx="8" ry="12" fill="#fff" opacity=".5" filter="url(#honey_pot-b1)"/></g>
+<use href="#honey_pot-body" fill="#5a2210" opacity=".28" transform="translate(10 10)" filter="url(#honey_pot-b9)"/>
+<use href="#honey_pot-body" fill="url(#honey_pot-clay)"/>
+<g clip-path="url(#honey_pot-bodyc)">
+<use href="#honey_pot-body" filter="url(#honey_pot-wood)" opacity=".28"/>
+<path d="M60,330 Q263,372 470,330" fill="none" stroke="#5a2210" stroke-opacity=".18" stroke-width="3"/>
+<path d="M60,420 Q263,462 470,420" fill="none" stroke="#5a2210" stroke-opacity=".15" stroke-width="3"/>
+<g clip-path="url(#honey_pot-bodyc)"><rect x="50" y="200" width="430" height="370" fill="url(#honey_pot-shade)"/><rect x="50" y="385.0" width="430" height="185.0" fill="url(#honey_pot-ao)"/><rect x="402.6" y="200" width="77.39999999999999" height="370" fill="url(#honey_pot-rim)"/></g>
+<ellipse cx="300" cy="560" rx="170" ry="60" fill="url(#honey_pot-bounce)"/>
+<ellipse cx="146" cy="370" rx="36" ry="100" transform="rotate(18 146 370)" fill="#ffd0a0" opacity=".55" filter="url(#honey_pot-b9)"/>
+<path d="M104,330 C96,380 108,440 140,486" fill="none" stroke="#fff4e0" stroke-width="11" stroke-linecap="round" opacity=".75" filter="url(#honey_pot-b1)"/>
+<ellipse cx="170" cy="470" rx="20" ry="8" transform="rotate(35 170 470)" fill="#fff" opacity=".4" filter="url(#honey_pot-b1)"/>
+<use href="#honey_pot-body" filter="url(#honey_pot-gloss)" opacity=".09"/>
+</g>
+<ellipse cx="263" cy="226" rx="152" ry="32" fill="#8c4416"/><ellipse cx="263" cy="222" rx="152" ry="30" fill="url(#honey_pot-clay)"/><path d="M118,222 Q263,260 408,222" fill="none" stroke="#5a2210" stroke-opacity=".3" stroke-width="8" filter="url(#honey_pot-b1)"/>
+<path d="M130,216 Q200,196 280,196" fill="none" stroke="#fff0d8" stroke-width="5" stroke-linecap="round" opacity=".6" filter="url(#honey_pot-b1)"/>
+<use href="#honey_pot-honeyp" fill="#a85a08" opacity=".35" transform="translate(7 8)" filter="url(#honey_pot-b3)"/>
+<use href="#honey_pot-honeyp" fill="url(#honey_pot-honey)" opacity=".95"/>
+<use href="#honey_pot-honeyp" fill="none" stroke="#fff3b0" stroke-opacity=".6" stroke-width="3"/>
+<path d="M146,252 C178,266 230,264 280,254" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".75" filter="url(#honey_pot-b1)"/>
+<path d="M164,300 C162,330 166,360 164,376" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".8" filter="url(#honey_pot-b1)"/>
+<ellipse cx="160" cy="392" rx="9" ry="5" fill="#fff" opacity=".7" filter="url(#honey_pot-b1)"/>
+<g>
+<use href="#honey_pot-cloth" fill="#7a1010" opacity=".3" transform="translate(6 10)" filter="url(#honey_pot-b3)"/>
+<use href="#honey_pot-cloth" fill="url(#honey_pot-gh)"/>
+<g clip-path="url(#honey_pot-clothc)">
+<use href="#honey_pot-cloth" fill="url(#honey_pot-clothsh)"/>
+<path d="M120,230 C180,260 340,266 410,232" fill="none" stroke="#7a1010" stroke-opacity=".3" stroke-width="14" filter="url(#honey_pot-b3)"/>
+<path d="M170,110 C160,160 170,215 184,262 M262,98 C268,160 262,220 262,268 M360,112 C372,160 362,215 346,262" stroke="#8a1010" stroke-opacity=".22" stroke-width="10" fill="none" filter="url(#honey_pot-b3)"/>
+<ellipse cx="190" cy="140" rx="40" ry="26" transform="rotate(-25 190 140)" fill="#fff" opacity=".6" filter="url(#honey_pot-b9)"/>
+<path d="M130,200 C132,150 170,118 210,108" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".75" filter="url(#honey_pot-b1)"/>
+<rect x="360" y="90" width="64" height="190" fill="url(#honey_pot-rim)"/>
+</g></g>
+<path d="M114,232 C170,266 360,268 412,232" fill="none" stroke="#7a3410" stroke-opacity=".45" stroke-width="14" stroke-linecap="round" filter="url(#honey_pot-b3)"/>
+<path d="M114,230 C170,262 360,264 412,230" fill="none" stroke="#e8c88a" stroke-width="12" stroke-linecap="round"/>
+<path d="M114,230 C170,262 360,264 412,230" fill="none" stroke="#a87438" stroke-width="3" stroke-dasharray="10 8" opacity=".6"/>
+<path d="M122,226 C170,254 250,258 300,257" fill="none" stroke="#fff6dc" stroke-width="4" stroke-linecap="round" opacity=".8" filter="url(#honey_pot-b1)"/>
+<path d="M352,258 C346,296 326,316 312,332 M358,258 C372,290 394,304 408,306" fill="none" stroke="#a87438" stroke-width="8" stroke-linecap="round"/>
+<path d="M352,258 C346,296 326,316 312,332 M358,258 C372,290 394,304 408,306" fill="none" stroke="#e8c88a" stroke-width="4" stroke-linecap="round"/>
+<ellipse cx="354" cy="259" rx="14" ry="11" fill="#d8b070"/><ellipse cx="350" cy="256" rx="7" ry="4" fill="#fff6dc" opacity=".8"/>
+</svg>

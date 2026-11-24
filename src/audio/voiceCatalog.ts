@@ -12,8 +12,9 @@ import { chatScript, FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
 import { itemLabel } from '../content/items';
 import { NOUNS, PLACES } from '../content/places';
 import { SPECIES } from '../content/species';
-import { BEDTIME, BIGGER_NOW, CUDDLES, NAME_ERRORS, NAME_SCREEN, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, STICKER_OFFER, say } from '../content/utterances';
+import { BEDTIME, BIGGER_NOW, CUDDLES, NAME_ERRORS, NAME_SCREEN, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, STICKER_OFFER, GIFT_OFFER, say } from '../content/utterances';
 import { STICKERS } from '../engine/stickers';
+import { GIFTS } from '../engine/gifts';
 import { CONTINENTS } from '../content/world';
 import { DOLPHINS, dolphinOrder, SEA_FRIENDS, SEA_THINGS, TURTLE, WHALE, whaleCount, whaleYes, type DolphinId, type DolphinMove } from '../content/sea';
 import type { QuestScript } from '../content/types';
@@ -136,6 +137,9 @@ export function buildVoiceCatalog(): Catalog {
   add('narrator', say.albumBorn(NAME_TOKEN));
   add('narrator', STICKER_OFFER.en);
   for (const st of STICKERS) add('narrator', say.sticker(st.en));
+  // cadeau du soir : le personnage qui apporte les paquets, puis le mot de l'objet ouvert
+  for (const r of ['father', 'mother', 'girl', 'boy'] as const) add(r, GIFT_OFFER.en);
+  for (const g of GIFTS) add('narrator', say.gift(g.en));
   add('mother', fill(BEDTIME.mother.en, anyName));
   for (const r of ['girl', 'boy'] as const) add(r, BEDTIME.baby.en);
   add('father', BEDTIME.father.en);

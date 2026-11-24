@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { speech } from '../audio/speech';
 import type { VoiceRole } from '../audio/voiceKey';
-import { DOLPHINS, seaDecor, SEA_DECORS, SEA_DECOR_NAMES, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
+import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, seaDecor, SEA_DECORS, SEA_DECOR_NAMES, seaFriend, SEA_HD, SEA_THINGS, type DolphinId, type SeaGameId, type SeaSprite } from '../content/sea';
 import type { Line } from '../content/types';
 import { currentRound, seaChoose, seaDone, seaNext, seaReward, startSea, type SeaState, type Utter } from '../engine/sea';
 import type { GameState } from '../engine/state';
 import { Confetti } from './Confetti';
 import { DialogueBox } from './DialogueBox';
+import { isDrag, seaDragPos } from './drag';
 
 interface Props {
   state: GameState;
@@ -30,10 +31,71 @@ const SPOTS = [
 /** où se pose la tortue, à côté de chaque place */
 const TURTLE_HOME = { x: 16, y: 10 };
 
-const DOLPHIN_POS: Record<DolphinId, CSSProperties> = {
-  big: { left: '6%', top: '8%', width: '30%' },
-  little: { left: '60%', top: '20%', width: '24%' },
-};
+/** places de départ des animaux (coin haut-gauche, en % de la scène) ; l'enfant les déplace ensuite au doigt */
+const START = { whale: { x: 4, y: 20 }, dolphins: { x: 22, y: 6 } };
+/** largeur de chaque animal (en % de la scène) */
+const WIDTH = { whale: 40, dolphins: 56, turtle: 22 };
+
+type P = { x: number; y: number };
+
+/**
+ * Déplacer un animal de la mer au doigt (2026-11-24, « on doit aussi pouvoir les déplacer »). Un appui sans mouvement
+ * reste un toucher (consigne redite, ou réponse) ; au-delà du seuil, l'animal suit le doigt, sans sortir de l'eau.
+ */
+function useSeaDrag(start: P, w: number) {
+  const [pos, setPos] = useState<P>(start);
+  const [dragging, setDragging] = useState(false);
+  const moved = useRef(false);
+  /** fin du glisser en cours (écoute retirée) ; on suit le doigt sur toute la fenêtre : un geste vif qui sort
+   *  de l'animal avant le premier mouvement n'est plus perdu (essai à la souris du 2026-11-24) */
+  const stop = useRef<(() => void) | null>(null);
+  useEffect(() => () => stop.current?.(), []);
+  const bind = (onTap?: () => void) => ({
+    onPointerDown: (e: React.PointerEvent<HTMLElement>) => {
+      const rect = e.currentTarget.closest('.sea-stage')?.getBoundingClientRect();
+      if (!rect || !rect.width) return;
+      stop.current?.();
+      const g = { sx: e.clientX, sy: e.clientY, id: e.pointerId, from: pos, on: false };
+      moved.current = false;
+      const move = (ev: PointerEvent) => {
+        if (ev.pointerId !== g.id) return;
+        const dx = ev.clientX - g.sx;
+        const dy = ev.clientY - g.sy;
+        if (!g.on) {
+          if (!isDrag({ x: dx, y: dy })) return;
+          g.on = true;
+          moved.current = true;
+          setDragging(true);
+        }
+        setPos(seaDragPos(g.from, { x: (dx / rect.width) * 100, y: (dy / rect.height) * 100 }, w));
+      };
+      const end = (ev: PointerEvent) => {
+        if (ev.pointerId === g.id) stop.current?.();
+      };
+      stop.current = () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', end);
+        window.removeEventListener('pointercancel', end);
+        if (g.on) setDragging(false);
+        stop.current = null;
+      };
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', end);
+      window.addEventListener('pointercancel', end);
+    },
+    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
+    onClick: () => {
+      if (moved.current) {
+        moved.current = false;
+        return;
+      }
+      onTap?.();
+    },
+  });
+  /** vrai juste après un glisser : le toucher qui le termine ne compte pas comme une réponse */
+  const wasDrag = () => moved.current;
+  return { pos, dragging, bind, wasDrag };
+}
 
 /** nom affiché au-dessus de la réplique, d'après la voix qui parle */
 function speakerName(game: SeaGameId, voice: VoiceRole): string {
@@ -53,6 +115,9 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
   const rewarded = useRef(false);
   /** fond choisi par l'enfant (vignettes en haut) : sinon les deux fonds alternent d'une manche à l'autre */
   const [chosenDecor, setChosenDecor] = useState<string | null>(null);
+  const whaleDrag = useSeaDrag(START.whale, WIDTH.whale);
+  const turtleDrag = useSeaDrag(TURTLE_HOME, WIDTH.turtle);
+  const dolphinDrag = useSeaDrag(START.dolphins, WIDTH.dolphins);
 
   const talk = (say: Utter[]) => {
     if (!say.length) return;
@@ -130,7 +195,12 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
 
         {game === 'whale' && (
           <>
-            <button className="sea-actor whale" style={{ left: '4%', top: '20%', width: '40%' }} onClick={replay} aria-label={friend.nameEn}>
+            <button
+              className={`sea-actor whale movable${whaleDrag.dragging ? ' dragging' : ''}`}
+              style={{ left: `${whaleDrag.pos.x}%`, top: `${whaleDrag.pos.y}%`, width: `${WIDTH.whale}%` }}
+              {...whaleDrag.bind(replay)}
+              aria-label={friend.nameEn}
+            >
               <img src={sprite('whale')} alt="" draggable={false} />
             </button>
             {round?.splashes && (
@@ -162,16 +232,18 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
             })}
             {(() => {
               const at = ok && round ? SPOTS[round.choices.findIndex((c) => c.id === target)]! : null;
-              const pos = at ? { x: at.x - 17, y: at.y - 2 } : TURTLE_HOME;
+              // chez elle : là où l'enfant l'a posée ; une chose trouvée : elle y nage
+              const pos = at && !turtleDrag.dragging ? { x: at.x - 17, y: at.y - 2 } : turtleDrag.pos;
+              const moving = `${ok ? ' swim' : ''} movable${turtleDrag.dragging ? ' dragging' : ''}`;
               return (
                 // déplacement par transform (composé par la carte graphique, sans recalcul de mise en page) :
                 // la scène fait 100cqw de large et 56,25cqw de haut (16/9)
                 <>
-                  <button className={`sea-actor turtle${ok ? ' swim' : ''}`} style={{ left: 0, top: 0, width: '22%', transform: `translate(${pos.x}cqw, ${pos.y * 0.5625}cqw)` }} onClick={replay} aria-label={friend.nameEn}>
+                  <button className={`sea-actor turtle${moving}`} style={{ left: 0, top: 0, width: `${WIDTH.turtle}%`, transform: `translate(${pos.x}cqw, ${pos.y * 0.5625}cqw)` }} {...turtleDrag.bind(replay)} aria-label={friend.nameEn}>
                     <img src={sprite('turtle')} alt="" draggable={false} />
                   </button>
                   {/* la petite tortue suit sa maman, un peu derrière */}
-                  <button className={`sea-actor turtle baby${ok ? ' swim' : ''}`} style={{ left: 0, top: 0, width: '12%', transform: `translate(${pos.x - 11}cqw, ${pos.y * 0.5625 - 1}cqw)` }} onClick={replay} aria-label="Baby turtle">
+                  <button className={`sea-actor turtle baby${moving}`} style={{ left: 0, top: 0, width: '12%', transform: `translate(${pos.x - 11}cqw, ${pos.y * 0.5625 - 1}cqw)` }} {...turtleDrag.bind(replay)} aria-label="Baby turtle">
                     <img src={sprite('turtle_baby')} alt="" draggable={false} />
                   </button>
                 </>
@@ -180,19 +252,37 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
           </>
         )}
 
-        {game === 'dolphins' &&
-          (['big', 'little'] as DolphinId[]).map((d) => (
-            <button
-              key={d}
-              className={`sea-actor dolphin${ok && target === d ? ` move-${round!.move}` : ''}${sea.reveal && target === d ? ' reveal' : ''}${shake?.startsWith(`${d}-`) ? ' shake' : ''}`}
-              style={DOLPHIN_POS[d]}
-              onClick={() => (round ? choose(d) : undefined)}
-              aria-label={DOLPHINS.name[d].en}
-            >
-              <img key={ok && target === d ? beat : 0} src={sprite(d === 'big' ? 'dolphin_big' : 'dolphin_little')} alt="" draggable={false} />
-              {ok && target === d && round?.move === 'splash' && <span className="splash-drops" aria-hidden>💦</span>}
-            </button>
-          ))}
+        {game === 'dolphins' && (
+          // la maman et son petit nagent ensemble (une seule image) : on touche l'un ou l'autre, on les déplace ensemble
+          <div
+            key={shake ?? 'still'}
+            className={`sea-actor dolphin movable${dolphinDrag.dragging ? ' dragging' : ''}${ok && round ? ` move-${round.move}` : ''}${shake ? ' shake' : ''}`}
+            style={{ left: `${dolphinDrag.pos.x}%`, top: `${dolphinDrag.pos.y}%`, width: `${WIDTH.dolphins}%` }}
+            {...dolphinDrag.bind()}
+            role="group"
+            aria-label="Dolphins"
+          >
+            <img key={ok ? beat : 0} src={`${import.meta.env.BASE_URL}assets/sea/${DOLPHIN_FAMILY}.webp`} alt="" draggable={false} />
+            {(['big', 'little'] as DolphinId[]).map((d) =>
+              DOLPHIN_ZONES[d].map((z, i) => (
+                <button
+                  key={`${d}-${i}`}
+                  className={`dolphin-zone${sea.reveal && target === d && i === 0 ? ' reveal' : ''}${ok && target === d && i === 0 ? ' found' : ''}`}
+                  style={{ left: `${z.x}%`, top: `${z.y}%`, width: `${z.w}%`, height: `${z.h}%` }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (dolphinDrag.wasDrag()) return;
+                    if (round && !ok) choose(d);
+                    else replay();
+                  }}
+                  aria-label={DOLPHINS.name[d].en}
+                >
+                  {ok && target === d && i === 0 && round?.move === 'splash' && <span className="splash-drops" aria-hidden>🫧</span>}
+                </button>
+              )),
+            )}
+          </div>
+        )}
 
         {done && <Confetti n={26} wide />}
 

@@ -1,0 +1,1156 @@
+{
+ "branchMaxH": 0.4,
+ "gifts": [
+  {
+   "id": "ball",
+   "en": "a ball",
+   "fr": "un ballon",
+   "colors": [
+    "red",
+    "yellow"
+   ],
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "ratio": 1.0
+  },
+  {
+   "id": "drum",
+   "en": "a drum",
+   "fr": "un tambour",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "h": 0.32,
+   "where": [
+    "any"
+   ],
+   "ratio": 1.121
+  },
+  {
+   "id": "blocks",
+   "en": "blocks",
+   "fr": "des cubes",
+   "colors": [
+    "red",
+    "blue",
+    "yellow"
+   ],
+   "h": 0.35,
+   "where": [
+    "any"
+   ],
+   "ratio": 0.551
+  },
+  {
+   "id": "blanket",
+   "en": "a blanket",
+   "fr": "une couverture",
+   "colors": [
+    "blue",
+    "white"
+   ],
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "ratio": 3.294
+  },
+  {
+   "id": "pillow",
+   "en": "a pillow",
+   "fr": "un coussin",
+   "colors": [
+    "pink"
+   ],
+   "h": 0.22,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "ratio": 1.299
+  },
+  {
+   "id": "treasure_chest",
+   "en": "a treasure chest",
+   "fr": "un coffre au trésor",
+   "colors": [
+    "brown",
+    "gold"
+   ],
+   "h": 0.35,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "ratio": 1.068
+  },
+  {
+   "id": "guitar",
+   "en": "a guitar",
+   "fr": "une guitare",
+   "colors": [
+    "orange"
+   ],
+   "h": 0.55,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "ratio": 0.361
+  },
+  {
+   "id": "basket",
+   "en": "a basket",
+   "fr": "un panier",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.28,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "ratio": 1.04
+  },
+  {
+   "id": "bell",
+   "en": "a bell",
+   "fr": "une clochette",
+   "colors": [
+    "gold",
+    "red"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "ratio": 0.795
+  },
+  {
+   "id": "xylophone",
+   "en": "a xylophone",
+   "fr": "un xylophone",
+   "colors": [
+    "rainbow"
+   ],
+   "h": 0.15,
+   "where": [
+    "any"
+   ],
+   "ratio": 1.816
+  },
+  {
+   "id": "train",
+   "en": "a train",
+   "fr": "un train",
+   "colors": [
+    "green",
+    "red",
+    "blue"
+   ],
+   "h": 0.22,
+   "where": [
+    "any"
+   ],
+   "ratio": 3.03
+  },
+  {
+   "id": "spinning_top",
+   "en": "a spinning top",
+   "fr": "une toupie",
+   "colors": [
+    "purple",
+    "yellow"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "ratio": 0.705
+  },
+  {
+   "id": "book",
+   "en": "a book",
+   "fr": "un livre",
+   "colors": [
+    "blue"
+   ],
+   "h": 0.14,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "ratio": 2.57
+  },
+  {
+   "id": "teddy_bear",
+   "en": "a teddy bear",
+   "fr": "un ours en peluche",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.32,
+   "where": [
+    "any"
+   ],
+   "ratio": 0.707
+  },
+  {
+   "id": "toy_car",
+   "en": "a toy car",
+   "fr": "une petite voiture",
+   "colors": [
+    "red"
+   ],
+   "h": 0.18,
+   "where": [
+    "any"
+   ],
+   "ratio": 1.892
+  },
+  {
+   "id": "balloons",
+   "en": "balloons",
+   "fr": "des ballons de baudruche",
+   "colors": [
+    "red",
+    "yellow",
+    "blue"
+   ],
+   "h": 0.9,
+   "where": [
+    "any"
+   ],
+   "ratio": 0.515
+  },
+  {
+   "id": "kite",
+   "en": "a kite",
+   "fr": "un cerf-volant",
+   "colors": [
+    "red"
+   ],
+   "h": 0.6,
+   "where": [
+    "outdoor"
+   ],
+   "ratio": 1.119
+  },
+  {
+   "id": "windmill",
+   "en": "a windmill",
+   "fr": "un moulin à vent",
+   "colors": [
+    "rainbow"
+   ],
+   "h": 0.45,
+   "where": [
+    "outdoor"
+   ],
+   "ratio": 0.439
+  },
+  {
+   "id": "flower_pot",
+   "en": "a flower pot",
+   "fr": "un pot de fleurs",
+   "colors": [
+    "orange",
+    "pink"
+   ],
+   "h": 0.32,
+   "where": [
+    "warm"
+   ],
+   "use": "object",
+   "ratio": 0.591
+  },
+  {
+   "id": "watering_can",
+   "en": "a watering can",
+   "fr": "un arrosoir",
+   "colors": [
+    "green"
+   ],
+   "h": 0.25,
+   "where": [
+    "warm",
+    "outdoor"
+   ],
+   "use": "object",
+   "ratio": 1.951
+  },
+  {
+   "id": "snowman",
+   "en": "a snowman",
+   "fr": "un bonhomme de neige",
+   "colors": [
+    "white",
+    "red"
+   ],
+   "h": 0.6,
+   "where": [
+    "cold",
+    "outdoor"
+   ],
+   "ratio": 0.94
+  },
+  {
+   "id": "sled",
+   "en": "a sled",
+   "fr": "une luge",
+   "colors": [
+    "red"
+   ],
+   "h": 0.22,
+   "where": [
+    "cold"
+   ],
+   "ratio": 3.288
+  },
+  {
+   "id": "birdhouse",
+   "en": "a birdhouse",
+   "fr": "un nichoir",
+   "colors": [
+    "green",
+    "brown"
+   ],
+   "h": 0.8,
+   "where": [
+    "trees",
+    "outdoor",
+    "warm"
+   ],
+   "species": "owl",
+   "ratio": 0.459
+  },
+  {
+   "id": "bench",
+   "en": "a bench",
+   "fr": "un banc",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.35,
+   "where": [
+    "outdoor"
+   ],
+   "use": "object",
+   "ratio": 1.511
+  },
+  {
+   "id": "boat",
+   "en": "a boat",
+   "fr": "un bateau",
+   "colors": [
+    "blue",
+    "white"
+   ],
+   "h": 0.35,
+   "where": [
+    "water"
+   ],
+   "float": true,
+   "ratio": 1.058
+  },
+  {
+   "id": "rubber_duck",
+   "en": "a rubber duck",
+   "fr": "un canard en plastique",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.15,
+   "where": [
+    "water"
+   ],
+   "float": true,
+   "ratio": 1.167
+  },
+  {
+   "id": "sandcastle",
+   "en": "a sandcastle",
+   "fr": "un château de sable",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.35,
+   "where": [
+    "beach"
+   ],
+   "ratio": 1.379
+  },
+  {
+   "id": "spade",
+   "en": "a spade",
+   "fr": "une pelle",
+   "colors": [
+    "blue"
+   ],
+   "h": 0.3,
+   "where": [
+    "beach"
+   ],
+   "ratio": 0.713
+  },
+  {
+   "id": "crown",
+   "en": "a crown",
+   "fr": "une couronne",
+   "colors": [
+    "gold"
+   ],
+   "h": 0.15,
+   "where": [
+    "any"
+   ],
+   "use": "worn",
+   "species": "lion",
+   "ratio": 1.483
+  },
+  {
+   "id": "sun_umbrella",
+   "en": "a sun umbrella",
+   "fr": "un parasol",
+   "colors": [
+    "yellow",
+    "white"
+   ],
+   "h": 1.1,
+   "where": [
+    "outdoor"
+   ],
+   "use": "object",
+   "species": "lion",
+   "ratio": 0.692
+  },
+  {
+   "id": "trumpet",
+   "en": "a trumpet",
+   "fr": "une trompette",
+   "colors": [
+    "gold"
+   ],
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "elephant",
+   "ratio": 2.889
+  },
+  {
+   "id": "bucket",
+   "en": "a bucket",
+   "fr": "un seau",
+   "colors": [
+    "blue"
+   ],
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "species": "elephant",
+   "ratio": 0.789
+  },
+  {
+   "id": "slide",
+   "en": "a slide",
+   "fr": "un toboggan",
+   "colors": [
+    "yellow",
+    "red"
+   ],
+   "h": 0.8,
+   "where": [
+    "outdoor"
+   ],
+   "species": "giraffe",
+   "ratio": 1.49
+  },
+  {
+   "id": "hoop",
+   "en": "a basketball hoop",
+   "fr": "un panier de basket",
+   "colors": [
+    "orange",
+    "white"
+   ],
+   "h": 1.0,
+   "where": [
+    "outdoor"
+   ],
+   "species": "giraffe",
+   "ratio": 0.517
+  },
+  {
+   "id": "ball_of_wool",
+   "en": "a ball of wool",
+   "fr": "une pelote de laine",
+   "colors": [
+    "orange"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "species": "jaguar",
+   "ratio": 1.502
+  },
+  {
+   "id": "tent",
+   "en": "a tent",
+   "fr": "une tente",
+   "colors": [
+    "green"
+   ],
+   "h": 0.75,
+   "where": [
+    "outdoor",
+    "warm"
+   ],
+   "use": "object",
+   "species": "jaguar",
+   "ratio": 1.421
+  },
+  {
+   "id": "paint_box",
+   "en": "a paint box",
+   "fr": "une boîte de peinture",
+   "colors": [
+    "rainbow"
+   ],
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "toucan",
+   "ratio": 1.265
+  },
+  {
+   "id": "maracas",
+   "en": "maracas",
+   "fr": "des maracas",
+   "colors": [
+    "red",
+    "yellow"
+   ],
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "toucan",
+   "ratio": 0.901
+  },
+  {
+   "id": "hammock",
+   "en": "a hammock",
+   "fr": "un hamac",
+   "colors": [
+    "green",
+    "white"
+   ],
+   "h": 0.6,
+   "where": [
+    "outdoor"
+   ],
+   "species": "sloth",
+   "ratio": 1.831
+  },
+  {
+   "id": "alarm_clock",
+   "en": "an alarm clock",
+   "fr": "un réveil",
+   "colors": [
+    "red"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "sloth",
+   "ratio": 0.856
+  },
+  {
+   "id": "honey_pot",
+   "en": "a honey pot",
+   "fr": "un pot de miel",
+   "colors": [
+    "brown",
+    "yellow"
+   ],
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "species": "bear",
+   "ratio": 0.902
+  },
+  {
+   "id": "fishing_rod",
+   "en": "a fishing rod",
+   "fr": "une canne à pêche",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "h": 0.9,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "bear",
+   "ratio": 0.74
+  },
+  {
+   "id": "cowboy_hat",
+   "en": "a hat",
+   "fr": "un chapeau",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.15,
+   "where": [
+    "any"
+   ],
+   "use": "worn",
+   "species": "bison",
+   "ratio": 2.063
+  },
+  {
+   "id": "cart",
+   "en": "a cart",
+   "fr": "une charrette",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "h": 0.55,
+   "where": [
+    "outdoor"
+   ],
+   "use": "object",
+   "species": "bison",
+   "ratio": 1.481
+  },
+  {
+   "id": "toolbox",
+   "en": "a toolbox",
+   "fr": "une caisse à outils",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "species": "beaver",
+   "ratio": 1.389
+  },
+  {
+   "id": "canoe",
+   "en": "a canoe",
+   "fr": "un canoë",
+   "colors": [
+    "red"
+   ],
+   "h": 0.22,
+   "where": [
+    "any"
+   ],
+   "species": "beaver",
+   "float": true,
+   "ratio": 4.159
+  },
+  {
+   "id": "map",
+   "en": "a map",
+   "fr": "une carte",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "fox",
+   "ratio": 1.833
+  },
+  {
+   "id": "backpack",
+   "en": "a backpack",
+   "fr": "un sac à dos",
+   "colors": [
+    "green"
+   ],
+   "h": 0.35,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "species": "fox",
+   "ratio": 0.898
+  },
+  {
+   "id": "glasses",
+   "en": "glasses",
+   "fr": "des lunettes",
+   "colors": [
+    "gold"
+   ],
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "use": "worn",
+   "species": "owl",
+   "ratio": 2.276
+  },
+  {
+   "id": "telescope",
+   "en": "a telescope",
+   "fr": "une longue-vue",
+   "colors": [
+    "brown",
+    "gold"
+   ],
+   "h": 0.6,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "species": "owl",
+   "ratio": 0.706
+  },
+  {
+   "id": "wheelbarrow",
+   "en": "a wheelbarrow",
+   "fr": "une brouette",
+   "colors": [
+    "red"
+   ],
+   "h": 0.35,
+   "where": [
+    "outdoor"
+   ],
+   "use": "object",
+   "species": "hedgehog",
+   "ratio": 1.555
+  },
+  {
+   "id": "leaf_hut",
+   "en": "a hut",
+   "fr": "une cabane",
+   "colors": [
+    "orange",
+    "brown"
+   ],
+   "h": 1.3,
+   "where": [
+    "outdoor"
+   ],
+   "species": "hedgehog",
+   "ratio": 1.186
+  },
+  {
+   "id": "flute",
+   "en": "a flute",
+   "fr": "une flûte",
+   "colors": [
+    "green"
+   ],
+   "h": 0.08,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "giant_panda",
+   "ratio": 15.121
+  },
+  {
+   "id": "teapot",
+   "en": "a teapot",
+   "fr": "une théière",
+   "colors": [
+    "white",
+    "blue"
+   ],
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "giant_panda",
+   "ratio": 1.22
+  },
+  {
+   "id": "gong",
+   "en": "a gong",
+   "fr": "un gong",
+   "colors": [
+    "gold",
+    "red"
+   ],
+   "h": 0.7,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "species": "tiger",
+   "ratio": 0.789
+  },
+  {
+   "id": "rubber_ring",
+   "en": "a rubber ring",
+   "fr": "une bouée",
+   "colors": [
+    "orange",
+    "white"
+   ],
+   "h": 0.18,
+   "where": [
+    "any"
+   ],
+   "species": "tiger",
+   "float": true,
+   "ratio": 1.629
+  },
+  {
+   "id": "skis",
+   "en": "skis",
+   "fr": "des skis",
+   "colors": [
+    "red"
+   ],
+   "h": 0.9,
+   "where": [
+    "cold"
+   ],
+   "use": "worn",
+   "species": "snow_leopard",
+   "ratio": 0.512
+  },
+  {
+   "id": "flag",
+   "en": "a flag",
+   "fr": "un drapeau",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.9,
+   "where": [
+    "outdoor"
+   ],
+   "use": "object",
+   "species": "snow_leopard",
+   "ratio": 0.459
+  },
+  {
+   "id": "skipping_rope",
+   "en": "a skipping rope",
+   "fr": "une corde à sauter",
+   "colors": [
+    "red"
+   ],
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "kangaroo",
+   "ratio": 3.311
+  },
+  {
+   "id": "trampoline",
+   "en": "a trampoline",
+   "fr": "un trampoline",
+   "colors": [
+    "blue",
+    "green"
+   ],
+   "h": 0.3,
+   "where": [
+    "outdoor"
+   ],
+   "species": "kangaroo",
+   "ratio": 2.15
+  },
+  {
+   "id": "swing",
+   "en": "a swing",
+   "fr": "une balançoire",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "h": 0.9,
+   "where": [
+    "outdoor"
+   ],
+   "species": "koala",
+   "ratio": 1.088
+  },
+  {
+   "id": "slippers",
+   "en": "slippers",
+   "fr": "des chaussons",
+   "colors": [
+    "pink"
+   ],
+   "h": 0.1,
+   "where": [
+    "any"
+   ],
+   "use": "worn",
+   "species": "koala",
+   "ratio": 3.991
+  },
+  {
+   "id": "sunglasses",
+   "en": "sunglasses",
+   "fr": "des lunettes de soleil",
+   "colors": [
+    "orange"
+   ],
+   "h": 0.1,
+   "where": [
+    "any"
+   ],
+   "use": "worn",
+   "species": "frilled_lizard",
+   "ratio": 2.759
+  },
+  {
+   "id": "mirror",
+   "en": "a mirror",
+   "fr": "un miroir",
+   "colors": [
+    "gold"
+   ],
+   "h": 0.5,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "frilled_lizard",
+   "ratio": 0.636
+  },
+  {
+   "id": "igloo",
+   "en": "an igloo",
+   "fr": "un igloo",
+   "colors": [
+    "white",
+    "blue"
+   ],
+   "h": 1.3,
+   "where": [
+    "cold",
+    "outdoor"
+   ],
+   "species": "penguin",
+   "ratio": 1.601
+  },
+  {
+   "id": "skates",
+   "en": "skates",
+   "fr": "des patins",
+   "colors": [
+    "white",
+    "blue"
+   ],
+   "h": 0.25,
+   "where": [
+    "cold"
+   ],
+   "use": "worn",
+   "species": "penguin",
+   "ratio": 2.102
+  },
+  {
+   "id": "snow_globe",
+   "en": "a snow globe",
+   "fr": "une boule à neige",
+   "colors": [
+    "blue"
+   ],
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "seal",
+   "ratio": 0.754
+  },
+  {
+   "id": "lantern",
+   "en": "a lantern",
+   "fr": "une lanterne",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "use": "object",
+   "species": "seal",
+   "ratio": 0.664
+  },
+  {
+   "id": "ice_castle",
+   "en": "an ice castle",
+   "fr": "un château de glace",
+   "colors": [
+    "blue",
+    "white"
+   ],
+   "h": 1.2,
+   "where": [
+    "cold"
+   ],
+   "species": "polar_bear",
+   "ratio": 1.096
+  },
+  {
+   "id": "hot_chocolate",
+   "en": "a hot chocolate",
+   "fr": "un chocolat chaud",
+   "colors": [
+    "red",
+    "brown"
+   ],
+   "h": 0.18,
+   "where": [
+    "any"
+   ],
+   "use": "held",
+   "species": "polar_bear",
+   "ratio": 0.857
+  },
+  {
+   "id": "tug_rope",
+   "en": "a big rope",
+   "fr": "une grosse corde",
+   "colors": [
+    "red"
+   ],
+   "h": 0.16,
+   "where": [
+    "any"
+   ],
+   "species": "lion",
+   "ratio": 1.247
+  },
+  {
+   "id": "bamboo",
+   "en": "some bamboo",
+   "fr": "des bambous",
+   "colors": [
+    "green"
+   ],
+   "h": 0.5,
+   "where": [
+    "any"
+   ],
+   "species": "giant_panda",
+   "ratio": 0.557
+  },
+  {
+   "id": "snowball",
+   "en": "a big snowball",
+   "fr": "une grosse boule de neige",
+   "colors": [
+    "white"
+   ],
+   "h": 0.24,
+   "where": [
+    "cold"
+   ],
+   "species": "snow_leopard",
+   "ratio": 1.1
+  },
+  {
+   "id": "grapes",
+   "en": "some grapes",
+   "fr": "du raisin",
+   "colors": [
+    "purple"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "species": "fox",
+   "ratio": 1.271
+  },
+  {
+   "id": "fruit_bowl",
+   "en": "some fruit",
+   "fr": "des fruits",
+   "colors": [
+    "orange"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "species": "toucan",
+   "ratio": 1.688
+  },
+  {
+   "id": "hay",
+   "en": "some hay",
+   "fr": "du foin",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.35,
+   "where": [
+    "outdoor"
+   ],
+   "species": "bison",
+   "ratio": 1.526
+  },
+  {
+   "id": "log",
+   "en": "a log",
+   "fr": "un tronc pour grimper",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.22,
+   "where": [
+    "outdoor",
+    "warm"
+   ],
+   "species": "frilled_lizard",
+   "ratio": 1.679
+  },
+  {
+   "id": "fish_bucket",
+   "en": "a bucket of fish",
+   "fr": "un seau de poissons",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.28,
+   "where": [
+    "any"
+   ],
+   "species": "seal",
+   "ratio": 0.932
+  }
+ ]
+}

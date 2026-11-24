@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 33 996 361">
+<defs>
+<linearGradient id="sunglasses-fr" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#ffb050"/><stop offset="0.45" stop-color="#ff8a1a"/><stop offset="1" stop-color="#d85a08"/></linearGradient>
+<linearGradient id="sunglasses-ln" x1="0" y1="0" x2="1" y2="1" ><stop offset="0" stop-color="#4a5a8a"/><stop offset="0.35" stop-color="#1e2448"/><stop offset="1" stop-color="#0a0a1c"/></linearGradient>
+<linearGradient id="sunglasses-sky" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#8ab4ff" stop-opacity="0.55"/><stop offset="0.5" stop-color="#6a7ad8" stop-opacity="0.15"/><stop offset="1" stop-color="#6a7ad8" stop-opacity="0"/></linearGradient>
+<radialGradient id="sunglasses-bn" cx=".5" cy="1" r=".6" ><stop offset="0" stop-color="#ff9a5a" stop-opacity="0.55"/><stop offset="1" stop-color="#ff9a5a" stop-opacity="0"/></radialGradient>
+<path id="sunglasses-lp" d="M75,55 L420,55 C450,55 464,75 459,102 L441,250 C429,330 376,375 276,375 C171,375 101,330 76,250 L51,102 C47,75 56,55 75,55Z"/>
+<clipPath id="sunglasses-lc"><use href="#sunglasses-lp"/></clipPath>
+<clipPath id="sunglasses-rc"><use href="#sunglasses-lp" transform="translate(1000 0) scale(-1 1)"/></clipPath>
+<filter id="sunglasses-b3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="sunglasses-b6" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="sunglasses-b10" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="10"/></filter>
+<filter id="sunglasses-pl" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="12" result="b"/><feSpecularLighting in="b" surfaceScale="8" specularConstant="0.8" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s2"/></feMerge></filter>
+</defs>
+<g filter="url(#sunglasses-b6)" opacity=".0"><rect width="10" height="10"/></g>
+<use href="#sunglasses-lp" fill="url(#sunglasses-ln)"/>
+<g clip-path="url(#sunglasses-lc)"><rect x="40" y="50" width="430" height="200" fill="url(#sunglasses-sky)"/>
+<ellipse cx="300" cy="400" rx="260" ry="90" fill="url(#sunglasses-bn)"/>
+<path d="M70,70 L250,70 L150,360 L50,300Z" fill="#fff" fill-opacity=".0"/>
+<path d="M120,62 L205,62 L120,300 L62,300Z" fill="#fff" fill-opacity=".16"/>
+<path d="M215,62 L250,62 L170,300 L140,300Z" fill="#fff" fill-opacity=".1"/>
+<ellipse cx="150" cy="108" rx="62" ry="14" transform="rotate(-8 150 108)" fill="#fff" fill-opacity=".75" filter="url(#sunglasses-b3)"/></g>
+<g transform="translate(1000 0) scale(-1 1)"><use href="#sunglasses-lp" fill="url(#sunglasses-ln)"/></g>
+<g clip-path="url(#sunglasses-rc)"><rect x="530" y="50" width="430" height="200" fill="url(#sunglasses-sky)"/>
+<ellipse cx="700" cy="400" rx="260" ry="90" fill="url(#sunglasses-bn)"/>
+<path d="M567,70 L747,70 L647,360 L547,300Z" fill="#fff" fill-opacity=".0"/>
+<path d="M617,62 L702,62 L617,300 L559,300Z" fill="#fff" fill-opacity=".16"/>
+<path d="M712,62 L747,62 L667,300 L637,300Z" fill="#fff" fill-opacity=".1"/>
+<ellipse cx="647" cy="108" rx="62" ry="14" transform="rotate(-8 647 108)" fill="#fff" fill-opacity=".75" filter="url(#sunglasses-b3)"/></g>
+<g filter="url(#sunglasses-pl)">
+<g ><use href="#sunglasses-lp" fill="none" stroke="url(#sunglasses-fr)" stroke-width="56" stroke-linejoin="round"/></g><g transform="translate(1000 0) scale(-1 1)"><use href="#sunglasses-lp" fill="none" stroke="url(#sunglasses-fr)" stroke-width="56" stroke-linejoin="round"/></g>
+<path d="M430,95 C460,50 540,50 570,95" fill="none" stroke="url(#sunglasses-fr)" stroke-width="40" stroke-linecap="round"/>
+<rect x="6" y="52" width="50" height="76" rx="22" fill="url(#sunglasses-fr)"/>
+<rect x="944" y="52" width="50" height="76" rx="22" fill="url(#sunglasses-fr)"/>
+</g>
+<g fill="none" stroke-linejoin="round">
+<use href="#sunglasses-lp" stroke="#8a2a08" stroke-opacity=".3" stroke-width="3"/>
+<use href="#sunglasses-lp" stroke="#8a2a08" stroke-opacity=".3" stroke-width="3" transform="translate(1000 0) scale(-1 1)"/>
+</g>
+<!-- reflets sur la monture -->
+<path d="M70,30 L420,30" fill="none" stroke="#fff0c0" stroke-opacity=".8" stroke-width="9" stroke-linecap="round" filter="url(#sunglasses-b3)"/>
+<path d="M580,30 L930,30" fill="none" stroke="#fff0c0" stroke-opacity=".8" stroke-width="9" stroke-linecap="round" filter="url(#sunglasses-b3)"/>
+<path d="M452,70 C470,52 530,52 548,70" fill="none" stroke="#fff0c0" stroke-opacity=".7" stroke-width="6" stroke-linecap="round" filter="url(#sunglasses-b3)"/>
+<path d="M20,70 C20,60 30,58 40,58" fill="none" stroke="#fff0c0" stroke-opacity=".8" stroke-width="6" stroke-linecap="round"/>
+</svg>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clampOffset, dragSpot, isDrag } from './drag';
+import { clampOffset, dragSpot, isDrag, seaDragPos } from './drag';
 import { depthScale } from '../game/staging';
 
 const stage = { left: 0, top: 0, right: 1000, bottom: 560 };
@@ -53,5 +53,13 @@ describe('animal déplacé dans le décor', () => {
     const scale = (_from: number, to: number) => to / 100;
     expect(dragSpot(home, { x: 20, y: 35 }, 0, scale, 64, rock)).toEqual({ x: 20, y: 35, h: 34 * 0.7 });
     expect(dragSpot(home, { x: 50, y: 35 }, 0, scale, 64, rock)).toEqual({ x: 50, y: 64, h: 34 * 0.64 }); // pas de rocher : sol
+  });
+});
+
+describe('animaux de la mer déplacés au doigt', () => {
+  it('suivent le doigt et restent dans l’eau', () => {
+    expect(seaDragPos({ x: 4, y: 20 }, { x: 24.4, y: 10 }, 40)).toEqual({ x: 28.4, y: 30 });
+    expect(seaDragPos({ x: 4, y: 20 }, { x: -90, y: -90 }, 40)).toEqual({ x: -12, y: -15 }); // 70 % encore visible
+    expect(seaDragPos({ x: 4, y: 20 }, { x: 200, y: 200 }, 40)).toEqual({ x: 72, y: 75 });
   });
 });

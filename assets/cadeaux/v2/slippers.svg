@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10.9 59.0 648.2 162.4">
+<defs>
+<filter id="slippers-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.6  0 0 0 0 0.2  0 0 0 0 0.4  0 0 0 1.9 -.7" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="slippers-bl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="slippers-bl3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="slippers-bl1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.3"/></filter><filter id="slippers-fz" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="5" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter><path id="slippers-s" d="M20,166 C10,110 60,86 130,90 C200,92 240,96 280,108 C320,124 330,170 322,204 C300,214 120,214 40,208 C28,204 22,190 20,166Z"/><radialGradient id="slippers-ab" cx="30%" cy="22%" r="95%"><stop offset="0" stop-color="#ffc0d8"/><stop offset=".45" stop-color="#f77fae"/><stop offset="1" stop-color="#c73e80"/></radialGradient>
+<radialGradient id="slippers-as" cx="30%" cy="22%" r="88%"><stop offset=".5" stop-color="#8a2a6a" stop-opacity="0"/><stop offset=".88" stop-color="#8a2a6a" stop-opacity=".3"/><stop offset="1" stop-color="#8a2a6a" stop-opacity=".55"/></radialGradient>
+<linearGradient id="slippers-aa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#8a2a5a" stop-opacity="0"/><stop offset="1" stop-color="#8a2a5a" stop-opacity=".5"/></linearGradient>
+<linearGradient id="slippers-ar" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe4b8" stop-opacity=".9"/><stop offset=".08" stop-color="#ffe4b8" stop-opacity=".4"/><stop offset=".22" stop-color="#ffe4b8" stop-opacity="0"/></linearGradient>
+<radialGradient id="slippers-in" cx="50%" cy="25%" r="85%"><stop offset="0" stop-color="#e0558f"/><stop offset=".7" stop-color="#a02e68"/><stop offset="1" stop-color="#7a2050"/></radialGradient>
+<radialGradient id="slippers-fl" cx="35%" cy="25%" r="90%"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#fff3f8"/><stop offset="1" stop-color="#e4cfe0"/></radialGradient>
+<linearGradient id="slippers-sole" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6e8"/><stop offset="1" stop-color="#e2c8b0"/></linearGradient>
+<filter id="slippers-fluff" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="3" seed="8" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter>
+</defs>
+<g transform="translate(0 2)">
+<path d="M26,196 C60,214 280,214 318,196 L322,208 C300,222 60,222 30,210Z" fill="url(#slippers-sole)"/>
+<g filter="url(#slippers-fz)"><use href="#slippers-s" fill="url(#slippers-ab)"/>
+<use href="#slippers-s" fill="url(#slippers-as)"/>
+<use href="#slippers-s" fill="url(#slippers-aa)"/>
+<use href="#slippers-s" fill="url(#slippers-ar)"/>
+<use href="#slippers-s" fill="#000" filter="url(#slippers-grain)" opacity="0.35"/>
+<path d="M70,150 C130,120 230,120 300,150" stroke="#8a2a5a" stroke-opacity=".3" stroke-width="14" fill="none" filter="url(#slippers-bl)"/>
+<ellipse cx="70" cy="122" rx="40" ry="16" fill="#fff" opacity=".4" filter="url(#slippers-bl3)" transform="rotate(-8 70 122)"/>
+<path d="M60,176 C90,150 120,146 150,150" stroke="#c43c80" stroke-opacity=".4" stroke-width="2.4" stroke-dasharray="8 6" fill="none"/></g>
+<g filter="url(#slippers-fluff)">
+<ellipse cx="226" cy="108" rx="84" ry="32" fill="url(#slippers-in)"/>
+<ellipse cx="226" cy="108" rx="84" ry="32" fill="none" stroke="url(#slippers-fl)" stroke-width="30"/>
+</g>
+<path d="M150,90 C185,74 270,74 308,92" stroke="#fff" stroke-opacity=".85" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#slippers-bl1)"/>
+<ellipse cx="226" cy="124" rx="66" ry="12" fill="#a02e68" opacity=".28" filter="url(#slippers-bl3)"/>
+</g><g transform="translate(326 -2)">
+<path d="M26,196 C60,214 280,214 318,196 L322,208 C300,222 60,222 30,210Z" fill="url(#slippers-sole)"/>
+<g filter="url(#slippers-fz)"><use href="#slippers-s" fill="url(#slippers-ab)"/>
+<use href="#slippers-s" fill="url(#slippers-as)"/>
+<use href="#slippers-s" fill="url(#slippers-aa)"/>
+<use href="#slippers-s" fill="url(#slippers-ar)"/>
+<use href="#slippers-s" fill="#000" filter="url(#slippers-grain)" opacity="0.35"/>
+<path d="M70,150 C130,120 230,120 300,150" stroke="#8a2a5a" stroke-opacity=".3" stroke-width="14" fill="none" filter="url(#slippers-bl)"/>
+<ellipse cx="70" cy="122" rx="40" ry="16" fill="#fff" opacity=".4" filter="url(#slippers-bl3)" transform="rotate(-8 70 122)"/>
+<path d="M60,176 C90,150 120,146 150,150" stroke="#c43c80" stroke-opacity=".4" stroke-width="2.4" stroke-dasharray="8 6" fill="none"/></g>
+<g filter="url(#slippers-fluff)">
+<ellipse cx="226" cy="108" rx="84" ry="32" fill="url(#slippers-in)"/>
+<ellipse cx="226" cy="108" rx="84" ry="32" fill="none" stroke="url(#slippers-fl)" stroke-width="30"/>
+</g>
+<path d="M150,90 C185,74 270,74 308,92" stroke="#fff" stroke-opacity=".85" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#slippers-bl1)"/>
+<ellipse cx="226" cy="124" rx="66" ry="12" fill="#a02e68" opacity=".28" filter="url(#slippers-bl3)"/>
+</g>
+</svg>

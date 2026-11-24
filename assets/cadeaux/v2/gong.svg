@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8.0 17.8 536.1 679.8">
+<defs>
+<linearGradient id="gong-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7b8"/><stop offset=".25" stop-color="#ffd84a"/><stop offset=".6" stop-color="#f4a71e"/><stop offset="1" stop-color="#c46f0c"/></linearGradient>
+<radialGradient id="gong-gr" cx="30%" cy="24%" r="95%"><stop offset="0" stop-color="#fff4a8"/><stop offset=".35" stop-color="#ffd23c"/><stop offset=".72" stop-color="#f09c1a"/><stop offset="1" stop-color="#bd650a"/></radialGradient>
+<linearGradient id="gong-gh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e99a1c"/><stop offset=".22" stop-color="#fff0a0"/><stop offset=".42" stop-color="#ffd23c"/><stop offset=".78" stop-color="#e8921a"/><stop offset="1" stop-color="#b8620c"/></linearGradient>
+<linearGradient id="gong-gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0a0"/><stop offset=".4" stop-color="#ffd23c"/><stop offset="1" stop-color="#cf7a10"/></linearGradient>
+<radialGradient id="gong-shade" cx="28%" cy="24%" r="90%"><stop offset=".5" stop-color="#a04a08" stop-opacity="0"/><stop offset=".85" stop-color="#a44a0a" stop-opacity=".3"/><stop offset="1" stop-color="#7c3008" stop-opacity=".55"/></radialGradient>
+<linearGradient id="gong-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a4608" stop-opacity="0"/><stop offset="1" stop-color="#8a3a06" stop-opacity=".5"/></linearGradient>
+<linearGradient id="gong-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff0c8" stop-opacity=".95"/><stop offset=".07" stop-color="#ffe9c0" stop-opacity=".5"/><stop offset=".2" stop-color="#ffe9c0" stop-opacity="0"/></linearGradient>
+<filter id="gong-b9" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
+<filter id="gong-b3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5"/></filter>
+<filter id="gong-b1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.5"/></filter>
+<filter id="gong-spec" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".01 .018" numOctaves="2" seed="4" result="n"/><feSpecularLighting in="n" surfaceScale="8" specularConstant="1.0" specularExponent="24" lighting-color="#fffbe0" result="s"><feDistantLight azimuth="225" elevation="50"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter>
+<filter id="gong-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".02 .5" numOctaves="3" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 .1  0 0 0 0 .05  0 0 0 2.4 -1.1"/></filter>
+
+<linearGradient id="gong-wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6a4a"/><stop offset=".3" stop-color="#e83c2c"/><stop offset=".7" stop-color="#c32420"/><stop offset="1" stop-color="#8c1218"/></linearGradient>
+<linearGradient id="gong-woodh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a58"/><stop offset=".45" stop-color="#e03a2a"/><stop offset="1" stop-color="#a21a1c"/></linearGradient>
+<radialGradient id="gong-disc" cx="34%" cy="28%" r="90%"><stop offset="0" stop-color="#fff2a0"/><stop offset=".3" stop-color="#ffd238"/><stop offset=".65" stop-color="#f09c1a"/><stop offset="1" stop-color="#b8620a"/></radialGradient>
+<radialGradient id="gong-boss" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#fffbd0"/><stop offset=".4" stop-color="#ffd84a"/><stop offset="1" stop-color="#d27c10"/></radialGradient>
+<radialGradient id="gong-dish" cx="62%" cy="68%" r="75%"><stop offset="0" stop-color="#fff0a0" stop-opacity=".0"/><stop offset=".6" stop-color="#b8620c" stop-opacity=".15"/><stop offset="1" stop-color="#8a3a06" stop-opacity=".45"/></radialGradient>
+<radialGradient id="gong-felt" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#ff9a80"/><stop offset=".5" stop-color="#e5303a"/><stop offset="1" stop-color="#8e1024"/></radialGradient>
+</defs>
+
+<rect x="40" y="30" width="40" height="640" rx="8" fill="#7a1a20" opacity=".3" transform="translate(8 6)" filter="url(#gong-b3)"/>
+<rect x="40" y="30" width="40" height="640" rx="8" fill="url(#gong-wood)"/>
+<rect x="40" y="30" width="40" height="640" rx="8" filter="url(#gong-grain)" opacity=".5"/>
+<rect x="46.4" y="46" width="5.6000000000000005" height="610" rx="4" fill="#ffb09a" opacity=".6" filter="url(#gong-b1)"/>
+<rect x="74.4" y="40" width="4.8" height="620" rx="3" fill="#ffd0a0" opacity=".5" filter="url(#gong-b1)"/>
+
+<rect x="440" y="30" width="40" height="640" rx="8" fill="#7a1a20" opacity=".3" transform="translate(8 6)" filter="url(#gong-b3)"/>
+<rect x="440" y="30" width="40" height="640" rx="8" fill="url(#gong-wood)"/>
+<rect x="440" y="30" width="40" height="640" rx="8" filter="url(#gong-grain)" opacity=".5"/>
+<rect x="446.4" y="46" width="5.6000000000000005" height="610" rx="4" fill="#ffb09a" opacity=".6" filter="url(#gong-b1)"/>
+<rect x="474.4" y="40" width="4.8" height="620" rx="3" fill="#ffd0a0" opacity=".5" filter="url(#gong-b1)"/>
+
+<g>
+<rect x="14" y="26" width="492" height="56" rx="18" fill="#7a1a20" opacity=".3" transform="translate(6 8)" filter="url(#gong-b3)"/>
+<rect x="14" y="26" width="492" height="56" rx="18" fill="url(#gong-woodh)"/>
+<rect x="14" y="26" width="492" height="56" rx="18" filter="url(#gong-grain)" opacity=".45"/>
+<rect x="30" y="32" width="460" height="9" rx="4" fill="#ffd0b8" opacity=".85" filter="url(#gong-b1)"/>
+<rect x="24" y="66" width="472" height="12" rx="6" fill="#70101a" opacity=".4" filter="url(#gong-b1)"/>
+<circle cx="30" cy="54" r="12" fill="url(#gong-boss)"/><circle cx="490" cy="54" r="12" fill="url(#gong-boss)"/>
+<ellipse cx="26" cy="49" rx="4" ry="3" fill="#fff" opacity=".85"/><ellipse cx="486" cy="49" rx="4" ry="3" fill="#fff" opacity=".85"/>
+</g>
+
+<rect x="0" y="632" width="120" height="58" rx="16" fill="#7a1a20" opacity=".3" transform="translate(5 5)" filter="url(#gong-b3)"/>
+<rect x="0" y="632" width="120" height="58" rx="16" fill="url(#gong-woodh)"/>
+<rect x="0" y="632" width="120" height="58" rx="16" filter="url(#gong-grain)" opacity=".45"/>
+<rect x="10" y="637" width="100" height="9" rx="4" fill="#ffc0a8" opacity=".75" filter="url(#gong-b1)"/>
+<rect x="4" y="672" width="112" height="14" rx="6" fill="#70101a" opacity=".45" filter="url(#gong-b1)"/>
+
+<rect x="400" y="632" width="120" height="58" rx="16" fill="#7a1a20" opacity=".3" transform="translate(5 5)" filter="url(#gong-b3)"/>
+<rect x="400" y="632" width="120" height="58" rx="16" fill="url(#gong-woodh)"/>
+<rect x="400" y="632" width="120" height="58" rx="16" filter="url(#gong-grain)" opacity=".45"/>
+<rect x="410" y="637" width="100" height="9" rx="4" fill="#ffc0a8" opacity=".75" filter="url(#gong-b1)"/>
+<rect x="404" y="672" width="112" height="14" rx="6" fill="#70101a" opacity=".45" filter="url(#gong-b1)"/>
+
+<path d="M200,82 L226,178" stroke="#7a1a20" stroke-width="9" opacity=".5" stroke-linecap="round"/>
+<path d="M320,82 L294,178" stroke="#7a1a20" stroke-width="9" opacity=".5" stroke-linecap="round"/>
+<path d="M200,82 L226,178" stroke="#e8a82a" stroke-width="6" stroke-linecap="round"/><path d="M320,82 L294,178" stroke="#e8a82a" stroke-width="6" stroke-linecap="round"/>
+<path d="M198,84 L224,180" stroke="#fff0a0" stroke-width="2.5" stroke-linecap="round"/><path d="M318,84 L292,180" stroke="#fff0a0" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="260" cy="348" r="174" fill="#7a3a08" opacity=".3" transform="translate(10 12)" filter="url(#gong-b9)"/>
+<circle cx="260" cy="340" r="170" fill="#b8620a"/>
+<circle cx="260" cy="340" r="167" fill="url(#gong-g1)"/>
+<circle cx="260" cy="340" r="146" fill="url(#gong-disc)"/>
+<circle cx="260" cy="340" r="146" fill="none" stroke="#b8620c" stroke-width="5" opacity=".55"/>
+<circle cx="260" cy="340" r="146" fill="url(#gong-dish)"/>
+<circle cx="260" cy="340" r="110" fill="none" stroke="#fff0a0" stroke-width="3" opacity=".5"/>
+<circle cx="260" cy="340" r="110" fill="none" stroke="#b8620c" stroke-width="3" opacity=".3" transform="translate(2 3)"/>
+<circle cx="260" cy="340" r="74" fill="none" stroke="#fff0a0" stroke-width="3" opacity=".4"/>
+<rect x="90" y="170" width="340" height="340" filter="url(#gong-spec)" opacity=".28"/>
+<path d="M420,300 A160,160 0 0 1 320,480" fill="none" stroke="#ffe0a0" stroke-width="9" stroke-linecap="round" opacity=".75" filter="url(#gong-b1)"/>
+<circle cx="260" cy="340" r="48" fill="#a8560a" opacity=".5" transform="translate(4 6)" filter="url(#gong-b3)"/>
+<circle cx="260" cy="340" r="46" fill="url(#gong-boss)"/>
+<ellipse cx="246" cy="324" rx="16" ry="9" transform="rotate(-30 246 324)" fill="#fff" opacity=".9" filter="url(#gong-b1)"/>
+<path d="M140,270 C170,220 220,204 270,204" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" opacity=".85" filter="url(#gong-b1)"/>
+<path d="M118,310 C118,296 122,288 126,282" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".8" filter="url(#gong-b1)"/>
+<circle cx="226" cy="184" r="9" fill="url(#gong-boss)"/><circle cx="294" cy="184" r="9" fill="url(#gong-boss)"/>
+
+<g transform="translate(150 664) rotate(-4)">
+<rect x="-10" y="-9" width="170" height="18" rx="9" fill="#7a3a10" opacity=".35" transform="translate(4 6)" filter="url(#gong-b3)"/>
+<rect x="-10" y="-9" width="170" height="18" rx="9" fill="#b8641c"/>
+<rect x="-8" y="-9" width="166" height="11" rx="5" fill="#e69a48"/>
+<rect x="-4" y="-7" width="150" height="4" rx="2" fill="#ffd8a0" opacity=".85" filter="url(#gong-b1)"/>
+<circle cx="190" cy="0" r="30" fill="#7a0e20" opacity=".3" transform="translate(4 5)" filter="url(#gong-b3)"/>
+<circle cx="190" cy="0" r="30" fill="url(#gong-felt)"/>
+<ellipse cx="180" cy="-12" rx="12" ry="7" transform="rotate(-30 180 -12)" fill="#fff" opacity=".7" filter="url(#gong-b1)"/>
+<path d="M170,26 C190,32 214,24 218,8" fill="none" stroke="#6e0a1c" stroke-width="6" opacity=".4" filter="url(#gong-b1)"/>
+<rect x="152" y="-10" width="10" height="20" rx="4" fill="url(#gong-gh)"/>
+</g>
+
+</svg>

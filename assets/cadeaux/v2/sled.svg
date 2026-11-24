@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="8 88 684 208">
+<defs>
+<filter id="sled-soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.6"/></filter>
+<filter id="sled-b3" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="sled-b6" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+<filter id="sled-b14" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+<filter id="sled-wob" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".8"/></filter>
+<filter id="sled-drw" x="-5%" y="-30%" width="110%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".022 .04" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.2"/></filter>
+<filter id="sled-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 9 -5.2"/></filter>
+<filter id="sled-grain2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .8  0 0 0 8 -5.0"/></filter>
+<filter id="sled-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .22" numOctaves="3" seed="6" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 .05  0 0 0 0 .08  0 0 0 5 -2.4"/></filter>
+<filter id="sled-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.5"/></filter>
+<radialGradient id="sled-snow" cx="32%" cy="22%" r="85%"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#e8f2fc"/><stop offset=".8" stop-color="#c9d4f2"/><stop offset="1" stop-color="#a99fdc"/></radialGradient>
+<radialGradient id="sled-light" cx="28%" cy="20%" r="60%"><stop offset="0" stop-color="#fff9ee" stop-opacity=".85"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<radialGradient id="sled-shade" cx="30%" cy="22%" r="95%"><stop offset=".45" stop-color="#6a6ad0" stop-opacity="0"/><stop offset=".8" stop-color="#6d63c6" stop-opacity=".28"/><stop offset="1" stop-color="#4b46a8" stop-opacity=".58"/></radialGradient>
+<linearGradient id="sled-rimr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffc6e6" stop-opacity=".95"/><stop offset=".08" stop-color="#ffd6ee" stop-opacity=".45"/><stop offset=".25" stop-color="#ffd6ee" stop-opacity="0"/></linearGradient>
+<linearGradient id="sled-aob" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#5a56b8" stop-opacity="0"/><stop offset="1" stop-color="#4a4ab0" stop-opacity=".4"/></linearGradient>
+<linearGradient id="sled-drift" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e6ecfa"/><stop offset="1" stop-color="#b9b6ec"/></linearGradient>
+
+<linearGradient id="sled-wd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a46"/><stop offset=".5" stop-color="#e02a2c"/><stop offset="1" stop-color="#a3131f"/></linearGradient>
+<linearGradient id="sled-wtop" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6a52"/><stop offset=".6" stop-color="#e83a33"/><stop offset="1" stop-color="#c41e28"/></linearGradient>
+<linearGradient id="sled-wdark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8182a"/><stop offset="1" stop-color="#7c0e22"/></linearGradient>
+<linearGradient id="sled-post" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ee3c36"/><stop offset="1" stop-color="#9a1023"/></linearGradient>
+<linearGradient id="sled-rope" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe46a"/><stop offset="1" stop-color="#e9a912"/></linearGradient>
+<clipPath id="sled-topc"><path d="M118,204 L628,204 L662,166 L152,166 Z"/></clipPath>
+<clipPath id="sled-frontc"><path d="M118,204 L628,204 L628,234 L124,234 Q112,232 118,204 Z"/></clipPath>
+
+</defs>
+
+<!-- far runner and posts -->
+<path d="M640,282 L178,282 Q104,282 72,226 Q60,202 82,188" fill="none" stroke="#6a0c20" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" transform="translate(34 -38)"/>
+<path d="M640,282 L178,282 Q104,282 72,226 Q60,202 82,188" fill="none" stroke="url(#sled-wdark)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" transform="translate(34 -38)"/>
+<g fill="url(#sled-wdark)"><rect x="268" y="196" width="20" height="50"/><rect x="468" y="196" width="20" height="50"/><rect x="624" y="196" width="20" height="50"/></g>
+<!-- near posts -->
+<g>
+<rect x="222" y="224" width="26" height="62" fill="#5a0818" opacity=".3" filter="url(#sled-soft)" transform="translate(4 2)"/>
+<rect x="422" y="224" width="26" height="62" fill="#5a0818" opacity=".3" filter="url(#sled-soft)" transform="translate(4 2)"/>
+<rect x="582" y="224" width="26" height="62" fill="#5a0818" opacity=".3" filter="url(#sled-soft)" transform="translate(4 2)"/>
+<rect x="222" y="224" width="26" height="62" rx="3" fill="url(#sled-post)"/>
+<rect x="422" y="224" width="26" height="62" rx="3" fill="url(#sled-post)"/>
+<rect x="582" y="224" width="26" height="62" rx="3" fill="url(#sled-post)"/>
+<g stroke="#ffb09a" stroke-opacity=".5" stroke-width="3"><path d="M226,228 v54 M426,228 v54 M586,228 v54"/></g>
+</g>
+<!-- near runner -->
+<path d="M640,282 L178,282 Q104,282 72,226 Q60,202 82,188" fill="none" stroke="#5a0818" stroke-opacity=".35" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)" filter="url(#sled-soft)"/>
+<path d="M640,282 L178,282 Q104,282 72,226 Q60,202 82,188" fill="none" stroke="#9c1022" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,282 L178,282 Q104,282 72,226 Q60,202 82,188" fill="none" stroke="url(#sled-wd)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,276 L180,276 Q112,276 80,224" fill="none" stroke="#ffb09a" stroke-opacity=".6" stroke-width="3.6" stroke-linecap="round"/>
+<path d="M150,290 L620,290" stroke="#7c0e22" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+<!-- deck -->
+<path d="M118,236 L628,236 L628,252 L124,252 Z" fill="#5a0818" opacity=".28" filter="url(#sled-b3)"/>
+<path d="M118,204 L628,204 L628,234 L124,234 Q110,232 118,204 Z" fill="url(#sled-wd)"/>
+<g clip-path="url(#sled-frontc)">
+<rect x="100" y="200" width="540" height="40" filter="url(#sled-wood)" opacity=".5"/>
+<rect x="100" y="222" width="540" height="14" fill="#5a0818" opacity=".3"/>
+<rect x="100" y="204" width="540" height="6" fill="#ffb09a" opacity=".55"/>
+</g>
+<path d="M118,204 L628,204 L662,166 L152,166 Z" fill="url(#sled-wtop)"/>
+<g clip-path="url(#sled-topc)">
+<path d="M203,204 L237,166" stroke="#7c0e22" stroke-opacity=".5" stroke-width="3.2"/><path d="M206,204 L240,166" stroke="#ff9a82" stroke-opacity=".35" stroke-width="1.6"/><path d="M288,204 L322,166" stroke="#7c0e22" stroke-opacity=".5" stroke-width="3.2"/><path d="M291,204 L325,166" stroke="#ff9a82" stroke-opacity=".35" stroke-width="1.6"/><path d="M373,204 L407,166" stroke="#7c0e22" stroke-opacity=".5" stroke-width="3.2"/><path d="M376,204 L410,166" stroke="#ff9a82" stroke-opacity=".35" stroke-width="1.6"/><path d="M458,204 L492,166" stroke="#7c0e22" stroke-opacity=".5" stroke-width="3.2"/><path d="M461,204 L495,166" stroke="#ff9a82" stroke-opacity=".35" stroke-width="1.6"/><path d="M543,204 L577,166" stroke="#7c0e22" stroke-opacity=".5" stroke-width="3.2"/><path d="M546,204 L580,166" stroke="#ff9a82" stroke-opacity=".35" stroke-width="1.6"/>
+<rect x="100" y="150" width="600" height="60" filter="url(#sled-wood)" opacity=".5"/>
+<ellipse cx="300" cy="172" rx="260" ry="12" fill="#fff0e0" opacity=".28" filter="url(#sled-b6)"/>
+<rect x="640" y="150" width="40" height="70" fill="#5a0818" opacity=".22" filter="url(#sled-b6)"/>
+</g>
+<path d="M118,204 L628,204" stroke="#ffd2c0" stroke-opacity=".9" stroke-width="3" stroke-linecap="round" filter="url(#sled-soft)"/>
+<path d="M152,167 L662,167" stroke="#ffd2c0" stroke-opacity=".5" stroke-width="2.4"/>
+<path d="M628,204 L662,166 L662,196 L628,234 Z" fill="#9a1023"/>
+<path d="M628,206 L660,170" stroke="#ff9a82" stroke-opacity=".45" stroke-width="2"/>
+<!-- rope -->
+<path d="M82,188 C40,182 22,142 44,114 C66,88 106,96 112,126 C116,150 104,168 100,180" fill="none" stroke="#7a4a00" stroke-opacity=".3" stroke-width="13" stroke-linecap="round" transform="translate(3 5)" filter="url(#sled-soft)"/>
+<path d="M82,188 C40,182 22,142 44,114 C66,88 106,96 112,126 C116,150 104,168 100,180" fill="none" stroke="#c98a10" stroke-width="13" stroke-linecap="round"/>
+<path d="M82,188 C40,182 22,142 44,114 C66,88 106,96 112,126 C116,150 104,168 100,180" fill="none" stroke="url(#sled-rope)" stroke-width="10" stroke-linecap="round"/>
+<path d="M82,188 C40,182 22,142 44,114 C66,88 106,96 112,126 C116,150 104,168 100,180" fill="none" stroke="#b8760a" stroke-opacity=".55" stroke-width="10" stroke-dasharray="3 7" stroke-linecap="butt"/>
+<path d="M78,182 C38,176 28,142 48,118 C66,96 98,100 104,122" fill="none" stroke="#fff6c0" stroke-opacity=".7" stroke-width="2.6" stroke-linecap="round"/>
+<g fill="#fff"><circle cx="40" cy="60" r="5" opacity=".6" filter="url(#sled-glow)"/><circle cx="40" cy="60" r="2" opacity=".95"/><circle cx="560" cy="178" r="5" opacity=".6" filter="url(#sled-glow)"/><path d="M560,168 L561.8,178 L560,188 L558.2,178Z M550,178 L560,176.2 L570,178 L560,179.8Z" opacity=".95"/></g>
+
+</svg>

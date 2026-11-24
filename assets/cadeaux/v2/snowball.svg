@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 600">
+<defs>
+<radialGradient id="snowball-body" cx="32%" cy="26%" r="85%"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#f4f8ff"/><stop offset=".75" stop-color="#d4e2f8"/><stop offset="1" stop-color="#a9b8ea"/></radialGradient>
+<radialGradient id="snowball-shade" cx="32%" cy="26%" r="82%"><stop offset=".5" stop-color="#7e78c8" stop-opacity="0"/><stop offset=".85" stop-color="#7a74c2" stop-opacity=".3"/><stop offset="1" stop-color="#5f5ab0" stop-opacity=".55"/></radialGradient>
+<radialGradient id="snowball-bounce" cx="62%" cy="100%" r="55%"><stop offset="0" stop-color="#ffe0c0" stop-opacity=".4"/><stop offset=".6" stop-color="#f6cdb8" stop-opacity=".22"/><stop offset="1" stop-color="#f6cdb8" stop-opacity="0"/></radialGradient>
+<linearGradient id="snowball-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe4bc" stop-opacity=".9"/><stop offset=".07" stop-color="#ffe9c8" stop-opacity=".45"/><stop offset=".2" stop-color="#ffe9c8" stop-opacity="0"/></linearGradient>
+<linearGradient id="snowball-ao" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#8a86c8" stop-opacity="0"/><stop offset="1" stop-color="#7f78bc" stop-opacity=".4"/></linearGradient>
+<radialGradient id="snowball-heap" cx="35%" cy="25%" r="90%"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e6eefc"/><stop offset="1" stop-color="#b8c4ee"/></radialGradient>
+<filter id="snowball-rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="snowball-roughS" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="snowball-blur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="10"/></filter>
+<filter id="snowball-blur3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.5"/></filter>
+<filter id="snowball-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".22" numOctaves="2" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .55  0 0 0 0 .58  0 0 0 0 .85  0 0 0 1.1 -.5" result="g"/><feComposite in="g" in2="SourceGraphic" operator="in"/></filter>
+<clipPath id="snowball-clip"><circle cx="330" cy="292" r="280"/></clipPath>
+<g id="snowball-flake"><path d="M0,-14 L0,14 M-14,0 L14,0 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#fff" stroke-width="3.2" stroke-linecap="round" fill="none"/><circle r="4" fill="#fff"/></g>
+</defs>
+<!-- boule -->
+<g filter="url(#snowball-rough)">
+<circle cx="330" cy="292" r="280" fill="url(#snowball-body)"/>
+</g>
+<g clip-path="url(#snowball-clip)">
+<circle cx="330" cy="292" r="280" fill="url(#snowball-shade)"/>
+<circle cx="330" cy="292" r="280" fill="url(#snowball-ao)"/>
+<circle cx="330" cy="292" r="280" fill="url(#snowball-bounce)"/>
+<circle cx="330" cy="292" r="280" fill="url(#snowball-rim)"/>
+<circle cx="330" cy="292" r="280" fill="#fff" filter="url(#snowball-grain)" opacity=".55"/>
+<!-- creux bleutés de tassement -->
+<g fill="#8f9de0" opacity=".28" filter="url(#snowball-blur3)">
+<ellipse cx="470" cy="190" rx="52" ry="26" transform="rotate(35 470 190)"/>
+<ellipse cx="200" cy="400" rx="60" ry="24" transform="rotate(-25 200 400)"/>
+<ellipse cx="420" cy="440" rx="46" ry="20" transform="rotate(20 420 440)"/>
+<ellipse cx="500" cy="330" rx="34" ry="16" transform="rotate(70 500 330)"/>
+</g>
+<g fill="#ffffff" opacity=".7" filter="url(#snowball-blur3)">
+<ellipse cx="220" cy="160" rx="60" ry="34" transform="rotate(-30 220 160)"/>
+<ellipse cx="320" cy="110" rx="34" ry="14" transform="rotate(-10 320 110)"/>
+</g>
+</g>
+<!-- paillettes -->
+<g opacity=".95">
+<use href="#snowball-flake" transform="translate(200,200) scale(1.3)"/>
+<use href="#snowball-flake" transform="translate(410,150) scale(.9)"/>
+<use href="#snowball-flake" transform="translate(300,330) scale(1.1)"/>
+<use href="#snowball-flake" transform="translate(470,310) scale(.8)"/>
+<use href="#snowball-flake" transform="translate(150,330) scale(.8)"/>
+<use href="#snowball-flake" transform="translate(380,420) scale(1)"/>
+</g>
+<!-- traînée de neige au pied, devant la boule -->
+<path d="M250,598 C330,586 520,586 646,598Z" fill="#8f8ad0" opacity=".22" filter="url(#snowball-blur3)"/>
+<g filter="url(#snowball-roughS)">
+<path d="M16,598 C20,566 80,552 140,560 C200,566 250,548 330,552 C420,548 470,566 540,560 C600,556 644,572 648,598Z" fill="url(#snowball-heap)"/>
+<ellipse cx="70" cy="574" rx="34" ry="18" fill="#f2f6ff"/>
+<ellipse cx="590" cy="574" rx="32" ry="17" fill="#f2f6ff"/>
+<ellipse cx="170" cy="586" rx="46" ry="13" fill="#e9f0fe"/>
+<ellipse cx="480" cy="586" rx="52" ry="13" fill="#e9f0fe"/>
+<circle cx="36" cy="588" r="12" fill="#f6f9ff"/><circle cx="630" cy="586" r="11" fill="#f6f9ff"/>
+</g>
+</svg>

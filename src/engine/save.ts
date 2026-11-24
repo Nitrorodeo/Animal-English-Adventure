@@ -1,5 +1,6 @@
 import { parseNamePron } from './nameVoice';
 import { parseSpots } from './spots';
+import { parseGiftDay, parseGifts } from './gifts';
 import { toWideMap } from './stickers';
 import { clampSpeechSpeed, newGameState, SAVE_VERSION, type CircleRef, type GameState, type PlacedSticker } from './state';
 
@@ -73,6 +74,8 @@ export function migrate(raw: unknown): GameState | null {
       photos: Array.isArray(p.photos) ? (p.photos as unknown[]).filter((x): x is string => typeof x === 'string') : [],
       stickers: Array.isArray(p.stickers) ? (p.stickers as unknown[]).filter(isPlacedSticker).map(toWideMap) : [],
       stickerDay: typeof p.stickerDay === 'string' ? p.stickerDay : null,
+      gifts: parseGifts(p.gifts),
+      giftDay: parseGiftDay(p.gifts, p.giftDay),
       spots: parseSpots(p.spots),
     },
     families: raw.families as GameState['families'],

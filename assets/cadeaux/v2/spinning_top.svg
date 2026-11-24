@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="52 42 316 448">
+<defs>
+<filter id="spinning_top-b9" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter><filter id="spinning_top-b4" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter><filter id="spinning_top-b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.5"/></filter><filter id="spinning_top-gh" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".008 .13" numOctaves="3" seed="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .40  0 0 0 0 .21  0 0 0 0 .07  0 0 0 2.4 -1.05"/><feComposite in2="SourceAlpha" operator="in"/></filter><filter id="spinning_top-gv" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".13 .008" numOctaves="3" seed="6" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .40  0 0 0 0 .21  0 0 0 0 .07  0 0 0 2.4 -1.05"/><feComposite in2="SourceAlpha" operator="in"/></filter><filter id="spinning_top-gloss" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="2" seed="5" result="n"/><feSpecularLighting in="n" surfaceScale="9" specularConstant="1.1" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="48"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter><filter id="spinning_top-disp2" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="spinning_top-disp" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".07" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
+<path id="spinning_top-body" d="M60,190 C60,300 160,400 210,452 C260,400 360,300 360,190 Z"/><clipPath id="spinning_top-bc"><use href="#spinning_top-body"/></clipPath>
+<radialGradient id="spinning_top-lit" cx="0.28" cy="0.22" r="0.75"><stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/><stop offset="0.35" stop-color="#ffffff" stop-opacity="0.12"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+<linearGradient id="spinning_top-shade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a1a7a" stop-opacity="0"/><stop offset="0.55" stop-color="#4a1a7a" stop-opacity="0"/><stop offset="0.85" stop-color="#4a1a6a" stop-opacity="0.4"/><stop offset="1" stop-color="#3a1060" stop-opacity="0.62"/></linearGradient>
+<linearGradient id="spinning_top-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffc9a0" stop-opacity="0.95"/><stop offset="0.07" stop-color="#ffc9a0" stop-opacity="0.5"/><stop offset="0.2" stop-color="#ffc9a0" stop-opacity="0"/></linearGradient>
+<linearGradient id="spinning_top-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a0a50" stop-opacity="0"/><stop offset="1" stop-color="#2a0a50" stop-opacity="0.5"/></linearGradient>
+<radialGradient id="spinning_top-lid" cx="0.3" cy="0.3" r="0.9"><stop offset="0" stop-color="#d6a2ff"/><stop offset="0.6" stop-color="#a65ae6"/><stop offset="1" stop-color="#7a35b8"/></radialGradient>
+<linearGradient id="spinning_top-wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe2a6"/><stop offset="0.4" stop-color="#e8b062"/><stop offset="1" stop-color="#a8672c"/></linearGradient>
+<radialGradient id="spinning_top-knob" cx="0.35" cy="0.3" r="0.85"><stop offset="0" stop-color="#fff3a8"/><stop offset="0.5" stop-color="#ffd23a"/><stop offset="1" stop-color="#e0951c"/></radialGradient>
+<linearGradient id="spinning_top-tip" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f2c37c"/><stop offset="0.5" stop-color="#c98a42"/><stop offset="1" stop-color="#8a4e22"/></linearGradient>
+</defs>
+<use href="#spinning_top-body" fill="#8d40d4"/>
+<g clip-path="url(#spinning_top-bc)">
+<path d="M40,224 Q210,268 380,224 L380,266 Q210,310 40,266 Z" fill="#ffd23a"/>
+<path d="M40,266 Q210,310 380,266" fill="none" stroke="#5a1f8a" stroke-opacity=".35" stroke-width="6" filter="url(#spinning_top-b1)"/>
+<path d="M40,318 Q210,362 380,318 L380,354 Q210,398 40,354 Z" fill="#ffd23a"/>
+<path d="M40,354 Q210,398 380,354" fill="none" stroke="#5a1f8a" stroke-opacity=".35" stroke-width="6" filter="url(#spinning_top-b1)"/>
+<path d="M40,392 Q210,436 380,392 L380,422 Q210,466 40,422 Z" fill="#ffd23a"/>
+<path d="M40,422 Q210,466 380,422" fill="none" stroke="#5a1f8a" stroke-opacity=".35" stroke-width="6" filter="url(#spinning_top-b1)"/>
+<rect x="50" y="180" width="320" height="290" fill="url(#spinning_top-shade)"/>
+<rect x="50" y="180" width="320" height="290" fill="url(#spinning_top-lit)"/>
+<rect x="300" y="180" width="70" height="290" fill="url(#spinning_top-rim)"/>
+<rect x="50" y="330" width="320" height="140" fill="url(#spinning_top-ao)" opacity=".7"/>
+<rect x="50" y="180" width="320" height="290" filter="url(#spinning_top-gloss)" opacity=".3"/>
+<path d="M92,250 C100,300 128,345 160,385" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="12" stroke-linecap="round" filter="url(#spinning_top-b4)"/>
+<path d="M84,232 C86,244 88,254 92,266" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-opacity=".9" filter="url(#spinning_top-b1)"/>
+</g>
+<path d="M196,440 L224,440 L216,484 Q210,490 204,484 Z" fill="url(#spinning_top-tip)"/>
+<path d="M203,450 L202,478" stroke="#fff" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="210" cy="190" rx="150" ry="36" fill="url(#spinning_top-lid)"/>
+<ellipse cx="210" cy="190" rx="150" ry="36" fill="none" stroke="#c88af0" stroke-opacity=".7" stroke-width="4"/>
+<ellipse cx="210" cy="196" rx="112" ry="22" fill="#5a1f8a" opacity=".25" filter="url(#spinning_top-b4)"/>
+<ellipse cx="150" cy="180" rx="50" ry="9" transform="rotate(-8 150 180)" fill="#fff" opacity=".55" filter="url(#spinning_top-b4)"/>
+<ellipse cx="210" cy="194" rx="30" ry="9" fill="#3a1060" opacity=".5" filter="url(#spinning_top-b4)"/>
+<rect x="192" y="96" width="36" height="98" rx="14" fill="url(#spinning_top-wood)"/>
+<rect x="197" y="104" width="7" height="80" rx="3.5" fill="#fff" opacity=".5" filter="url(#spinning_top-b1)"/>
+<ellipse cx="210" cy="196" rx="26" ry="8" fill="url(#spinning_top-wood)"/>
+<circle cx="210" cy="78" r="34" fill="url(#spinning_top-knob)"/>
+<ellipse cx="198" cy="64" rx="13" ry="8" transform="rotate(-30 198 64)" fill="#fff" opacity=".85" filter="url(#spinning_top-b1)"/>
+<path d="M238,92 C232,108 220,112 206,111" fill="none" stroke="#ffe6b0" stroke-opacity=".75" stroke-width="4" stroke-linecap="round"/>
+</svg>

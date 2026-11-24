@@ -1,0 +1,1172 @@
+{
+ "_comment": "Cadeaux du soir (2026-11-24). h = hauteur de l'objet en fraction de la hauteur du papa de la famille (proportions logiques : les objets sont à la taille de la famille qui les reçoit, et rapetissent au fond du décor comme les animaux). where = où l'objet a du sens (voir classes). species = objet propre à une famille. float = peut aussi flotter sur l'eau. Les couleurs sont celles des questions (« Is the ball red? ») : le dessin doit les respecter.",
+ "classes": {
+  "any": "tous les décors, grottes et banquise comprises",
+  "outdoor": "dehors : pas dans une grotte ni une tanière",
+  "warm": "pays chauds ou tempérés : pas de neige ni de glace",
+  "cold": "neige ou glace",
+  "trees": "décor avec des arbres",
+  "water": "décor avec de l'eau (mare, rivière, lac, mer)",
+  "beach": "plage de sable ou de galets au bord de la mer"
+ },
+ "branch_max_h": 0.4,
+ "gifts": [
+  {
+   "id": "ball",
+   "en": "a ball",
+   "fr": "un ballon",
+   "colors": [
+    "red",
+    "yellow"
+   ],
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "draw": "un ballon rond à grosses bandes alternées rouges et jaunes, brillant"
+  },
+  {
+   "id": "drum",
+   "en": "a drum",
+   "fr": "un tambour",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "h": 0.32,
+   "where": [
+    "any"
+   ],
+   "draw": "un petit tambour cylindrique en bois clair, peau beige sur le dessus, cordes rouges en zigzag sur le côté, deux baguettes posées dessus"
+  },
+  {
+   "id": "blocks",
+   "en": "blocks",
+   "fr": "des cubes",
+   "colors": [
+    "red",
+    "blue",
+    "yellow"
+   ],
+   "h": 0.35,
+   "where": [
+    "any"
+   ],
+   "draw": "une petite pile de trois cubes de bois aux arêtes arrondies : rouge en bas, bleu au milieu, jaune en haut (légèrement décalé), sans lettres"
+  },
+  {
+   "id": "blanket",
+   "en": "a blanket",
+   "fr": "une couverture",
+   "colors": [
+    "blue",
+    "white"
+   ],
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "draw": "une couverture douce à grands carreaux bleus et blancs, pliée en deux, posée à plat, bord frangé",
+   "use": "object"
+  },
+  {
+   "id": "pillow",
+   "en": "a pillow",
+   "fr": "un coussin",
+   "colors": [
+    "pink"
+   ],
+   "h": 0.22,
+   "where": [
+    "any"
+   ],
+   "draw": "un gros coussin rose bien rebondi, carré aux coins arrondis, avec un bouton au centre",
+   "use": "object"
+  },
+  {
+   "id": "treasure_chest",
+   "en": "a treasure chest",
+   "fr": "un coffre au trésor",
+   "colors": [
+    "brown",
+    "gold"
+   ],
+   "h": 0.35,
+   "where": [
+    "any"
+   ],
+   "draw": "un petit coffre en bois brun aux coins et à la serrure dorés, couvercle bombé entrouvert, pièces d'or qui brillent à l'intérieur",
+   "use": "object"
+  },
+  {
+   "id": "guitar",
+   "en": "a guitar",
+   "fr": "une guitare",
+   "colors": [
+    "orange"
+   ],
+   "h": 0.55,
+   "where": [
+    "any"
+   ],
+   "draw": "une petite guitare acoustique en bois orange clair, debout sur sa base, manche vers le haut, rosace sombre, six cordes claires",
+   "use": "held"
+  },
+  {
+   "id": "basket",
+   "en": "a basket",
+   "fr": "un panier",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.28,
+   "where": [
+    "any"
+   ],
+   "draw": "un panier en osier tressé, rond, avec une grande anse, vide",
+   "use": "object"
+  },
+  {
+   "id": "bell",
+   "en": "a bell",
+   "fr": "une clochette",
+   "colors": [
+    "gold",
+    "red"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "draw": "une clochette dorée brillante posée sur son bord, avec un nœud rouge en haut",
+   "use": "held"
+  },
+  {
+   "id": "xylophone",
+   "en": "a xylophone",
+   "fr": "un xylophone",
+   "colors": [
+    "rainbow"
+   ],
+   "h": 0.15,
+   "where": [
+    "any"
+   ],
+   "draw": "un xylophone d'enfant : huit lames de longueurs décroissantes aux couleurs de l'arc-en-ciel sur un cadre en bois, deux baguettes à boule posées devant"
+  },
+  {
+   "id": "train",
+   "en": "a train",
+   "fr": "un train",
+   "colors": [
+    "green",
+    "red",
+    "blue"
+   ],
+   "h": 0.22,
+   "where": [
+    "any"
+   ],
+   "draw": "un petit train en bois : locomotive verte avec cheminée, un wagon rouge, un wagon bleu, roues jaunes, vu de trois quarts"
+  },
+  {
+   "id": "spinning_top",
+   "en": "a spinning top",
+   "fr": "une toupie",
+   "colors": [
+    "purple",
+    "yellow"
+   ],
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "draw": "une toupie en bois à rayures violettes et jaunes, debout sur sa pointe, petite poignée en haut"
+  },
+  {
+   "id": "book",
+   "en": "a book",
+   "fr": "un livre",
+   "colors": [
+    "blue"
+   ],
+   "h": 0.14,
+   "where": [
+    "any"
+   ],
+   "draw": "un gros livre à couverture bleue posé à plat, entrouvert, pages crème, marque-page rouge, aucune lettre",
+   "use": "held"
+  },
+  {
+   "id": "teddy_bear",
+   "en": "a teddy bear",
+   "fr": "un ours en peluche",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.32,
+   "where": [
+    "any"
+   ],
+   "draw": "un ours en peluche brun clair assis, ventre et museau plus clairs, yeux boutons noirs, nœud bleu au cou, coutures visibles (jouet, pas un vrai ours)"
+  },
+  {
+   "id": "toy_car",
+   "en": "a toy car",
+   "fr": "une petite voiture",
+   "colors": [
+    "red"
+   ],
+   "h": 0.18,
+   "where": [
+    "any"
+   ],
+   "draw": "une petite voiture jouet rouge toute ronde, quatre grosses roues noires aux moyeux blancs, vitres bleu clair, vue de trois quarts"
+  },
+  {
+   "id": "balloons",
+   "en": "balloons",
+   "fr": "des ballons de baudruche",
+   "colors": [
+    "red",
+    "yellow",
+    "blue"
+   ],
+   "h": 0.9,
+   "where": [
+    "any"
+   ],
+   "draw": "trois ballons de baudruche (rouge, jaune, bleu) au bout de ficelles qui se rejoignent sur un petit poids rond en bois posé au sol"
+  },
+  {
+   "id": "kite",
+   "en": "a kite",
+   "fr": "un cerf-volant",
+   "colors": [
+    "red"
+   ],
+   "h": 0.6,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un cerf-volant rouge en losange avec croisillon de bois, appuyé debout, sa longue queue à nœuds colorés enroulée au sol"
+  },
+  {
+   "id": "windmill",
+   "en": "a windmill",
+   "fr": "un moulin à vent",
+   "colors": [
+    "rainbow"
+   ],
+   "h": 0.45,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un moulin à vent d'enfant : quatre ailes en papier rouge, jaune, bleu, vert au bout d'un bâton planté dans une petite motte de terre"
+  },
+  {
+   "id": "flower_pot",
+   "en": "a flower pot",
+   "fr": "un pot de fleurs",
+   "colors": [
+    "orange",
+    "pink"
+   ],
+   "h": 0.32,
+   "where": [
+    "warm"
+   ],
+   "draw": "un pot en terre cuite orange rempli de fleurs roses et de feuilles vertes",
+   "use": "object"
+  },
+  {
+   "id": "watering_can",
+   "en": "a watering can",
+   "fr": "un arrosoir",
+   "colors": [
+    "green"
+   ],
+   "h": 0.25,
+   "where": [
+    "warm",
+    "outdoor"
+   ],
+   "draw": "un petit arrosoir vert avec une anse et un long bec à pomme d'arrosoir",
+   "use": "object"
+  },
+  {
+   "id": "snowman",
+   "en": "a snowman",
+   "fr": "un bonhomme de neige",
+   "colors": [
+    "white",
+    "red"
+   ],
+   "h": 0.6,
+   "where": [
+    "cold",
+    "outdoor"
+   ],
+   "draw": "un petit bonhomme de neige en deux boules, écharpe rouge, nez carotte orange, yeux et boutons en petits cailloux noirs, bras en brindilles"
+  },
+  {
+   "id": "sled",
+   "en": "a sled",
+   "fr": "une luge",
+   "colors": [
+    "red"
+   ],
+   "h": 0.22,
+   "where": [
+    "cold"
+   ],
+   "draw": "une luge en bois rouge à deux patins recourbés devant, une corde jaune pour la tirer"
+  },
+  {
+   "id": "birdhouse",
+   "en": "a birdhouse",
+   "fr": "un nichoir",
+   "colors": [
+    "green",
+    "brown"
+   ],
+   "h": 0.8,
+   "where": [
+    "trees",
+    "outdoor",
+    "warm"
+   ],
+   "draw": "un nichoir en bois clair au toit vert, trou rond et petit perchoir, posé en haut d'un poteau planté au sol",
+   "species": "owl"
+  },
+  {
+   "id": "bench",
+   "en": "a bench",
+   "fr": "un banc",
+   "colors": [
+    "brown"
+   ],
+   "h": 0.35,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un petit banc en bois clair à dossier, pieds solides, vu de trois quarts",
+   "use": "object"
+  },
+  {
+   "id": "boat",
+   "en": "a boat",
+   "fr": "un bateau",
+   "colors": [
+    "blue",
+    "white"
+   ],
+   "h": 0.35,
+   "where": [
+    "water"
+   ],
+   "float": true,
+   "draw": "un petit bateau jouet à coque bleue et voile blanche triangulaire, mât en bois"
+  },
+  {
+   "id": "rubber_duck",
+   "en": "a rubber duck",
+   "fr": "un canard en plastique",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.15,
+   "where": [
+    "water"
+   ],
+   "float": true,
+   "draw": "un canard en plastique jaune bien rond, bec orange, œil noir brillant"
+  },
+  {
+   "id": "sandcastle",
+   "en": "a sandcastle",
+   "fr": "un château de sable",
+   "colors": [
+    "yellow"
+   ],
+   "h": 0.35,
+   "where": [
+    "beach"
+   ],
+   "draw": "un petit château de sable doré à trois tours crénelées, un petit drapeau rouge au sommet de la tour du milieu, un coquillage collé sur le mur"
+  },
+  {
+   "id": "spade",
+   "en": "a spade",
+   "fr": "une pelle",
+   "colors": [
+    "blue"
+   ],
+   "h": 0.3,
+   "where": [
+    "beach"
+   ],
+   "draw": "une petite pelle de plage bleue en plastique, plantée de biais dans un petit tas de sable"
+  },
+  {
+   "id": "crown",
+   "en": "a crown",
+   "fr": "une couronne",
+   "colors": [
+    "gold"
+   ],
+   "species": "lion",
+   "h": 0.15,
+   "where": [
+    "any"
+   ],
+   "draw": "une couronne dorée simple à cinq pointes arrondies ornées de petites pierres rouges, posée au sol",
+   "use": "worn"
+  },
+  {
+   "id": "sun_umbrella",
+   "en": "a sun umbrella",
+   "fr": "un parasol",
+   "colors": [
+    "yellow",
+    "white"
+   ],
+   "species": "lion",
+   "h": 1.1,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un grand parasol à bandes jaunes et blanches, ouvert, son mât en bois planté droit dans un petit socle",
+   "use": "object"
+  },
+  {
+   "id": "trumpet",
+   "en": "a trumpet",
+   "fr": "une trompette",
+   "colors": [
+    "gold"
+   ],
+   "species": "elephant",
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "draw": "une trompette dorée et brillante posée sur le côté, pavillon tourné vers l'avant",
+   "use": "held"
+  },
+  {
+   "id": "bucket",
+   "en": "a bucket",
+   "fr": "un seau",
+   "colors": [
+    "blue"
+   ],
+   "species": "elephant",
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "draw": "un seau bleu avec une anse en métal, rempli d'eau claire qui brille"
+  },
+  {
+   "id": "slide",
+   "en": "a slide",
+   "fr": "un toboggan",
+   "colors": [
+    "yellow",
+    "red"
+   ],
+   "species": "giraffe",
+   "h": 0.8,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un grand toboggan de jardin : piste jaune, échelle et rambardes rouges, vu de côté de trois quarts"
+  },
+  {
+   "id": "hoop",
+   "en": "a basketball hoop",
+   "fr": "un panier de basket",
+   "colors": [
+    "orange",
+    "white"
+   ],
+   "species": "giraffe",
+   "h": 1.0,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un panier de basket sur un haut poteau planté dans un socle : panneau blanc, cercle orange, filet blanc, un ballon orange posé au pied"
+  },
+  {
+   "id": "ball_of_wool",
+   "en": "a ball of wool",
+   "fr": "une pelote de laine",
+   "colors": [
+    "orange"
+   ],
+   "species": "jaguar",
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "draw": "une grosse pelote de laine orange, fils enroulés bien visibles, un bout de fil qui serpente au sol"
+  },
+  {
+   "id": "tent",
+   "en": "a tent",
+   "fr": "une tente",
+   "colors": [
+    "green"
+   ],
+   "species": "jaguar",
+   "h": 0.75,
+   "where": [
+    "outdoor",
+    "warm"
+   ],
+   "draw": "une petite tente d'explorateur vert vif en triangle, porte ouverte et nouée, piquets et cordes",
+   "use": "object"
+  },
+  {
+   "id": "paint_box",
+   "en": "a paint box",
+   "fr": "une boîte de peinture",
+   "colors": [
+    "rainbow"
+   ],
+   "species": "toucan",
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "draw": "une boîte de peinture ouverte : couvercle relevé, pastilles rouge, orange, jaune, vert, bleu, violet, un pinceau posé en travers",
+   "use": "held"
+  },
+  {
+   "id": "maracas",
+   "en": "maracas",
+   "fr": "des maracas",
+   "colors": [
+    "red",
+    "yellow"
+   ],
+   "species": "toucan",
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "draw": "deux maracas croisées, une rouge et une jaune, à pois blancs, manches en bois",
+   "use": "held"
+  },
+  {
+   "id": "hammock",
+   "en": "a hammock",
+   "fr": "un hamac",
+   "colors": [
+    "green",
+    "white"
+   ],
+   "species": "sloth",
+   "h": 0.6,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un hamac en toile rayée verte et blanche tendu sur un cadre en bois arqué posé au sol"
+  },
+  {
+   "id": "alarm_clock",
+   "en": "an alarm clock",
+   "fr": "un réveil",
+   "colors": [
+    "red"
+   ],
+   "species": "sloth",
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "draw": "un réveil rouge tout rond à deux cloches dorées sur le dessus, cadran blanc avec deux aiguilles et des points (pas de chiffres), deux petits pieds",
+   "use": "held"
+  },
+  {
+   "id": "honey_pot",
+   "en": "a honey pot",
+   "fr": "un pot de miel",
+   "colors": [
+    "brown",
+    "yellow"
+   ],
+   "species": "bear",
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "draw": "un pot de miel ventru en terre brune, couvercle en tissu à carreaux rouges noué d'une ficelle, une coulée de miel doré sur le bord, une cuillère en bois"
+  },
+  {
+   "id": "fishing_rod",
+   "en": "a fishing rod",
+   "fr": "une canne à pêche",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "species": "bear",
+   "h": 0.9,
+   "where": [
+    "any"
+   ],
+   "draw": "une canne à pêche en bambou appuyée en biais sur une petite fourche plantée au sol, moulinet, fil fin qui pend avec un bouchon rouge et blanc",
+   "use": "held"
+  },
+  {
+   "id": "cowboy_hat",
+   "en": "a hat",
+   "fr": "un chapeau",
+   "colors": [
+    "brown"
+   ],
+   "species": "bison",
+   "h": 0.15,
+   "where": [
+    "any"
+   ],
+   "draw": "un chapeau de cow-boy marron à larges bords relevés, ruban plus foncé, posé au sol",
+   "use": "worn"
+  },
+  {
+   "id": "cart",
+   "en": "a cart",
+   "fr": "une charrette",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "species": "bison",
+   "h": 0.55,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "une petite charrette en bois à deux grandes roues rouges, deux brancards devant, quelques bottes de foin dedans",
+   "use": "object"
+  },
+  {
+   "id": "toolbox",
+   "en": "a toolbox",
+   "fr": "une caisse à outils",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "species": "beaver",
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "draw": "une caisse à outils ouverte en bois avec poignée, un marteau au manche rouge, une scie et des clous qui dépassent",
+   "use": "object"
+  },
+  {
+   "id": "canoe",
+   "en": "a canoe",
+   "fr": "un canoë",
+   "colors": [
+    "red"
+   ],
+   "species": "beaver",
+   "h": 0.22,
+   "where": [
+    "any"
+   ],
+   "float": true,
+   "draw": "un petit canoë en bois rouge aux pointes relevées, une pagaie en bois posée dedans, vu de trois quarts"
+  },
+  {
+   "id": "map",
+   "en": "a map",
+   "fr": "une carte",
+   "colors": [
+    "yellow"
+   ],
+   "species": "fox",
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "draw": "une carte au trésor en vieux papier jaune à moitié déroulée, chemin pointillé, petits arbres, croix rouge, coins roulés, aucune lettre",
+   "use": "held"
+  },
+  {
+   "id": "backpack",
+   "en": "a backpack",
+   "fr": "un sac à dos",
+   "colors": [
+    "green"
+   ],
+   "species": "fox",
+   "h": 0.35,
+   "where": [
+    "any"
+   ],
+   "draw": "un sac à dos d'explorateur vert bien rempli, rabat avec boucle, poche devant, une gourde accrochée sur le côté",
+   "use": "object"
+  },
+  {
+   "id": "glasses",
+   "en": "glasses",
+   "fr": "des lunettes",
+   "colors": [
+    "gold"
+   ],
+   "species": "owl",
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "draw": "une paire de lunettes rondes à fine monture dorée, branches dépliées, posée face à nous, verres qui reflètent la lumière",
+   "use": "worn"
+  },
+  {
+   "id": "telescope",
+   "en": "a telescope",
+   "fr": "une longue-vue",
+   "colors": [
+    "brown",
+    "gold"
+   ],
+   "species": "owl",
+   "h": 0.6,
+   "where": [
+    "any"
+   ],
+   "draw": "une longue-vue en bois brun et laiton doré sur un petit trépied en bois, tournée vers le ciel",
+   "use": "object"
+  },
+  {
+   "id": "wheelbarrow",
+   "en": "a wheelbarrow",
+   "fr": "une brouette",
+   "colors": [
+    "red"
+   ],
+   "species": "hedgehog",
+   "h": 0.35,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "une petite brouette rouge à une roue, brancards en bois, remplie de feuilles d'automne orange et jaunes",
+   "use": "object"
+  },
+  {
+   "id": "leaf_hut",
+   "en": "a hut",
+   "fr": "une cabane",
+   "colors": [
+    "orange",
+    "brown"
+   ],
+   "species": "hedgehog",
+   "h": 1.3,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "une petite cabane ronde faite de feuilles d'automne et de brindilles, entrée en arche sombre, assez grande pour qu'un hérisson y entre"
+  },
+  {
+   "id": "flute",
+   "en": "a flute",
+   "fr": "une flûte",
+   "colors": [
+    "green"
+   ],
+   "species": "giant_panda",
+   "h": 0.08,
+   "where": [
+    "any"
+   ],
+   "draw": "une flûte en bambou vert clair posée à plat, nœuds du bambou visibles, six trous, petit pompon rouge",
+   "use": "held"
+  },
+  {
+   "id": "teapot",
+   "en": "a teapot",
+   "fr": "une théière",
+   "colors": [
+    "white",
+    "blue"
+   ],
+   "species": "giant_panda",
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "draw": "une théière ronde en porcelaine blanche à fleurs bleues, anse en bambou, avec deux petites tasses assorties",
+   "use": "held"
+  },
+  {
+   "id": "gong",
+   "en": "a gong",
+   "fr": "un gong",
+   "colors": [
+    "gold",
+    "red"
+   ],
+   "species": "tiger",
+   "h": 0.7,
+   "where": [
+    "any"
+   ],
+   "draw": "un gong doré rond suspendu à un portique en bois rouge, un maillet posé au pied",
+   "use": "object"
+  },
+  {
+   "id": "rubber_ring",
+   "en": "a rubber ring",
+   "fr": "une bouée",
+   "colors": [
+    "orange",
+    "white"
+   ],
+   "species": "tiger",
+   "h": 0.18,
+   "where": [
+    "any"
+   ],
+   "float": true,
+   "draw": "une bouée gonflable ronde à quartiers orange et blancs, posée à plat de trois quarts"
+  },
+  {
+   "id": "skis",
+   "en": "skis",
+   "fr": "des skis",
+   "colors": [
+    "red"
+   ],
+   "species": "snow_leopard",
+   "h": 0.9,
+   "where": [
+    "cold"
+   ],
+   "draw": "une paire de skis rouges plantés debout dans une petite congère, pointes recourbées en haut, deux bâtons croisés à côté",
+   "use": "worn"
+  },
+  {
+   "id": "flag",
+   "en": "a flag",
+   "fr": "un drapeau",
+   "colors": [
+    "yellow"
+   ],
+   "species": "snow_leopard",
+   "h": 0.9,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un petit drapeau jaune uni triangulaire qui flotte en haut d'un mât en bois planté dans un tas de pierres",
+   "use": "object"
+  },
+  {
+   "id": "skipping_rope",
+   "en": "a skipping rope",
+   "fr": "une corde à sauter",
+   "colors": [
+    "red"
+   ],
+   "species": "kangaroo",
+   "h": 0.12,
+   "where": [
+    "any"
+   ],
+   "draw": "une corde à sauter aux poignées rouges en bois, la corde jaune posée en boucle souple au sol",
+   "use": "held"
+  },
+  {
+   "id": "trampoline",
+   "en": "a trampoline",
+   "fr": "un trampoline",
+   "colors": [
+    "blue",
+    "green"
+   ],
+   "species": "kangaroo",
+   "h": 0.3,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "un petit trampoline rond : toile bleue tendue, bord matelassé vert, petits pieds courbes, vu de trois quarts d'en haut"
+  },
+  {
+   "id": "swing",
+   "en": "a swing",
+   "fr": "une balançoire",
+   "colors": [
+    "brown",
+    "red"
+   ],
+   "species": "koala",
+   "h": 0.9,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "une balançoire : portique en bois clair en A, deux cordes, siège en bois rouge"
+  },
+  {
+   "id": "slippers",
+   "en": "slippers",
+   "fr": "des chaussons",
+   "colors": [
+    "pink"
+   ],
+   "species": "koala",
+   "h": 0.1,
+   "where": [
+    "any"
+   ],
+   "draw": "une paire de chaussons roses tout doux et moelleux, bordure blanche duveteuse, posés côte à côte",
+   "use": "worn"
+  },
+  {
+   "id": "sunglasses",
+   "en": "sunglasses",
+   "fr": "des lunettes de soleil",
+   "colors": [
+    "orange"
+   ],
+   "species": "frilled_lizard",
+   "h": 0.1,
+   "where": [
+    "any"
+   ],
+   "draw": "une paire de lunettes de soleil à grosse monture orange et verres sombres brillants, posée face à nous",
+   "use": "worn"
+  },
+  {
+   "id": "mirror",
+   "en": "a mirror",
+   "fr": "un miroir",
+   "colors": [
+    "gold"
+   ],
+   "species": "frilled_lizard",
+   "h": 0.5,
+   "where": [
+    "any"
+   ],
+   "draw": "un miroir rond sur pied, cadre doré à petites volutes, glace bleutée avec un reflet clair en diagonale",
+   "use": "held"
+  },
+  {
+   "id": "igloo",
+   "en": "an igloo",
+   "fr": "un igloo",
+   "colors": [
+    "white",
+    "blue"
+   ],
+   "species": "penguin",
+   "h": 1.3,
+   "where": [
+    "cold",
+    "outdoor"
+   ],
+   "draw": "un petit igloo en blocs de neige blanc bleuté, entrée en tunnel arrondi bien sombre, assez grand pour qu'un manchot y entre"
+  },
+  {
+   "id": "skates",
+   "en": "skates",
+   "fr": "des patins",
+   "colors": [
+    "white",
+    "blue"
+   ],
+   "species": "penguin",
+   "h": 0.25,
+   "where": [
+    "cold"
+   ],
+   "draw": "une paire de patins à glace blancs aux lacets bleus et lames argentées, posés côte à côte",
+   "use": "worn"
+  },
+  {
+   "id": "snow_globe",
+   "en": "a snow globe",
+   "fr": "une boule à neige",
+   "colors": [
+    "blue"
+   ],
+   "species": "seal",
+   "h": 0.25,
+   "where": [
+    "any"
+   ],
+   "draw": "une boule à neige en verre sur un socle bleu, à l'intérieur un petit sapin vert sous des flocons blancs",
+   "use": "held"
+  },
+  {
+   "id": "lantern",
+   "en": "a lantern",
+   "fr": "une lanterne",
+   "colors": [
+    "yellow"
+   ],
+   "species": "seal",
+   "h": 0.3,
+   "where": [
+    "any"
+   ],
+   "draw": "une lanterne de marin en métal noir et laiton avec une poignée, flamme jaune qui brille chaud derrière la vitre",
+   "use": "object"
+  },
+  {
+   "id": "ice_castle",
+   "en": "an ice castle",
+   "fr": "un château de glace",
+   "colors": [
+    "blue",
+    "white"
+   ],
+   "species": "polar_bear",
+   "h": 1.2,
+   "where": [
+    "cold"
+   ],
+   "draw": "un petit château de glace bleu clair translucide à trois tours, créneaux, porte en arche, reflets brillants"
+  },
+  {
+   "id": "hot_chocolate",
+   "en": "a hot chocolate",
+   "fr": "un chocolat chaud",
+   "colors": [
+    "red",
+    "brown"
+   ],
+   "species": "polar_bear",
+   "h": 0.18,
+   "where": [
+    "any"
+   ],
+   "draw": "une grosse tasse rouge de chocolat chaud avec un nuage de crème et un peu de vapeur",
+   "use": "held"
+  },
+  {
+   "id": "tug_rope",
+   "en": "a big rope",
+   "fr": "une grosse corde",
+   "colors": [
+    "red"
+   ],
+   "species": "lion",
+   "h": 0.16,
+   "where": [
+    "any"
+   ],
+   "draw": "le jouet des lionceaux pour tirer chacun de son côté : une grosse corde tressée rouge, épaisse, posée au sol en forme de S, avec un gros nœud rond à chaque bout ; brins torsadés bien visibles"
+  },
+  {
+   "id": "bamboo",
+   "en": "some bamboo",
+   "fr": "des bambous",
+   "colors": [
+    "green"
+   ],
+   "species": "giant_panda",
+   "h": 0.5,
+   "where": [
+    "any"
+   ],
+   "draw": "une botte de tiges de bambou vert tendre, bien droites avec leurs nœuds, des feuilles fines en haut, liée au milieu par un ruban rouge noué ; posée debout, un peu évasée en haut"
+  },
+  {
+   "id": "snowball",
+   "en": "a big snowball",
+   "fr": "une grosse boule de neige",
+   "colors": [
+    "white"
+   ],
+   "species": "snow_leopard",
+   "h": 0.24,
+   "where": [
+    "cold"
+   ],
+   "draw": "une grosse boule de neige ronde et bien tassée, blanche avec des reflets bleutés, quelques flocons brillants et une petite traînée de neige à sa base, comme roulée par un bébé léopard des neiges"
+  },
+  {
+   "id": "grapes",
+   "en": "some grapes",
+   "fr": "du raisin",
+   "colors": [
+    "purple"
+   ],
+   "species": "fox",
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "draw": "une belle grappe de raisin violet, grains ronds et brillants bien serrés, une tige brune et deux feuilles de vigne vertes, posée couchée au sol"
+  },
+  {
+   "id": "fruit_bowl",
+   "en": "some fruit",
+   "fr": "des fruits",
+   "colors": [
+    "orange"
+   ],
+   "species": "toucan",
+   "h": 0.2,
+   "where": [
+    "any"
+   ],
+   "draw": "une coupe basse en bois clair pleine de fruits tropicaux : une papaye orange ouverte, des tranches de mangue orange, des baies rouges ; l'orange domine"
+  },
+  {
+   "id": "hay",
+   "en": "some hay",
+   "fr": "du foin",
+   "colors": [
+    "yellow"
+   ],
+   "species": "bison",
+   "h": 0.35,
+   "where": [
+    "outdoor"
+   ],
+   "draw": "une botte de foin jaune dorée, rectangulaire aux coins arrondis, brins de paille qui dépassent partout, deux ficelles brunes qui la serrent"
+  },
+  {
+   "id": "log",
+   "en": "a log",
+   "fr": "un tronc pour grimper",
+   "colors": [
+    "brown"
+   ],
+   "species": "frilled_lizard",
+   "h": 0.22,
+   "where": [
+    "outdoor",
+    "warm"
+   ],
+   "draw": "un gros tronc d'arbre couché, écorce brune bien texturée, bout coupé clair avec ses cernes, une petite branche cassée et deux feuilles vertes ; le lézard aime grimper dessus et s'y chauffer au soleil"
+  },
+  {
+   "id": "fish_bucket",
+   "en": "a bucket of fish",
+   "fr": "un seau de poissons",
+   "colors": [
+    "yellow"
+   ],
+   "species": "seal",
+   "h": 0.28,
+   "where": [
+    "any"
+   ],
+   "draw": "un seau jaune avec une anse en métal, rempli de petits poissons argentés brillants dont les queues dépassent du bord"
+  }
+ ],
+ "classes_use": {
+  "(absent)": "posé au sol, a du sens dans le décor sans que l'animal le tienne",
+  "worn": "se porte (tête, yeux, pattes) : gardé pour plus tard, pas offert tant que les animaux ne peuvent pas le porter",
+  "held": "se tient ou se joue en main / bouche : gardé pour plus tard, pas offert",
+  "object": "pas un jouet ni un objet lié à l'animal (coffre au trésor, couverture, banc, tente…) : sans intérêt pour un lion, pas offert (Westimmo, 2026-11-24)"
+ }
+}

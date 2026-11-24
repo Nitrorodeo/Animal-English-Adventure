@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="29.2 20.8 375.1 438.2">
+<defs>
+<linearGradient id="alarm_clock-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7b8"/><stop offset=".25" stop-color="#ffd84a"/><stop offset=".6" stop-color="#f4a71e"/><stop offset="1" stop-color="#c46f0c"/></linearGradient>
+<radialGradient id="alarm_clock-gr" cx="30%" cy="24%" r="95%"><stop offset="0" stop-color="#fff4a8"/><stop offset=".35" stop-color="#ffd23c"/><stop offset=".72" stop-color="#f09c1a"/><stop offset="1" stop-color="#bd650a"/></radialGradient>
+<linearGradient id="alarm_clock-gh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e99a1c"/><stop offset=".22" stop-color="#fff0a0"/><stop offset=".42" stop-color="#ffd23c"/><stop offset=".78" stop-color="#e8921a"/><stop offset="1" stop-color="#b8620c"/></linearGradient>
+<linearGradient id="alarm_clock-gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0a0"/><stop offset=".4" stop-color="#ffd23c"/><stop offset="1" stop-color="#cf7a10"/></linearGradient>
+<radialGradient id="alarm_clock-shade" cx="28%" cy="24%" r="90%"><stop offset=".5" stop-color="#a04a08" stop-opacity="0"/><stop offset=".85" stop-color="#a44a0a" stop-opacity=".3"/><stop offset="1" stop-color="#7c3008" stop-opacity=".55"/></radialGradient>
+<linearGradient id="alarm_clock-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a4608" stop-opacity="0"/><stop offset="1" stop-color="#8a3a06" stop-opacity=".5"/></linearGradient>
+<linearGradient id="alarm_clock-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff0c8" stop-opacity=".95"/><stop offset=".07" stop-color="#ffe9c0" stop-opacity=".5"/><stop offset=".2" stop-color="#ffe9c0" stop-opacity="0"/></linearGradient>
+<filter id="alarm_clock-b9" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
+<filter id="alarm_clock-b3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5"/></filter>
+<filter id="alarm_clock-b1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.5"/></filter>
+<filter id="alarm_clock-spec" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".01 .018" numOctaves="2" seed="4" result="n"/><feSpecularLighting in="n" surfaceScale="8" specularConstant="1.0" specularExponent="24" lighting-color="#fffbe0" result="s"><feDistantLight azimuth="225" elevation="50"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter>
+<filter id="alarm_clock-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".02 .5" numOctaves="3" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 .1  0 0 0 0 .05  0 0 0 2.4 -1.1"/></filter>
+
+<radialGradient id="alarm_clock-red" cx="30%" cy="24%" r="95%"><stop offset="0" stop-color="#ff9a84"/><stop offset=".3" stop-color="#f23a3a"/><stop offset=".7" stop-color="#d4202c"/><stop offset="1" stop-color="#8e0e22"/></radialGradient>
+<radialGradient id="alarm_clock-red2" cx="30%" cy="24%" r="95%"><stop offset="0" stop-color="#ff7a68"/><stop offset=".5" stop-color="#d82a34"/><stop offset="1" stop-color="#8a0e24"/></radialGradient>
+<linearGradient id="alarm_clock-side" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c0202c"/><stop offset="1" stop-color="#6a0a1e"/></linearGradient>
+<radialGradient id="alarm_clock-face" cx="38%" cy="30%" r="90%"><stop offset="0" stop-color="#ffffff"/><stop offset=".65" stop-color="#fff8ec"/><stop offset="1" stop-color="#ecdcd0"/></radialGradient>
+<radialGradient id="alarm_clock-bell" cx="32%" cy="28%" r="90%"><stop offset="0" stop-color="#fff4a8"/><stop offset=".35" stop-color="#ffd23c"/><stop offset=".75" stop-color="#f09c1a"/><stop offset="1" stop-color="#b8650b"/></radialGradient>
+<clipPath id="alarm_clock-bc"><circle cx="210" cy="245" r="175"/></clipPath>
+</defs>
+
+<path d="M120,380 L96,452 L142,452 L160,388Z" fill="url(#alarm_clock-gh)"/><path d="M300,380 L324,452 L278,452 L260,388Z" fill="url(#alarm_clock-gh)"/>
+<ellipse cx="119" cy="452" rx="26" ry="6" fill="#b8620c" opacity=".7"/><ellipse cx="301" cy="452" rx="26" ry="6" fill="#b8620c" opacity=".7"/>
+<path d="M112,392 L103,430" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8" filter="url(#alarm_clock-b1)"/>
+
+<g transform="translate(108 92) rotate(-36)">
+<path d="M-74,10 C-74,-58 74,-58 74,10 Z" fill="#7a3a08" opacity=".3" transform="translate(5 7)" filter="url(#alarm_clock-b3)"/>
+<path d="M-74,12 C-74,-62 74,-62 74,12 Q0,26 -74,12Z" fill="url(#alarm_clock-bell)"/>
+<path d="M-74,12 C-74,-62 74,-62 74,12 Q0,26 -74,12Z" fill="url(#alarm_clock-shade)" opacity=".8"/>
+<path d="M-70,12 Q0,28 70,12" fill="none" stroke="#b8620c" stroke-width="6" opacity=".7"/>
+<path d="M-70,6 Q0,22 70,6" fill="none" stroke="#ffe27a" stroke-width="4" opacity=".9" filter="url(#alarm_clock-b1)"/>
+<ellipse cx="-30" cy="-26" rx="22" ry="10" transform="rotate(-24 -30 -26)" fill="#fff" opacity=".85" filter="url(#alarm_clock-b1)"/>
+<circle cx="0" cy="-48" r="9" fill="url(#alarm_clock-bell)"/>
+</g>
+
+<g transform="translate(312 92) rotate(36)">
+<path d="M-74,10 C-74,-58 74,-58 74,10 Z" fill="#7a3a08" opacity=".3" transform="translate(5 7)" filter="url(#alarm_clock-b3)"/>
+<path d="M-74,12 C-74,-62 74,-62 74,12 Q0,26 -74,12Z" fill="url(#alarm_clock-bell)"/>
+<path d="M-74,12 C-74,-62 74,-62 74,12 Q0,26 -74,12Z" fill="url(#alarm_clock-shade)" opacity=".8"/>
+<path d="M-70,12 Q0,28 70,12" fill="none" stroke="#b8620c" stroke-width="6" opacity=".7"/>
+<path d="M-70,6 Q0,22 70,6" fill="none" stroke="#ffe27a" stroke-width="4" opacity=".9" filter="url(#alarm_clock-b1)"/>
+<ellipse cx="-30" cy="-26" rx="22" ry="10" transform="rotate(-24 -30 -26)" fill="#fff" opacity=".85" filter="url(#alarm_clock-b1)"/>
+<circle cx="0" cy="-48" r="9" fill="url(#alarm_clock-bell)"/>
+</g>
+<rect x="200" y="42" width="20" height="62" rx="8" fill="url(#alarm_clock-gh)"/>
+<circle cx="210" cy="42" r="16" fill="url(#alarm_clock-bell)"/><ellipse cx="204" cy="36" rx="6" ry="4" fill="#fff" opacity=".85"/>
+<circle cx="224" cy="259" r="175" fill="url(#alarm_clock-side)"/>
+<circle cx="210" cy="245" r="175" fill="url(#alarm_clock-red)"/>
+<g clip-path="url(#alarm_clock-bc)">
+<circle cx="210" cy="245" r="175" fill="url(#alarm_clock-shade)" opacity=".7"/>
+<ellipse cx="240" cy="420" rx="175" ry="70" fill="#ffb08a" opacity=".45" filter="url(#alarm_clock-b9)"/>
+<rect x="335" y="70" width="55" height="350" fill="url(#alarm_clock-rim)"/>
+<rect x="35" y="70" width="350" height="350" filter="url(#alarm_clock-spec)" opacity=".35"/>
+</g>
+<circle cx="210" cy="245" r="169" fill="none" stroke="#ff9a84" stroke-width="5" opacity=".6" filter="url(#alarm_clock-b1)"/>
+<circle cx="210" cy="245" r="146" fill="#7a0e22" opacity=".55"/>
+<circle cx="210" cy="245" r="144" fill="url(#alarm_clock-red2)"/>
+<circle cx="210" cy="245" r="136" fill="#a8101e" opacity=".5" transform="translate(2 4)"/>
+<circle cx="210" cy="245" r="132" fill="url(#alarm_clock-face)"/>
+<circle cx="210" cy="245" r="132" fill="none" stroke="#c9a090" stroke-width="3" opacity=".5"/>
+<ellipse cx="246" cy="305" rx="90" ry="64" fill="#e8c8b8" opacity=".35" filter="url(#alarm_clock-b9)"/>
+<circle cx="210.0" cy="139.0" r="9" fill="#8a7aa0" opacity=".35"/><circle cx="210.0" cy="137.0" r="9" fill="#3a3a8a"/><circle cx="207.3" cy="134.3" r="2.9" fill="#fff" opacity=".8"/>
+<circle cx="264.0" cy="153.5" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="264.0" cy="151.5" r="5.5" fill="#6a62b0"/><circle cx="262.4" cy="149.8" r="1.8" fill="#fff" opacity=".8"/>
+<circle cx="303.5" cy="193.0" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="303.5" cy="191.0" r="5.5" fill="#6a62b0"/><circle cx="301.9" cy="189.3" r="1.8" fill="#fff" opacity=".8"/>
+<circle cx="318.0" cy="247.0" r="9" fill="#8a7aa0" opacity=".35"/><circle cx="318.0" cy="245.0" r="9" fill="#3a3a8a"/><circle cx="315.3" cy="242.3" r="2.9" fill="#fff" opacity=".8"/>
+<circle cx="303.5" cy="301.0" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="303.5" cy="299.0" r="5.5" fill="#6a62b0"/><circle cx="301.9" cy="297.4" r="1.8" fill="#fff" opacity=".8"/>
+<circle cx="264.0" cy="340.5" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="264.0" cy="338.5" r="5.5" fill="#6a62b0"/><circle cx="262.4" cy="336.9" r="1.8" fill="#fff" opacity=".8"/>
+<circle cx="210.0" cy="355.0" r="9" fill="#8a7aa0" opacity=".35"/><circle cx="210.0" cy="353.0" r="9" fill="#3a3a8a"/><circle cx="207.3" cy="350.3" r="2.9" fill="#fff" opacity=".8"/>
+<circle cx="156.0" cy="340.5" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="156.0" cy="338.5" r="5.5" fill="#6a62b0"/><circle cx="154.4" cy="336.9" r="1.8" fill="#fff" opacity=".8"/>
+<circle cx="116.5" cy="301.0" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="116.5" cy="299.0" r="5.5" fill="#6a62b0"/><circle cx="114.8" cy="297.4" r="1.8" fill="#fff" opacity=".8"/>
+<circle cx="102.0" cy="247.0" r="9" fill="#8a7aa0" opacity=".35"/><circle cx="102.0" cy="245.0" r="9" fill="#3a3a8a"/><circle cx="99.3" cy="242.3" r="2.9" fill="#fff" opacity=".8"/>
+<circle cx="116.5" cy="193.0" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="116.5" cy="191.0" r="5.5" fill="#6a62b0"/><circle cx="114.8" cy="189.3" r="1.8" fill="#fff" opacity=".8"/>
+<circle cx="156.0" cy="153.5" r="5.5" fill="#8a7aa0" opacity=".35"/><circle cx="156.0" cy="151.5" r="5.5" fill="#6a62b0"/><circle cx="154.3" cy="149.8" r="1.8" fill="#fff" opacity=".8"/>
+<path d="M213,250 L242.0,199.8" stroke="#7a6a90" stroke-opacity=".4" stroke-width="14" stroke-linecap="round" filter="url(#alarm_clock-b1)"/><path d="M210,245 L239.0,194.8" stroke="#2f2f7a" stroke-width="14" stroke-linecap="round"/><path d="M209,243 L238.0,192.8" stroke="#fff" stroke-opacity=".35" stroke-width="4.2" stroke-linecap="round"/><path d="M213,250 L257.0,326.2" stroke="#7a6a90" stroke-opacity=".4" stroke-width="10" stroke-linecap="round" filter="url(#alarm_clock-b1)"/><path d="M210,245 L254.0,321.2" stroke="#3a3a8a" stroke-width="10" stroke-linecap="round"/><path d="M209,243 L253.0,319.2" stroke="#fff" stroke-opacity=".35" stroke-width="3.0" stroke-linecap="round"/>
+<circle cx="210" cy="245" r="17" fill="#7a3a08" opacity=".4" transform="translate(2 3)"/>
+<circle cx="210" cy="245" r="16" fill="url(#alarm_clock-bell)"/><ellipse cx="205" cy="239" rx="6" ry="4" fill="#fff" opacity=".9"/>
+<path d="M90,183 A135,135 0 0 1 158,123" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".5" filter="url(#alarm_clock-b1)"/>
+<path d="M42,193 C50,135 90,95 148,79" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".75" filter="url(#alarm_clock-b1)"/>
+<path d="M38,239 C38,225 39,215 40,207" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".7" filter="url(#alarm_clock-b1)"/>
+
+</svg>

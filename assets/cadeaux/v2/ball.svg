@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<defs>
+<radialGradient id="ball-r" cx=".35" cy=".28" r=".85" ><stop offset="0" stop-color="#ff7a5c"/><stop offset="0.45" stop-color="#ee3b2c"/><stop offset="1" stop-color="#b3151a"/></radialGradient>
+<radialGradient id="ball-y" cx=".35" cy=".28" r=".85" ><stop offset="0" stop-color="#fff39a"/><stop offset="0.45" stop-color="#ffcf2e"/><stop offset="1" stop-color="#e29a0c"/></radialGradient>
+<radialGradient id="ball-shade" cx=".33" cy=".27" r=".85" ><stop offset="0" stop-color="#fff" stop-opacity="0.15"/><stop offset="0.4" stop-color="#fff" stop-opacity="0"/><stop offset="0.72" stop-color="#7a1a4a" stop-opacity="0.18"/><stop offset="1" stop-color="#4a1048" stop-opacity="0.55"/></radialGradient>
+<radialGradient id="ball-bounce" cx=".62" cy=".95" r=".55" ><stop offset="0" stop-color="#ffb44a" stop-opacity="0.7"/><stop offset="1" stop-color="#ffb44a" stop-opacity="0"/></radialGradient>
+<radialGradient id="ball-spec" cx=".5" cy=".5" r=".5" ><stop offset="0" stop-color="#fff" stop-opacity="0.95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<linearGradient id="ball-rim" x1="0" y1="0" x2="1" y2="1" ><stop offset="0.5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0.85"/></linearGradient>
+<clipPath id="ball-clip"><circle cx="500" cy="500" r="485"/></clipPath>
+<filter id="ball-blur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="10"/></filter>
+<filter id="ball-blur3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="ball-pl" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="22" result="b"/><feSpecularLighting in="b" surfaceScale="10" specularConstant="0.5" specularExponent="30" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s2"/></feMerge></filter>
+</defs>
+<g clip-path="url(#ball-clip)">
+<circle cx="500" cy="500" r="485" fill="#b3151a"/>
+<g transform="rotate(-16 500 500)"><path d="M500,15 A420.0,485 0 0 0 500,985 A485.0,485 0 0 1 500,15 Z" fill="url(#ball-y)"/><path d="M500,15 A165.9,485 0 0 0 500,985 A420.0,485 0 0 1 500,15 Z" fill="url(#ball-r)"/><path d="M500,15 A165.9,485 0 0 1 500,985 A165.9,485 0 0 1 500,15 Z" fill="url(#ball-y)"/><path d="M500,15 A420.0,485 0 0 1 500,985 A165.9,485 0 0 0 500,15 Z" fill="url(#ball-r)"/><path d="M500,15 A485.0,485 0 0 1 500,985 A420.0,485 0 0 0 500,15 Z" fill="url(#ball-y)"/><path d="M500,15 A420.0,485 0 0 0 500,985" fill="none" stroke="#7a1a1a" stroke-opacity=".28" stroke-width="7"/><path d="M500,15 A420.0,485 0 0 0 500,985" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3" transform="translate(5 -2)"/><path d="M500,15 A165.9,485 0 0 0 500,985" fill="none" stroke="#7a1a1a" stroke-opacity=".28" stroke-width="7"/><path d="M500,15 A165.9,485 0 0 0 500,985" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3" transform="translate(5 -2)"/><path d="M500,15 A165.9,485 0 0 1 500,985" fill="none" stroke="#7a1a1a" stroke-opacity=".28" stroke-width="7"/><path d="M500,15 A165.9,485 0 0 1 500,985" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3" transform="translate(5 -2)"/><path d="M500,15 A420.0,485 0 0 1 500,985" fill="none" stroke="#7a1a1a" stroke-opacity=".28" stroke-width="7"/><path d="M500,15 A420.0,485 0 0 1 500,985" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3" transform="translate(5 -2)"/></g>
+<circle cx="500" cy="500" r="485" fill="url(#ball-shade)"/>
+<circle cx="500" cy="500" r="485" fill="url(#ball-bounce)"/>
+<circle cx="500" cy="500" r="466" fill="none" stroke="url(#ball-rim)" stroke-width="36" filter="url(#ball-blur)"/>
+</g>
+<circle cx="500" cy="500" r="485" fill="none" stroke="#6a1018" stroke-opacity=".3" stroke-width="5"/>
+<ellipse cx="335" cy="205" rx="135" ry="72" transform="rotate(-36 335 205)" fill="url(#ball-spec)"/>
+<ellipse cx="222" cy="338" rx="22" ry="12" transform="rotate(-58 222 338)" fill="#fff" fill-opacity=".9"/>
+<ellipse cx="640" cy="905" rx="70" ry="14" transform="rotate(-25 640 905)" fill="#ffe2b0" fill-opacity=".55" filter="url(#ball-blur3)"/>
+</svg>

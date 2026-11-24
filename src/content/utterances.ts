@@ -71,12 +71,17 @@ export const CUDDLES = {
 /** Autocollant du jour (fin de la première activité de la journée). */
 export const STICKER_OFFER = { en: 'A sticker for you! Pick one!', fr: 'Un autocollant pour toi ! Choisis-en un !' } as const;
 
+/** Cadeau du soir (remplace l'autocollant du jour, 2026-11-24) : dit par le personnage qui apporte les paquets. */
+export const GIFT_OFFER = { en: 'A present for our home! Pick one!', fr: 'Un cadeau pour notre maison ! Choisis-en un !' } as const;
+
 /** Ce que dit le bébé sur la carte « il grandit ». */
 export const BIGGER_NOW = { en: "Look at me! I'm bigger now!", fr: 'Regarde-moi ! Je suis plus grand maintenant !' } as const;
 
 export const say = {
   /** « a rainbow » → « A rainbow! » (choix et carte des autocollants) */
   sticker: (en: string) => `${en.charAt(0).toUpperCase()}${en.slice(1)}!`,
+  /** « a kite » → « A kite! » (ouverture du paquet du soir) */
+  gift: (en: string) => `${en.charAt(0).toUpperCase()}${en.slice(1)}!`,
   /** photo de naissance de l'album souvenir */
   albumBorn: (babyName: string) => fillLine(FAMILY_LINES.welcomeBaby, { babyName }).en,
   title: (playerName: string) => `Hello, ${playerName}! Let's go on an adventure!`,

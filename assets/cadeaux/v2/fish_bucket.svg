@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="35 21 260 279">
+<defs>
+<linearGradient id="fish_bucket-body" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe45a"/><stop offset=".45" stop-color="#ffc81e"/><stop offset=".85" stop-color="#e89a10"/><stop offset="1" stop-color="#d4800c"/></linearGradient>
+<linearGradient id="fish_bucket-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8620a" stop-opacity="0"/><stop offset="1" stop-color="#b8620a" stop-opacity=".5"/></linearGradient>
+<linearGradient id="fish_bucket-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd6a0" stop-opacity=".9"/><stop offset=".12" stop-color="#ffd6a0" stop-opacity="0"/></linearGradient>
+<linearGradient id="fish_bucket-fs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f8ff"/><stop offset=".5" stop-color="#b8c8e4"/><stop offset="1" stop-color="#7f8fc4"/></linearGradient>
+<radialGradient id="fish_bucket-in" cx="50%" cy="30%" r="80%"><stop offset="0" stop-color="#8a98cc"/><stop offset="1" stop-color="#5a5aa0"/></radialGradient>
+<linearGradient id="fish_bucket-metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2f2fa"/><stop offset=".5" stop-color="#a8a8c8"/><stop offset="1" stop-color="#6e6ea0"/></linearGradient>
+<filter id="fish_bucket-blur"><feGaussianBlur stdDeviation="2.5"/></filter>
+<clipPath id="fish_bucket-bc"><path d="M52,120 C52,140 248,140 248,120 L226,296 C226,300 74,300 74,296Z"/></clipPath>
+<linearGradient id="fish_bucket-fb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f86c4"/><stop offset=".45" stop-color="#b4c6e8"/><stop offset=".62" stop-color="#e8f0fc"/><stop offset="1" stop-color="#fbfdff"/></linearGradient>
+<linearGradient id="fish_bucket-ft" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a6fb0"/><stop offset="1" stop-color="#8fa4d8"/></linearGradient>
+<g id="fish_bucket-fish">
+<path d="M74,0 L114,-27 L101,0 L114,27Z" fill="url(#fish_bucket-ft)"/>
+<path d="M40,-17 C46,-36 64,-33 70,-10Z" fill="url(#fish_bucket-ft)"/>
+<path d="M0,0 C10,-21 46,-25 80,-8 L86,0 L80,8 C46,25 10,21 0,0Z" fill="url(#fish_bucket-fb)"/>
+<path d="M0,0 C10,-21 46,-25 80,-8 L86,0 L80,8 C46,25 10,21 0,0Z" fill="none" stroke="#3f4f94" stroke-opacity=".35" stroke-width="2"/>
+<path d="M26,-14 C20,-6 20,6 26,14" fill="none" stroke="#4a5aa0" stroke-opacity=".45" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M8,-9 C26,-19 50,-19 70,-8" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="3.5" stroke-linecap="round"/>
+<circle cx="14" cy="-4" r="5.5" fill="#fff"/><circle cx="14.5" cy="-4" r="3.6" fill="#1f2a5c"/><circle cx="13" cy="-5.6" r="1.4" fill="#fff"/>
+</g>
+</defs>
+<path d="M48,126 C20,20 280,20 252,126" fill="none" stroke="#6e6ea0" stroke-width="9" stroke-linecap="round" opacity=".5" transform="translate(2,3)"/>
+<path d="M48,126 C20,20 280,20 252,126" fill="none" stroke="url(#fish_bucket-metal)" stroke-width="8" stroke-linecap="round"/>
+<path d="M52,100 C60,60 100,36 140,32" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2.5" stroke-linecap="round"/>
+<ellipse cx="150" cy="120" rx="98" ry="22" fill="url(#fish_bucket-in)"/>
+<use href="#fish_bucket-fish" transform="translate(98,140) rotate(-112) scale(.9)"/>
+<use href="#fish_bucket-fish" transform="translate(205,140) rotate(-50) scale(.9)"/>
+<use href="#fish_bucket-fish" transform="translate(152,138) rotate(-84) scale(1)"/>
+<path d="M52,120 C52,140 248,140 248,120 L226,296 C226,300 74,300 74,296Z" fill="url(#fish_bucket-body)"/>
+<g clip-path="url(#fish_bucket-bc)">
+<rect x="40" y="200" width="220" height="100" fill="url(#fish_bucket-ao)"/>
+<rect x="40" y="120" width="220" height="180" fill="url(#fish_bucket-rim)" opacity=".7"/>
+<path d="M70,150 L90,150 L100,285 L84,285Z" fill="#fff" opacity=".35" filter="url(#fish_bucket-blur)"/>
+<rect x="46" y="190" width="210" height="9" fill="#d98a0c" opacity=".55"/>
+<rect x="46" y="192" width="210" height="3" fill="#fff2a0" opacity=".6"/>
+<rect x="46" y="250" width="210" height="9" fill="#d98a0c" opacity=".55"/>
+<rect x="46" y="252" width="210" height="3" fill="#fff2a0" opacity=".6"/>
+</g>
+<path d="M52,120 C52,140 248,140 248,120" fill="none" stroke="#ffe98a" stroke-width="7" stroke-linecap="round"/>
+<path d="M60,121 C70,134 230,134 240,121" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
+</svg>

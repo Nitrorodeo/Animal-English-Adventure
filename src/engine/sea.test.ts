@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { clipFor } from '../audio/speech';
 import { itemInfo } from '../content/items';
-import { DOLPHINS, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_THINGS, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
+import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_THINGS, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
 import { CONTINENTS } from '../content/world';
 import { currentRound, INTRO, numberChoices, OUTRO, seaChoose, seaDone, seaNext, seaReward, seaRounds, startSea, type SeaState } from './sea';
 import { newGameState } from './state';
@@ -157,6 +157,22 @@ describe('jeux bonus de la mer : contenu', () => {
     expect(SEA_HD.turtle).toBe('turtle_mother_hd');
     expect(SEA_HD.turtle_baby).toBe('turtle_baby_hd');
     expect(SEA_HD.dolphin_big).not.toBe(SEA_HD.dolphin_little);
+  });
+
+  it('dauphins : la planche « Dauphins joyeux » (ils nagent sous l’eau), ensemble, une zone à toucher pour chacun', () => {
+    expect(DOLPHIN_FAMILY).toBe('dolphin_family_hd');
+    expect(SPRITES).toContain(`/public/assets/sea/${DOLPHIN_FAMILY}.webp`);
+    for (const d of ['big', 'little'] as const) {
+      expect(DOLPHIN_ZONES[d].length, d).toBeGreaterThan(0);
+      for (const z of DOLPHIN_ZONES[d]) {
+        expect(z.x >= 0 && z.y >= 0 && z.x + z.w <= 100 && z.y + z.h <= 100, d).toBe(true);
+        expect(z.w * z.h, d).toBeGreaterThan(400); // assez grand pour un doigt
+      }
+    }
+    // le petit est en bas, la maman en haut : leurs zones ne se recouvrent pas
+    const overlap = (a: { x: number; y: number; w: number; h: number }, b: typeof a) =>
+      a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+    for (const a of DOLPHIN_ZONES.big) for (const b of DOLPHIN_ZONES.little) expect(overlap(a, b)).toBe(false);
   });
 
   it('les découpes existent et sont posées dans la mer, hors des continents', () => {

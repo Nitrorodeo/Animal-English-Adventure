@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="29.5 11.4 381.0 538.8">
+<defs>
+<filter id="teddy_bear-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.18  0 0 0 0 0.08  0 0 0 1.9 -.7" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="teddy_bear-bl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="teddy_bear-bl3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="teddy_bear-bl1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.3"/></filter><filter id="teddy_bear-fz" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="6" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="7" xChannelSelector="R" yChannelSelector="G"/></filter><ellipse id="teddy_bear-body" cx="220" cy="385" rx="128" ry="150"/>
+<circle id="teddy_bear-head" cx="220" cy="172" r="122"/>
+<circle id="teddy_bear-earL" cx="112" cy="70" r="52"/>
+<circle id="teddy_bear-earR" cx="328" cy="70" r="52"/>
+<ellipse id="teddy_bear-armL" cx="86" cy="360" rx="48" ry="98" transform="rotate(14 86 360)"/>
+<ellipse id="teddy_bear-armR" cx="354" cy="360" rx="48" ry="98" transform="rotate(-14 354 360)"/>
+<ellipse id="teddy_bear-legL" cx="118" cy="486" rx="84" ry="60" transform="rotate(-8 118 486)"/>
+<ellipse id="teddy_bear-legR" cx="322" cy="486" rx="84" ry="60" transform="rotate(8 322 486)"/>
+<radialGradient id="teddy_bear-earLb" cx="32%" cy="26%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-earLs" cx="32%" cy="26%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-earLa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-earLr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-earRb" cx="32%" cy="26%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-earRs" cx="32%" cy="26%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-earRa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-earRr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-ie" cx="40%" cy="35%" r="80%"><stop offset="0" stop-color="#f8d9aa"/><stop offset="1" stop-color="#d89a62"/></radialGradient><radialGradient id="teddy_bear-bodyb" cx="32%" cy="26%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-bodys" cx="32%" cy="26%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-bodya" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-bodyr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-bel" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff0cc"/><stop offset=".6" stop-color="#f6d49c"/><stop offset="1" stop-color="#d9a468"/></radialGradient><radialGradient id="teddy_bear-legLb" cx="32%" cy="26%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-legLs" cx="32%" cy="26%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-legLa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-legLr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-legRb" cx="32%" cy="26%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-legRs" cx="32%" cy="26%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-legRa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-legRr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-pad" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fbe2b4"/><stop offset="1" stop-color="#dea66a"/></radialGradient><radialGradient id="teddy_bear-armLb" cx="32%" cy="26%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-armLs" cx="32%" cy="26%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-armLa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-armLr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-armRb" cx="32%" cy="26%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-armRs" cx="32%" cy="26%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-armRa" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-armRr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-headb" cx="34%" cy="24%" r="95%"><stop offset="0" stop-color="#e9b073"/><stop offset=".45" stop-color="#c78a50"/><stop offset="1" stop-color="#8a5126"/></radialGradient>
+<radialGradient id="teddy_bear-heads" cx="34%" cy="24%" r="88%"><stop offset=".5" stop-color="#6a3a1e" stop-opacity="0"/><stop offset=".88" stop-color="#6a3a1e" stop-opacity=".3"/><stop offset="1" stop-color="#6a3a1e" stop-opacity=".55"/></radialGradient>
+<linearGradient id="teddy_bear-heada" x1="0" y1="0" x2="0" y2="1"><stop offset=".6" stop-color="#6a3418" stop-opacity="0"/><stop offset="1" stop-color="#6a3418" stop-opacity=".5"/></linearGradient>
+<linearGradient id="teddy_bear-headr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd8a0" stop-opacity=".9"/><stop offset=".08" stop-color="#ffd8a0" stop-opacity=".4"/><stop offset=".22" stop-color="#ffd8a0" stop-opacity="0"/></linearGradient><radialGradient id="teddy_bear-mz" cx="40%" cy="30%" r="85%"><stop offset="0" stop-color="#fff2d2"/><stop offset=".55" stop-color="#f6d49c"/><stop offset="1" stop-color="#d49a60"/></radialGradient><radialGradient id="teddy_bear-nose" cx="35%" cy="28%" r="80%"><stop offset="0" stop-color="#7a5a52"/><stop offset=".5" stop-color="#3e2a2a"/><stop offset="1" stop-color="#1e1416"/></radialGradient><radialGradient id="teddy_bear-eye" cx="35%" cy="28%" r="80%"><stop offset="0" stop-color="#6a5a68"/><stop offset=".45" stop-color="#2a1e30"/><stop offset="1" stop-color="#120c18"/></radialGradient><linearGradient id="teddy_bear-bow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ea6f4"/><stop offset=".5" stop-color="#3a74d6"/><stop offset="1" stop-color="#2150a8"/></linearGradient>
+</defs>
+<g filter="url(#teddy_bear-fz)">
+<use href="#teddy_bear-earL" fill="url(#teddy_bear-earLb)"/>
+<use href="#teddy_bear-earL" fill="url(#teddy_bear-earLs)"/>
+<use href="#teddy_bear-earL" fill="url(#teddy_bear-earLa)"/>
+<use href="#teddy_bear-earL" fill="url(#teddy_bear-earLr)"/>
+<use href="#teddy_bear-earL" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<use href="#teddy_bear-earR" fill="url(#teddy_bear-earRb)"/>
+<use href="#teddy_bear-earR" fill="url(#teddy_bear-earRs)"/>
+<use href="#teddy_bear-earR" fill="url(#teddy_bear-earRa)"/>
+<use href="#teddy_bear-earR" fill="url(#teddy_bear-earRr)"/>
+<use href="#teddy_bear-earR" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<circle cx="118" cy="76" r="30" fill="url(#teddy_bear-ie)"/><circle cx="322" cy="76" r="30" fill="url(#teddy_bear-ie)"/><circle cx="118" cy="76" r="30" fill="none" stroke="#a8693a" stroke-opacity=".3" stroke-width="3"/><circle cx="322" cy="76" r="30" fill="none" stroke="#a8693a" stroke-opacity=".3" stroke-width="3"/>
+<use href="#teddy_bear-body" fill="url(#teddy_bear-bodyb)"/>
+<use href="#teddy_bear-body" fill="url(#teddy_bear-bodys)"/>
+<use href="#teddy_bear-body" fill="url(#teddy_bear-bodya)"/>
+<use href="#teddy_bear-body" fill="url(#teddy_bear-bodyr)"/>
+<use href="#teddy_bear-body" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<ellipse cx="220" cy="400" rx="82" ry="102" fill="url(#teddy_bear-bel)"/><ellipse cx="220" cy="400" rx="82" ry="102" fill="#000" filter="url(#teddy_bear-grain)" opacity=".3"/>
+<path d="M150,330 C170,310 270,310 290,330" stroke="#a8693a" stroke-opacity=".5" stroke-width="3" stroke-dasharray="8 6" fill="none"/>
+<use href="#teddy_bear-legL" fill="url(#teddy_bear-legLb)"/>
+<use href="#teddy_bear-legL" fill="url(#teddy_bear-legLs)"/>
+<use href="#teddy_bear-legL" fill="url(#teddy_bear-legLa)"/>
+<use href="#teddy_bear-legL" fill="url(#teddy_bear-legLr)"/>
+<use href="#teddy_bear-legL" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<use href="#teddy_bear-legR" fill="url(#teddy_bear-legRb)"/>
+<use href="#teddy_bear-legR" fill="url(#teddy_bear-legRs)"/>
+<use href="#teddy_bear-legR" fill="url(#teddy_bear-legRa)"/>
+<use href="#teddy_bear-legR" fill="url(#teddy_bear-legRr)"/>
+<use href="#teddy_bear-legR" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<ellipse cx="108" cy="500" rx="46" ry="34" fill="url(#teddy_bear-pad)" transform="rotate(-8 108 500)"/><ellipse cx="332" cy="500" rx="46" ry="34" fill="url(#teddy_bear-pad)" transform="rotate(8 332 500)"/>
+<path d="M62,486 C70,470 90,466 110,470 M378,486 C370,470 350,466 330,470" stroke="#8a5126" stroke-opacity=".45" stroke-width="3" stroke-dasharray="7 5" fill="none"/>
+<use href="#teddy_bear-armL" fill="url(#teddy_bear-armLb)"/>
+<use href="#teddy_bear-armL" fill="url(#teddy_bear-armLs)"/>
+<use href="#teddy_bear-armL" fill="url(#teddy_bear-armLa)"/>
+<use href="#teddy_bear-armL" fill="url(#teddy_bear-armLr)"/>
+<use href="#teddy_bear-armL" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<use href="#teddy_bear-armR" fill="url(#teddy_bear-armRb)"/>
+<use href="#teddy_bear-armR" fill="url(#teddy_bear-armRs)"/>
+<use href="#teddy_bear-armR" fill="url(#teddy_bear-armRa)"/>
+<use href="#teddy_bear-armR" fill="url(#teddy_bear-armRr)"/>
+<use href="#teddy_bear-armR" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<ellipse cx="82" cy="440" rx="30" ry="22" fill="url(#teddy_bear-pad)" opacity=".9" transform="rotate(14 82 440)"/><ellipse cx="358" cy="440" rx="30" ry="22" fill="url(#teddy_bear-pad)" opacity=".9" transform="rotate(-14 358 440)"/>
+<use href="#teddy_bear-head" fill="url(#teddy_bear-headb)"/>
+<use href="#teddy_bear-head" fill="url(#teddy_bear-heads)"/>
+<use href="#teddy_bear-head" fill="url(#teddy_bear-heada)"/>
+<use href="#teddy_bear-head" fill="url(#teddy_bear-headr)"/>
+<use href="#teddy_bear-head" fill="#000" filter="url(#teddy_bear-grain)" opacity="0.5"/>
+<ellipse cx="226" cy="222" rx="38" ry="12" fill="#7a4526" opacity=".35" filter="url(#teddy_bear-bl3)"/><ellipse cx="220" cy="214" rx="64" ry="50" fill="url(#teddy_bear-mz)"/><ellipse cx="220" cy="214" rx="64" ry="50" fill="#000" filter="url(#teddy_bear-grain)" opacity=".25"/>
+<ellipse cx="220" cy="190" rx="26" ry="18" fill="url(#teddy_bear-nose)"/><ellipse cx="212" cy="184" rx="9" ry="4.5" fill="#fff" opacity=".7"/>
+<path d="M220,206 L220,226 M220,226 C210,242 192,240 186,230 M220,226 C230,242 248,240 254,230" stroke="#6a3a1e" stroke-opacity=".75" stroke-width="4" fill="none" stroke-linecap="round"/>
+<circle cx="160" cy="150" r="22" fill="url(#teddy_bear-eye)"/><circle cx="153" cy="142" r="7" fill="#fff" opacity=".85"/><circle cx="167" cy="158" r="3" fill="#fff" opacity=".45"/><circle cx="160" cy="150" r="22" fill="none" stroke="#a8693a" stroke-opacity=".5" stroke-width="3" stroke-dasharray="5 4"/>
+<circle cx="280" cy="150" r="22" fill="url(#teddy_bear-eye)"/><circle cx="273" cy="142" r="7" fill="#fff" opacity=".85"/><circle cx="287" cy="158" r="3" fill="#fff" opacity=".45"/><circle cx="280" cy="150" r="22" fill="none" stroke="#a8693a" stroke-opacity=".5" stroke-width="3" stroke-dasharray="5 4"/>
+<path d="M220,292 C160,250 112,262 112,296 C112,332 168,330 220,300Z M220,292 C280,250 328,262 328,296 C328,332 272,330 220,300Z" fill="#2150a8" opacity=".35" transform="translate(4 8)" filter="url(#teddy_bear-bl3)"/>
+<path d="M220,292 C160,250 112,262 112,296 C112,332 168,330 220,300Z M220,292 C280,250 328,262 328,296 C328,332 272,330 220,300Z" fill="url(#teddy_bear-bow)"/>
+<path d="M200,282 C160,262 130,270 124,290" stroke="#bcd8fa" stroke-opacity=".8" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#teddy_bear-bl1)"/><path d="M150,300 C175,296 195,298 214,298 M290,300 C265,296 245,298 226,298" stroke="#1c3f8a" stroke-opacity=".35" stroke-width="3" fill="none"/>
+<path d="M208,312 L192,350 L214,342 L224,352 L228,310Z" fill="url(#teddy_bear-bow)"/><path d="M222,312 L246,350 L228,340 L216,350Z" fill="#2658ae"/>
+<ellipse cx="220" cy="298" rx="19" ry="18" fill="url(#teddy_bear-bow)"/><ellipse cx="214" cy="291" rx="8" ry="5" fill="#fff" opacity=".5"/>
+</g>
+
+</svg>

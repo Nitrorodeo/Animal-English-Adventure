@@ -1,3 +1,4 @@
+import { peekSpot } from '../game/peek';
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { speech, type VoiceRole } from '../audio/speech';
 import { babyVoice, DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
@@ -7,10 +8,13 @@ import { PROPS } from '../content/props';
 import { NOUNS, PLACES } from '../content/places';
 import type { BiomeDef, GrowthStage, PlaceId, QuestScript, Sex, Speaker, SpeciesDef } from '../content/types';
 import { unlockedAt } from '../content/archetypes';
-import { BEDTIME, BIGGER_NOW, say, STICKER_OFFER } from '../content/utterances';
+import { BEDTIME, BIGGER_NOW, say } from '../content/utterances';
 import { bedtimeLines, type BedtimeLine } from '../engine/bedtime';
 import { cuddleLine, HOLD_MS } from '../engine/cuddles';
-import { dayKey, placeSticker, stickerOffer, type StickerDef } from '../engine/stickers';
+import { dayKey } from '../engine/stickers';
+import { giftOffer, giftsHere, moveGift, receiveGift, type GiftDef } from '../engine/gifts';
+import { GiftChoice, GiftItem, useScenePixels } from './Gifts';
+import { ambientAt, giftLook, giftStart, groundAt, skyOf } from './giftLook';
 import { fillLine, type Vars } from '../engine/dialogue';
 import { applyQuestOutcome, type OutcomeEvents } from '../engine/events';
 import { nextBabySex } from '../engine/family';
@@ -104,8 +108,21 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
   const [grow, setGrow] = useState<{ name: string; sex: Sex; to: GrowthStage; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[] } | null>(null);
   const [wordBubble, setWordBubble] = useState<{ anchorId: string; text: string } | null>(null);
   const [seed] = useState(() => Math.floor(Math.random() * 1e9));
-  /** autocollant du jour à choisir (après la première activité de la journée) */
-  const [stickerPick, setStickerPick] = useState<{ offer: StickerDef[]; today: string } | null>(null);
+  /** cadeau du soir à choisir (après la première activité de la journée), apporté par le personnage de l'activité */
+  const [giftPick, setGiftPick] = useState<{ offer: GiftDef[]; today: string; from: ActorRef } | null>(null);
+  /** objet glissé au doigt ; une fois posé, sa place va dans la partie */
+  const [liveGift, setLiveGift] = useState<{ id: string; spot: Spot } | null>(null);
+  const liveGiftRef = useRef(liveGift);
+  /** petite copie du décor en pixels : lumière, ciel et sol des cadeaux posés (lue avant tout retour anticipé) */
+  const bgInfo = background(biome.background);
+  const pixels = useScenePixels(bgInfo ? assetUrl(bgInfo) : undefined);
+  /** objet qui vient d'arriver (il brille un moment) */
+  const [freshGift, setFreshGift] = useState<string | null>(null);
+  useEffect(() => {
+    if (!freshGift) return;
+    const t = window.setTimeout(() => setFreshGift(null), 4000);
+    return () => window.clearTimeout(t);
+  }, [freshGift]);
   /** rituel « Bonne nuit » : qui parle, puis toute la famille dort */
   const [night, setNight] = useState<{ line: BedtimeLine | null; asleep: boolean } | null>(null);
   const nightRun = useRef(0);
@@ -222,9 +239,10 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
       setState(() => r.state);
       setRunning(null);
       const today = dayKey(new Date());
-      const offer = stickerOffer(r.state, today);
-      if (offer) setStickerPick({ offer, today });
       const end = script.endPlace ?? script.biomeId;
+      // le cadeau du soir arrive dans la maison où l'on est (après un voyage, ce sera à la prochaine activité)
+      const offer = end === biome.id ? giftOffer(r.state, species.id, biome, today) : null;
+      if (offer) setGiftPick({ offer, today, from: actor });
       if (end !== biome.id) onPlace(end);
       const growing = events.grew;
       const babyName = growing ? (family.babies.find((b) => b.id === growing.babyId)?.name ?? species.babyWord.en) : actorName(state, species, actor);
@@ -245,7 +263,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
         setToast(`📷 ${events.photos.length === 1 ? 'Nouvelle photo dans l’album !' : `${events.photos.length} nouvelles photos dans l’album !`}`);
       }
       // l'animal félicite la joueuse par son prénom (sauf pendant l'annonce d'un bébé qui grandit,
-      // d'un autocollant, ou d'un nouveau lieu, qui est annoncé)
+      // d'un cadeau, ou d'un nouveau lieu, qui est annoncé)
       if (!growing && !offer && end === biome.id && state.player.name !== DEFAULT_PLAYER_NAME) void speech.speak(say.bravo(state.player.name), { role: voiceOf(state, actor) });
     },
     [running, setState, biome, state, species, family.babies, onPlace],
@@ -295,6 +313,34 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
     );
   }
 
+  // --- cadeaux du soir posés dans le décor : placés et mis à l'échelle comme le papa (leur taille = la sienne
+  // à cet endroit × la hauteur logique de l'objet), accordés à la lumière du dessin
+  const gifts = giftsHere(state, species.id, biome);
+  const papa: ActorRef = { speciesId: species.id, kind: 'adult', role: 'father' };
+  const papaHome = homePlacement(papa, family, biome.groundY, biome.lane, biome);
+  const papaNatural = homePlacement(papa, family, biome.groundY).h;
+  const dropGift = (pointer: { x: number; y: number }, grabDy: number): Spot => {
+    const hz = horizonOf(biome.groundY, biome.horizonY);
+    return dragSpot(papaHome, pointer, grabDy, placeScale(biome, papaHome.y), (x) => farthestY(papaHome.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y), biome.lane, biome.water, biome.seats && { list: biome.seats, naturalH: papaNatural, groundToo: biome.groundToo }, biome.floes);
+  };
+  /** place gardée → taille selon la perspective du jour (comme `spotOf` pour les animaux) */
+  const fitGift = (s: { x: number; y: number }): Spot => {
+    if (biome.seats?.length && !biome.groundToo) {
+      const { seat: _seat, ...on } = snapToSeats(biome.seats, papaNatural, s.x, s.y);
+      return on;
+    }
+    if (biome.seats?.length && biome.groundToo) {
+      const on = nearSeat(biome.seats, papaNatural, s.x, s.y, 0.5);
+      if (on) {
+        const { seat: _seat, ...spot } = on;
+        return spot;
+      }
+    }
+    if (biome.lane) return snapToLane(biome.lane, { h: papaHome.h }, s.x, s.y);
+    return { x: s.x, y: s.y, h: papaHome.h * placeScale(biome, papaHome.y)(papaHome.y, perchAt(biome, s.x, s.y) ?? s.y) };
+  };
+  const sky = pixels ? skyOf(pixels) : null;
+
   return (
     <div className="screen habitat-screen">
       <div className={`stage${night ? ' night bedtime' : ''}`}>
@@ -304,6 +350,34 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
           <button key={a.id} className="anchor" style={rectStyle(a.hit)} aria-label={a.word} onClick={() => tapAnchorFree(biome, a.id)} />
         ))}
         {wordBubble && <WordBubble place={biome} anchorId={wordBubble.anchorId} text={wordBubble.text} />}
+        {gifts.map(({ def, spot }, i) => {
+          const s = liveGift?.id === def.id ? liveGift.spot : fitGift(spot ?? dropGift(giftStart(i, papaHome.y), 0));
+          const look = pixels ? giftLook(ambientAt(pixels, s.x, s.y, s.h * def.h), sky!, s.h / papaHome.h, groundAt(pixels, s.x, s.y, s.h * def.h * def.ratio * 0.5625)) : null;
+          return (
+            <GiftItem
+              key={def.id}
+              def={def}
+              spot={s}
+              look={look}
+              fresh={freshGift === def.id}
+              onTap={night ? undefined : () => void speech.speak(say.gift(def.en), { slow: state.settings.slowVoice })}
+              onDragTo={
+                night
+                  ? undefined
+                  : (pointer, grabDy) => {
+                      liveGiftRef.current = { id: def.id, spot: dropGift(pointer, grabDy) };
+                      setLiveGift(liveGiftRef.current);
+                    }
+              }
+              onDragEnd={() => {
+                const cur = liveGiftRef.current;
+                liveGiftRef.current = null;
+                setLiveGift(null);
+                if (cur?.id === def.id) setState((st) => moveGift(st, def.id, species.id, biome.id, cur.spot));
+              }}
+            />
+          );
+        })}
         {actors.map((a) => (
           <Character
             key={actorId(a)}
@@ -314,7 +388,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             baseH={biome.seats?.length && !biome.groundToo ? homePlacement(a, family, biome.groundY).h : homePlacement(a, family, biome.groundY, biome.lane, biome).h}
             face={spotOf(a)?.f}
             dim={!!night}
-            paused={showFamily || !!grow || !!stickerPick}
+            paused={showFamily || !!grow || !!giftPick}
             onDragTo={
               night
                 ? undefined
@@ -437,15 +511,17 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
         )}
 
         {toast && <div className="toast">{toast}</div>}
-        {stickerPick && !grow && (
-          <StickerChoice
-            offer={stickerPick.offer}
+        {giftPick && !grow && (
+          <GiftChoice
+            offer={giftPick.offer}
+            role={voiceOf(state, giftPick.from)}
+            slow={state.settings.slowVoice}
             frenchHelp={state.settings.frenchHelp}
-            onPick={(st) => {
-              void speech.speak(say.sticker(st.en));
-              setState((s) => placeSticker(s, st.id, biome.continentId, stickerPick.today));
-              setStickerPick(null);
-              setToast(`${st.icon} ➜ 🗺️`);
+            onDone={(g) => {
+              const at = dropGift(giftStart(gifts.length, papaHome.y), 0);
+              setState((s) => receiveGift(s, g.id, species.id, biome.id, at, giftPick.today));
+              setGiftPick(null);
+              setFreshGift(g.id);
             }}
           />
         )}
@@ -496,30 +572,6 @@ function BedtimeSky() {
 }
 const BEDTIME_STARS = Array.from({ length: 16 }, (_, i) => ({ x: (i * 37 + 11) % 92 + 4, y: ((i * 53) % 34) + 4, d: (i % 5) * 0.4, s: 1.2 + (i % 3) * 0.5 }));
 
-/** Autocollant du jour : trois grands autocollants, un toucher suffit. */
-function StickerChoice({ offer, frenchHelp, onPick }: { offer: StickerDef[]; frenchHelp: boolean; onPick: (s: StickerDef) => void }) {
-  useEffect(() => {
-    const t = setTimeout(() => void speech.speak(STICKER_OFFER.en), 500);
-    return () => clearTimeout(t);
-  }, []);
-  return (
-    <div className="grow-overlay sticker-overlay">
-      <div className="grow-card sticker-card">
-        <p className="en">🎁 {STICKER_OFFER.en}</p>
-        {frenchHelp && <p className="fr">{STICKER_OFFER.fr} Il ira sur la carte du monde.</p>}
-        <div className="sticker-row">
-          {offer.map((st, i) => (
-            <button key={st.id} className="sticker-pick" style={{ animationDelay: `${0.2 + i * 0.15}s` }} onClick={() => onPick(st)} aria-label={st.en}>
-              <span>{st.icon}</span>
-              <small>{st.en}</small>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /** Le bébé à son nouveau stade, sur fond de rayons de soleil (carte « growing up »). */
 function GrowPortrait({ speciesId, sex, stage }: { speciesId: string; sex: Sex; stage: GrowthStage }) {
   const sprite = spriteFor(speciesId, { sex, stage });
@@ -567,6 +619,8 @@ interface CharacterProps {
   action?: string;
   speaking?: boolean;
   hidden?: boolean;
+  /** caché mais qui dépasse de sa cachette, de ce côté (1 = à droite, -1 = à gauche) */
+  peek?: 1 | -1;
   found?: boolean;
   onTap?: () => void;
   /** émojis des habits portés (jeu « Too hot! ») */
@@ -592,7 +646,7 @@ interface CharacterProps {
   paused?: boolean;
 }
 
-function Character({ actor, state, species, place, question, action, speaking, hidden, found, onTap, wearing, wanted, glow, cuddle, onHold, onDragTo, onDragEnd, baseH, face, dim, paused }: CharacterProps) {
+function Character({ actor, state, species, place, question, action, speaking, hidden, peek, found, onTap, wearing, wanted, glow, cuddle, onHold, onDragTo, onDragEnd, baseH, face, dim, paused }: CharacterProps) {
   const sprite = spriteOf(state, species, actor);
   const name = actorName(state, species, actor);
   const rig = rigFor(sprite?.path.split('/').pop()?.replace(/\.\w+$/, ''));
@@ -720,7 +774,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const base = baseH ?? place.h;
   return (
     <button
-      className={`char${action ? ` act-${action}` : ''}${speaking ? ' speaking' : ''}${hidden ? ' hidden' : ''}${found ? ' found' : ''}${puppet && puppetOk ? ' puppeted' : ''}${puppet && walk ? ' walking' : ''}${flies && walk && !dragging ? ' flying' : ''}${wanted ? ' wanted' : ''}${glow ? ' glow' : ''}${cuddle ? (actor.kind === 'baby' ? ' tickled' : ' hugged') : ''}${onDragTo ? ' movable' : ''}${dragging ? ' dragging' : ''}${nameInside(place.y) ? ' low' : ''}`}
+      className={`char${action ? ` act-${action}` : ''}${speaking ? ' speaking' : ''}${hidden ? ' hidden' : ''}${hidden && peek ? ` peek peek-${peek === 1 ? 'r' : 'l'}` : ''}${found ? ' found' : ''}${puppet && puppetOk ? ' puppeted' : ''}${puppet && walk ? ' walking' : ''}${flies && walk && !dragging ? ' flying' : ''}${wanted ? ' wanted' : ''}${glow ? ' glow' : ''}${cuddle ? (actor.kind === 'baby' ? ' tickled' : ' hugged') : ''}${onDragTo ? ' movable' : ''}${dragging ? ' dragging' : ''}${nameInside(place.y) ? ' low' : ''}`}
       style={{
         // déplacé par transform (calculé par la carte graphique, sans recalcul de mise en page) : marche fluide
         height: `${base}%`,
@@ -948,21 +1002,24 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
         const hiding = run.hiding && mySpeakers.includes(run.hiding.who) ? run.hiding : null;
         const anchorAt = (anchorId: string) => place.anchors.find((x) => x.id === anchorId);
         const target = hiding?.found ? anchorAt(hiding.at) : move ? anchorAt(move.anchor) : undefined;
-        const toY = target ? (target.stand?.y ?? target.hit.y + target.hit.h) : home.y;
+        // caché : il dépasse à moitié du bord de sa cachette (cache-cache, game/peek.ts)
+        const hideAt = hiding && !hiding.found ? anchorAt(hiding.at) : undefined;
+        const peek = hideAt ? peekSpot(hideAt) : undefined;
+        const toY = peek ? peek.y : target ? (target.stand?.y ?? target.hit.y + target.hit.h) : home.y;
         const natural = homePlacement(a, family, place.groundY).h;
-        const toX = target ? (target.stand?.x ?? target.hit.x + target.hit.w / 2) : home.x;
+        const toX = peek ? peek.x : target ? (target.stand?.x ?? target.hit.x + target.hit.w / 2) : home.x;
         // décor à percher : il va se poser sur l'endroit le plus proche de ce qu'il va voir (rocher, branche, nid)
         const seat = target && place.seats?.length ? (place.groundToo ? nearSeat(place.seats, natural, toX, toY, SEAT_REACH) : snapToSeats(place.seats, natural, toX, toY)) : undefined;
         const perched = seat ? (({ seat: _seat, ...on }: typeof seat) => ({ ...home, ...on }))(seat) : undefined;
         // même perspective que l'animal posé au doigt (taille au fond choisie sur le dessin du décor, places/depth.ts) ;
         // sur un rocher, la taille de son pied ; jamais plus petit qu'au fond du sol
         const sizeY = Math.max(perchAt(place, toX, toY) ?? toY, place.farY === undefined ? toY : Math.min(farAt(place.farY, toX), home.y));
-        const pos = perched ?? (target ? { ...home, x: toX, y: toY, h: place.lane ? home.h : home.h * placeScale(place, home.y)(home.y, sizeY) } : home);
+        const pos = perched ?? (target || peek ? { ...home, x: toX, y: toY, h: place.lane ? home.h : home.h * placeScale(place, home.y)(home.y, sizeY) } : home);
         const acting = run.acting && mySpeakers.includes(run.acting.who) ? run.acting.action : undefined;
         const speaking = !!run.bubble && mySpeakers.includes(run.bubble.who) && !move;
         const worn = mySpeakers.flatMap((sp) => run.wearing[sp] ?? []);
         const glowing = !!q.reveal?.actor && mySpeakers.includes(q.reveal.actor);
-        return <Character key={id} actor={a} state={state} species={species} place={pos} baseH={place.seats?.length && !place.groundToo ? natural : home.h} dim={!!run.night} action={acting ?? move?.action} speaking={speaking} hidden={!!hiding && !hiding.found} found={!!hiding?.found} wearing={worn} wanted={q.wantsActor} glow={glowing} onTap={q.wantsActor ? () => q.tapActor(mySpeakers) : undefined} />;
+        return <Character key={id} actor={a} state={state} species={species} place={pos} baseH={place.seats?.length && !place.groundToo ? natural : home.h} dim={!!run.night} action={acting ?? move?.action} speaking={speaking} hidden={!!hiding && !hiding.found} peek={peek?.side} face={peek?.side} found={!!hiding?.found} wearing={worn} wanted={q.wantsActor} glow={glowing} onTap={peek && hiding && q.wantsAnchor ? () => q.tapAnchor(hiding.at) : q.wantsActor ? () => q.tapActor(mySpeakers) : undefined} />;
       })}
       <div className="quest-title">
         {running.icon} {running.title}

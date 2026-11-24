@@ -189,5 +189,21 @@ export const DOLPHINS = {
   reply: { jump: L("Wheee! I'm jumping!", 'Youpi ! Je saute !'), swim: L("I'm swimming! Look!", 'Je nage ! Regarde !'), splash: L('Splish, splash!', 'Plouf, plouf !') } as Record<DolphinMove, Line>,
 } as const;
 
+/**
+ * Les deux dauphins du jeu (2026-11-24) : la planche « Dauphins joyeux » (la maman et son petit qui NAGENT, sous
+ * l'eau), gardés ensemble sur une seule image comme les baleines (`scripts/sea_famille.py`). Les anciennes images
+ * `dolphin_*_hd` sautaient hors de l'eau avec leur flaque : absurde en plein fond marin.
+ */
+export const DOLPHIN_FAMILY = 'dolphin_family_hd';
+
+/** Où toucher chaque dauphin sur cette image (en % de l'image) : le petit en bas à gauche, la maman en haut. */
+export const DOLPHIN_ZONES: Readonly<Record<DolphinId, readonly { x: number; y: number; w: number; h: number }[]>> = {
+  big: [
+    { x: 0, y: 0, w: 100, h: 54 },
+    { x: 57, y: 54, w: 30, h: 26 },
+  ],
+  little: [{ x: 4, y: 54, w: 53, h: 46 }],
+};
+
 /** « Big dolphin, jump! » */
 export const dolphinOrder = (d: DolphinId, m: DolphinMove): Line => L(`${DOLPHINS.name[d].en}, ${DOLPHINS.move[m].en}`, `${DOLPHINS.name[d].fr}, ${DOLPHINS.move[m].fr}`);

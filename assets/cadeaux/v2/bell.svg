@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="47.4 15.8 313.5 394.4">
+<defs>
+<linearGradient id="bell-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7b8"/><stop offset=".25" stop-color="#ffd84a"/><stop offset=".6" stop-color="#f4a71e"/><stop offset="1" stop-color="#c46f0c"/></linearGradient>
+<radialGradient id="bell-gr" cx="30%" cy="24%" r="95%"><stop offset="0" stop-color="#fff4a8"/><stop offset=".35" stop-color="#ffd23c"/><stop offset=".72" stop-color="#f09c1a"/><stop offset="1" stop-color="#bd650a"/></radialGradient>
+<linearGradient id="bell-gh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e99a1c"/><stop offset=".22" stop-color="#fff0a0"/><stop offset=".42" stop-color="#ffd23c"/><stop offset=".78" stop-color="#e8921a"/><stop offset="1" stop-color="#b8620c"/></linearGradient>
+<linearGradient id="bell-gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0a0"/><stop offset=".4" stop-color="#ffd23c"/><stop offset="1" stop-color="#cf7a10"/></linearGradient>
+<radialGradient id="bell-shade" cx="28%" cy="24%" r="90%"><stop offset=".5" stop-color="#a04a08" stop-opacity="0"/><stop offset=".85" stop-color="#a44a0a" stop-opacity=".3"/><stop offset="1" stop-color="#7c3008" stop-opacity=".55"/></radialGradient>
+<linearGradient id="bell-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a4608" stop-opacity="0"/><stop offset="1" stop-color="#8a3a06" stop-opacity=".5"/></linearGradient>
+<linearGradient id="bell-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff0c8" stop-opacity=".95"/><stop offset=".07" stop-color="#ffe9c0" stop-opacity=".5"/><stop offset=".2" stop-color="#ffe9c0" stop-opacity="0"/></linearGradient>
+<filter id="bell-b9" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
+<filter id="bell-b3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.5"/></filter>
+<filter id="bell-b1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.5"/></filter>
+<filter id="bell-spec" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".01 .018" numOctaves="2" seed="4" result="n"/><feSpecularLighting in="n" surfaceScale="8" specularConstant="1.0" specularExponent="24" lighting-color="#fffbe0" result="s"><feDistantLight azimuth="225" elevation="50"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter>
+<filter id="bell-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".02 .5" numOctaves="3" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 .1  0 0 0 0 .05  0 0 0 2.4 -1.1"/></filter>
+
+<path id="bell-body" d="M160,92 C160,68 240,68 240,92 C240,150 232,200 262,250 C292,300 346,330 348,384 C300,404 100,404 52,384 C54,330 108,300 138,250 C168,200 160,150 160,92Z"/>
+<clipPath id="bell-clip"><use href="#bell-body"/></clipPath>
+<radialGradient id="bell-red" cx="32%" cy="28%" r="85%"><stop offset="0" stop-color="#ff8a74"/><stop offset=".4" stop-color="#ef2f3a"/><stop offset="1" stop-color="#9c1022"/></radialGradient>
+<linearGradient id="bell-red2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6a5e"/><stop offset="1" stop-color="#a8142a"/></linearGradient>
+</defs>
+
+<use href="#bell-body" fill="#7a3a08" opacity=".25" transform="translate(8 8)" filter="url(#bell-b9)"/>
+<use href="#bell-body" fill="url(#bell-gr)"/>
+<g clip-path="url(#bell-clip)">
+<rect x="40" y="60" width="320" height="350" fill="url(#bell-shade)"/>
+<rect x="40" y="300" width="320" height="110" fill="url(#bell-ao)"/>
+<ellipse cx="220" cy="410" rx="170" ry="40" fill="#ffc060" opacity=".55" filter="url(#bell-b9)"/>
+<rect x="240" y="60" width="120" height="350" fill="url(#bell-rim)"/>
+<path d="M60,352 C110,376 290,376 340,352" fill="none" stroke="#b8620c" stroke-width="16" stroke-opacity=".75"/>
+<path d="M62,346 C112,368 288,368 338,346" fill="none" stroke="#ffe27a" stroke-width="5" stroke-opacity=".9" filter="url(#bell-b1)"/>
+<path d="M104,300 C150,330 250,330 296,300" fill="none" stroke="#b8620c" stroke-width="4" stroke-opacity=".5"/>
+<rect x="40" y="60" width="320" height="350" filter="url(#bell-spec)" opacity=".3"/>
+<ellipse cx="150" cy="250" rx="22" ry="90" transform="rotate(14 150 250)" fill="#fff" opacity=".6" filter="url(#bell-b3)"/>
+<path d="M118,318 C100,336 92,350 90,360" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".85" filter="url(#bell-b1)"/>
+<path d="M176,100 C172,150 170,190 160,230" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".8" filter="url(#bell-b1)"/>
+</g>
+<circle cx="200" cy="84" r="18" fill="url(#bell-gr)"/><ellipse cx="193" cy="77" rx="6" ry="4" fill="#fff" opacity=".8" filter="url(#bell-b1)"/>
+<path d="M186,88 C176,120 150,150 126,170 L148,184 C170,164 192,130 200,96Z" fill="url(#bell-red2)"/>
+<path d="M214,88 C224,120 250,150 274,170 L252,184 C230,164 208,130 200,96Z" fill="url(#bell-red2)"/>
+<path d="M196,70 C170,14 100,6 96,44 C94,80 160,90 196,70Z" fill="url(#bell-red)"/>
+<path d="M204,70 C230,14 300,6 304,44 C306,80 240,90 204,70Z" fill="url(#bell-red)"/>
+<path d="M120,40 C128,26 150,24 172,38" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".6" filter="url(#bell-b1)"/>
+<path d="M280,40 C272,26 250,24 228,38" fill="none" stroke="#ffd0a0" stroke-width="5" stroke-linecap="round" opacity=".6" filter="url(#bell-b1)"/>
+<ellipse cx="200" cy="72" rx="22" ry="19" fill="url(#bell-red)"/>
+<ellipse cx="192" cy="66" rx="8" ry="5" fill="#fff" opacity=".7" filter="url(#bell-b1)"/>
+<path d="M182,86 C192,94 208,94 218,86" fill="none" stroke="#7a0e20" stroke-opacity=".5" stroke-width="5" filter="url(#bell-b1)"/>
+
+</svg>

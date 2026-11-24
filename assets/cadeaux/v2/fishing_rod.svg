@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="28.2 47.2 491.3 664.1">
+<defs>
+<radialGradient id="fishing_rod-shade" cx="30%" cy="24%" r="95%"><stop offset=".45" stop-color="#5a2a10" stop-opacity="0"/><stop offset=".85" stop-color="#5a2a10" stop-opacity=".30"/><stop offset="1" stop-color="#5a2a10" stop-opacity=".55"/></radialGradient>
+<linearGradient id="fishing_rod-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a2a10" stop-opacity="0"/><stop offset="1" stop-color="#5a2a10" stop-opacity=".5"/></linearGradient>
+<linearGradient id="fishing_rod-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe0a8" stop-opacity=".95"/><stop offset=".07" stop-color="#ffe0a8" stop-opacity=".45"/><stop offset=".2" stop-color="#ffe0a8" stop-opacity="0"/></linearGradient>
+<radialGradient id="fishing_rod-bounce" cx="60%" cy="100%" r="55%"><stop offset="0" stop-color="#ffc890" stop-opacity=".6"/><stop offset="1" stop-color="#ffc890" stop-opacity="0"/></radialGradient>
+<filter id="fishing_rod-b9" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8.0"/></filter>
+<filter id="fishing_rod-b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.0"/></filter>
+<filter id="fishing_rod-b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2"/></filter>
+<filter id="fishing_rod-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .2" numOctaves="3" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="fishing_rod-woodv" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".2 .012" numOctaves="3" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="fishing_rod-gloss" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="2" seed="5" result="n"/><feSpecularLighting in="n" surfaceScale="8" specularConstant="1.0" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="48"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter>
+<filter id="fishing_rod-rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9.0" xChannelSelector="R" yChannelSelector="G"/></filter>
+<linearGradient id="fishing_rod-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2a8"/><stop offset=".45" stop-color="#ffcf3a"/><stop offset="1" stop-color="#d98a12"/></linearGradient>
+<linearGradient id="fishing_rod-goldh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe680"/><stop offset=".45" stop-color="#f6b92a"/><stop offset="1" stop-color="#c47a10"/></linearGradient>
+<linearGradient id="fishing_rod-steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b6c0d2"/><stop offset="1" stop-color="#6f7a95"/></linearGradient>
+<linearGradient id="fishing_rod-steelv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b0bbd0"/><stop offset="1" stop-color="#6a7592"/></linearGradient>
+<linearGradient id="fishing_rod-woodg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d98a42"/><stop offset=".5" stop-color="#b8662a"/><stop offset="1" stop-color="#8a431a"/></linearGradient>
+<linearGradient id="fishing_rod-woodv2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e4a05a"/><stop offset=".5" stop-color="#bf6e30"/><stop offset="1" stop-color="#8d471c"/></linearGradient>
+<linearGradient id="fishing_rod-bam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d676"/><stop offset=".4" stop-color="#d9a238"/><stop offset="1" stop-color="#8a5a18"/></linearGradient>
+<linearGradient id="fishing_rod-cork" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4b684"/><stop offset=".5" stop-color="#b87a44"/><stop offset="1" stop-color="#7a4620"/></linearGradient>
+<radialGradient id="fishing_rod-bob" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#ff8a78"/><stop offset=".5" stop-color="#e22c24"/><stop offset="1" stop-color="#9a1414"/></radialGradient>
+<radialGradient id="fishing_rod-bobw" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#eef0f8"/><stop offset="1" stop-color="#b4b8d8"/></radialGradient>
+<clipPath id="fishing_rod-bobc"><circle cx="62" cy="318" r="25"/></clipPath>
+<path id="fishing_rod-rodp" d="M0,-13 L768,-2.5 L768,2.5 L0,13Z"/>
+<clipPath id="fishing_rod-rodc"><use href="#fishing_rod-rodp"/></clipPath>
+</defs>
+<path d="M330,700 L330,560 M330,560 L304,448 M330,560 L360,444" stroke="#5a2a10" stroke-opacity=".3" stroke-width="22" stroke-linecap="round" fill="none" transform="translate(6 3)" filter="url(#fishing_rod-b3)"/>
+<path d="M330,698 L330,560 M330,560 L304,448 M330,560 L360,444" stroke="url(#fishing_rod-woodv2)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M324,690 L324,566 M322,552 L300,456 M326,552 L352,452" stroke="#ffe6b8" stroke-width="4" stroke-linecap="round" opacity=".6" fill="none" filter="url(#fishing_rod-b1)"/>
+<g transform="translate(500 690) rotate(-124.93)">
+<use href="#fishing_rod-rodp" fill="#4a2410" opacity=".3" transform="translate(5 8)" filter="url(#fishing_rod-b3)"/>
+<use href="#fishing_rod-rodp" fill="url(#fishing_rod-bam)"/>
+<g clip-path="url(#fishing_rod-rodc)"><rect x="190" y="-11.9" width="9" height="23.8" rx="3" fill="#8a5018" opacity=".8"/><rect x="192" y="-10.4" width="2" height="20.8" fill="#ffe6a0" opacity=".5"/><rect x="285" y="-10.6" width="9" height="21.2" rx="3" fill="#8a5018" opacity=".8"/><rect x="287" y="-9.1" width="2" height="18.2" fill="#ffe6a0" opacity=".5"/><rect x="380" y="-9.3" width="9" height="18.6" rx="3" fill="#8a5018" opacity=".8"/><rect x="382" y="-7.8" width="2" height="15.6" fill="#ffe6a0" opacity=".5"/><rect x="475" y="-8.0" width="9" height="16.0" rx="3" fill="#8a5018" opacity=".8"/><rect x="477" y="-6.5" width="2" height="13.0" fill="#ffe6a0" opacity=".5"/><rect x="570" y="-6.7" width="9" height="13.4" rx="3" fill="#8a5018" opacity=".8"/><rect x="572" y="-5.2" width="2" height="10.4" fill="#ffe6a0" opacity=".5"/><rect x="665" y="-5.4" width="9" height="10.8" rx="3" fill="#8a5018" opacity=".8"/><rect x="667" y="-3.9" width="2" height="7.8" fill="#ffe6a0" opacity=".5"/>
+<rect x="0" y="-14" width="768" height="12" fill="#fff6c0" opacity=".35" filter="url(#fishing_rod-b3)"/>
+<rect x="0" y="4" width="768" height="10" fill="#6a3a10" opacity=".3" filter="url(#fishing_rod-b3)"/></g>
+<path d="M0,-13 L170,-9.5 L170,9.5 L0,13Z" fill="url(#fishing_rod-cork)"/>
+<path d="M0,-13 L170,-9.5 L170,-6 L0,-9Z" fill="#ffe6b8" opacity=".6"/>
+<path d="M40,-12 L40,12 M80,-11 L80,11 M120,-10 L120,10" stroke="#5a2a10" stroke-opacity=".35" stroke-width="3"/>
+<path d="M170,-10 L182,-10 L182,10 L170,10Z" fill="url(#fishing_rod-steelv)"/>
+<rect x="0" y="-12" width="16" height="24" rx="5" fill="#6a3a10"/>
+<g transform="translate(228 0)"><path d="M-10,8 L-10,22 L12,22 L12,8Z" fill="url(#fishing_rod-steel)"/><circle cx="2" cy="40" r="30" fill="#6f7a95"/><circle cx="2" cy="40" r="30" fill="url(#fishing_rod-steel)"/><circle cx="2" cy="40" r="20" fill="#e8a830"/><circle cx="2" cy="40" r="20" fill="url(#fishing_rod-gold)"/><circle cx="2" cy="40" r="7" fill="#8a5a18"/>
+<path d="M-18,26 A28,28 0 0 1 4,12" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none" opacity=".85" filter="url(#fishing_rod-b1)"/><path d="M26,52 L56,66" stroke="url(#fishing_rod-steel)" stroke-width="7" stroke-linecap="round"/><circle cx="58" cy="67" r="9" fill="#e22c24"/></g>
+</g>
+<path d="M62,62 C60,150 66,230 62,292" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".95"/>
+<path d="M62,62 C60,150 66,230 62,292" fill="none" stroke="#8a90a8" stroke-width="1" stroke-opacity=".5" transform="translate(1 0)"/>
+<path d="M62,344 C64,380 58,410 62,450 C70,466 80,462 80,448" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".95"/>
+<path d="M80,448 C80,436 76,434 72,438" fill="none" stroke="url(#fishing_rod-steel)" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="62" cy="318" rx="26" ry="28" fill="#2a1030" opacity=".25" transform="translate(5 6)" filter="url(#fishing_rod-b3)"/>
+<circle cx="62" cy="318" r="25" fill="url(#fishing_rod-bobw)"/>
+<g clip-path="url(#fishing_rod-bobc)"><rect x="30" y="276" width="64" height="36" fill="url(#fishing_rod-bob)"/><rect x="30" y="344" width="64" height="30" fill="url(#fishing_rod-bob)"/><ellipse cx="62" cy="318" rx="25" ry="8" fill="url(#fishing_rod-bobw)"/>
+<circle cx="62" cy="318" r="25" fill="url(#fishing_rod-shade)"/><rect x="62" y="290" width="40" height="60" fill="url(#fishing_rod-rim)"/></g>
+<circle cx="62" cy="318" r="25" fill="none" stroke="#9a1414" stroke-opacity=".25" stroke-width="2"/>
+<ellipse cx="52" cy="304" rx="9" ry="5" transform="rotate(-35 52 304)" fill="#fff" opacity=".9" filter="url(#fishing_rod-b1)"/>
+<rect x="58" y="287" width="8" height="8" rx="3" fill="#e22c24"/><rect x="58" y="341" width="8" height="8" rx="3" fill="#bfc4de"/>
+</svg>

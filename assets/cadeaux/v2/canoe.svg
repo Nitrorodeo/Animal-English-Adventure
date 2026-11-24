@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 38 890 214">
+<defs>
+<radialGradient id="canoe-shade" cx="30%" cy="24%" r="95%"><stop offset=".45" stop-color="#5a1010" stop-opacity="0"/><stop offset=".85" stop-color="#5a1010" stop-opacity=".30"/><stop offset="1" stop-color="#5a1010" stop-opacity=".55"/></radialGradient>
+<linearGradient id="canoe-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a1010" stop-opacity="0"/><stop offset="1" stop-color="#5a1010" stop-opacity=".5"/></linearGradient>
+<linearGradient id="canoe-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffd0a0" stop-opacity=".95"/><stop offset=".07" stop-color="#ffd0a0" stop-opacity=".45"/><stop offset=".2" stop-color="#ffd0a0" stop-opacity="0"/></linearGradient>
+<radialGradient id="canoe-bounce" cx="60%" cy="100%" r="55%"><stop offset="0" stop-color="#ffb890" stop-opacity=".6"/><stop offset="1" stop-color="#ffb890" stop-opacity="0"/></radialGradient>
+<filter id="canoe-b9" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9.6"/></filter>
+<filter id="canoe-b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.5999999999999996"/></filter>
+<filter id="canoe-b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.44"/></filter>
+<filter id="canoe-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .2" numOctaves="3" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="canoe-woodv" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".2 .012" numOctaves="3" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="canoe-gloss" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="2" seed="5" result="n"/><feSpecularLighting in="n" surfaceScale="8" specularConstant="1.0" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="48"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter>
+<filter id="canoe-rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="10.799999999999999" xChannelSelector="R" yChannelSelector="G"/></filter>
+<linearGradient id="canoe-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2a8"/><stop offset=".45" stop-color="#ffcf3a"/><stop offset="1" stop-color="#d98a12"/></linearGradient>
+<linearGradient id="canoe-goldh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe680"/><stop offset=".45" stop-color="#f6b92a"/><stop offset="1" stop-color="#c47a10"/></linearGradient>
+<linearGradient id="canoe-steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b6c0d2"/><stop offset="1" stop-color="#6f7a95"/></linearGradient>
+<linearGradient id="canoe-steelv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b0bbd0"/><stop offset="1" stop-color="#6a7592"/></linearGradient>
+<linearGradient id="canoe-woodg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d98a42"/><stop offset=".5" stop-color="#b8662a"/><stop offset="1" stop-color="#8a431a"/></linearGradient>
+<linearGradient id="canoe-woodv2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e4a05a"/><stop offset=".5" stop-color="#bf6e30"/><stop offset="1" stop-color="#8d471c"/></linearGradient>
+<linearGradient id="canoe-hull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6a50"/><stop offset=".45" stop-color="#e02c24"/><stop offset="1" stop-color="#9a1414"/></linearGradient>
+<linearGradient id="canoe-inn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a1810"/><stop offset="1" stop-color="#b03a24"/></linearGradient>
+<linearGradient id="canoe-woodh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8a864"/><stop offset=".5" stop-color="#c0702e"/><stop offset="1" stop-color="#8d471c"/></linearGradient>
+<path id="canoe-hullp" d="M20,92 C250,150 650,150 880,92 C800,200 640,250 450,250 C260,250 100,200 20,92Z"/>
+<clipPath id="canoe-hullc"><use href="#canoe-hullp"/></clipPath>
+<path id="canoe-inp" d="M20,92 C250,32 650,32 880,92 C650,150 250,150 20,92Z"/>
+<clipPath id="canoe-inc"><use href="#canoe-inp"/></clipPath>
+</defs>
+<use href="#canoe-inp" fill="url(#canoe-inn)"/>
+<g clip-path="url(#canoe-inc)">
+<use href="#canoe-inp" filter="url(#canoe-wood)" opacity=".5"/>
+<rect x="0" y="30" width="900" height="40" fill="#300a06" opacity=".5" filter="url(#canoe-b9)"/>
+<path d="M300,56 L330,52 L352,120 L318,128Z M570,52 L596,56 L592,128 L560,122Z" fill="#c8761a"/>
+<path d="M300,56 L330,52 L331,64 L303,68Z M570,52 L596,56 L595,68 L567,64Z" fill="#f2b068"/>
+<g transform="rotate(-4 450 100)"><rect x="300" y="94" width="400" height="14" rx="7" fill="#4a2410" opacity=".4" filter="url(#canoe-b3)" transform="translate(4 6)"/><rect x="300" y="88" width="400" height="14" rx="7" fill="url(#canoe-woodh)"/><rect x="310" y="90" width="380" height="4" rx="2" fill="#ffe6b8" opacity=".7"/>
+<rect x="690" y="76" width="14" height="38" rx="7" fill="#c0702e"/><ellipse cx="236" cy="96" rx="76" ry="22" fill="#a0561e" transform="translate(4 6)" opacity=".5" filter="url(#canoe-b3)"/><ellipse cx="236" cy="94" rx="76" ry="22" fill="url(#canoe-woodh)"/><ellipse cx="224" cy="88" rx="44" ry="6" fill="#ffe6b8" opacity=".7" filter="url(#canoe-b1)"/></g>
+</g>
+<use href="#canoe-hullp" fill="url(#canoe-hull)"/>
+<g clip-path="url(#canoe-hullc)">
+<path d="M10,120 C250,185 650,185 890,120" fill="none" stroke="#ffb890" stroke-width="10" opacity=".55"/>
+<path d="M60,150 C260,215 640,215 840,150" fill="none" stroke="#8a1010" stroke-width="3" opacity=".35"/>
+<path d="M120,185 C300,236 600,236 780,185" fill="none" stroke="#8a1010" stroke-width="3" opacity=".3"/>
+<path d="M30,100 C250,160 650,160 870,100" fill="none" stroke="#fff4c0" stroke-width="7" opacity=".85"/>
+<use href="#canoe-hullp" filter="url(#canoe-wood)" opacity=".35"/>
+<g clip-path="url(#canoe-hullc)"><rect x="10" y="80" width="880" height="180" fill="url(#canoe-shade)"/><rect x="10" y="170.0" width="880" height="90.0" fill="url(#canoe-ao)"/><rect x="766.8" y="80" width="123.20000000000002" height="180" fill="url(#canoe-rim)"/></g>
+<ellipse cx="610" cy="256" rx="200" ry="40" fill="url(#canoe-bounce)"/>
+<ellipse cx="300" cy="150" rx="150" ry="22" transform="rotate(4 300 150)" fill="#fff" opacity=".4" filter="url(#canoe-b9)"/>
+<path d="M120,150 C220,176 330,188 440,190" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".7" filter="url(#canoe-b1)"/>
+</g>
+<path d="M20,92 C250,150 650,150 880,92" fill="none" stroke="#fff4c0" stroke-width="9" stroke-linecap="round"/>
+<path d="M60,110 C250,148 450,152 520,150" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8" filter="url(#canoe-b1)"/>
+<path d="M20,92 C14,70 22,52 36,40 C34,60 40,76 52,88Z" fill="#e02c24"/><path d="M880,92 C886,70 878,52 864,40 C866,60 860,76 848,88Z" fill="#c82620"/>
+<path d="M26,84 C24,68 28,56 34,46" stroke="#ffb0a0" stroke-width="4" fill="none" stroke-linecap="round" opacity=".8"/>
+</svg>

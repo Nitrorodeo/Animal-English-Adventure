@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="76.9 17.2 407.0 516.1">
+<defs>
+<radialGradient id="bucket-shade" cx="30%" cy="24%" r="95%"><stop offset=".45" stop-color="#0e2a6a" stop-opacity="0"/><stop offset=".85" stop-color="#0e2a6a" stop-opacity=".30"/><stop offset="1" stop-color="#0e2a6a" stop-opacity=".55"/></radialGradient>
+<linearGradient id="bucket-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e2a6a" stop-opacity="0"/><stop offset="1" stop-color="#0e2a6a" stop-opacity=".5"/></linearGradient>
+<linearGradient id="bucket-rim" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#bfe4ff" stop-opacity=".95"/><stop offset=".07" stop-color="#bfe4ff" stop-opacity=".45"/><stop offset=".2" stop-color="#bfe4ff" stop-opacity="0"/></linearGradient>
+<radialGradient id="bucket-bounce" cx="60%" cy="100%" r="55%"><stop offset="0" stop-color="#9ad0ff" stop-opacity=".6"/><stop offset="1" stop-color="#9ad0ff" stop-opacity="0"/></radialGradient>
+<filter id="bucket-b9" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8.0"/></filter>
+<filter id="bucket-b3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.0"/></filter>
+<filter id="bucket-b1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.2"/></filter>
+<filter id="bucket-wood" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .2" numOctaves="3" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="bucket-woodv" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".2 .012" numOctaves="3" seed="9" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .30  0 0 0 0 .13  0 0 0 0 .04  2.4 0 0 0 -.95" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in"/></filter>
+<filter id="bucket-gloss" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="2" seed="5" result="n"/><feSpecularLighting in="n" surfaceScale="8" specularConstant="1.0" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="48"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in"/></filter>
+<filter id="bucket-rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9.0" xChannelSelector="R" yChannelSelector="G"/></filter>
+<linearGradient id="bucket-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2a8"/><stop offset=".45" stop-color="#ffcf3a"/><stop offset="1" stop-color="#d98a12"/></linearGradient>
+<linearGradient id="bucket-goldh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe680"/><stop offset=".45" stop-color="#f6b92a"/><stop offset="1" stop-color="#c47a10"/></linearGradient>
+<linearGradient id="bucket-steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b6c0d2"/><stop offset="1" stop-color="#6f7a95"/></linearGradient>
+<linearGradient id="bucket-steelv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset=".5" stop-color="#b0bbd0"/><stop offset="1" stop-color="#6a7592"/></linearGradient>
+<linearGradient id="bucket-woodg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d98a42"/><stop offset=".5" stop-color="#b8662a"/><stop offset="1" stop-color="#8a431a"/></linearGradient>
+<linearGradient id="bucket-woodv2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e4a05a"/><stop offset=".5" stop-color="#bf6e30"/><stop offset="1" stop-color="#8d471c"/></linearGradient>
+<linearGradient id="bucket-blue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#52b0ff"/><stop offset=".45" stop-color="#2a82e2"/><stop offset="1" stop-color="#1650b0"/></linearGradient>
+<linearGradient id="bucket-blueh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ac4ff"/><stop offset="1" stop-color="#2a82e2"/></linearGradient>
+<radialGradient id="bucket-water" cx="38%" cy="30%" r="85%"><stop offset="0" stop-color="#e8fbff"/><stop offset=".45" stop-color="#8ad8f4"/><stop offset="1" stop-color="#3a9ede"/></radialGradient>
+<path id="bucket-body" d="M92,172 L142,500 Q280,548 418,500 L468,172 Q280,222 92,172Z"/>
+<clipPath id="bucket-bodyc"><use href="#bucket-body"/></clipPath>
+<g id="bucket-star"><path d="M0,-16 C2,-4 4,-2 16,0 C4,2 2,4 0,16 C-2,4 -4,2 -16,0 C-4,-2 -2,-4 0,-16Z" fill="#fff"/></g>
+</defs>
+<path d="M96,176 C90,10 470,10 464,176" fill="none" stroke="#1a2a5a" stroke-opacity=".25" stroke-width="18" transform="translate(5 7)" filter="url(#bucket-b3)"/>
+<path d="M96,176 C90,10 470,10 464,176" fill="none" stroke="#6f7a95" stroke-width="15" stroke-linecap="round"/>
+<path d="M96,176 C90,10 470,10 464,176" fill="none" stroke="url(#bucket-steelv)" stroke-width="10" stroke-linecap="round"/>
+<path d="M104,150 C108,70 190,30 270,26" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".9" filter="url(#bucket-b1)"/>
+<use href="#bucket-body" fill="#0e2a6a" opacity=".28" transform="translate(10 10)" filter="url(#bucket-b9)"/>
+<use href="#bucket-body" fill="url(#bucket-blue)"/>
+<g clip-path="url(#bucket-bodyc)">
+<path d="M70,262 Q280,318 490,262" fill="none" stroke="#1650b0" stroke-opacity=".5" stroke-width="22" filter="url(#bucket-b3)"/>
+<path d="M70,258 Q280,314 490,258" fill="none" stroke="url(#bucket-blueh)" stroke-width="20"/>
+<path d="M70,266 Q280,322 490,266" fill="none" stroke="#0e3a8a" stroke-opacity=".35" stroke-width="4"/>
+<path d="M70,392 Q280,448 490,392" fill="none" stroke="#1650b0" stroke-opacity=".5" stroke-width="22" filter="url(#bucket-b3)"/>
+<path d="M70,388 Q280,444 490,388" fill="none" stroke="url(#bucket-blueh)" stroke-width="20"/>
+<path d="M70,396 Q280,452 490,396" fill="none" stroke="#0e3a8a" stroke-opacity=".35" stroke-width="4"/>
+<g clip-path="url(#bucket-bodyc)"><rect x="80" y="160" width="400" height="400" fill="url(#bucket-shade)"/><rect x="80" y="360.0" width="400" height="200.0" fill="url(#bucket-ao)"/><rect x="408.0" y="160" width="72.0" height="400" fill="url(#bucket-rim)"/></g>
+<ellipse cx="380" cy="545" rx="150" ry="50" fill="url(#bucket-bounce)"/>
+<ellipse cx="190" cy="330" rx="34" ry="110" transform="rotate(8 190 330)" fill="#fff" opacity=".5" filter="url(#bucket-b9)"/>
+<path d="M142,230 C146,300 158,380 172,450" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" opacity=".8" filter="url(#bucket-b1)"/>
+<use href="#bucket-body" filter="url(#bucket-gloss)" opacity=".1"/>
+</g>
+<ellipse cx="280" cy="172" rx="192" ry="44" fill="#1650b0"/>
+<ellipse cx="280" cy="168" rx="192" ry="42" fill="url(#bucket-blueh)"/>
+<ellipse cx="280" cy="176" rx="176" ry="34" fill="#0e3a8a" opacity=".6"/>
+<ellipse cx="280" cy="172" rx="170" ry="31" fill="url(#bucket-water)"/>
+<ellipse cx="280" cy="172" rx="170" ry="31" fill="none" stroke="#ffffff" stroke-opacity=".6" stroke-width="3"/>
+<path d="M130,176 Q175,164 225,176 T330,176 T430,172" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" opacity=".8"/>
+<path d="M170,192 Q220,184 270,192 T370,190" fill="none" stroke="#2a82e2" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+<ellipse cx="200" cy="160" rx="50" ry="8" fill="#fff" opacity=".85" filter="url(#bucket-b1)"/>
+<use href="#bucket-star" transform="translate(205 168) scale(1.3)"/><use href="#bucket-star" transform="translate(340 160) scale(.9)" opacity=".95"/><use href="#bucket-star" transform="translate(395 178) scale(.6)"/>
+<path d="M92,172 Q280,226 468,172" fill="none" stroke="#9ad8ff" stroke-width="10" stroke-linecap="round"/>
+<path d="M104,176 Q200,206 300,212" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".85" filter="url(#bucket-b1)"/>
+<g><circle cx="98" cy="178" r="15" fill="url(#bucket-steel)"/><circle cx="98" cy="178" r="6" fill="#6f7a95"/><circle cx="94" cy="174" r="4" fill="#fff"/><circle cx="462" cy="178" r="15" fill="url(#bucket-steel)"/><circle cx="462" cy="178" r="6" fill="#6f7a95"/></g>
+</svg>

@@ -1,5 +1,6 @@
 import type { NamePron } from './nameVoice';
 import type { ActorSpot } from './spots';
+import type { OwnedGift } from './gifts';
 import type { ContinentId, GrowthStage, ParentRole, PlaceId, Sex, Tier } from '../content/types';
 
 /** v2 (2026-11-19) : trésors, aventures, lieux visités, mots découverts par continent. */
@@ -49,6 +50,10 @@ export interface PlayerState {
   stickers: PlacedSticker[];
   /** jour (AAAA-MM-JJ, heure de l'appareil) du dernier autocollant reçu ; null = jamais */
   stickerDay: string | null;
+  /** cadeaux du soir reçus par les familles, avec leur place décor par décor (voir engine/gifts.ts) */
+  gifts: OwnedGift[];
+  /** jour (AAAA-MM-JJ, heure de l'appareil) du dernier cadeau du soir reçu ; null = jamais */
+  giftDay: string | null;
   /** animaux posés au doigt dans les décors, « lieu|personnage » → place (voir engine/spots.ts) */
   spots: Record<string, ActorSpot>;
 }
@@ -146,7 +151,7 @@ export interface CircleRef {
 export function newGameState(): GameState {
   return {
     version: SAVE_VERSION,
-    player: { name: 'Explorer', namePron: null, items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null, spots: {} },
+    player: { name: 'Explorer', namePron: null, items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null, gifts: [], giftDay: null, spots: {} },
     families: {},
     settings: { muted: false, slowVoice: false, frenchHelp: true, levelOverride: 'auto', speechSpeed: SPEECH_SPEED.default },
     onboarded: false,

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 82 726 622">
+<defs>
+<radialGradient id="rubber_duck-y" cx=".3" cy=".25" r=".95" ><stop offset="0" stop-color="#fff08a"/><stop offset="0.3" stop-color="#ffd62e"/><stop offset="0.75" stop-color="#fbb412"/><stop offset="1" stop-color="#e88a08"/></radialGradient>
+<radialGradient id="rubber_duck-sh" cx=".3" cy=".25" r=".9" ><stop offset="0.45" stop-color="#d0502a" stop-opacity="0"/><stop offset="0.85" stop-color="#d0502a" stop-opacity="0.22"/><stop offset="1" stop-color="#b03a30" stop-opacity="0.45"/></radialGradient>
+<radialGradient id="rubber_duck-bn" cx=".55" cy="1" r=".55" ><stop offset="0" stop-color="#ffc27a" stop-opacity="0.45"/><stop offset="1" stop-color="#ffc27a" stop-opacity="0"/></radialGradient>
+<linearGradient id="rubber_duck-bk" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#ffb347"/><stop offset="0.55" stop-color="#ff8c14"/><stop offset="1" stop-color="#e0610a"/></linearGradient>
+<linearGradient id="rubber_duck-bk2" x1="0" y1="0" x2="0" y2="1" ><stop offset="0" stop-color="#ff9a2a"/><stop offset="1" stop-color="#cf520a"/></linearGradient>
+<radialGradient id="rubber_duck-eye" cx=".4" cy=".3" r=".8" ><stop offset="0" stop-color="#4a5a8a"/><stop offset="0.35" stop-color="#1c2038"/><stop offset="1" stop-color="#06060e"/></radialGradient>
+<linearGradient id="rubber_duck-wing" x1="0" y1="0" x2="1" y2="1" ><stop offset="0" stop-color="#ffe46a"/><stop offset="0.6" stop-color="#ffc21c"/><stop offset="1" stop-color="#e8920a"/></linearGradient>
+<filter id="rubber_duck-b3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="rubber_duck-b8" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="rubber_duck-b16" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="16"/></filter>
+<filter id="rubber_duck-pl" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="16" result="b"/><feSpecularLighting in="b" surfaceScale="9" specularConstant="0.5" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="225" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s2"/></feMerge></filter>
+<path id="rubber_duck-body" d="M150,470 C150,400 260,380 380,392 C520,372 640,330 735,250 C770,330 755,470 690,560 C620,660 500,702 380,702 C240,702 150,622 150,470Z"/>
+<clipPath id="rubber_duck-bc"><use href="#rubber_duck-body"/></clipPath>
+<clipPath id="rubber_duck-hc"><circle cx="330" cy="250" r="165"/></clipPath>
+</defs>
+<g filter="url(#rubber_duck-pl)"><use href="#rubber_duck-body" fill="url(#rubber_duck-y)"/></g>
+<g clip-path="url(#rubber_duck-bc)">
+<use href="#rubber_duck-body" fill="url(#rubber_duck-sh)"/>
+<ellipse cx="450" cy="760" rx="300" ry="120" fill="url(#rubber_duck-bn)"/>
+<ellipse cx="330" cy="430" rx="190" ry="60" fill="#e0701a" fill-opacity=".4" filter="url(#rubber_duck-b16)"/>
+<path d="M700,300 C760,380 730,500 680,570" fill="none" stroke="#ffe3b0" stroke-opacity=".6" stroke-width="22" filter="url(#rubber_duck-b8)"/>
+<path d="M702,420 C700,520 640,610 560,650" fill="none" stroke="#ffd09a" stroke-opacity=".55" stroke-width="24" filter="url(#rubber_duck-b8)"/>
+</g>
+<path d="M735,250 C760,300 765,330 745,360" fill="none" stroke="#ffe9a0" stroke-opacity=".6" stroke-width="8" stroke-linecap="round" filter="url(#rubber_duck-b3)"/>
+<ellipse cx="340" cy="365" rx="135" ry="50" fill="#d0600e" fill-opacity=".3" filter="url(#rubber_duck-b8)"/>
+<!-- aile -->
+<g>
+<path d="M410,470 C470,430 590,445 640,500 C600,590 500,640 430,610 C400,580 395,510 410,470Z" fill="#c4650c" fill-opacity=".35" transform="translate(5 10)" filter="url(#rubber_duck-b8)"/>
+<path d="M410,470 C470,430 590,445 640,500 C600,590 500,640 430,610 C400,580 395,510 410,470Z" fill="url(#rubber_duck-wing)"/>
+<path d="M432,610 C500,640 600,590 640,500" fill="none" stroke="#c9700c" stroke-opacity=".5" stroke-width="10" filter="url(#rubber_duck-b3)"/>
+<path d="M430,490 C470,462 560,462 612,495" fill="none" stroke="#fff6b8" stroke-opacity=".8" stroke-width="12" stroke-linecap="round" filter="url(#rubber_duck-b3)"/>
+</g>
+<!-- tete -->
+<g filter="url(#rubber_duck-pl)"><circle cx="330" cy="250" r="165" fill="url(#rubber_duck-y)"/></g>
+<g clip-path="url(#rubber_duck-hc)">
+<circle cx="330" cy="250" r="165" fill="url(#rubber_duck-sh)"/>
+<ellipse cx="400" cy="440" rx="190" ry="90" fill="url(#rubber_duck-bn)"/>
+<path d="M470,150 C505,230 480,330 400,390" fill="none" stroke="#ffe3b0" stroke-opacity=".6" stroke-width="22" filter="url(#rubber_duck-b8)"/>
+</g>
+<ellipse cx="258" cy="130" rx="62" ry="28" transform="rotate(-38 258 130)" fill="#fff" fill-opacity=".75" filter="url(#rubber_duck-b3)"/>
+<ellipse cx="205" cy="190" rx="9" ry="5" transform="rotate(-50 205 190)" fill="#fff" fill-opacity=".9"/>
+<!-- joues -->
+<ellipse cx="215" cy="300" rx="30" ry="18" fill="#ff7a5a" fill-opacity=".38" filter="url(#rubber_duck-b8)"/>
+<ellipse cx="415" cy="290" rx="24" ry="15" fill="#ff7a5a" fill-opacity=".3" filter="url(#rubber_duck-b8)"/>
+<!-- yeux -->
+<g>
+<ellipse cx="270" cy="222" rx="29" ry="38" fill="url(#rubber_duck-eye)"/>
+<ellipse cx="260" cy="205" rx="10" ry="14" fill="#fff"/><circle cx="283" cy="240" r="5" fill="#fff" fill-opacity=".8"/>
+<ellipse cx="383" cy="214" rx="23" ry="32" fill="url(#rubber_duck-eye)"/>
+<ellipse cx="375" cy="200" rx="8" ry="11" fill="#fff"/><circle cx="393" cy="228" r="4" fill="#fff" fill-opacity=".8"/>
+</g>
+<!-- bec -->
+<g>
+<path d="M95,318 C70,300 70,262 115,252 C170,238 245,262 290,300 C300,330 255,350 175,352 C130,350 108,336 95,318Z" fill="#7a2a08" fill-opacity=".35" transform="translate(4 8)" filter="url(#rubber_duck-b8)"/>
+<g filter="url(#rubber_duck-pl)"><path d="M92,322 C60,300 62,255 112,246 C170,232 250,258 296,298 C288,326 232,344 170,342 C128,340 104,334 92,322Z" fill="url(#rubber_duck-bk)"/></g>
+<path d="M92,322 C120,334 160,342 200,338 C250,334 285,316 296,298 C270,322 220,326 175,322 C140,320 110,314 92,322Z" fill="#a83e06" fill-opacity=".5"/>
+<path d="M104,318 C125,316 150,318 190,314" fill="none" stroke="#9a3a06" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/>
+<ellipse cx="150" cy="268" rx="62" ry="12" transform="rotate(8 150 268)" fill="#fff" fill-opacity=".6" filter="url(#rubber_duck-b3)"/>
+<circle cx="126" cy="288" r="6" fill="#8a3006" fill-opacity=".55"/>
+</g>
+</svg>

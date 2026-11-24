@@ -94,3 +94,12 @@ export function dragSpot(
   }
   return { x, y, h };
 }
+
+/**
+ * Animal de la mer déplacé au doigt (2026-11-24) : coin haut-gauche de départ + mouvement du doigt (en % de la
+ * scène), borné pour qu'il ne sorte pas de l'eau (au moins 70 % de sa largeur `w` reste visible).
+ */
+export function seaDragPos(start: { x: number; y: number }, move: { x: number; y: number }, w: number): { x: number; y: number } {
+  const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+  return { x: clamp(start.x + move.x, -w * 0.3, 100 - w * 0.7), y: clamp(start.y + move.y, -15, 75) };
+}
