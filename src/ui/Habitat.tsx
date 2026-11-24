@@ -14,7 +14,7 @@ import { dayKey, placeSticker, stickerOffer, type StickerDef } from '../engine/s
 import { fillLine, type Vars } from '../engine/dialogue';
 import { applyQuestOutcome, type OutcomeEvents } from '../engine/events';
 import { nextBabySex } from '../engine/family';
-import { findBaby, selectActivities, selectAdventures, type AdventureOffer, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
+import { findBaby, hashText, selectActivities, selectAdventures, type AdventureOffer, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
 import { createRng } from '../engine/rng';
 import type { AnswerRecord } from '../engine/skills';
 import { actorId, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
@@ -168,7 +168,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
       const greeted = st.player.history.some((h) => h.speciesId === species.id);
       const memory = actor.kind === 'adult' ? getFamily(st, species.id).parentMemory[actor.role] : (findBaby(st, actor)?.questMemory ?? []);
       const need = greeted && !memory.some((m) => m.startsWith('found_water')) ? ('thirsty' as const) : null;
-      return { state: st, species, biome, actor, rng: createRng(seed + st.player.activityCounter * 31 + actorId(actor).length), need };
+      return { state: st, species, biome, actor, rng: createRng(seed + st.player.activityCounter * 31 + hashText(actorId(actor))), need };
     },
     [species, biome, seed],
   );

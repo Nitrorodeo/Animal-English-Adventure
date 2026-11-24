@@ -11,7 +11,7 @@ import { chatScript } from '../content/dialogues';
 import { NOUNS, PLACES } from '../content/places';
 import type { ActivityCtx, ActivityDef, ActorKind, AdventureDef, BiomeDef, QuestArchetype, QuestScript, SpeciesDef, Tier } from '../content/types';
 import { nextStageGoal } from './family';
-import type { Rng } from './rng';
+import { createRng, type Rng } from './rng';
 import { endPlaceOf, finalizeSteps, shareSteps, walkSteps } from './script';
 import { chooseTier, itemStatus, scriptItems, statusAtLeast } from './skills';
 import { actorId, getFamily, type ActorRef, type Baby, type GameState } from './state';
@@ -259,6 +259,64 @@ export interface RankedActivity extends BuiltQuest {
   score: number;
 }
 
+/** Petit nombre stable tiré d'un texte : chaque personnage a son propre tirage (deux prénoms de même longueur ne tombent plus pareil). */
+export function hashText(s: string): number {
+  let h = 7;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 100003;
+  return h;
+}
+
+/** Familles de jeux (par mécanique) que chaque personnage aime proposer. */
+const FATHER_LIKES: readonly string[] = ['guide', 'compare', 'build', 'plan', 'puzzle', 'locate'];
+const MOTHER_LIKES: readonly string[] = ['social', 'observe', 'tell', 'talk', 'identify', 'count', 'sort'];
+const PERSONALITY_LIKES: Readonly<Record<string, readonly string[]>> = {
+  curious: ['teach', 'locate', 'puzzle', 'observe'],
+  playful: ['compare', 'build', 'plan', 'locate'],
+  gentle: ['social', 'observe', 'tell', 'count'],
+  funny: ['talk', 'plan', 'puzzle', 'identify'],
+};
+const BOY_LIKES: readonly string[] = ['build', 'compare', 'guide'];
+const GIRL_LIKES: readonly string[] = ['social', 'tell', 'identify', 'count'];
+/** ce que chaque stade de croissance aime (le tout-petit parle et nomme ; le grand raconte et résout) */
+const STAGE_LIKES: Readonly<Record<string, readonly string[]>> = {
+  newborn: ['teach', 'talk'],
+  little: ['talk', 'identify', 'count', 'social'],
+  young: ['locate', 'build', 'compare', 'plan'],
+  companion: ['puzzle', 'tell', 'guide', 'compare'],
+};
+
+/**
+ * Affinité d'un personnage avec un jeu : Papa guide et agit, Maman soigne et observe ; un bébé suit sa
+ * personnalité, son sexe (petit coup de pouce) et son stade. Un jeu que seul son rôle peut proposer est « à lui ».
+ * Ces points servent à départager les jeux : ils ne remplacent ni le jeu de l'espèce ni l'apprentissage des mots
+ * (« Teach me a word » garde sa place dans le menu tant que le bébé a besoin de mots pour grandir : voir selectActivities).
+ */
+/** Le bébé manque-t-il encore de mots retenus pour atteindre son prochain stade ? */
+function babyNeedsWords(ctx: QuestContext): boolean {
+  if (ctx.actor.kind !== 'baby') return false;
+  const baby = findBaby(ctx.state, ctx.actor);
+  const goal = baby && nextStageGoal(baby);
+  return !!(baby && goal && baby.retainedWords.length < goal.threshold.retained);
+}
+
+export function actorAffinity(q: BuiltQuest, ctx: QuestContext): number {
+  const m = q.archetype.mechanic;
+  let pts = 0;
+  const only = q.archetype.roles;
+  if (ctx.actor.kind === 'adult') {
+    if ((ctx.actor.role === 'father' ? FATHER_LIKES : MOTHER_LIKES).includes(m)) pts += 3;
+    if (only && only.length === 1 && only[0] === ctx.actor.role) pts += 3;
+  } else {
+    const baby = findBaby(ctx.state, ctx.actor);
+    if (baby) {
+      if (PERSONALITY_LIKES[baby.personality]?.includes(m)) pts += 6;
+      if ((baby.sex === 'boy' ? BOY_LIKES : GIRL_LIKES).includes(m)) pts += 3;
+      if (STAGE_LIKES[baby.stage]?.includes(m)) pts += 2;
+    }
+  }
+  return pts;
+}
+
 export function rankActivity(q: BuiltQuest, ctx: QuestContext): number {
   const { player } = ctx.state;
   const items = scriptItems(q.script);
@@ -269,11 +327,7 @@ export function rankActivity(q: BuiltQuest, ctx: QuestContext): number {
   if (ctx.need === 'thirsty' && q.archetype.id === 'find_water') score += 15;
   if (q.teach?.mode === 'retest') score += 6;
   // un bébé curieux : tant qu'il lui manque des mots retenus pour grandir, apprendre un mot passe en tête
-  if (q.archetype.id === 'name_object' && ctx.actor.kind === 'baby') {
-    const baby = findBaby(ctx.state, ctx.actor);
-    const goal = baby && nextStageGoal(baby);
-    if (baby && goal && baby.retainedWords.length < goal.threshold.retained) score += q.teach?.mode === 'retest' ? 12 : 7;
-  }
+  if (q.archetype.id === 'name_object' && babyNeedsWords(ctx)) score += q.teach?.mode === 'retest' ? 16 : 9;
   if (q.archetype.id === 'greeting' && !player.history.some((h) => h.speciesId === ctx.species.id)) score += 30;
   if (q.archetype.id === 'family_presentation' && !getFamily(ctx.state, ctx.species.id).memories.includes('met_family')) score += 8;
   if (q.archetype.id === 'remember_yesterday') score += 3;
@@ -283,12 +337,22 @@ export function rankActivity(q: BuiltQuest, ctx: QuestContext): number {
   // un jeu de 1 à 3 lieux (le nid au baobab, l'écho au canyon) passe devant un jeu de tout le continent
   // (on compte les lieux du continent où l'on est : l'écho du canyon reste local même s'il y a aussi un écho dans les Alpes)
   const nPlaces = q.archetype.allowedBiomes.filter((b) => PLACES[b]?.continentId === ctx.biome.continentId).length;
-  if (nPlaces) score += nPlaces <= 3 ? 6 : 2;
+  if (nPlaces) score += nPlaces <= 3 ? 8 : 2;
   // le jeu à soi de l'animal (son vocabulaire à lui) passe aussi devant les jeux de partout
-  if (q.archetype.speciesIds?.includes(ctx.species.id)) score += q.archetype.speciesIds.length === 1 ? 7 : 4;
+  // chacun ses jeux : le parent nommé en premier dans le jeu le mène (bonus entier), l'autre parent et les bébés
+  // le proposent moins souvent, pour que les menus de Papa, Maman et des bébés ne commencent pas tous par lui
+  if (q.archetype.speciesIds?.includes(ctx.species.id)) {
+    const full = q.archetype.speciesIds.length === 1 ? 7 : 4;
+    const lead = q.archetype.roles?.find((r) => r !== 'baby');
+    const leads = ctx.actor.kind === 'adult' && (!lead || lead === ctx.actor.role);
+    // l'autre parent le laisse au premier (−4) ; un bébé le propose comme les autres jeux, selon ses goûts
+    score += leads ? full : ctx.actor.kind === 'adult' ? -4 : 1;
+  }
   // un bébé revient volontiers à ses jeux préférés (sans écraser la variété)
   const likes = findBaby(ctx.state, ctx.actor)?.likes?.[q.archetype.mechanic] ?? 0;
   score += Math.min(likes, 3);
+  // chacun ses jeux : rôle (papa / maman), personnalité, sexe et stade du bébé
+  score += actorAffinity(q, ctx);
   // anti-répétition (historique des 10 dernières activités)
   const me = actorId(ctx.actor);
   for (const h of player.history) {
@@ -297,22 +361,53 @@ export function rankActivity(q: BuiltQuest, ctx: QuestContext): number {
   }
   const last2 = player.history.slice(-2);
   if (last2.length === 2 && last2.every((h) => h.mechanic === q.archetype.mechanic)) score -= 20;
+  // jamais deux fois de suite le même jeu (demande du parent, 2026-11-24 : « pas de répétition… pour pas que
+  // l'enfant s'ennuie ») : ni juste après l'avoir joué, ni avec ce personnage-là la fois suivante
+  if (player.history.at(-1)?.archetypeId === q.archetype.id) score -= 15;
+  if ([...player.history].reverse().find((h) => h.actorId === me)?.archetypeId === q.archetype.id) score -= 10;
   return score + ctx.rng.next() * 3; // un peu de surprise, reproductible
 }
 
 const CHAT: QuestArchetype = { id: 'chat', titleEn: 'Chat', titleFr: 'Discuter', icon: '💬', skillIds: ['1.1'], mechanic: 'talk', requiredAnchors: [], allowedBiomes: [], actorKinds: ['adult', 'baby'], implemented: true };
 
+/**
+ * Jeux que l'aîné(e) propose déjà, ici et maintenant (hors « Teach me a word ») : le second bébé les lui laisse,
+ * pour que frère et sœur n'aient pas le même menu. Tirage fixe : le résultat ne dépend que de la partie.
+ */
+function siblingPicks(ctx: QuestContext): ReadonlySet<string> {
+  const baby = findBaby(ctx.state, ctx.actor);
+  if (!baby || baby.birthOrder !== 2) return new Set();
+  const first = getFamily(ctx.state, ctx.actor.speciesId).babies.find((b) => b.birthOrder === 1);
+  if (!first) return new Set();
+  const sib: ActorRef = { speciesId: ctx.actor.speciesId, kind: 'baby', babyId: first.id };
+  const picks = selectActivities({ ...ctx, actor: sib, rng: createRng(hashText(first.id) + ctx.state.player.activityCounter) });
+  return new Set(picks.map((a) => a.archetype.id).filter((id) => id !== 'name_object'));
+}
+
 export function selectActivities(ctx: QuestContext, max = 3): RankedActivity[] {
   const built: RankedActivity[] = [];
+  const sibling = siblingPicks(ctx);
   for (const arch of ARCHETYPES) {
     const q = buildQuest(arch, ctx);
-    if (q) built.push({ ...q, score: rankActivity(q, ctx) });
+    if (q) built.push({ ...q, score: rankActivity(q, ctx) - (sibling.has(arch.id) ? 8 : 0) });
   }
   built.sort((a, b) => b.score - a.score);
   // une seule activité par mécanique dans la sélection, si possible (variété)
   const out: RankedActivity[] = [];
   for (const q of built) if (out.length < max && !out.some((o) => o.archetype.mechanic === q.archetype.mechanic)) out.push(q);
   for (const q of built) if (out.length < max && !out.includes(q)) out.push(q);
+  // un bébé qui a besoin de mots pour grandir a toujours « Teach me a word » dans son menu, en première carte…
+  // sauf pour dire bonjour la première fois, ou si le jeu d'avant était déjà une leçon de mots
+  // (jamais deux leçons de suite : l'enfant ne doit pas s'ennuyer)
+  const teach = babyNeedsWords(ctx) ? built.find((q) => q.archetype.id === 'name_object') : undefined;
+  if (teach) {
+    const i = out.indexOf(teach);
+    if (i >= 0) out.splice(i, 1);
+    else if (out.length >= max) out.pop();
+    const tired = ctx.state.player.history.at(-1)?.mechanic === teach.archetype.mechanic;
+    const urgent = out[0]?.archetype.id === 'greeting' || (ctx.need === 'thirsty' && out[0]?.archetype.id === 'find_water');
+    out.splice(tired || urgent ? Math.min(1, out.length) : 0, 0, teach);
+  }
   if (out.length === 0) {
     // QUE-04 : repli conversation toujours disponible
     out.push({ archetype: CHAT, script: chatScript(ctx.species.id, ctx.biome.id, actorKindOf(ctx.actor)), score: 0 });
