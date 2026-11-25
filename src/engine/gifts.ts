@@ -100,6 +100,14 @@ export function giftAllowed(g: GiftDef, speciesId: string, b: BiomeDef): boolean
 }
 
 /** Les trois paquets de ce soir, ou null si le cadeau du jour est déjà reçu (ou s'il ne reste rien à offrir ici). */
+/**
+ * Seule une vraie activité apporte le cadeau du soir : la petite conversation de repli (« Do you want to play? »
+ * → « Not now, thank you. ») n'en est pas une (audit du 2026-11-25).
+ */
+export function earnsGift(script: { archetypeId: string }): boolean {
+  return script.archetypeId !== 'chat';
+}
+
 export function giftOffer(state: GameState, speciesId: string, b: BiomeDef, today: string): GiftDef[] | null {
   if (state.player.giftDay === today) return null;
   const owned = new Set(state.player.gifts.filter((g) => g.speciesId === speciesId).map((g) => g.id));

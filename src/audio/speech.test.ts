@@ -59,7 +59,9 @@ afterEach(() => vi.unstubAllGlobals());
 
 const load = async () => {
   vi.resetModules();
-  return (await import('./speech')).createSpeech();
+  const m = await import('./speech');
+  await m.voicesReady; // la table des enregistrements arrive à part
+  return m.createSpeech();
 };
 const flush = () => new Promise((r) => setTimeout(r, 0));
 
@@ -190,5 +192,17 @@ describe('voix du prénom de la joueuse', () => {
     await seq;
     await flush();
     expect(FakeAudio.last.played).toHaveLength(2); // l'accueil, puis la phrase demandée ; pas « Africa »
+  });
+
+  it('quitter l’écran (stop) coupe la suite des répliques : rien n’est dit après', async () => {
+    const s = await load();
+    const seq = s.sequence([{ text: say.continent('Africa') }, { text: say.continent('Asia') }]);
+    await flush();
+    expect(FakeAudio.last.played).toHaveLength(1); // « Africa » en cours
+    s.stop();
+    await seq;
+    await flush();
+    expect(FakeAudio.last.played).toHaveLength(1); // « Asia » n'est jamais dit
+    expect(spoken).toEqual([]);
   });
 });

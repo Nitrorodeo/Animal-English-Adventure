@@ -5,7 +5,8 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { SPECIES } from '../content/species';
 import { getBiome } from '../content/world';
-import { BRANCH_MAX_H, GIFTS, giftAllowed, giftOffer, giftsHere, moveGift, parseGifts, placeClasses, receiveGift } from './gifts';
+import { BRANCH_MAX_H, earnsGift, GIFTS, giftAllowed, giftOffer, giftsHere, moveGift, parseGifts, placeClasses, receiveGift } from './gifts';
+import { chatScript } from '../content/dialogues';
 import { migrate } from './save';
 import { newGameState } from './state';
 
@@ -173,5 +174,12 @@ describe('cadeaux du soir : un par jour', () => {
     old.player.gifts = [{ id: 'treasure_chest', speciesId: 'lion', spots: {} }];
     expect(migrate(old)!.player.gifts).toEqual([]);
     expect(migrate(old)!.player.giftDay).toBeNull();
+  });
+});
+
+describe('cadeaux du soir : seulement après une vraie activité', () => {
+  it('« Not now, thank you. » (petite conversation) ne donne pas de cadeau ; une activité, si', () => {
+    expect(earnsGift(chatScript('lion', 'savanna', 'adult'))).toBe(false);
+    expect(earnsGift({ archetypeId: 'greetings' })).toBe(true);
   });
 });

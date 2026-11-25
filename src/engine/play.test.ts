@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clipFor } from '../audio/speech';
+import { clipFor } from '../audio/clips';
 import { ORDERS } from '../content/activities/africa';
 import { canDo } from '../content/activities/kit';
 import { familyOrders, SILLY_QUESTIONS, yesOrNo } from '../content/activities/play';

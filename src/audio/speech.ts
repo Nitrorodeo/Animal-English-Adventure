@@ -7,9 +7,9 @@
  *    synthèse vocale de l'appareil, sans déformation de hauteur. Le français reste sur la synthèse.
  * 3. Sans aucun son, le jeu reste jouable avec les sous-titres et les images.
  */
-import manifest from '../content/voiceManifest.json';
 import { nameClipFor, type NameClips } from '../engine/nameVoice';
-import { clipKey, DEFAULT_PLAYER_NAME, normalizeNames, VOICE_OF_ROLE, type VoiceRole } from './voiceKey';
+import type { clipFor as ClipFor } from './clips';
+import { DEFAULT_PLAYER_NAME, type VoiceRole } from './voiceKey';
 
 export type { VoiceRole };
 
@@ -39,7 +39,17 @@ export interface AudioService {
   setNameVoice(playerName: string, clips: NameClips | null): void;
 }
 
-const CLIPS: Readonly<Record<string, string>> = manifest.clips;
+/**
+ * La table des enregistrements arrive à part (audio/clips.ts) : l'écran titre n'attend pas ses 1,5 Mo.
+ * Une phrase demandée avant son arrivée l'attend ; si elle ne vient pas (fichier introuvable), repli sur la synthèse.
+ */
+let lookup: typeof ClipFor | undefined;
+export const voicesReady: Promise<void> = import('./clips').then(
+  (m) => {
+    lookup = m.clipFor;
+  },
+  () => undefined,
+);
 
 /**
  * Débit auquel les enregistrements ont été générés, en part du débit naturel de Kokoro.
@@ -50,12 +60,6 @@ export const RECORDED_SPEED = 0.8;
 /** Vitesse de lecture d'un enregistrement pour obtenir la vitesse voulue (1 = naturelle). */
 export function clipPlaybackRate(speed: number, slow: boolean): number {
   return (speed / RECORDED_SPEED) * (slow ? 0.75 : 1);
-}
-
-/** Chemin de l'enregistrement d'une phrase anglaise, ou undefined s'il n'existe pas. */
-export function clipFor(text: string, role: VoiceRole | undefined, names: readonly string[], clips: Readonly<Record<string, string>> = CLIPS): string | undefined {
-  const normalized = normalizeNames(text.trim(), [DEFAULT_PLAYER_NAME, ...names]);
-  return clips[clipKey(VOICE_OF_ROLE[role ?? 'narrator'], normalized)];
 }
 
 function pickVoice(synth: SpeechSynthesis, lang: 'en' | 'fr'): SpeechSynthesisVoice | undefined {
@@ -162,7 +166,9 @@ export function createSpeech(): AudioService {
       const named = nameClipFor(text, opts.role, player, nameClips);
       if (named && (await playClip(named, slow))) return mine;
       if (mine !== seq) return mine; // coupée pendant l'essai : ne pas enchaîner sur la variante
-      const src = clipFor(text, opts.role, opts.names ? [...names, ...opts.names] : names);
+      if (!lookup) await voicesReady;
+      if (mine !== seq) return mine;
+      const src = lookup?.(text, opts.role, opts.names ? [...names, ...opts.names] : names);
       if (src && (await playClip(src, slow))) return mine;
       if (!src && import.meta.env.DEV) console.warn(`[voix] pas d'enregistrement (${opts.role ?? 'narrator'}) : « ${text} » — lancer npm run voices`);
     }
@@ -181,7 +187,12 @@ export function createSpeech(): AudioService {
         if (mine !== seq) return;
       }
     },
-    stop: stopAll,
+    // stop() coupe aussi la suite d'une `sequence` en cours (sinon la réplique suivante partait
+    // sur l'écran d'après : audit du 2026-11-25)
+    stop() {
+      seq++;
+      stopAll();
+    },
     setMuted(m) {
       muted = m;
       if (m) stopAll();

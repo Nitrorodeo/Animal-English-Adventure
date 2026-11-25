@@ -330,13 +330,13 @@ const gumWoodlandNap = (sp: SpeciesDef): QuestStep[] => [
   end('mother', 'Sweet dreams in the gum woodland!', 'Fais de beaux rêves dans le bois d’eucalyptus !'),
 ];
 
-// 9. Koala · la crique aux rochers : le koala regarde la mer depuis son arbre (il ne nage pas)
+// 9. Koala · la crique aux rochers : le koala regarde la mer depuis son arbre (il sait nager, mais n'aime pas l'eau : audit du 2026-11-25)
 const rockyCoveWatch = (sp: SpeciesDef): QuestStep[] => [
   say('narrator', 'The koala family walks near the sea. The sea is big and blue.', 'La famille koala marche près de la mer. La mer est grande et bleue.', {}, 'curious'),
   tap('father', 'Where is the sea? Show me!', 'Où est la mer ? Montre-moi !', 'sea', ['It is big and blue!', 'Elle est grande et bleue !'], ['sea', 'where']),
-  say('narrator', 'Koalas do not swim. We watch the waves from the tree!', 'Les koalas ne nagent pas. On regarde les vagues depuis l’arbre !', {}, 'calm'),
+  say('narrator', 'Koalas do not like the water. We watch the waves from the tree!', 'Les koalas n’aiment pas l’eau. On regarde les vagues depuis l’arbre !', {}, 'calm'),
   tap('mother', 'Look! Where is the wave?', 'Regarde ! Où est la vague ?', 'wave', ['It is white, on the sea!', 'Elle est blanche, sur la mer !'], ['wave', 'where']),
-  ask('father', 'Do koalas swim in the sea?', 'Est-ce que les koalas nagent dans la mer ?', [ok('No, they do not!', 'Non, ils ne nagent pas !', '🚫'), no('Yes, they swim!', 'Oui, ils nagent !', '🏊'), no('They fly!', 'Ils volent !', '🪽')], ['Koalas live in trees!', 'Les koalas vivent dans les arbres !'], ['swim'], { minTier: 'intermediate' }),
+  ask('father', 'Do koalas like the sea?', 'Est-ce que les koalas aiment la mer ?', [ok('No, they do not!', 'Non, ils n’aiment pas ça !', '🚫'), no('Yes, they love it!', 'Oui, ils adorent !', '🏊'), no('They fly over it!', 'Ils volent au-dessus !', '🪽')], ['Koalas live in trees!', 'Les koalas vivent dans les arbres !'], ['sea'], { minTier: 'intermediate' }),
   tap('father', 'Where is the tree? Touch it!', 'Où est l’arbre ? Touche-le !', 'tree', ['It is big and green!', 'Il est grand et vert !'], ['tree', 'where']),
   moveTo('tree', 'rest', 'actor'),
   say('actor', 'I see the sea from the tree!', 'Je vois la mer depuis l’arbre !', {}, 'happy'),

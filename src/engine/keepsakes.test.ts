@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clipFor } from '../audio/speech';
+import { clipFor } from '../audio/clips';
 import { SPECIES } from '../content/species';
 import { BEDTIME, say, STICKER_OFFER } from '../content/utterances';
 import { CONTINENTS, OLD_MAP_HITS } from '../content/world';

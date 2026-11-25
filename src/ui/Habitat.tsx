@@ -12,7 +12,7 @@ import { BEDTIME, BIGGER_NOW, say } from '../content/utterances';
 import { bedtimeLines, type BedtimeLine } from '../engine/bedtime';
 import { cuddleLine, HOLD_MS } from '../engine/cuddles';
 import { dayKey } from '../engine/stickers';
-import { giftOffer, giftsHere, moveGift, receiveGift, type GiftDef } from '../engine/gifts';
+import { earnsGift, giftOffer, giftsHere, moveGift, receiveGift, type GiftDef } from '../engine/gifts';
 import { GiftChoice, GiftItem, useScenePixels } from './Gifts';
 import { ambientAt, giftLook, giftStart, groundAt, skyOf } from './giftLook';
 import { fillLine, type Vars } from '../engine/dialogue';
@@ -34,7 +34,7 @@ import { rigFor } from '../game/rigs';
 import { canFly, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
-import { dragSpot, isDrag, type Spot } from './drag';
+import { acceptsDown, dragSpot, endsTrack, isDrag, withoutKey, type Spot } from './drag';
 import { placeActor, spotKey } from '../engine/spots';
 
 interface Props {
@@ -111,7 +111,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
   /** cadeau du soir à choisir (après la première activité de la journée), apporté par le personnage de l'activité */
   const [giftPick, setGiftPick] = useState<{ offer: GiftDef[]; today: string; from: ActorRef } | null>(null);
   /** objet glissé au doigt ; une fois posé, sa place va dans la partie */
-  const [liveGift, setLiveGift] = useState<{ id: string; spot: Spot } | null>(null);
+  const [liveGift, setLiveGift] = useState<Readonly<Record<string, Spot>>>({});
   const liveGiftRef = useRef(liveGift);
   /** petite copie du décor en pixels : lumière, ciel et sol des cadeaux posés (lue avant tout retour anticipé) */
   const bgInfo = background(biome.background);
@@ -126,15 +126,25 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
   /** rituel « Bonne nuit » : qui parle, puis toute la famille dort */
   const [night, setNight] = useState<{ line: BedtimeLine | null; asleep: boolean } | null>(null);
   const nightRun = useRef(0);
-  useEffect(() => () => void nightRun.current++, []);
+  // en quittant le décor : la scène du soir s'arrête et plus personne ne parle (audit du 2026-11-25)
+  useEffect(
+    () => () => {
+      nightRun.current++;
+      speech.stop();
+    },
+    [],
+  );
   /** chatouilles / câlin en cours (appui long sur un personnage) */
   const [cuddle, setCuddle] = useState<{ id: string; n: number; icon: string } | null>(null);
   const cuddles = useRef(0);
-  /** animal en train d'être glissé au doigt ; une fois posé, sa place va dans la partie (gardée le lendemain) */
-  const [live, setLive] = useState<{ id: string; spot: Spot } | null>(null);
+  /**
+   * animaux en train d'être glissés au doigt (un par doigt : deux doigts ne se mélangent plus, audit du 2026-11-25) ;
+   * une fois posé, sa place va dans la partie (gardée le lendemain)
+   */
+  const [live, setLive] = useState<Readonly<Record<string, Spot>>>({});
   const liveRef = useRef(live);
   const spotOf = (a: ActorRef): Spot | undefined => {
-    const s = live?.id === actorId(a) ? live.spot : state.player.spots[spotKey(biome.id, actorId(a))];
+    const s = live[actorId(a)] ?? state.player.spots[spotKey(biome.id, actorId(a))];
     // décor à percher : une place gardée d'avant est ramenée sur l'endroit le plus proche (rocher, branche, nid)
     if (s && biome.seats?.length && !biome.groundToo) {
       const { seat: _seat, ...on } = snapToSeats(biome.seats, homePlacement(a, family, biome.groundY).h, s.x, s.y);
@@ -241,7 +251,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
       const today = dayKey(new Date());
       const end = script.endPlace ?? script.biomeId;
       // le cadeau du soir arrive dans la maison où l'on est (après un voyage, ce sera à la prochaine activité)
-      const offer = end === biome.id ? giftOffer(r.state, species.id, biome, today) : null;
+      const offer = end === biome.id && earnsGift(script) ? giftOffer(r.state, species.id, biome, today) : null;
       if (offer) setGiftPick({ offer, today, from: actor });
       if (end !== biome.id) onPlace(end);
       const growing = events.grew;
@@ -251,7 +261,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
         const unlocks = unlockedAt(growing.to).map((x) => ({ icon: x.icon, en: x.titleEn, fr: x.titleFr }));
         const sex = family.babies.find((b) => b.id === growing.babyId)?.sex ?? 'girl';
         setGrow({ name: babyName, sex, to: growing.to, stage: stage.en, stageFr: stage.fr, unlocks });
-        void speech.speak(say.growUp(babyName, growing.to)).then(() => speech.speak(BIGGER_NOW.en, { role: babyVoice(sex) }));
+        void speech.sequence([{ text: say.growUp(babyName, growing.to) }, { text: BIGGER_NOW.en, opts: { role: babyVoice(sex) } }]);
       } else if (events.treasure) {
         const t = TREASURES[events.treasure];
         if (t) setToast(`${t.icon} ${say.treasure(t.nameEn)}`);
@@ -351,7 +361,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
         ))}
         {wordBubble && <WordBubble place={biome} anchorId={wordBubble.anchorId} text={wordBubble.text} />}
         {gifts.map(({ def, spot }, i) => {
-          const s = liveGift?.id === def.id ? liveGift.spot : fitGift(spot ?? dropGift(giftStart(i, papaHome.y), 0));
+          const s = liveGift[def.id] ?? fitGift(spot ?? dropGift(giftStart(i, papaHome.y), 0));
           const look = pixels ? giftLook(ambientAt(pixels, s.x, s.y, s.h * def.h), sky!, s.h / papaHome.h, groundAt(pixels, s.x, s.y, s.h * def.h * def.ratio * 0.5625)) : null;
           return (
             <GiftItem
@@ -365,15 +375,16 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
                 night
                   ? undefined
                   : (pointer, grabDy) => {
-                      liveGiftRef.current = { id: def.id, spot: dropGift(pointer, grabDy) };
+                      liveGiftRef.current = { ...liveGiftRef.current, [def.id]: dropGift(pointer, grabDy) };
                       setLiveGift(liveGiftRef.current);
                     }
               }
               onDragEnd={() => {
-                const cur = liveGiftRef.current;
-                liveGiftRef.current = null;
-                setLiveGift(null);
-                if (cur?.id === def.id) setState((st) => moveGift(st, def.id, species.id, biome.id, cur.spot));
+                const cur = liveGiftRef.current[def.id];
+                if (!cur) return;
+                liveGiftRef.current = withoutKey(liveGiftRef.current, def.id);
+                setLiveGift(liveGiftRef.current);
+                setState((st) => moveGift(st, def.id, species.id, biome.id, cur));
               }}
             />
           );
@@ -397,18 +408,20 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
                     const hz = horizonOf(biome.groundY, biome.horizonY);
                     const next = dragSpot(home, pointer, grabDy, placeScale(biome, home.y), (x) => farthestY(home.y, hz, biome.farY, x), (x, y) => perchAt(biome, x, y), biome.lane, biome.water, biome.seats && { list: biome.seats, naturalH: homePlacement(a, family, biome.groundY).h, groundToo: biome.groundToo }, biome.floes);
                     // il regarde vers où on l'emmène, et garde ce sens une fois posé
-                    const prev: Spot = (liveRef.current?.id === actorId(a) ? liveRef.current.spot : undefined) ?? spotOf(a) ?? { x: home.x, y: home.y, h: home.h };
+                    const prev: Spot = liveRef.current[actorId(a)] ?? spotOf(a) ?? { x: home.x, y: home.y, h: home.h };
                     const dx = next.x - prev.x;
                     const f = Math.abs(dx) >= 0.4 ? (dx < 0 ? -1 : 1) : prev.f;
-                    liveRef.current = { id: actorId(a), spot: f ? { ...next, f } : next };
+                    liveRef.current = { ...liveRef.current, [actorId(a)]: f ? { ...next, f } : next };
                     setLive(liveRef.current);
                   }
             }
             onDragEnd={() => {
-              const cur = liveRef.current;
-              liveRef.current = null;
-              setLive(null);
-              if (cur?.id === actorId(a)) setState((st) => placeActor(st, biome.id, cur.id, cur.spot));
+              const id = actorId(a);
+              const cur = liveRef.current[id];
+              if (!cur) return;
+              liveRef.current = withoutKey(liveRef.current, id);
+              setLive(liveRef.current);
+              setState((st) => placeActor(st, biome.id, id, cur));
             }}
             question={!night && curious.has(actorId(a))}
             action={night?.asleep ? 'sleep' : undefined}
@@ -687,7 +700,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
   };
   useEffect(() => () => cancelHold(), []);
   // glisser au doigt : un petit tremblement reste un toucher (menu), au-delà l'animal suit le doigt
-  const drag = useRef<{ sx: number; sy: number; grabDy: number; on: boolean; rect: DOMRect } | null>(null);
+  const drag = useRef<{ pointerId: number; sx: number; sy: number; grabDy: number; on: boolean; rect: DOMRect } | null>(null);
   const dragged = useRef(false);
   const [dragging, setDragging] = useState(false);
   // un doigt ou une souris envoient 120 à 240 mouvements par seconde : on n'en garde qu'un par image
@@ -706,7 +719,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
     ? {
         onPointerMove: (e: React.PointerEvent<HTMLButtonElement>) => {
           const d = drag.current;
-          if (!d) return;
+          if (!d || d.pointerId !== e.pointerId) return;
           if (!d.on) {
             if (!isDrag({ x: e.clientX - d.sx, y: e.clientY - d.sy })) return;
             d.on = true;
@@ -724,9 +737,10 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const startDrag = (e: React.PointerEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.parentElement?.getBoundingClientRect();
     if (!onDragTo || !rect || !rect.height) return;
-    drag.current = { sx: e.clientX, sy: e.clientY, grabDy: place.y - toStage(e, rect).y, on: false, rect };
+    drag.current = { pointerId: e.pointerId, sx: e.clientX, sy: e.clientY, grabDy: place.y - toStage(e, rect).y, on: false, rect };
   };
-  const endDrag = () => {
+  const endDrag = (e: React.PointerEvent) => {
+    if (!endsTrack(drag.current, e.pointerId)) return; // un autre doigt : ce glisser continue
     if (drag.current?.on) {
       flushMove(); // dernière position du doigt avant de poser
       setDragging(false);
@@ -738,6 +752,8 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const holdProps = onHold
     ? {
         onPointerDown: (e: React.PointerEvent<HTMLButtonElement>) => {
+          if (!acceptsDown(drag.current)) return; // déjà tenu par un autre doigt
+          dragged.current = false; // un glisser interrompu (geste du système) n'avale plus ce toucher
           startDrag(e);
           cancelHold();
           const h = { fired: false, timer: 0 };
@@ -747,15 +763,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
           }, HOLD_MS);
           hold.current = h;
         },
-        onPointerUp: () => {
-          endDrag();
-          cancelHold();
-        },
         onPointerLeave: cancelHold,
-        onPointerCancel: () => {
-          endDrag();
-          cancelHold();
-        },
         onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
       }
     : {};
@@ -790,6 +798,16 @@ function Character({ actor, state, species, place, question, action, speaking, h
       aria-label={name}
       {...holdProps}
       {...dragProps}
+      // fin du geste toujours écoutée, même si le glisser est retiré en cours (🌙 pendant qu'un doigt glisse)
+      onPointerUp={(e) => {
+        endDrag(e);
+        cancelHold();
+      }}
+      onPointerCancel={(e) => {
+        endDrag(e);
+        cancelHold();
+      }}
+      onLostPointerCapture={endDrag}
     >
       {sprite ? (
         <img src={assetUrl(sprite)} alt="" draggable={false} style={!puppet && facing !== natural ? { transform: 'scaleX(-1)' } : undefined} />

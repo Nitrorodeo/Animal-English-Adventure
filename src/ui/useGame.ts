@@ -49,6 +49,8 @@ export function useGame() {
   const [boot] = useState(() => loadGame(storage.current));
   const [state, setState] = useState<GameState>(boot.state);
   const [restored, setRestored] = useState(false);
+  /** l'écriture de la partie a échoué (mémoire du navigateur pleine) : un bandeau prévient l'adulte */
+  const [saveFailed, setSaveFailed] = useState(false);
   const loadStatus: LoadStatus = boot.status;
   const playing = useRef(false);
   const pending = useRef<number | undefined>(undefined);
@@ -58,7 +60,7 @@ export function useGame() {
 
   useEffect(() => {
     if (state !== boot.state) playing.current = true;
-    saveGame(storage.current, state);
+    setSaveFailed(!saveGame(storage.current, state));
     if (!hasProgress(state)) return;
     window.clearTimeout(pending.current);
     pending.current = window.setTimeout(() => sendBackup('PUT', state), BACKUP_DELAY_MS);
@@ -102,5 +104,5 @@ export function useGame() {
   // version en ligne : le petit tableau de bord des amis (engine/circle.ts)
   const circle = useCircle(state, setState, storage.current);
 
-  return { state, setState, loadStatus, restored, reset, nameVoice, cloud, circle };
+  return { state, setState, loadStatus, restored, saveFailed, reset, nameVoice, cloud, circle };
 }

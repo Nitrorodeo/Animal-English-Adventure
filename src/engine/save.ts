@@ -1,7 +1,8 @@
 import { parseNamePron } from './nameVoice';
 import { parseSpots } from './spots';
 import { parseGiftDay, parseGifts } from './gifts';
-import { clampSpeechSpeed, newGameState, SAVE_VERSION, type CircleRef, type GameState } from './state';
+import { clampSpeechSpeed, newGameState, SAVE_VERSION, type Baby, type CircleRef, type GameState } from './state';
+import { GROWTH_STAGES } from '../content/types';
 
 /** Adaptateur de stockage (localStorage dans le navigateur, mémoire en test). */
 export interface StorageLike {
@@ -48,6 +49,56 @@ function parseCircleRef(v: unknown): CircleRef | null {
   return codeOk && /^[a-z0-9]{8,32}$/.test(v.id) ? { code: v.code, id: v.id } : null;
 }
 
+const strings = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
+const counts = (v: unknown): Record<string, number> => {
+  if (!isObj(v)) return {};
+  const out: Record<string, number> = {};
+  for (const [k, n] of Object.entries(v)) if (typeof n === 'number' && Number.isFinite(n)) out[k] = n;
+  return out;
+};
+const PERSONALITIES = ['curious', 'playful', 'gentle', 'funny'] as const;
+
+/** Bébé relu champ par champ ; sans identifiant ni prénom il est écarté (rien à montrer). */
+function parseBaby(v: unknown, familyId: string): Baby | null {
+  if (!isObj(v) || typeof v.id !== 'string' || !v.id || typeof v.name !== 'string') return null;
+  const likes = counts(v.likes);
+  return {
+    id: v.id,
+    familyId: typeof v.familyId === 'string' ? v.familyId : familyId,
+    name: v.name,
+    sex: v.sex === 'boy' ? 'boy' : 'girl',
+    birthOrder: v.birthOrder === 2 ? 2 : 1,
+    stage: (GROWTH_STAGES as readonly unknown[]).includes(v.stage) ? (v.stage as Baby['stage']) : 'newborn',
+    personality: (PERSONALITIES as readonly unknown[]).includes(v.personality) ? (v.personality as Baby['personality']) : 'curious',
+    taughtWords: counts(v.taughtWords),
+    retainedWords: strings(v.retainedWords),
+    seenItems: strings(v.seenItems),
+    activities: strings(v.activities),
+    questMemory: strings(v.questMemory),
+    milestones: strings(v.milestones),
+    ...(isObj(v.likes) ? { likes } : {}),
+  };
+}
+
+/**
+ * Familles relues champ par champ : une famille abîmée (bébés absents, souvenirs d'un autre type…)
+ * faisait planter l'écran au démarrage, à chaque rechargement (audit du 2026-11-25).
+ */
+function parseFamilies(raw: Record<string, unknown>): GameState['families'] {
+  const out: GameState['families'] = {};
+  for (const [key, v] of Object.entries(raw)) {
+    if (!isObj(v)) continue;
+    const pm = isObj(v.parentMemory) ? v.parentMemory : {};
+    out[key] = {
+      speciesId: typeof v.speciesId === 'string' ? v.speciesId : key,
+      babies: (Array.isArray(v.babies) ? v.babies : []).map((b) => parseBaby(b, key)).filter((b): b is Baby => b !== null).slice(0, 2),
+      memories: strings(v.memories),
+      parentMemory: { father: strings(pm.father), mother: strings(pm.mother) },
+    };
+  }
+  return out;
+}
+
 export function migrate(raw: unknown): GameState | null {
   if (!isObj(raw) || typeof raw.version !== 'number' || raw.version > SAVE_VERSION) return null;
   if (!isObj(raw.player) || !isObj(raw.families)) return null;
@@ -75,7 +126,7 @@ export function migrate(raw: unknown): GameState | null {
       giftDay: parseGiftDay(p.gifts, p.giftDay),
       spots: parseSpots(p.spots),
     },
-    families: raw.families as GameState['families'],
+    families: parseFamilies(raw.families),
     settings: migrateSettings(base.settings, raw.settings),
     onboarded: raw.onboarded === true,
     ...(circle ? { circle } : {}),
@@ -109,6 +160,21 @@ export function loadGame(storage: StorageLike): { state: GameState; status: Load
 export function saveGame(storage: StorageLike, state: GameState): boolean {
   try {
     storage.setItem(SAVE_KEY, JSON.stringify(state));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Écran de secours (le jeu a planté) : la partie est mise de côté dans `aea.save.corrupt`
+ * — jamais effacée — et le jeu repart d'une nouvelle partie. Renvoie false si rien n'a pu être fait.
+ */
+export function setAsideSave(storage: StorageLike): boolean {
+  try {
+    const text = storage.getItem(SAVE_KEY);
+    if (text !== null) storage.setItem(CORRUPT_KEY, text);
+    storage.removeItem(SAVE_KEY);
     return true;
   } catch {
     return false;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clipFor } from '../audio/speech';
+import { clipFor } from '../audio/clips';
 import { itemInfo } from '../content/items';
 import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_START, SEA_THINGS, SEA_WIDTH, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
 import { CONTINENTS } from '../content/world';

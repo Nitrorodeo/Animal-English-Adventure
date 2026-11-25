@@ -120,7 +120,8 @@ export function SeaBonus({ state, setState, game, onClose }: Props) {
   const talk = (say: Utter[]) => {
     if (!say.length) return;
     setSaid(say[say.length - 1]!);
-    void say.reduce<Promise<void>>((p, u) => p.then(() => speech.speak(u.line.en, { role: u.voice, slow: settings.slowVoice })), Promise.resolve());
+    // `sequence` s'arrête si l'enfant ferme le jeu ou répond avant la fin (audit du 2026-11-25)
+    void speech.sequence(say.map((u) => ({ text: u.line.en, opts: { role: u.voice, slow: settings.slowVoice } })));
   };
 
   // introduction dite à l'ouverture

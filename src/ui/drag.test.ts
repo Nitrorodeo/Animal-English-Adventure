@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clampOffset, dragSpot, isDrag, seaDragPos } from './drag';
+import { acceptsDown, clampOffset, dragSpot, endsTrack, isDrag, seaDragPos, withoutKey } from './drag';
 import { depthScale } from '../game/staging';
 
 const stage = { left: 0, top: 0, right: 1000, bottom: 560 };
@@ -61,5 +61,27 @@ describe('animaux de la mer déplacés au doigt', () => {
     expect(seaDragPos({ x: 4, y: 20 }, { x: 24.4, y: 10 }, 40)).toEqual({ x: 28.4, y: 30 });
     expect(seaDragPos({ x: 4, y: 20 }, { x: -90, y: -90 }, 40)).toEqual({ x: -12, y: -15 }); // 70 % encore visible
     expect(seaDragPos({ x: 4, y: 20 }, { x: 200, y: 200 }, 40)).toEqual({ x: 72, y: 75 });
+  });
+});
+
+/** audit du 2026-11-25 : un 2e doigt « collait » l'animal levé, et deux animaux glissés se mélangeaient */
+describe('plusieurs doigts', () => {
+  it('un glisser commencé n’est pas remplacé par un autre doigt', () => {
+    expect(acceptsDown(null)).toBe(true);
+    expect(acceptsDown({ pointerId: 1, on: false })).toBe(true); // simple appui : un nouveau toucher le remplace
+    expect(acceptsDown({ pointerId: 1, on: true })).toBe(false);
+  });
+
+  it('seul le doigt qui glisse peut poser l’animal', () => {
+    const t = { pointerId: 7, on: true };
+    expect(endsTrack(t, 7)).toBe(true);
+    expect(endsTrack(t, 8)).toBe(false);
+    expect(endsTrack(null, 7)).toBe(false); // déjà posé : la 2e fin (perte de capture) ne refait rien
+  });
+
+  it('poser un animal laisse l’autre animal sous son doigt', () => {
+    const live = { father: { x: 10, y: 60, h: 30 }, mother: { x: 50, y: 70, h: 30 } };
+    expect(withoutKey(live, 'father')).toEqual({ mother: { x: 50, y: 70, h: 30 } });
+    expect(live.father).toBeDefined(); // la copie, pas l'original
   });
 });

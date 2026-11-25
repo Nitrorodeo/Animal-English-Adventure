@@ -84,7 +84,7 @@ export const SEA_FRIENDS: readonly SeaFriend[] = [
     titleEn: 'Count my splashes!',
     titleFr: 'Compte mes jets d’eau !',
     voice: 'father',
-    hello: L("Splash! I'm a big blue whale! Let's play!", 'Splash ! Je suis une grosse baleine bleue ! On joue ?'),
+    hello: L("Splash! I'm a big whale! Let's play!", 'Splash ! Je suis une grosse baleine ! On joue ?'), // dessin : baleine à bosse, pas une baleine bleue
     sprites: [{ sprite: 'whale', box: { x: 67.45, y: 42.5, w: 9.67, h: 12.5 } }],
   },
   {

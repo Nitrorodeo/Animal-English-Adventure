@@ -103,3 +103,26 @@ export function seaDragPos(start: { x: number; y: number }, move: { x: number; y
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
   return { x: clamp(start.x + move.x, -w * 0.3, 100 - w * 0.7), y: clamp(start.y + move.y, -15, 75) };
 }
+
+/** Copie sans la clé `k` (fin du glisser d'un animal : les autres doigts gardent le leur). */
+export function withoutKey<T>(o: Readonly<Record<string, T>>, k: string): Record<string, T> {
+  const out = { ...o };
+  delete out[k];
+  return out;
+}
+
+/** Suivi d'un glisser : seul le doigt qui l'a commencé peut le finir (un 2e doigt ne le « colle » plus). */
+export interface PointerTrack {
+  pointerId: number;
+  on: boolean;
+}
+
+/** Un nouvel appui ne remplace pas un glisser déjà commencé par un autre doigt. */
+export function acceptsDown(cur: PointerTrack | null): boolean {
+  return !cur || !cur.on;
+}
+
+/** La fin d'un geste ne compte que pour le doigt qui l'a commencé. */
+export function endsTrack(cur: PointerTrack | null, pointerId: number): boolean {
+  return !!cur && cur.pointerId === pointerId;
+}

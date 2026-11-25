@@ -686,3 +686,14 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 .friend-num { font-size: clamp(26px, 4vw, 34px); font-weight: bold; color: #c4621a; width: 5.6ch; flex: none; white-space: nowrap; }
 .friend-stat small { color: #7a5a30; font-size: 16px; }
 .friend-empty { margin-top: 16px; font-size: 18px; }
+
+/* écran de secours : le jeu a planté (CrashScreen.tsx) */
+.crash-screen { min-height: 100vh; background: #fff4e0; padding: 16px; }
+.crash-card { background: #fffaf0; border: 3px solid #ffe2a0; border-radius: 28px; padding: 24px 28px; max-width: 420px; text-align: center; display: flex; flex-direction: column; gap: 14px; align-items: center; box-shadow: 0 10px 30px #0003; }
+.crash-card h1 { margin: 0; color: #8a4a12; }
+.crash-icon { font-size: 56px; }
+.crash-card button { border: 2px solid #e0a54a; border-radius: 999px; padding: 12px 22px; font-size: 18px; background: #fff; color: #6a3a0c; min-width: 240px; }
+.crash-card button.primary { background: linear-gradient(180deg, #ffcf5a, #f3a52a); border-color: #d98a1a; font-weight: 700; }
+
+/* bandeau « la partie n'est plus enregistrée » (stockage plein, audit du 2026-11-25) */
+.save-warning { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; margin: 0; padding: 8px 16px; background: #fff3cd; color: #5c4200; border-bottom: 2px solid #e0b100; font-size: 14px; text-align: center; pointer-events: none; }

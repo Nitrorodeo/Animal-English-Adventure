@@ -191,6 +191,9 @@ export const beachShells: ActivityDef = {
 // Antarctique — les flocons de neige, puis le manteau et les gants pour avoir chaud
 // ---------------------------------------------------------------------------
 
+/** espèces du grand froid : fourrure, plumes ou graisse, jamais de manteau ni « j'ai froid » */
+export const COLD_NATIVE: ReadonlySet<string> = new Set(['penguin', 'seal', 'polar_bear', 'snow_leopard']);
+
 export const snowflakes: ActivityDef = {
   id: 'snowflakes',
   choices: (c) => (c.place.weather === 'cold' || c.place.weather === 'windy' ? ['snow'] : []),
@@ -209,6 +212,8 @@ export const snowflakes: ActivityDef = {
     // en pleine mer, rien de sec pour poser les habits : on attrape seulement les flocons
     // (le lagon des manchots : la glace du bord est trop étroite pour y poser des habits, comme avant)
     if (sp.length < 4 || c.place.id === 'open_sea') return [...snow, end('actor', 'What fun! I love the snow!', "Trop bien ! J'adore la neige !")];
+    // un animal du grand froid n'a pas besoin de manteau : « I'm cold! I need a coat! » était absurde (audit du 2026-11-25)
+    if (COLD_NATIVE.has(c.species.id)) return [...snow, end('actor', "I'm not cold! I love the snow!", "Je n'ai pas froid ! J'adore la neige !")];
     return [
       ...snow,
       props([prop('coat', 'coat', sp[0]!), prop('glasses', 'sunglasses', sp[1]!)], { maxTier: 'beginner' }),
@@ -403,7 +408,10 @@ export const quizIntermediate: ActivityDef = {
       props([prop('what', thing.id, shown, thing.shape ? 'green' : undefined)], { minTier: 'intermediate' }),
       ask('actor', "What's this?", "Qu'est-ce que c'est ?", [ok(`It's ${low(thing.noun.en)}!`, `C'est ${low(thing.noun.fr)} !`, thing.emoji), ...others.filter((o) => o.id !== thing.id).slice(0, 2).map((o) => no(`It's ${low(o.noun.en)}!`, `C'est ${low(o.noun.fr)} !`))], ['Look at it!', 'Regarde bien !'], ['whats_this', thing.word], { minTier: 'intermediate', onCorrect: L(`Yes! It's ${low(thing.noun.en)}!`, `Oui ! C'est ${low(thing.noun.fr)} !`) }),
       clearProps({ minTier: 'intermediate' }),
-      ask('actor', `${WEATHER_WORDS[w].en} What do I wear?`, `${WEATHER_WORDS[w].fr} Qu'est-ce que je mets ?`, [ok(`${cap(clothes.good.need!.en)}!`, `${cap(clothes.good.need!.fr)} !`, clothes.good.emoji), no(`${cap(clothes.bad.need!.en)}!`, `${cap(clothes.bad.need!.fr)} !`, clothes.bad.emoji)], ['Think about the weather!', 'Pense à la météo !'], [clothes.good.word, 'wear', w], { onCorrect: L(`Yes! I wear ${clothes.good.need!.en}!`, `Oui ! Je mets ${clothes.good.need!.fr} !`) }),
+      // un animal du grand froid n'a pas besoin d'habits : la question porte sur l'enfant (audit du 2026-11-25)
+      COLD_NATIVE.has(c.species.id)
+        ? ask('actor', `${WEATHER_WORDS[w].en} What do you wear?`, `${WEATHER_WORDS[w].fr} Qu'est-ce que tu mets ?`, [ok(`${cap(clothes.good.need!.en)}!`, `${cap(clothes.good.need!.fr)} !`, clothes.good.emoji), no(`${cap(clothes.bad.need!.en)}!`, `${cap(clothes.bad.need!.fr)} !`, clothes.bad.emoji)], ['Think about the weather!', 'Pense à la météo !'], [clothes.good.word, 'wear', w], { onCorrect: c.species.id === 'penguin' ? L(`Yes! You wear ${clothes.good.need!.en}! I have my feathers!`, `Oui ! Tu mets ${clothes.good.need!.fr} ! Moi, j'ai mes plumes !`) : L(`Yes! You wear ${clothes.good.need!.en}! I have my fur!`, `Oui ! Tu mets ${clothes.good.need!.fr} ! Moi, j'ai ma fourrure !`) })
+        : ask('actor', `${WEATHER_WORDS[w].en} What do I wear?`, `${WEATHER_WORDS[w].fr} Qu'est-ce que je mets ?`, [ok(`${cap(clothes.good.need!.en)}!`, `${cap(clothes.good.need!.fr)} !`, clothes.good.emoji), no(`${cap(clothes.bad.need!.en)}!`, `${cap(clothes.bad.need!.fr)} !`, clothes.bad.emoji)], ['Think about the weather!', 'Pense à la météo !'], [clothes.good.word, 'wear', w], { onCorrect: L(`Yes! I wear ${clothes.good.need!.en}!`, `Oui ! Je mets ${clothes.good.need!.fr} !`) }),
       end('actor', 'Super! You know everything! Well done!', 'Super ! Tu sais tout ! Bravo !'),
     ];
   },

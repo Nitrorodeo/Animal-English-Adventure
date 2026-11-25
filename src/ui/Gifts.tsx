@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { speech, type VoiceRole } from '../audio/speech';
 import { GIFT_OFFER, say } from '../content/utterances';
 import type { GiftDef } from '../engine/gifts';
-import { isDrag, type Spot } from './drag';
+import { acceptsDown, endsTrack, isDrag, type Spot } from './drag';
 import type { GiftLook, ScenePixels } from './giftLook';
 
 export const giftUrl = (id: string) => `${import.meta.env.BASE_URL}assets/gifts/${id}.webp`;
@@ -97,7 +97,7 @@ export function GiftItem({
   onTap?: () => void;
 }) {
   const h = spot.h * def.h;
-  const drag = useRef<{ sx: number; sy: number; grabDy: number; on: boolean; rect: DOMRect } | null>(null);
+  const drag = useRef<{ pointerId: number; sx: number; sy: number; grabDy: number; on: boolean; rect: DOMRect } | null>(null);
   const dragged = useRef(false);
   const [dragging, setDragging] = useState(false);
   const pending = useRef<{ x: number; y: number; grabDy: number } | null>(null);
@@ -111,7 +111,8 @@ export function GiftItem({
     if (m) onDragTo?.({ x: m.x, y: m.y }, m.grabDy);
   };
   const toStage = (e: React.PointerEvent, r: DOMRect) => ({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
-  const end = () => {
+  const end = (e: React.PointerEvent) => {
+    if (!endsTrack(drag.current, e.pointerId)) return; // un autre doigt : ce glisser continue
     if (drag.current?.on) {
       flush();
       setDragging(false);
@@ -132,13 +133,15 @@ export function GiftItem({
       }}
       aria-label={def.en}
       onPointerDown={(e) => {
+        if (!acceptsDown(drag.current)) return; // déjà tenu par un autre doigt
+        dragged.current = false; // un glisser interrompu (geste du système) n'avale plus ce toucher
         const r = e.currentTarget.parentElement?.getBoundingClientRect();
         if (!onDragTo || !r || !r.height) return;
-        drag.current = { sx: e.clientX, sy: e.clientY, grabDy: spot.y - toStage(e, r).y, on: false, rect: r };
+        drag.current = { pointerId: e.pointerId, sx: e.clientX, sy: e.clientY, grabDy: spot.y - toStage(e, r).y, on: false, rect: r };
       }}
       onPointerMove={(e) => {
         const d = drag.current;
-        if (!d) return;
+        if (!d || d.pointerId !== e.pointerId) return;
         if (!d.on) {
           if (!isDrag({ x: e.clientX - d.sx, y: e.clientY - d.sy })) return;
           d.on = true;
@@ -151,6 +154,7 @@ export function GiftItem({
       }}
       onPointerUp={end}
       onPointerCancel={end}
+      onLostPointerCapture={end}
       onContextMenu={(e) => e.preventDefault()}
       onClick={() => {
         if (dragged.current) {

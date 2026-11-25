@@ -70,7 +70,7 @@ export const countObjects: ActivityDef = {
       tapProps('actor', `Touch the ${p.plural} and count with me!`, `Touche les ${p.pluralFr} et compte avec moi !`, targets, L(`Touch every ${p.word}!`, `Touche chaque ${p.pluralFr.replace(/s$/, '')} !`), [p.word, 'count'], {
         count: true,
         onCorrect: L(`${NUMBERS[n]!.en} ${p.plural}!`, `${NUMBERS[n]!.fr} ${p.pluralFr} !`),
-        ...(intruder ? { wrong: { intruder: L(`That's not a ${p.word}! It's ${intruder.noun.en.toLowerCase()}!`, `Ce n'est pas ça ! C'est ${intruder.noun.fr.toLowerCase()} !`) } } : {}),
+        ...(intruder ? { wrong: { intruder: L(`That's not ${p.noun.en.toLowerCase()}! It's ${intruder.noun.en.toLowerCase()}!`, `Ce n'est pas ça ! C'est ${intruder.noun.fr.toLowerCase()} !`) } } : {}),
       }),
       ask('actor', `How many ${p.plural}?`, `Combien de ${p.pluralFr} ?`, numberOptions(n), ['Count again: one, two, three…', 'Recompte : one, two, three…'], [numberId(n), 'how_many'], { onCorrect: L(`Yes! ${NUMBERS[n]!.en}!`, `Oui ! ${NUMBERS[n]!.fr} !`), keepOrder: false }),
     ];
@@ -210,15 +210,18 @@ export const weatherCheck: ActivityDef = {
       const spots = spotsFor(c.place, good.length + bad.length, 'weather' + c.place.id);
       const all = [...good, ...bad];
       const goodIds = good.map((g) => `w_${g.id}`);
-      const needLine = good.length === 2 ? L(`Yes! I need ${good[0]!.need!.en} and ${good[1]!.need!.en}!`, `Oui ! J'ai besoin ${good[0]!.need!.fr.replace(/^(un|une|des) /, (m) => (m === 'des ' ? 'de ' : `d'${m}`))} et ${good[1]!.need!.fr.replace(/^(un|une|des) /, (m) => (m === 'des ' ? 'de ' : `d'${m}`))} !`) : L(`Yes! I need ${good[0]!.need!.en}!`, `Oui ! J'ai besoin ${good[0]!.need!.fr.replace(/^(un|une|des) /, (m) => (m === 'des ' ? 'de ' : `d'${m}`))} !`);
+      // les habits sont pour l'enfant, pas pour l'animal : un ours polaire qui réclame un manteau
+      // et une écharpe était absurde (audit du 2026-11-25)
+      const de = (fr: string) => fr.replace(/^(un|une|des) /, (m) => (m === 'des ' ? 'de ' : `d'${m}`));
+      const needLine = good.length === 2 ? L(`Yes! You need ${good[0]!.need!.en} and ${good[1]!.need!.en}!`, `Oui ! Tu as besoin ${de(good[0]!.need!.fr)} et ${de(good[1]!.need!.fr)} !`) : L(`Yes! You need ${good[0]!.need!.en}!`, `Oui ! Tu as besoin ${de(good[0]!.need!.fr)} !`);
       steps.push(
         props(all.map((p, i) => prop(`w_${p.id}`, p.id, spots[i]!)), { minTier: 'intermediate' }),
-        tapProps('actor', `${ww.en} What do I need? Touch the good things!`, `${ww.fr} De quoi ai-je besoin ? Touche les bonnes choses !`, goodIds, ['Think about the weather!', 'Pense à la météo !'], [...good.map((g) => g.word), 'need'], {
+        tapProps('actor', `${ww.en} What do you need? Touch the good things!`, `${ww.fr} De quoi as-tu besoin ? Touche les bonnes choses !`, goodIds, ['Think about the weather!', 'Pense à la météo !'], [...good.map((g) => g.word), 'need'], {
           minTier: 'intermediate',
           onCorrect: needLine,
-          wrong: Object.fromEntries(bad.map((b) => [`w_${b.id}`, L(`I don't need ${b.need!.en} today!`, `Je n'ai pas besoin de ça aujourd'hui !`)])),
+          wrong: Object.fromEntries(bad.map((b) => [`w_${b.id}`, L(`You don't need ${b.need!.en} today!`, `Tu n'as pas besoin de ça aujourd'hui !`)])),
         }),
-        ask('actor', `Do I need ${bad[0]!.need!.en} today?`, `Ai-je besoin de ça aujourd'hui ?`, [ok("No, you don't!", 'Non !', '👎'), no('Yes, you do!', 'Oui !', '👍')], [`${ww.en} I don't need ${bad[0]!.need!.en}!`, `${ww.fr} Je n'en ai pas besoin !`], ['need', bad[0]!.word], { keepOrder: true, minTier: 'expert', onCorrect: L("That's right!", "C'est ça !") }),
+        ask('actor', `Do you need ${bad[0]!.need!.en} today?`, `As-tu besoin de ça aujourd'hui ?`, [ok("No, I don't!", 'Non !', '👎'), no('Yes, I do!', 'Oui !', '👍')], [`${ww.en} You don't need ${bad[0]!.need!.en}!`, `${ww.fr} Tu n'en as pas besoin !`], ['need', bad[0]!.word], { keepOrder: true, minTier: 'expert', onCorrect: L("That's right!", "C'est ça !") }),
         clearProps({ minTier: 'intermediate' }),
       );
     }

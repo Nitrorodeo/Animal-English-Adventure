@@ -22,7 +22,19 @@ const TITLE_ANIMALS = SPECIES.filter((sp, i, all) => all.findIndex((x) => x.cont
 type Screen = { kind: 'title' } | { kind: 'name' } | { kind: 'map' } | { kind: 'habitat'; speciesId: string; biomeId: BiomeId } | { kind: 'passport' } | { kind: 'friends' } | { kind: 'parents' } | { kind: 'sea'; game: SeaGameId };
 
 export function App() {
-  const { state, setState, loadStatus, restored, reset, nameVoice, cloud, circle } = useGame();
+  const game = useGame();
+  return (
+    <>
+      {game.saveFailed && (
+        <p className="save-warning" role="alert">⚠️ Mémoire du navigateur pleine : la partie n'est plus enregistrée sur cet appareil. On peut continuer à jouer, mais les progrès d'aujourd'hui seront perdus en fermant le jeu.</p>
+      )}
+      <Screens game={game} />
+    </>
+  );
+}
+
+function Screens({ game }: { game: ReturnType<typeof useGame> }) {
+  const { state, setState, loadStatus, restored, reset, nameVoice, cloud, circle } = game;
   const [screen, setScreen] = useState<Screen>({ kind: 'title' });
   const [back, setBack] = useState<Screen>({ kind: 'map' });
   /** lieu à l'écran (peut différer du lieu de la famille pendant une aventure) */
