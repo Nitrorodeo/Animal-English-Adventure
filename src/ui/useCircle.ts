@@ -49,6 +49,12 @@ export interface CircleInfo {
   /** crée le cercle sous ce code (choisi ou proposé) ; refusé si un cercle l'utilise déjà */
   create(typed: string): Promise<CircleResult>;
   join(typed: string): Promise<CircleResult>;
+  /**
+   * Change le code du cercle (2026-11-25 : « je dois pouvoir changer le mot de passe pour la team… et le donner aux
+   * autres copains ») : la carte entre sous le nouveau code (nouveau cercle, ou celui d'un ami), puis quitte l'ancien.
+   * En cas d'échec, l'enfant reste dans son cercle actuel.
+   */
+  change(typed: string, how: 'create' | 'join'): Promise<CircleResult>;
   leave(): Promise<void>;
   /** l'écran des amis a été ouvert : les cartes ne sont plus « nouvelles » */
   see(): void;
@@ -272,14 +278,15 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
       sent.current = null;
       setStatus('syncing');
       const r = await push();
+      // échec : retour au cercle d'avant (aucun, ou l'ancien code quand on en changeait)
       if (r === 'full') {
-        update({ ...previous, code: null });
-        setStatus('off');
+        update(previous);
+        setStatus(previous.code ? 'ok' : 'off');
         return { ok: false, reason: 'full' };
       }
       if (r === 'offline') {
-        update({ ...previous, code: null });
-        setStatus('off');
+        update(previous);
+        setStatus(previous.code ? 'ok' : 'off');
         return { ok: false, reason: 'offline' };
       }
       await pull();
@@ -325,6 +332,24 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
       return enter(code);
     },
     [available, enter],
+  );
+
+  const change = useCallback(
+    async (typed: string, how: 'create' | 'join'): Promise<CircleResult> => {
+      const old = metaRef.current;
+      if (old.code && normalizeFamilyCode(typed) === old.code) return { ok: true }; // même code : rien à changer
+      const r = how === 'create' ? await create(typed) : await join(typed);
+      // entrée réussie dans le nouveau cercle : la carte quitte l'ancien (sinon elle y resterait en double)
+      if (r.ok && old.code) {
+        try {
+          await call(old.code, 'DELETE', { id: old.id });
+        } catch {
+          /* sans réseau : l'ancienne carte reste chez les amis de l'ancien code */
+        }
+      }
+      return r;
+    },
+    [create, join],
   );
 
   const leave = useCallback(async () => {
@@ -383,6 +408,7 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     propose,
     create,
     join,
+    change,
     leave,
     see,
     friendAlbum,
