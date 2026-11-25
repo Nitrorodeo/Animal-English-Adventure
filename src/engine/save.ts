@@ -145,6 +145,7 @@ export function migrate(raw: unknown): GameState | null {
       activityCounter: num(p.activityCounter),
       treasures: Array.isArray(p.treasures) ? (p.treasures as string[]).filter((t) => typeof t === 'string') : [],
       adventuresDone: counts(p.adventuresDone),
+      gamesDone: counts(p.gamesDone),
       placesVisited: strings(p.placesVisited) as GameState['player']['placesVisited'],
       words: parseWords(p.words),
       photos: Array.isArray(p.photos) ? (p.photos as unknown[]).filter((x): x is string => typeof x === 'string') : [],

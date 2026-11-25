@@ -3,7 +3,7 @@ import { computeStage } from './family';
 import { placesOfSteps } from './script';
 import { pushHistory, type TeachChoice } from './quests';
 import { recordQuestAnswers, type AnswerRecord } from './skills';
-import { actorId, getFamily, type ActorRef, type Baby, type GameState } from './state';
+import { actorId, gameKey, getFamily, type ActorRef, type Baby, type GameState } from './state';
 
 export interface QuestOutcome {
   script: QuestScript;
@@ -78,6 +78,10 @@ export function applyQuestOutcome(state: GameState, o: QuestOutcome): { state: G
   if (o.script.adventureId) {
     const id = o.script.adventureId;
     player = { ...player, adventuresDone: { ...player.adventuresDone, [id]: (player.adventuresDone[id] ?? 0) + 1 } };
+  } else {
+    // jeu terminé (on ne peut finir un jeu qu'en le réussissant) : sa carte passe en vert pour cet animal
+    const key = gameKey(o.actor, o.script.archetypeId);
+    player = { ...player, gamesDone: { ...player.gamesDone, [key]: (player.gamesDone[key] ?? 0) + 1 } };
   }
   for (const s of o.script.steps) {
     if (s.kind !== 'reward') continue;

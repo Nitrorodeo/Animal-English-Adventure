@@ -21,7 +21,7 @@ import { nextBabySex } from '../engine/family';
 import { findBaby, hashText, selectActivities, selectAdventures, type AdventureOffer, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
 import { createRng } from '../engine/rng';
 import type { AnswerRecord } from '../engine/skills';
-import { actorId, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
+import { actorId, gameDone, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
 import { Confetti } from './Confetti';
 import { DialogueBox, Options } from './DialogueBox';
 import { bubbleSide, nameInside, wornSlot } from './bubbleSide';
@@ -490,6 +490,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             adventures={menu.adventures}
             here={biome.id}
             frenchHelp={state.settings.frenchHelp}
+            isDone={(id) => gameDone(state, menuFor, id)}
             onClose={() => setMenuFor(null)}
             onTurn={() => {
               const a = menuFor;
@@ -851,12 +852,17 @@ interface MenuProps {
   frenchHelp: boolean;
   onPickActivity: (a: RankedActivity) => void;
   onPickAdventure: (a: AdventureOffer) => void;
+  /** ce jeu a-t-il déjà été réussi avec cet animal ? (carte verte avec une coche) */
+  isDone: (archetypeId: string) => boolean;
   onClose: () => void;
   /** le personnage se retourne (regarde de l'autre côté) */
   onTurn?: () => void;
 }
 
-function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, onClose, onTurn }: MenuProps) {
+/** petite coche verte des cartes réussies */
+const DoneCheck = () => <span className="done-check" role="img" aria-label="done">✓</span>;
+
+function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, isDone, onClose, onTurn }: MenuProps) {
   return (
     <div className="activity-menu" role="dialog" aria-label={`Jouer avec ${name}`}>
       <div className="picker-head">
@@ -877,6 +883,7 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
               const away = o.adventure.start !== here ? PLACES[o.adventure.start] : undefined;
               return (
                 <div className={`option adv${o.done ? ' done' : ''}`} key={o.adventure.id}>
+                  {o.done > 0 && <DoneCheck />}
                   <button className="option-main activity" onClick={() => onPickAdventure(o)}>
                     <span className="opt-icon">{o.adventure.icon}</span>
                     <span className="opt-text">{o.adventure.titleEn}</span>
@@ -896,7 +903,8 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
       <h3 className="menu-section">🎲 Games{frenchHelp && <span className="fr"> · Jeux</span>}</h3>
       <div className="activity-cards">
         {activities.map((a) => (
-          <div className="option" key={a.archetype.id}>
+          <div className={`option${isDone(a.archetype.id) ? ' played' : ''}`} key={a.archetype.id}>
+            {isDone(a.archetype.id) && <DoneCheck />}
             <button className="option-main activity" onClick={() => onPickActivity(a)}>
               <span className="opt-icon">{a.archetype.icon}</span>
               <span className="opt-text">{a.archetype.titleEn}</span>
@@ -915,6 +923,7 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
               const place = PLACES[o.adventure.start];
               return (
                 <button key={o.adventure.id} className={`adv-chip${o.done ? ' done' : ''}`} onClick={() => onPickAdventure(o)} aria-label={`${o.adventure.titleEn}, ${place?.nameEn ?? ''}`}>
+                  {o.done > 0 && <DoneCheck />}
                   <span className="opt-icon">{o.adventure.icon}</span>
                   <span className="chip-txt">
                     <span className="opt-text">{o.adventure.titleEn}</span>

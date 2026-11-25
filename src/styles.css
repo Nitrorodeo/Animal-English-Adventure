@@ -437,6 +437,13 @@ small { font-weight: normal; opacity: 0.7; }
 .adv-elsewhere { display: flex; flex-wrap: wrap; gap: 8px; }
 .adv-chip { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 2px solid #b7d7f5; border-radius: 14px; background: linear-gradient(#fff, #eef6ff); font: inherit; cursor: pointer; text-align: left; min-height: 48px; }
 .adv-chip.done { border-color: #a8dcb5; background: linear-gradient(#fff, #effaf1); }
+/* cartes réussies avec cet animal : vertes, avec une coche (« qu'elle sache où elle en est », 2026-11-25) */
+.option.played .option-main, .option.adv.done .option-main { border-color: #3fae5f; background: linear-gradient(180deg, #f4fff6 0%, #d6f3dd 100%); box-shadow: 0 0.45cqw 0 #2f8f4a, 0 0.8cqw 1.6cqw #0002, inset 0 0.15cqw 0 #fff; }
+.option.played .option-main:not(:disabled):hover, .option.adv.done .option-main:not(:disabled):hover { box-shadow: 0 0.6cqw 0 #2f8f4a, 0 1.2cqw 2cqw #0003, inset 0 0.15cqw 0 #fff; }
+.option.played .listen, .option.adv.done .listen { border-color: #3fae5f; box-shadow: 0 2px 0 #2f8f4a, 0 3px 8px #0003; }
+.adv-chip.done { position: relative; border-color: #3fae5f; background: linear-gradient(#f4fff6, #d6f3dd); }
+.done-check { position: absolute; top: -12px; left: -12px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; border: 3px solid #fff; background: radial-gradient(circle at 35% 28%, #6fdc8a, #2f9a4c); color: #fff; font-size: 22px; font-weight: 900; line-height: 1; box-shadow: 0 2px 0 #23733a, 0 3px 8px #0003; pointer-events: none; animation: pop 0.4s ease-out both; }
+.adv-chip .done-check { top: -10px; left: -10px; width: 26px; height: 26px; font-size: 15px; border-width: 2px; }
 .adv-chip .opt-icon { font-size: 26px; }
 .adv-chip .chip-txt { display: flex; flex-direction: column; line-height: 1.15; }
 .adv-chip .opt-text { font-weight: 700; font-size: 15px; }

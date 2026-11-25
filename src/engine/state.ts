@@ -40,6 +40,11 @@ export interface PlayerState {
   treasures: string[];
   /** aventures terminées → nombre de fois */
   adventuresDone: Record<string, number>;
+  /**
+   * jeux réussis avec chaque animal (clé `gameKey`) → nombre de fois ; la carte du jeu passe en vert avec une coche
+   * (« qu'elle sache où elle en est dans chaque animal », 2026-11-25). L'historique, lui, ne garde que 10 jeux.
+   */
+  gamesDone: Record<string, number>;
   /** lieux visités (carte, passeport) */
   placesVisited: PlaceId[];
   /** mots découverts, par continent (album du passeport) */
@@ -151,7 +156,7 @@ export interface CircleRef {
 export function newGameState(): GameState {
   return {
     version: SAVE_VERSION,
-    player: { name: 'Explorer', namePron: null, items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null, gifts: [], giftDay: null, spots: {} },
+    player: { name: 'Explorer', namePron: null, items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, gamesDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null, gifts: [], giftDay: null, spots: {} },
     families: {},
     settings: { muted: false, slowVoice: false, frenchHelp: true, levelOverride: 'auto', speechSpeed: SPEECH_SPEED.default },
     onboarded: false,
@@ -170,6 +175,12 @@ export type ActorRef =
 export function actorId(a: ActorRef): string {
   return a.kind === 'adult' ? `${a.speciesId}:${a.role}` : `${a.speciesId}:baby:${a.babyId}`;
 }
+
+/** clé d'un jeu réussi avec un animal précis (Papa, Maman ou un bébé) dans `player.gamesDone` */
+export const gameKey = (a: ActorRef, archetypeId: string): string => `${actorId(a)}|${archetypeId}`;
+
+/** ce jeu a-t-il déjà été réussi avec cet animal ? */
+export const gameDone = (state: GameState, a: ActorRef, archetypeId: string): boolean => (state.player.gamesDone[gameKey(a, archetypeId)] ?? 0) > 0;
 
 export function withFamily(state: GameState, family: FamilyState): GameState {
   return { ...state, families: { ...state.families, [family.speciesId]: family } };
