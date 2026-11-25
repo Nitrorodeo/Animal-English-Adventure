@@ -12,6 +12,7 @@ import { PROPS } from '../content/props';
 import { getSpecies, SPECIES } from '../content/species';
 import { TIERS, type ActivityCtx, type ActorKind, type QuestScript, type Sex, type Speaker, type SpeciesDef } from '../content/types';
 import { endPlaceOf, finalizeSteps } from './script';
+import { dayWeathers, WEATHER_ACTIVITIES } from './weather';
 
 export type VoiceRoleOf = 'father' | 'mother' | 'girl' | 'boy' | 'narrator';
 
@@ -99,29 +100,33 @@ export function* activityVariants(configs: readonly FamilyConfig[] = FAMILY_CONF
       const place = PLACES[placeId];
       if (!place) continue;
       for (const config of configs) {
-        const ctx: ActivityCtx = { species: sp, place, actorKind: config.actorKind, babies: config.babies, actorSex: config.actorSex, memories, ...(config.actorKind === 'adult' ? { role: config.role as 'father' | 'mother' } : {}) };
+        const base: ActivityCtx = { species: sp, place, actorKind: config.actorKind, babies: config.babies, actorSex: config.actorSex, memories, ...(config.actorKind === 'adult' ? { role: config.role as 'father' | 'mother' } : {}) };
         for (const act of ACTIVITIES) {
           if (!activityOffered(act.id, placeId, config)) continue;
-          for (const choice of act.choices(ctx)) {
-            for (const tier of TIERS) {
-              const raw = act.build(ctx, tier, choice);
-              if (!raw) continue;
-              const steps = finalizeSteps(raw, { tier, babies: config.babies.length, seed: 1 });
-              yield {
-                config,
-                species: sp,
-                script: {
-                  id: `${act.id}|${choice}|${sp.id}|${placeId}|${cfgId(config)}|${tier}`,
-                  archetypeId: act.id,
-                  speciesId: sp.id,
-                  biomeId: placeId,
-                  actorKind: config.actorKind,
-                  tier,
-                  steps,
-                  memoryEvent: act.memoryEvent?.(ctx, choice),
-                  endPlace: endPlaceOf(placeId, steps),
-                },
-              };
+          // météo du jour (engine/weather.ts) : les jeux qui en parlent sont déclinés pour chaque météo possible du lieu
+          for (const w of WEATHER_ACTIVITIES.has(act.id) ? dayWeathers(place) : [place.weather]) {
+            const ctx: ActivityCtx = w === place.weather ? base : { ...base, place: { ...place, weather: w } };
+            for (const choice of act.choices(ctx)) {
+              for (const tier of TIERS) {
+                const raw = act.build(ctx, tier, choice);
+                if (!raw) continue;
+                const steps = finalizeSteps(raw, { tier, babies: config.babies.length, seed: 1 });
+                yield {
+                  config,
+                  species: sp,
+                  script: {
+                    id: `${act.id}|${choice}|${sp.id}|${placeId}${w === place.weather ? '' : `~${w}`}|${cfgId(config)}|${tier}`,
+                    archetypeId: act.id,
+                    speciesId: sp.id,
+                    biomeId: placeId,
+                    actorKind: config.actorKind,
+                    tier,
+                    steps,
+                    memoryEvent: act.memoryEvent?.(ctx, choice),
+                    endPlace: endPlaceOf(placeId, steps),
+                  },
+                };
+              }
             }
           }
         }

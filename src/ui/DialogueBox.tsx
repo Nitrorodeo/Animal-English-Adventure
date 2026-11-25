@@ -70,10 +70,12 @@ interface Props {
   side?: Side;
   /** revenir à la question d'avant (absent : pas de bouton) */
   onBack?: () => void;
+  /** bouton 🎤 « Répète après moi » (option des parents) */
+  mic?: ReactNode;
 }
 
 /** Bulle de dialogue : texte anglais (lu à voix haute), réécoute, ralenti et aide française facultative. */
-export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, mood, side = 'left', onBack }: Props) {
+export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, mood, side = 'left', onBack, mic }: Props) {
   const [showFr, setShowFr] = useState(false);
   const drag = useDraggable(side);
   return (
@@ -86,6 +88,7 @@ export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, moo
           {onBack && <button className="round back-btn" onClick={onBack} aria-label="Revenir à la question d'avant">⏪</button>}
           <button className="round" onClick={() => onReplay(false)} aria-label="Réécouter">🔊</button>
           <button className="round" onClick={() => onReplay(true)} aria-label="Plus lentement">🐢</button>
+          {mic}
           {frenchHelp && (
             <button className={`round fr-btn${showFr ? ' on' : ''}`} onClick={() => setShowFr((v) => !v)} aria-label="Aide en français">
               FR

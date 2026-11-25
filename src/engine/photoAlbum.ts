@@ -1,4 +1,5 @@
-import { GROWTH_STAGES, type GrowthStage, type PlaceId, type Sex } from '../content/types';
+import { GROWTH_STAGES, WEATHERS, type GrowthStage, type PlaceId, type Sex, type Weather } from '../content/types';
+import { stickerDef } from './stickers';
 import type { GameState } from './state';
 
 /**
@@ -29,6 +30,12 @@ export interface PhotoRec {
   g?: GiftRec[];
   /** prise pendant le « Good night » */
   n?: 1;
+  /** météo du jour (rang dans WEATHERS), quand il ne faisait pas simplement beau */
+  w?: number;
+  /** photo d'anniversaire du bébé né en 1er ou 2e (prise toute seule quand il grandit) */
+  b?: 1 | 2;
+  /** autocollants collés sur la photo : 6 caractères chacun, code + x + y en % (« he5030 » = cœur au milieu) */
+  s?: string;
 }
 /** album rangé par famille (espèce) */
 export type AlbumRec = Record<string, PhotoRec[]>;
@@ -65,6 +72,18 @@ export interface Photo {
   a: SnapActor[];
   g: SnapGift[];
   night: boolean;
+  /** météo du jour ; null = beau temps (ou photo d'avant la météo) */
+  weather: Weather | null;
+  /** anniversaire du bébé né en 1er ou 2e */
+  birthday: 1 | 2 | null;
+  stickers: PhotoSticker[];
+}
+
+export interface PhotoSticker {
+  id: string;
+  icon: string;
+  x: number;
+  y: number;
 }
 
 /** Ce que le décor donne au moment du déclic (positions déjà calculées à l'écran). */
@@ -74,6 +93,28 @@ export interface Shot {
   a: SnapActor[];
   g: SnapGift[];
   night?: boolean;
+  weather?: Weather;
+  birthday?: 1 | 2;
+}
+
+/** Autocollants qu'on peut coller sur une photo (ceux de la carte du monde, dits à voix haute par say.sticker). */
+export const PHOTO_STICKERS = ['heart', 'star', 'rainbow', 'flower', 'butterfly', 'crown', 'balloon', 'sun'] as const;
+/** au plus 6 autocollants par photo : la photo reste lisible, et légère */
+export const PHOTO_STICKERS_MAX = 6;
+const STICKER_CODE: Readonly<Record<string, string>> = { heart: 'he', star: 'st', rainbow: 'rb', flower: 'fl', butterfly: 'bf', crown: 'cr', balloon: 'ba', sun: 'su' };
+const CODE_STICKER: Readonly<Record<string, string>> = Object.fromEntries(Object.entries(STICKER_CODE).map(([k, v]) => [v, k]));
+const pct = (v: number) => String(Math.max(0, Math.min(99, Math.round(v)))).padStart(2, '0');
+
+function decodeStickers(s: string | undefined): PhotoSticker[] {
+  const out: PhotoSticker[] = [];
+  for (let i = 0; s && i + 6 <= s.length; i += 6) {
+    const id = CODE_STICKER[s.slice(i, i + 2)];
+    const def = id ? stickerDef(id) : undefined;
+    const x = Number(s.slice(i + 2, i + 4));
+    const y = Number(s.slice(i + 4, i + 6));
+    if (def && Number.isInteger(x) && Number.isInteger(y)) out.push({ id: def.id, icon: def.icon, x, y });
+  }
+  return out;
 }
 
 /** arrondi au dixième : la précision de l'écran, et des nombres courts */
@@ -100,6 +141,9 @@ const decode = (sp: string, r: PhotoRec): Photo => ({
   a: r.a.map(decodeActor),
   g: (r.g ?? []).map(([id, x, y, h]) => ({ id, x, y, h })),
   night: r.n === 1,
+  weather: r.w !== undefined ? (WEATHERS[r.w] ?? null) : null,
+  birthday: r.b ?? null,
+  stickers: decodeStickers(r.s),
 });
 
 const albumOf = (state: GameState): AlbumRec => state.player.album ?? {};
@@ -116,7 +160,7 @@ export function albumFamilies(state: GameState): { speciesId: string; count: num
     .map(([speciesId, list]) => ({ speciesId, count: list.length }));
 }
 
-const sameScene = (a: PhotoRec, b: PhotoRec) => a.p === b.p && !!a.n === !!b.n && JSON.stringify([a.a, a.g ?? []]) === JSON.stringify([b.a, b.g ?? []]);
+const sameScene = (a: PhotoRec, b: PhotoRec) => a.p === b.p && !!a.n === !!b.n && a.w === b.w && a.b === b.b && JSON.stringify([a.a, a.g ?? []]) === JSON.stringify([b.a, b.g ?? []]);
 
 export type TakeResult = { ok: true; state: GameState; photo: Photo } | { ok: false; reason: 'full' | 'same' };
 
@@ -131,7 +175,8 @@ export function takePhoto(state: GameState, shot: Shot, now: number): TakeResult
   let t = Math.round(now);
   while (list.some((r) => r.t === t)) t++;
   const g = shot.g.map((x): GiftRec => [x.id, r1(x.x), r1(x.y), r1(x.h)]);
-  const rec: PhotoRec = { t, p: shot.p, a: shot.a.map(encodeActor), ...(g.length ? { g } : {}), ...(shot.night ? { n: 1 as const } : {}) };
+  const w = shot.weather && shot.weather !== 'sunny' ? WEATHERS.indexOf(shot.weather) : -1;
+  const rec: PhotoRec = { t, p: shot.p, a: shot.a.map(encodeActor), ...(g.length ? { g } : {}), ...(shot.night ? { n: 1 as const } : {}), ...(w >= 0 ? { w } : {}), ...(shot.birthday ? { b: shot.birthday } : {}) };
   const last = list.reduce<PhotoRec | undefined>((m, r) => (!m || r.t > m.t ? r : m), undefined);
   if (last && sameScene(last, rec)) return { ok: false, reason: 'same' };
   return { ok: true, photo: decode(shot.sp, rec), state: { ...state, player: { ...state.player, album: { ...album, [shot.sp]: [...list, rec] } } } };
@@ -146,6 +191,43 @@ export function deletePhoto(state: GameState, id: string): GameState {
   const list = album[sp];
   if (!list?.some((r) => r.t === t)) return state;
   return { ...state, player: { ...state.player, album: { ...album, [sp]: list.filter((r) => r.t !== t) } } };
+}
+
+/** change une photo de l'album (identifiant « espèce:date ») ; absente : rien ne change */
+function updatePhoto(state: GameState, id: string, fn: (r: PhotoRec) => PhotoRec | null): GameState {
+  const cut = id.lastIndexOf(':');
+  const sp = id.slice(0, cut);
+  const t = Number(id.slice(cut + 1));
+  const album = albumOf(state);
+  const list = album[sp];
+  const i = list?.findIndex((r) => r.t === t) ?? -1;
+  if (!list || i < 0) return state;
+  const next = fn(list[i]!);
+  if (!next) return state;
+  return { ...state, player: { ...state.player, album: { ...album, [sp]: list.map((r, k) => (k === i ? next : r)) } } };
+}
+
+/** Coller un autocollant sur une photo (x, y en % de la photo) ; refusé au-delà de 6. */
+export function stickOnPhoto(state: GameState, id: string, stickerId: string, x: number, y: number): GameState {
+  const code = STICKER_CODE[stickerId];
+  if (!code) return state;
+  return updatePhoto(state, id, (r) => ((r.s ?? '').length / 6 >= PHOTO_STICKERS_MAX ? null : { ...r, s: `${r.s ?? ''}${code}${pct(x)}${pct(y)}` }));
+}
+
+/** Décoller l'autocollant n° `index` d'une photo. */
+export function unstickPhoto(state: GameState, id: string, index: number): GameState {
+  return updatePhoto(state, id, (r) => {
+    const s = r.s ?? '';
+    if (index < 0 || index * 6 >= s.length) return null;
+    const left = s.slice(0, index * 6) + s.slice(index * 6 + 6);
+    const { s: _old, ...rest } = r;
+    return left ? { ...rest, s: left } : rest;
+  });
+}
+
+/** Photo d'anniversaire d'un bébé à un stade donné (pour le livre du bébé), la plus récente. */
+export function birthdayPhoto(state: GameState, speciesId: string, birthOrder: 1 | 2, stage: GrowthStage): Photo | undefined {
+  return familyPhotos(state, speciesId).find((p) => p.birthday === birthOrder && p.a.some((a) => a.who === 'baby' && a.birthOrder === birthOrder && a.stage === stage));
 }
 
 // --- lecture d'une sauvegarde : seules les photos lisibles sont gardées -------------------------------------------
@@ -178,7 +260,18 @@ export function parseAlbum(raw: unknown): AlbumRec {
       if (!num(o.t, 0, 1e14) || !str(o.p) || !Array.isArray(o.a) || kept.some((r) => r.t === o.t)) continue;
       const a = o.a.map(parseActor).filter((x): x is ActorRec => !!x).slice(0, 4);
       const g = (Array.isArray(o.g) ? o.g : []).map(parseGift).filter((x): x is GiftRec => !!x).slice(0, 30);
-      kept.push({ t: o.t, p: o.p, a, ...(g.length ? { g } : {}), ...(o.n === 1 ? { n: 1 as const } : {}) });
+      const stickers = typeof o.s === 'string' ? decodeStickers(o.s.slice(0, PHOTO_STICKERS_MAX * 6)) : [];
+      const s = stickers.map((x) => `${STICKER_CODE[x.id]}${pct(x.x)}${pct(x.y)}`).join('');
+      kept.push({
+        t: o.t,
+        p: o.p,
+        a,
+        ...(g.length ? { g } : {}),
+        ...(o.n === 1 ? { n: 1 as const } : {}),
+        ...(num(o.w, 0, WEATHERS.length - 1) && Number.isInteger(o.w) ? { w: o.w } : {}),
+        ...(o.b === 1 || o.b === 2 ? { b: o.b } : {}),
+        ...(s ? { s } : {}),
+      });
     }
     if (kept.length) out[sp] = kept;
   }

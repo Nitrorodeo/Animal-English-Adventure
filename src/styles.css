@@ -831,3 +831,100 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 
 /* bandeau « la partie n'est plus enregistrée » (stockage plein, audit du 2026-11-25) */
 .save-warning { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; margin: 0; padding: 8px 16px; background: #fff3cd; color: #5c4200; border-bottom: 2px solid #e0b100; font-size: 14px; text-align: center; pointer-events: none; }
+
+/* --- Météo du jour dans le décor (src/ui/Weather.tsx, engine/weather.ts) : pluie, neige, vent, brume, nuages --- */
+.weather-fx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 105; }
+.weather-fx > span { position: absolute; display: block; }
+.weather-fx.fx-rain { background: linear-gradient(#4a5a7040, #4a5a7020); }
+.weather-fx.fx-clouds { background: linear-gradient(#5d687a30, #5d687a10 60%); }
+.weather-fx.fx-mist { background: linear-gradient(#ffffff10 20%, #ffffff55); }
+.wx-drop { width: 0.18cqw; height: 3.2cqw; border-radius: 0.1cqw; background: linear-gradient(#fff0, #eaf3ffd0); rotate: 4deg; animation: wx-fall 0.9s linear infinite; }
+@keyframes wx-fall { from { transform: translate(0, 0); } to { transform: translate(-4cqw, 65cqw); } }
+.wx-flake { width: 0.9cqw; height: 0.9cqw; border-radius: 50%; background: #fff; opacity: 0.92; box-shadow: 0 0 0.4cqw #fff9; animation: wx-snow 7s linear infinite; }
+.wx-flake:nth-child(3n) { width: 0.55cqw; height: 0.55cqw; }
+.wx-flake:nth-child(4n) { width: 1.2cqw; height: 1.2cqw; }
+@keyframes wx-snow { from { transform: translate(0, 0); } 50% { transform: translate(1.6cqw, 32cqw); } to { transform: translate(-0.8cqw, 65cqw); } }
+.wx-gust { width: 14cqw; height: 0.5cqw; border-radius: 1cqw; background: linear-gradient(90deg, #fff0, #ffffffd0, #fff0); opacity: 0; animation: wx-gust 4.5s ease-in infinite; }
+@keyframes wx-gust { 0% { transform: translateX(0); opacity: 0; } 15% { opacity: 0.8; } 70% { opacity: 0.55; } 100% { transform: translateX(120cqw); opacity: 0; } }
+.wx-fog { width: 90cqw; height: 18cqw; border-radius: 50%; background: radial-gradient(#ffffffb0, #fff0 70%); animation: wx-fog 18s ease-in-out infinite alternate; }
+@keyframes wx-fog { from { transform: translateX(-6cqw); } to { transform: translateX(8cqw); } }
+.wx-cloud { width: 20cqw; height: 6cqw; border-radius: 50%; opacity: 0.72; background: radial-gradient(ellipse at 50% 60%, #f6f8fb, #e3e8ef 50%, #fff0 70%); animation: wx-cloud 30s ease-in-out infinite alternate; }
+@keyframes wx-cloud { from { transform: translateX(-8cqw); } to { transform: translateX(14cqw); } }
+/* photo de l'album : la météo figée, comme au moment du déclic */
+.weather-fx.still > span { animation: none; }
+.weather-fx.still :is(.wx-drop, .wx-flake) { transform: translate(0, var(--y)); }
+.weather-fx.still .wx-gust { opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) {
+  .weather-fx > span { animation: none; }
+  .weather-fx :is(.wx-drop, .wx-flake) { transform: translate(0, var(--y)); }
+  .weather-fx .wx-gust { opacity: 0.6; }
+}
+/* la famille réagit : frisson sous la pluie, la neige ou le vent ; petit saut au « Cheese! » */
+.stage.weather-hello:is(.wx-rainy, .wx-snowy, .wx-windy) .char :is(img, .puppet) { animation: shiver 0.35s ease-in-out 4; }
+@keyframes shiver { 0%, 100% { translate: 0 0; } 25% { translate: -1.5% 0; } 75% { translate: 1.5% 0; } }
+.stage.cheese .char :is(img, .puppet) { animation: hop 0.6s ease-out; }
+@media (prefers-reduced-motion: reduce) { .stage:is(.weather-hello, .cheese) .char :is(img, .puppet) { animation: none; } }
+
+/* --- Mot de la semaine : l'objet du décor brille jusqu'à ce qu'elle le touche --- */
+.anchor.week-word { z-index: 6; background: #fff3; box-shadow: 0 0 0 0.35cqw #fff, 0 0 2.6cqw 0.8cqw #ffd23f; animation: pulse 1.3s ease-in-out infinite; }
+
+/* --- Anniversaire d'un bébé qui grandit : gâteau, une bougie par stade, à souffler en la touchant --- */
+/* gâteau à gauche, texte à droite : la carte reste dans la hauteur de la scène */
+.bday { display: flex; align-items: center; justify-content: center; gap: 2.4cqw; margin: 0.6cqw auto 0.2cqw; }
+.bday-text { text-align: left; max-width: 38cqw; }
+.grow-card { max-height: 100%; overflow-y: auto; }
+.bday-title { margin: 0 !important; font-size: 2.6cqw; font-weight: 800; color: #d93d80; }
+.bday.done .bday-title { animation: pop 0.5s ease-out; }
+.bday-cake { position: relative; display: inline-flex; flex-direction: column; align-items: center; }
+.bday-candles { display: flex; gap: 1.2cqw; margin-bottom: -0.2cqw; }
+.bday-candle { position: relative; width: 5cqw; height: 9cqw; padding: 0; border: none; background: none; cursor: pointer; }
+.bday-candle::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 1.6cqw; height: 5cqw; translate: -50% 0; border-radius: 0.4cqw; background: repeating-linear-gradient(135deg, #fff 0 0.6cqw, #ff7fb0 0.6cqw 1.2cqw); box-shadow: inset 0 -0.3cqw 0 #0001; }
+.bday-flame { position: absolute; left: 50%; bottom: 5cqw; width: 1.6cqw; height: 2.8cqw; margin-left: -0.8cqw; border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%; background: radial-gradient(circle at 50% 70%, #fff6a8, #ffb02e 55%, #ff6a1a); box-shadow: 0 0 1.4cqw 0.5cqw #ffcf4d99; transform-origin: 50% 100%; animation: flicker 0.5s ease-in-out infinite alternate; }
+@keyframes flicker { from { scale: 1 1; rotate: -4deg; } to { scale: 0.9 1.08; rotate: 4deg; } }
+.bday-candle.out .bday-flame { animation: blowout 0.5s ease-out forwards; }
+@keyframes blowout { to { scale: 0.2; opacity: 0; translate: 0 -1.5cqw; } }
+.bday-layer { display: block; width: 22cqw; height: 6cqw; border-radius: 1.2cqw 1.2cqw 0.6cqw 0.6cqw; background: linear-gradient(#fff 0 1.3cqw, #ffb3cf 1.3cqw 1.9cqw, #f6d2a2 1.9cqw 3.8cqw, #ff8fb8 3.8cqw 4.4cqw, #f6d2a2 4.4cqw); box-shadow: 0 0.5cqw 0 #c98b5a; }
+.bday-hint { margin: 0.8cqw 0 0 !important; font-size: 2.1cqw; font-weight: 700; }
+
+/* --- Album qui parle : légende du récit, jeu « Who is in the photo? », autocollants, livre du bébé --- */
+.photo-scene.sticking { cursor: copy; }
+.ps-char.tappable { pointer-events: auto; cursor: pointer; }
+.ps-bday { position: absolute; right: 2%; top: 3%; z-index: 120; font-size: 6cqw; line-height: 1; }
+.ps-sticker { position: absolute; z-index: 130; translate: -50% -50%; font-size: 7cqw; line-height: 1; pointer-events: none; }
+.ps-sticker.tappable { pointer-events: auto; cursor: pointer; }
+.album-caption { position: absolute; left: 0; right: 0; bottom: 4px; display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 20px; font-weight: 800; color: #3d2a14; animation: pop 0.35s ease-out; }
+.album-caption small { font-size: 14px; font-weight: 600; opacity: 0.75; }
+.album-view:has(.album-caption) .album-view-frame { padding-bottom: 48px; }
+.album-tool { background: #fff; font-size: 26px !important; }
+.album-tool.on { background: #ffe6f1; box-shadow: 0 0 0 3px #e04c8c; }
+.album-stickers { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; max-width: 94vw; }
+.album-sticker { width: 52px; height: 52px; border: 3px solid #fff8; border-radius: 50%; background: #fff3; font-size: 28px; cursor: pointer; }
+.album-sticker.on { border-color: #ffd23f; background: #fff; }
+.album-stickers-hint { color: #fff; font-size: 16px; font-weight: 700; }
+.album-stickers-hint small { font-weight: 500; opacity: 0.85; }
+.album-quiz-score { margin: 0; font-size: 30px; letter-spacing: 6px; }
+.album-quiz-score span { opacity: 0.3; filter: grayscale(1); }
+.album-quiz-score span.on { opacity: 1; filter: none; }
+.album-books { display: flex; flex-wrap: wrap; gap: 10px; }
+.album-book-btn { display: flex; align-items: center; gap: 6px; min-height: 52px; padding: 4px 14px 4px 10px; border: 3px solid #b9d7f0; border-radius: 14px; background: #f2f9ff; font: inherit; font-size: 18px; font-weight: 800; cursor: pointer; }
+.album-book-btn img { height: 42px; width: 42px; object-fit: contain; }
+.album-book-btn small { font-weight: 600; opacity: 0.7; }
+.album-empty.small { padding: 10px; font-size: 20px; }
+.baby-book .book-page { position: relative; width: min(92vw, 640px); max-height: calc(100dvh - 120px); overflow: auto; padding: 18px 22px 30px; border-radius: 10px 18px 18px 10px; background: #fffaf0; box-shadow: inset 10px 0 0 #f3d9b1, 0 10px 40px #0008; text-align: center; }
+.book-head { margin: 0 0 8px; font-size: 26px; font-weight: 900; color: #d93d80; }
+.book-stage { cursor: pointer; }
+.book-portrait { display: flex; justify-content: center; height: min(30dvh, 220px); }
+.book-portrait img { height: 100%; width: auto; filter: drop-shadow(0 6px 6px #0003); }
+.baby-book .en { margin: 6px 0 0; font-size: 24px; font-weight: 800; text-transform: capitalize; }
+.baby-book .fr { margin: 0; font-size: 16px; opacity: 0.75; }
+.book-photo { margin: 10px auto 0; width: min(100%, 420px); padding: 6px 6px 4px; background: #fff; box-shadow: 0 3px 10px #0003; rotate: -1deg; font-weight: 800; }
+.book-nophoto { font-size: 22px; opacity: 0.5; }
+.book-word-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
+.book-word { min-height: 48px; padding: 6px 14px; border: 2px solid #e3d3b8; border-radius: 999px; background: #fff; font: inherit; font-size: 18px; font-weight: 800; cursor: pointer; }
+.book-word.kept { border-color: #ffd23f; background: #fff8dc; }
+.book-word small { font-weight: 500; opacity: 0.7; }
+.book-num { position: absolute; right: 14px; bottom: 6px; margin: 0; font-size: 14px; opacity: 0.6; }
+
+/* --- « Répète après moi » 🎤 (option des parents) --- */
+.dialogue .mic-btn.rec { background: #ffdede; box-shadow: 0 0 0 0.3cqw #e53935; animation: pulse 0.8s ease-in-out infinite; }
+.dialogue .mic-btn.play { background: #e3f6e3; }

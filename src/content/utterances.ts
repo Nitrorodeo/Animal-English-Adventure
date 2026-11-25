@@ -108,3 +108,35 @@ export const say = {
   treasure: (nameEn: string) => `A new treasure: ${nameEn}!`,
   placeName: (p: Pick<BiomeDef, 'nameEn'>) => `${p.nameEn}!`,
 };
+
+/** 📷 : au déclic, un animal de la famille crie « Cheese! » (le bébé s'il y en a un, sinon Papa). */
+export const CHEESE = { en: 'Cheese!', fr: 'Ouistiti !' } as const;
+
+/**
+ * Anniversaire d'un bébé qui grandit (2026-11-25) : un gâteau avec une bougie par stade franchi ; on souffle les
+ * bougies en les touchant, on les compte, puis toute la famille chante. Le prénom est écrit, pas dit (« Happy birthday! »).
+ */
+export const BIRTHDAY = {
+  title: { en: 'Happy birthday, {babyName}!', fr: 'Joyeux anniversaire, {babyName} !' },
+  blow: { en: 'Blow out the candles! Touch them!', fr: 'Souffle les bougies ! Touche-les !' },
+  count: [
+    { en: 'One!', fr: 'Une !' },
+    { en: 'Two!', fr: 'Deux !' },
+    { en: 'Three!', fr: 'Trois !' },
+  ],
+  sing: { en: 'Happy birthday!', fr: 'Joyeux anniversaire !' },
+  photo: { en: 'A birthday photo!', fr: 'Une photo d’anniversaire !' },
+} as const;
+
+/** Mot de la semaine, choisi par le parent (espace parents) : annoncé en arrivant dans un décor qui le montre. */
+export const WEEK_WORD = {
+  intro: { en: 'Word of the week!', fr: 'Le mot de la semaine !' },
+  find: { en: 'Can you find it?', fr: 'Tu le trouves ?' },
+  found: { en: 'Yes! The word of the week!', fr: 'Oui ! Le mot de la semaine !' },
+} as const;
+
+/** « Répète après moi » (micro, option des parents) : rien n'est envoyé ni gardé, la voix est seulement réécoutée. */
+export const MIC = {
+  turn: { en: 'Your turn! Say it!', fr: 'À toi ! Dis-le !' },
+  listen: { en: "Listen! It's you!", fr: 'Écoute ! C’est toi !' },
+} as const;

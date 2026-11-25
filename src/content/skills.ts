@@ -96,6 +96,7 @@ export const ITEMS: Readonly<Record<string, { en: string; fr: string; icon: stri
   windy: { en: "It's windy.", fr: 'Il y a du vent.', icon: '🌬️' },
   snowy: { en: "It's snowy.", fr: 'Il neige.', icon: '🌨️' },
   cold: { en: "It's cold!", fr: 'Il fait froid !', icon: '🥶' },
+  cloudy: { en: "It's cloudy.", fr: 'Il y a des nuages.', icon: '☁️' },
   long: { en: 'long', fr: 'long', icon: '📏' },
   tall: { en: 'tall', fr: 'grand', icon: '📏' },
   far: { en: 'far', fr: 'loin', icon: '🔭' },

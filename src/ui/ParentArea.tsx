@@ -5,6 +5,9 @@ import { itemStatus } from '../engine/skills';
 import { clampSpeechSpeed, SPEECH_SPEED, type GameState, type Settings } from '../engine/state';
 import { speech } from '../audio/speech';
 import { SPEED_SAMPLE } from '../content/utterances';
+import { WEEK_WORD_CHOICES, weekWordChoice } from '../content/weekWord';
+import { PLACES } from '../content/places';
+import { micAvailable } from './RepeatMic';
 import { offlineLabel, offlineStatus, onOfflineStatus } from '../pwa/offline';
 import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
 import { NameSetup } from './NameSetup';
@@ -134,6 +137,30 @@ export function ParentArea({ state, setState, nameVoice, cloud, circle, onReset,
           <label className="check"><input type="checkbox" checked={state.settings.slowVoice} onChange={(e) => set({ slowVoice: e.target.checked })} /> Voix lente par défaut</label>
           <label className="check"><input type="checkbox" checked={state.settings.frenchHelp} onChange={(e) => set({ frenchHelp: e.target.checked })} /> Afficher l'aide en français</label>
           <label>
+            Mot de la semaine
+            <select value={state.settings.weekWord ?? ''} onChange={(e) => set({ weekWord: e.target.value || undefined })}>
+              <option value="">Aucun</option>
+              {WEEK_WORD_CHOICES.map((c) => (
+                <option key={c.word} value={c.word}>
+                  {c.noun.fr} · {c.noun.en}
+                </option>
+              ))}
+            </select>
+          </label>
+          {weekWordChoice(state.settings.weekWord) && (
+            <p className="note">
+              Annoncé en arrivant dans : {weekWordChoice(state.settings.weekWord)!.places.map((id) => PLACES[id]?.nameFr ?? id).join(', ')}. L'objet brille jusqu'à ce qu'elle le touche.
+            </p>
+          )}
+          <label className="check">
+            <input type="checkbox" checked={!!state.settings.micRepeat} disabled={!micAvailable()} onChange={(e) => set({ micRepeat: e.target.checked || undefined })} /> « Répète après moi » avec le micro
+          </label>
+          <p className="note">
+            {micAvailable()
+              ? 'Un bouton 🎤 dans la bulle : elle dit la phrase, s’entend, puis réécoute le jeu. L’enregistrement reste dans l’appareil, n’est ni envoyé, ni gardé, ni analysé : il est effacé dès la réécoute.'
+              : 'Micro indisponible sur cet appareil ou ce navigateur.'}
+          </p>
+          <label>
             Niveau des dialogues
             <select value={state.settings.levelOverride} onChange={(e) => set({ levelOverride: e.target.value as 'auto' | Tier })}>
               <option value="auto">Automatique (selon les acquis)</option>
@@ -143,7 +170,7 @@ export function ParentArea({ state, setState, nameVoice, cloud, circle, onReset,
             </select>
           </label>
           <p className="note">
-            Voix : enregistrements anglais intégrés au jeu (voix Kokoro, générées sur l'ordinateur), aide française par la synthèse vocale de l'appareil{speech.available ? '' : ' (son indisponible : sous-titres seulement)'}. Aucun micro, aucun compte, aucune donnée envoyée.
+            Voix : enregistrements anglais intégrés au jeu (voix Kokoro, générées sur l'ordinateur), aide française par la synthèse vocale de l'appareil{speech.available ? '' : ' (son indisponible : sous-titres seulement)'}. Aucun compte, aucune donnée envoyée ; le micro n'est utilisé que si vous cochez « Répète après moi ».
           </p>
         </section>
 

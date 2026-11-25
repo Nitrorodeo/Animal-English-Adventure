@@ -12,7 +12,9 @@ import { chatScript, FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
 import { itemLabel } from '../content/items';
 import { NOUNS, PLACES } from '../content/places';
 import { SPECIES } from '../content/species';
-import { BEDTIME, BIGGER_NOW, NEW_GAME_WISH, CUDDLES, NAME_ERRORS, NAME_SCREEN, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, STICKER_OFFER, GIFT_OFFER, say } from '../content/utterances';
+import { BEDTIME, BIGGER_NOW, BIRTHDAY, CHEESE, MIC, NEW_GAME_WISH, CUDDLES, NAME_ERRORS, NAME_SCREEN, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, STICKER_OFFER, GIFT_OFFER, WEEK_WORD, say } from '../content/utterances';
+import { allWhoLines, HAPPY_BIRTHDAY, NIGHT_TIME, QUIZ_LINES, QUIZ_START } from '../content/photoTalk';
+import { WEATHER_WORDS } from '../content/props';
 import { STICKERS } from '../engine/stickers';
 import { GIFTS } from '../engine/gifts';
 import { CONTINENTS } from '../content/world';
@@ -153,6 +155,17 @@ export function buildVoiceCatalog(): Catalog {
   add('father', BEDTIME.wake.en);
   for (const r of ['girl', 'boy'] as const) for (const l of CUDDLES.baby) add(r, l.en);
   for (const r of ['father', 'mother'] as const) for (const l of CUDDLES.parent) add(r, l.en);
+
+  // album qui parle (src/content/photoTalk.ts) : récit d'une photo, « Who is in the photo? », « Cheese! »
+  for (const l of allWhoLines()) add('narrator', l.en);
+  for (const l of [NIGHT_TIME, HAPPY_BIRTHDAY, QUIZ_START, ...QUIZ_LINES]) add('narrator', l.en);
+  for (const w of Object.values(WEATHER_WORDS)) add('narrator', w.en), add('father', w.en); // récit, et Papa qui annonce la météo du jour
+  for (const r of ['father', 'mother', 'girl', 'boy'] as const) add(r, CHEESE.en);
+  // anniversaire d'un bébé qui grandit : bougies comptées, chanson de la famille
+  for (const l of [BIRTHDAY.blow, ...BIRTHDAY.count, BIRTHDAY.photo]) add('narrator', l.en);
+  for (const r of ['father', 'mother'] as const) add(r, BIRTHDAY.sing.en);
+  // mot de la semaine, « Répète après moi »
+  for (const l of [...Object.values(WEEK_WORD), ...Object.values(MIC)]) add('narrator', l.en);
 
   // jeux bonus de la mer (src/engine/sea.ts) : chaque animal parle avec sa voix
   for (const f of SEA_FRIENDS) add(f.voice, f.hello.en);

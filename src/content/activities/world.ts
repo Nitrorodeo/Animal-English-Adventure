@@ -16,6 +16,7 @@
  */
 import { COLORS, NUMBERS, PROPS, WEATHER_WORDS } from '../props';
 import { inWater } from '../places/depth';
+import { PLACES } from '../places';
 import type { Ability, ActivityCtx, ActivityDef, ColorId, Line, QuestStep, ResponseOption, Tier, Weather } from '../types';
 import { numberId, numberOptions } from './games';
 import { ABILITY_WORDS, act, anchor, ask, back, canDo, cap, clearProps, drinkMove, drinkScene, eatScene, end, foodsOf, L, landSpots, low, moveTo, nameable, no, ok, only, pickStable, prop, props, say, scene, skyProp, tap, tapProps } from './kit';
@@ -33,8 +34,11 @@ function waterSpots(c: ActivityCtx): number[] {
   return c.place.spots.flatMap((s, i) => (inWater(c.place.water, s.x, s.y) ? [i] : []));
 }
 
-/** Décor de neige : pas de fleurs ni de papillons. */
-const snowy = (c: ActivityCtx) => c.place.continentId === 'antarctica' || c.place.weather === 'snowy';
+/**
+ * Décor de neige : pas de fleurs ni de papillons. La neige DESSINÉE compte même un jour sans flocons (météo du jour,
+ * engine/weather.ts), et un jour de neige compte même dans un décor froid dessiné sans neige.
+ */
+const snowy = (c: ActivityCtx) => c.place.continentId === 'antarctica' || c.place.weather === 'snowy' || PLACES[c.place.id]?.weather === 'snowy';
 
 /** Étapes « compter » communes : toucher chaque objet, puis « How many? » dès le niveau intermédiaire. */
 function countSteps(ids: string[], word: { en: string; fr: string; plural: string; pluralFr: string }, touch: Line, items: string[]): QuestStep[] {

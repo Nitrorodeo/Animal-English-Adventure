@@ -121,6 +121,10 @@ export interface Settings {
   levelOverride: 'auto' | Tier;
   /** vitesse des voix réglée par les parents, en part de la vitesse NATURELLE (1 = 100 % = naturelle) */
   speechSpeed: number;
+  /** mot de la semaine choisi par le parent (un mot des décors, content/weekWord.ts) ; absent = aucun */
+  weekWord?: string;
+  /** « Répète après moi » : bouton 🎤 qui enregistre sa voix pour la réécouter, sur l'appareil seulement ; absent = coupé */
+  micRepeat?: boolean;
 }
 
 /**
