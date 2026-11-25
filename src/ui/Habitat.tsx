@@ -26,7 +26,7 @@ import { actorGames, buildQuest, findBaby, hashText, selectActivities, selectAdv
 import { nameOf, originalName, renameActor, withParentNames } from '../engine/names';
 import { createRng } from '../engine/rng';
 import type { AnswerRecord } from '../engine/skills';
-import { actorId, gameDone, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
+import { actorId, gameDone, getFamily, withFamily, type ActorRef, type Baby, type GameState } from '../engine/state';
 import { Confetti } from './Confetti';
 import { DialogueBox, Options } from './DialogueBox';
 import { bubbleSide, nameInside, wornSlot } from './bubbleSide';
@@ -127,12 +127,25 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
   const [menuFor, setMenuFor] = useState<ActorRef | null>(null);
   const [running, setRunning] = useState<Running | null>(null);
   const [showFamily, setShowFamily] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToastText] = useState<string | null>(null);
+  /** deux messages identiques d'affilée : le second reste affiché aussi longtemps que le premier */
+  const [toastN, setToastN] = useState(0);
+  const setToast = useCallback((text: string | null) => {
+    setToastText(text);
+    if (text) setToastN((n) => n + 1);
+  }, []);
   /** déclic de l'appareil photo 📷 (flash blanc) */
   const [flash, setFlash] = useState(0);
   /** moment « Well done! » : premier jeu réussi avec cet animal (grande coche verte) */
   const [firstDone, setFirstDone] = useState<{ icon: string; titleEn: string; titleFr: string; name: string; done: number; total: number } | null>(null);
-  const [grow, setGrow] = useState<{ name: string; sex: Sex; to: GrowthStage; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[]; birthOrder: 1 | 2; candles: number } | null>(null);
+  const [grow, setGrow] = useState<Party | null>(null);
+  /** fêtes qui attendent leur tour : deux bébés peuvent grandir au même jeu, chacun a la sienne (audit du 2026-11-25) */
+  const parties = useRef<Party[]>([]);
+  /** voyage de fin d'aventure pendant une fête : l'accueil du nouveau lieu ne coupe pas « X is growing up! » */
+  const quietArrival = useRef(false);
+  /** la bulle d'un mot du décor s'efface 2,2 s après le DERNIER toucher (pas le premier) */
+  const wordTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(wordTimer.current), []);
   const [wordBubble, setWordBubble] = useState<{ anchorId: string; text: string } | null>(null);
   const [seed] = useState(() => Math.floor(Math.random() * 1e9));
   /** cadeau du soir à choisir (après la première activité de la journée), apporté par le personnage de l'activité */
@@ -257,6 +270,11 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
       ...(ww ? [{ text: WEEK_WORD.intro.en }, { text: say.decorWord(NOUNS[ww.word], ww.word) }, { text: WEEK_WORD.find.en }] : []),
     ];
     const t = setTimeout(() => {
+      if (quietArrival.current) {
+        // un bébé fête son anniversaire : on ne lui coupe pas la parole (l'accueil se fera au prochain lieu)
+        quietArrival.current = false;
+        return;
+      }
       greeted.current = true;
       if (wx) setReact('weather-hello');
       void speech.sequence(lines);
@@ -286,15 +304,28 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
     if (!toast) return;
     const t = setTimeout(() => setToast(null), 3600);
     return () => clearTimeout(t);
-  }, [toast]);
+  }, [toast, toastN, setToast]);
+
+  const openParty = useCallback((p: Party) => {
+    setBlown([]);
+    setGrow(p);
+    void speech.sequence([{ text: say.growUp(p.name, p.to) }, { text: BIGGER_NOW.en, opts: { role: babyVoice(p.sex) } }, { text: BIRTHDAY.blow.en }]);
+  }, []);
+  const closeParty = () => {
+    const next = parties.current.shift();
+    if (next) openParty(next);
+    else setGrow(null);
+  };
 
   const onQuestDone = useCallback(
     (answers: AnswerRecord[]) => {
       if (!running) return;
       const { script, actor } = running;
-      const r = applyQuestOutcome(state, { script, mechanic: running.mechanic, actor, answers, teach: running.teach, continentId: biome.continentId, choice: running.choice });
+      const outcome = { script, mechanic: running.mechanic, actor, answers, teach: running.teach, continentId: biome.continentId, choice: running.choice };
+      const r = applyQuestOutcome(state, outcome);
       const events: OutcomeEvents = r.events;
-      setState(() => r.state);
+      // calculé sur la partie la plus récente : une partie arrivée d'un autre appareil pendant le jeu n'est plus écrasée
+      setState((s) => (s === state ? r.state : applyQuestOutcome(s, outcome).state));
       setRunning(null);
       const today = dayKey(new Date());
       const end = script.endPlace ?? script.biomeId;
@@ -302,19 +333,16 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
       // (cadeaux choisis selon le climat DESSINÉ du lieu : un jour de vent dans le grand froid reste un lieu froid)
       const offer = end === biome.id && earnsGift(script) ? giftOffer(r.state, species.id, baseBiome, today) : null;
       if (offer) setGiftPick({ offer, today, from: actor });
-      if (end !== biome.id) onPlace(end);
       const growing = events.grew;
+      if (end !== biome.id) {
+        if (growing) quietArrival.current = true;
+        onPlace(end);
+      }
       const babyName = growing ? (family.babies.find((b) => b.id === growing.babyId)?.name ?? species.babyWord.en) : actorName(state, species, actor);
       if (growing) {
-        const stage = STAGE_NAMES[growing.to]!;
-        const unlocks = unlockedAt(growing.to).map((x) => ({ icon: x.icon, en: x.titleEn, fr: x.titleFr }));
-        const baby = family.babies.find((b) => b.id === growing.babyId);
-        const sex = baby?.sex ?? 'girl';
-        // anniversaire : une bougie par stade franchi (1 à 3), qu'on souffle en les touchant
-        const candles = Math.max(1, Math.min(3, GROWTH_STAGES.indexOf(growing.to)));
-        setBlown([]);
-        setGrow({ name: babyName, sex, to: growing.to, stage: stage.en, stageFr: stage.fr, unlocks, birthOrder: baby?.birthOrder === 2 ? 2 : 1, candles });
-        void speech.sequence([{ text: say.growUp(babyName, growing.to) }, { text: BIGGER_NOW.en, opts: { role: babyVoice(sex) } }, { text: BIRTHDAY.blow.en }]);
+        const all = [growing, ...(events.grewOthers ?? [])].map((g) => partyFor(family.babies.find((b) => b.id === g.babyId), g.to, species.babyWord.en));
+        parties.current = all.slice(1);
+        openParty(all[0]!);
       } else if (events.treasure) {
         const t = TREASURES[events.treasure];
         if (t) setToast(`${t.icon} ${say.treasure(t.nameEn)}`);
@@ -338,7 +366,7 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
       if (calm && state.player.name !== DEFAULT_PLAYER_NAME) void speech.speak(say.bravo(state.player.name), { role: voiceOf(state, actor) });
       else if (first) void speech.speak(FAMILY_LINES.wellDone.en, { role: voiceOf(state, actor) });
     },
-    [running, setState, biome, baseBiome, state, species, family.babies, onPlace],
+    [running, setState, biome, baseBiome, state, species, family.babies, onPlace, openParty, setToast],
   );
 
   const tapAnchorFree = (place: BiomeDef, anchorId: string) => {
@@ -351,7 +379,8 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
       setToast(`⭐ ${WEEK_WORD.found.en}`);
       void speech.sequence([{ text }, { text: WEEK_WORD.found.en }]);
     } else void speech.speak(text);
-    setTimeout(() => setWordBubble((w) => (w?.anchorId === anchorId ? null : w)), 2200);
+    window.clearTimeout(wordTimer.current);
+    wordTimer.current = window.setTimeout(() => setWordBubble((w) => (w?.anchorId === anchorId ? null : w)), 2200);
   };
 
   const startNight = () => {
@@ -732,7 +761,7 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
           </div>
         )}
         {grow && (
-          <div className="grow-overlay" onClick={() => partyDone && setGrow(null)}>
+          <div className="grow-overlay" onClick={() => partyDone && closeParty()}>
             <Confetti n={26} wide />
             {partyDone && <Confetti key="party" n={30} wide />}
             <div className="grow-card">
@@ -763,6 +792,25 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
       </div>
     </div>
   );
+}
+
+/** Carte « growing up » d'un bébé (une par bébé qui a grandi). */
+type Party = { name: string; sex: Sex; to: GrowthStage; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[]; birthOrder: 1 | 2; candles: number };
+
+/** Fête d'un bébé qui passe au stade `to` (son nom, ses bougies, les jeux qu'il débloque). */
+export function partyFor(baby: Pick<Baby, 'name' | 'sex' | 'birthOrder'> | undefined, to: GrowthStage, fallbackName: string): Party {
+  const stage = STAGE_NAMES[to]!;
+  return {
+    name: baby?.name ?? fallbackName,
+    sex: baby?.sex ?? 'girl',
+    to,
+    stage: stage.en,
+    stageFr: stage.fr,
+    unlocks: unlockedAt(to).map((x) => ({ icon: x.icon, en: x.titleEn, fr: x.titleFr })),
+    birthOrder: baby?.birthOrder === 2 ? 2 : 1,
+    // anniversaire : une bougie par stade franchi (1 à 3), qu'on souffle en les touchant
+    candles: Math.max(1, Math.min(3, GROWTH_STAGES.indexOf(to))),
+  };
 }
 
 /** Gâteau d'anniversaire : une bougie par stade franchi ; on la souffle en la touchant (BIRTHDAY). */

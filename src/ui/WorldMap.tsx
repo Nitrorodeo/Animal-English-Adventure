@@ -198,6 +198,12 @@ function useMapView() {
     onPointerMove: (e: React.PointerEvent<HTMLDivElement>) => {
       const g = grab.current;
       if (!g) return;
+      // bouton relâché hors de la fenêtre (aucun pointerup reçu) : la carte ne suit plus la souris au simple survol
+      if (e.buttons === 0) {
+        e.currentTarget.classList.remove('grabbing');
+        grab.current = null;
+        return;
+      }
       const dx = e.clientX - g.x;
       const dy = e.clientY - g.y;
       if (!g.moved && !isDrag({ x: dx, y: dy })) return;
@@ -212,6 +218,10 @@ function useMapView() {
     onPointerUp: (e: React.PointerEvent<HTMLDivElement>) => {
       e.currentTarget.classList.remove('grabbing');
       if (!grab.current?.moved) grab.current = null;
+    },
+    onPointerCancel: (e: React.PointerEvent<HTMLDivElement>) => {
+      e.currentTarget.classList.remove('grabbing');
+      grab.current = null;
     },
     // la carte a été tirée : ce n'était pas un toucher de continent
     onClickCapture: (e: React.MouseEvent) => {

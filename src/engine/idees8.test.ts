@@ -382,7 +382,7 @@ describe('les 8 idées dans l’interface', () => {
 
   it('anniversaire : une bougie par stade, à souffler avant de fermer ; puis la chanson et la photo', () => {
     expect(habitat).toContain('<BirthdayCake candles={grow.candles}');
-    expect(habitat).toContain('onClick={() => partyDone && setGrow(null)}');
+    expect(habitat).toContain('onClick={() => partyDone && closeParty()}');
     expect(habitat).toContain("makeShot(state, { birthday: grow.birthOrder, night: false })");
     expect(css).toContain('.bday-candle.out .bday-flame');
   });

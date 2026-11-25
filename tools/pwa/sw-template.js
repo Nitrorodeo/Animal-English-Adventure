@@ -20,9 +20,15 @@ const SHELL_SET = new Set(PLAN.shell.map(([p]) => abs(p)));
 /** révision de chaque média en cache (gardée dans un en-tête de la réponse) */
 async function cachedRevs(cache) {
   const revs = {};
-  for (const req of await cache.keys()) {
-    const r = await cache.match(req);
-    revs[req.url.slice(BASE.length)] = (r && r.headers.get(REV_HEADER)) || '';
+  const keys = await cache.keys();
+  // par paquets de 32 : relire un à un des centaines de médias prenait de longues secondes sur iPad (audit du 2026-11-25)
+  for (let i = 0; i < keys.length; i += 32) {
+    await Promise.all(
+      keys.slice(i, i + 32).map(async (req) => {
+        const r = await cache.match(req);
+        revs[req.url.slice(BASE.length)] = (r && r.headers.get(REV_HEADER)) || '';
+      }),
+    );
   }
   return revs;
 }

@@ -92,7 +92,7 @@ export function useCloudSync(state: GameState, setState: (s: GameState) => void,
         setStatus('ok');
         return;
       }
-      const decision = decidePull(meta.current!, remote);
+      const decision = decidePull(meta.current!, remote, latest.current);
       ready.current = true;
       if (decision === 'adopt' && remote) {
         clean.current = remote.state;

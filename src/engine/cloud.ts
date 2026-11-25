@@ -135,11 +135,17 @@ export type PullDecision = 'adopt' | 'push' | 'none';
  * - rien au serveur → on y envoie la partie de cet appareil (premier appareil de la famille) ;
  * - cet appareil a joué sans pouvoir envoyer → sa partie est la plus récente, on l'envoie ;
  * - sinon, si un autre appareil a envoyé une version plus récente → on la reprend.
+ * - les deux ont changé (cet appareil a joué sans envoyer ET un autre a envoyé depuis) → la partie la plus avancée
+ *   (le plus d'activités jouées) l'emporte, à égalité celle de cet appareil (audit du 2026-11-25).
  * (La joueuse joue sur un appareil à la fois : en cas de doute, ce qu'elle vient de faire ici l'emporte.)
  */
-export function decidePull(meta: CloudMeta, remote: RemoteSave | null): PullDecision {
+export function decidePull(meta: CloudMeta, remote: RemoteSave | null, local?: GameState): PullDecision {
   if (remote === null) return 'push';
-  if (meta.dirty) return 'push';
+  if (meta.dirty) {
+    const bothChanged = remote.savedAt > meta.syncedAt;
+    if (bothChanged && local && remote.state.player.activityCounter > local.player.activityCounter) return 'adopt';
+    return 'push';
+  }
   return remote.savedAt > meta.syncedAt ? 'adopt' : 'none';
 }
 

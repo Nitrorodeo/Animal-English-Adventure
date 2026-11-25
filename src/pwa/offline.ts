@@ -72,14 +72,42 @@ export function shouldReloadForUpdate(hadController: boolean, alreadyReloaded: b
   return hadController && !alreadyReloaded && msSinceOpen >= 0 && msSinceOpen <= UPDATE_RELOAD_WINDOW_MS;
 }
 
+/** Pause au-delà de laquelle un retour au premier plan compte comme une réouverture (recherche de mise à jour). */
+export const RESUME_CHECK_MS = 10 * 60_000;
+
+/**
+ * Tablette laissée ouverte des jours (appli plein écran sur iPad, mise en veille) : la page n'est jamais rouverte,
+ * donc le navigateur ne cherche pas de nouvelle version. Au retour au premier plan après une longue pause, on la
+ * cherche, et ce retour compte comme une ouverture pour le rechargement automatique (audit du 2026-11-25).
+ */
+export function resumeIsReopen(hiddenAt: number | null, now: number): boolean {
+  return hiddenAt !== null && now - hiddenAt >= RESUME_CHECK_MS;
+}
+
 export function registerOffline(): void {
   if (!import.meta.env.PROD || typeof navigator === 'undefined' || !('serviceWorker' in navigator) || !window.isSecureContext) return;
   set({ ...status, state: 'starting' });
   const sw = navigator.serviceWorker;
   const hadController = sw.controller !== null;
   let reloaded = false;
+  /** dernière « ouverture » : le chargement de la page, ou un retour après une longue pause */
+  let openedAt = 0;
+  let hiddenAt: number | null = null;
+  let registration: ServiceWorkerRegistration | null = null;
+  document.addEventListener('visibilitychange', () => {
+    const now = performance.now();
+    if (document.visibilityState === 'hidden') {
+      hiddenAt = now;
+      return;
+    }
+    if (resumeIsReopen(hiddenAt, now)) {
+      openedAt = now;
+      void registration?.update().catch(() => undefined);
+    }
+    hiddenAt = null;
+  });
   sw.addEventListener('controllerchange', () => {
-    if (!shouldReloadForUpdate(hadController, reloaded, performance.now())) return;
+    if (!shouldReloadForUpdate(hadController, reloaded, performance.now() - openedAt)) return;
     reloaded = true;
     window.location.reload();
   });
@@ -90,6 +118,7 @@ export function registerOffline(): void {
     sw.register('./sw.js')
       .then(() => sw.ready)
       .then((reg) => {
+        registration = reg;
         reg.active?.postMessage({ type: 'cache-all' });
         // évite que la tablette efface le cache quand elle manque de place
         void navigator.storage?.persist?.();

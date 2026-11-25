@@ -48,7 +48,8 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
   const paused = busy && screen.kind === 'habitat';
 
   const open = (s: Screen) => {
-    if (screen.kind === 'map' || screen.kind === 'habitat') setBack(screen);
+    // depuis la mer aussi : avant, ✕ ramenait dans l'ancien décor visité au lieu du jeu de la mer (audit du 2026-11-25)
+    if (screen.kind === 'map' || screen.kind === 'habitat' || screen.kind === 'sea') setBack(screen);
     setScreen(s);
   };
 

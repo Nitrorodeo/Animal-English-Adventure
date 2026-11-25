@@ -56,6 +56,16 @@ export interface CircleInfo {
   friendAlbum(id: string): Promise<AlbumRec | 'none' | 'offline'>;
 }
 
+/**
+ * Faut-il republier la carte de cette famille ? Oui si le dernier résumé n'est pas parti (envoi raté), ou si la
+ * liste reçue du service ne la contient pas. Jamais quand le cercle est plein.
+ */
+export function needsRepublish(sent: string | null, current: string, members: readonly { id: string }[] | null, myId: string, status: CircleStatus): boolean {
+  if (status === 'full') return false;
+  if (sent !== current) return true;
+  return members !== null && !members.some((f) => f.id === myId);
+}
+
 const freshMeta = (): CircleMeta => ({ code: null, id: newMemberId(Math.random), seen: [] });
 
 async function call(code: string, method: 'GET' | 'PUT' | 'DELETE', opts: { body?: string; id?: string; keepalive?: boolean } = {}): Promise<Response> {
@@ -81,8 +91,22 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     const base = (available ? readCircleMeta(storage) : null) ?? freshMeta();
     return state.circle ? { ...base, code: state.circle.code, id: state.circle.id } : base;
   });
-  const [members, setMembers] = useState<Friend[]>([]);
-  const [status, setStatus] = useState<CircleStatus>(meta.code ? 'syncing' : 'off');
+  const [members, setMembersList] = useState<Friend[]>([]);
+  /** dernière liste reçue du service (null : pas encore reçue) */
+  const membersRef = useRef<Friend[] | null>(null);
+  const setMembers = useCallback((list: Friend[]) => {
+    membersRef.current = list;
+    setMembersList(list);
+  }, []);
+  const [status, setStatusValue] = useState<CircleStatus>(meta.code ? 'syncing' : 'off');
+  const statusRef = useRef(status);
+  const setStatus = useCallback((next: CircleStatus | ((old: CircleStatus) => CircleStatus)) => {
+    setStatusValue((old) => {
+      const v = typeof next === 'function' ? next(old) : next;
+      statusRef.current = v;
+      return v;
+    });
+  }, []);
   const metaRef = useRef(meta);
   metaRef.current = meta;
   const summary = summaryOf(state);
@@ -181,7 +205,22 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     } catch {
       setStatus('offline');
     }
-  }, [available]);
+  }, [available, setMembers, setStatus]);
+
+  /**
+   * Chaque minute : un envoi raté (réseau coupé) est refait, et une carte absente de la liste du service (effacée par
+   * l'envoi simultané d'une autre famille) est republiée. Au plus un envoi par minute (audit du 2026-11-25).
+   */
+  const catchUp = useCallback(async () => {
+    const m = metaRef.current;
+    const s = latest.current;
+    if (!available || !m.code) return;
+    if (needsRepublish(sent.current, summaryKey(s), membersRef.current, m.id, statusRef.current) && publishable(s)) {
+      const r = await push();
+      if (r === 'full') setStatus('full');
+    }
+    await pull();
+  }, [available, push, pull, setStatus]);
 
   // le résumé a changé : envoi groupé quelques secondes plus tard
   useEffect(() => {
@@ -195,7 +234,7 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
       });
     }, sent.current === null ? 300 : CIRCLE_DELAY_MS);
     return () => window.clearTimeout(timer.current);
-  }, [key, meta.code, push, pull]);
+  }, [key, meta.code, push, pull, setStatus]);
 
   // l'album a changé (photo, autocollant) : un seul envoi après un moment de calme, une fois dans le cercle
   useEffect(() => {
@@ -215,7 +254,7 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     };
     const onVisibility = () => (document.visibilityState === 'hidden' ? flush() : void pull());
     const every = window.setInterval(() => {
-      if (document.visibilityState === 'visible') void pull();
+      if (document.visibilityState === 'visible') void catchUp();
     }, PULL_EVERY_MS);
     document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('pagehide', flush);
@@ -224,7 +263,7 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('pagehide', flush);
     };
-  }, [meta.code, pull, push, pushAlbum]);
+  }, [meta.code, pull, push, pushAlbum, catchUp]);
 
   const enter = useCallback(
     async (code: string): Promise<CircleResult> => {
@@ -246,7 +285,7 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
       await pull();
       return { ok: true };
     },
-    [pull, push, update],
+    [pull, push, update, setStatus],
   );
 
   const propose = useCallback(() => newCircleCode(Math.random), []);
@@ -308,7 +347,7 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     update({ code: null, id: m.id, seen: [] });
     setMembers([]);
     setStatus('off');
-  }, [available, update, storage]);
+  }, [available, update, storage, setMembers, setStatus]);
 
   const friendAlbum = useCallback(
     async (id: string): Promise<AlbumRec | 'none' | 'offline'> => {
