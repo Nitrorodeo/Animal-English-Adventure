@@ -5,14 +5,14 @@ import { weatherFx } from '../engine/weather';
 const spread = (i: number, k: number) => ((i * 0.6180339887 + k * 0.137) % 1);
 
 /**
- * Météo du jour dessinée par-dessus le décor (engine/weather.ts) : pluie, neige, rafales de vent, brume, nuages.
+ * Météo du jour dessinée par-dessus le décor (engine/weather.ts) : neige, rafales de vent, brume, nuages.
  * Rien quand il fait beau, chaud, ou froid sans neige (le dessin le montre déjà). `still` : photo de l'album, figée.
  */
 export function WeatherLayer({ weather, still = false }: { weather: Weather | null | undefined; still?: boolean }) {
   const fx = weather ? weatherFx(weather) : null;
   if (!fx) return null;
-  const n = { rain: still ? 26 : 42, snow: still ? 22 : 34, wind: 7, mist: 3, clouds: 3 }[fx];
-  const cls = { rain: 'wx-drop', snow: 'wx-flake', wind: 'wx-gust', mist: 'wx-fog', clouds: 'wx-cloud' }[fx];
+  const n = { snow: still ? 22 : 34, wind: 7, mist: 3, clouds: 3 }[fx];
+  const cls = { snow: 'wx-flake', wind: 'wx-gust', mist: 'wx-fog', clouds: 'wx-cloud' }[fx];
   return (
     <div className={`weather-fx fx-${fx}${still ? ' still' : ''}`} aria-hidden>
       {Array.from({ length: n }, (_, i) => {
@@ -21,7 +21,7 @@ export function WeatherLayer({ weather, still = false }: { weather: Weather | nu
         const style: Record<string, string> = {
           left: `${fx === 'clouds' ? -8 + spread(i, 3) * 90 : fx === 'wind' || fx === 'mist' ? -10 + spread(i, 3) * 60 : x}%`,
           top: fx === 'wind' ? `${10 + y * 70}%` : fx === 'mist' ? `${35 + i * 18}%` : fx === 'clouds' ? `${-3 + y * 7}%` : '-6%',
-          animationDelay: `${-spread(i, 4) * (fx === 'snow' ? 7 : fx === 'rain' ? 0.9 : 9)}s`,
+          animationDelay: `${-spread(i, 4) * (fx === 'snow' ? 7 : 9)}s`,
           '--y': `${(y * 52).toFixed(1)}cqw`,
         };
         return <span key={i} className={cls} style={style} />;

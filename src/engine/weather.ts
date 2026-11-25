@@ -8,6 +8,9 @@ import { hashSeed } from './rng';
  * PLAUSIBLE à cet endroit : de la neige pour le manchot, jamais dans la savane ni dans le désert ; pas de pluie dans
  * le grand froid ; rien ne tombe dans une grotte de glace. Le tirage dépend du jour et du lieu : la même journée
  * donne la même météo (le jeu « What's the weather like? » demande alors la météo qu'on voit à l'écran).
+ *
+ * Plus jamais de pluie tirée au hasard (2026-11-25, « enlève la pluie automatique du décor, c'est désagréable ») :
+ * aucun décor n'est dessiné sous la pluie, donc il ne pleut plus nulle part, et aucune goutte ne tombe à l'écran.
  */
 
 /** décors vus de l'intérieur : la météo du dehors n'y entre pas */
@@ -30,11 +33,11 @@ export function placeWeathers(place: Pick<BiomeDef, 'id' | 'continentId' | 'weat
         case 'antarctica':
           return ['sunny', 'windy', 'snowy'];
         case 'south_america':
-          return ['sunny', 'sunny', 'rainy', 'misty'];
+          return ['sunny', 'sunny', 'misty'];
         case 'oceania':
-          return ['sunny', 'sunny', 'windy', 'rainy'];
+          return ['sunny', 'sunny', 'windy'];
         default:
-          return ['sunny', 'sunny', 'cloudy', 'windy', 'rainy'];
+          return ['sunny', 'sunny', 'cloudy', 'windy'];
       }
     case 'hot':
       return ['hot', 'hot', 'windy'];
@@ -47,7 +50,7 @@ export function placeWeathers(place: Pick<BiomeDef, 'id' | 'continentId' | 'weat
     case 'misty':
       return ['misty', 'cloudy'];
     case 'cloudy':
-      return ['cloudy', 'sunny', 'rainy'];
+      return ['cloudy', 'sunny'];
     case 'rainy':
       return ['rainy', 'cloudy'];
   }
@@ -68,8 +71,11 @@ export function withDayWeather<T extends BiomeDef>(place: T, day: string): T {
   return w === place.weather ? place : { ...place, weather: w };
 }
 
-/** Ce qui se voit à l'écran : pluie, neige, vent, brume, nuages ; rien quand il fait beau, chaud ou froid sans neige. */
-export type WeatherFx = 'rain' | 'snow' | 'wind' | 'mist' | 'clouds';
+/**
+ * Ce qui se voit à l'écran : neige, vent, brume, nuages ; rien quand il fait beau, chaud ou froid sans neige.
+ * Pas de pluie qui tombe, même sur une ancienne photo de l'album prise un jour de pluie (demande du 2026-11-25).
+ */
+export type WeatherFx = 'snow' | 'wind' | 'mist' | 'clouds';
 export function weatherFx(w: Weather): WeatherFx | null {
-  return ({ rainy: 'rain', snowy: 'snow', windy: 'wind', misty: 'mist', cloudy: 'clouds' } as Partial<Record<Weather, WeatherFx>>)[w] ?? null;
+  return ({ snowy: 'snow', windy: 'wind', misty: 'mist', cloudy: 'clouds' } as Partial<Record<Weather, WeatherFx>>)[w] ?? null;
 }

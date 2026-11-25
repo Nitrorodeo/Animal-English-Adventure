@@ -65,8 +65,12 @@ describe('météo du jour : toujours plausible dans le lieu', () => {
     }
   });
 
-  it('ce qui se voit : pluie, neige, vent, brume, nuages ; rien quand il fait beau, chaud ou froid', () => {
-    expect(weatherFx('rainy')).toBe('rain');
+  it('plus de pluie automatique (2026-11-25) : aucun décor ne la tire, aucune goutte ne tombe', () => {
+    for (const p of places) expect(dayWeathers(p), p.id).not.toContain('rainy');
+    expect(weatherFx('rainy')).toBeNull();
+  });
+
+  it('ce qui se voit : neige, vent, brume, nuages ; rien quand il fait beau, chaud ou froid', () => {
     expect(weatherFx('snowy')).toBe('snow');
     expect(weatherFx('windy')).toBe('wind');
     expect(weatherFx('misty')).toBe('mist');
