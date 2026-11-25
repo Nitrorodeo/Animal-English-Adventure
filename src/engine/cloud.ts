@@ -25,8 +25,12 @@ export interface CloudMeta {
 }
 
 export const CLOUD_META_KEY = 'aea.cloud';
-/** Délai avant l'envoi : on groupe les changements (le service gratuit compte les écritures). */
-export const CLOUD_DELAY_MS = 8000;
+/**
+ * Au plus un envoi par minute pendant le jeu (le service gratuit compte 1 000 écritures par jour pour tout
+ * le compte : 3 enfants qui jouent une heure restent loin dessous). Quitter le jeu ou passer à une autre
+ * application envoie tout de suite ce qui reste (useCloudSync).
+ */
+export const CLOUD_DELAY_MS = 60_000;
 /** Taille maximale d'une partie envoyée (une vraie partie fait quelques Ko). */
 export const CLOUD_MAX_BYTES = 1_000_000;
 
@@ -67,6 +71,18 @@ export const FAMILY_CODE_PATTERN = /^(?=.{4,40}$)[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export function isFamilyCode(code: string): boolean {
   return FAMILY_CODE_PATTERN.test(code);
 }
+
+/**
+ * Code valable mais facile à deviner (« lion2026 », « famille-dupont ») : moins de 12 caractères ou moins
+ * de 3 chiffres. Le jeu prévient seulement, il ne refuse pas. Les codes proposés passent toujours.
+ */
+export function easyToGuess(code: string): boolean {
+  return code.length < 12 || (code.match(/[0-9]/g)?.length ?? 0) < 3;
+}
+
+/** Avertissement affiché sous le champ quand le parent choisit lui-même un code. */
+export const EASY_CODE_WARNING =
+  '⚠️ Ce code est facile à deviner : une autre personne pourrait le trouver. Ajoutez des chiffres (au moins 3) ou gardez le code proposé.';
 
 /** Lit ce que l'appareil retient ; `null` si le partage n'a jamais été réglé ici. */
 export function readCloudMeta(storage: StorageLike): CloudMeta | null {

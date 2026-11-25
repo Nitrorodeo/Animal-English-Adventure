@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { easyToGuess, EASY_CODE_WARNING, isFamilyCode, normalizeFamilyCode } from '../engine/cloud';
 import type { CircleInfo, CircleResult } from './useCircle';
 
 const WHY: Record<Exclude<CircleResult, { ok: true }>['reason'], string> = {
@@ -115,6 +116,11 @@ export function CircleSettings({ circle }: { circle: CircleInfo }) {
             autoFocus
           />
           <p className="note">Lettres et chiffres, au moins 4 ; les espaces deviennent des tirets. Évitez un code facile à deviner : toute personne qui le connaît voit les cartes du cercle.</p>
+          {isFamilyCode(normalizeFamilyCode(typed)) && easyToGuess(normalizeFamilyCode(typed)) && (
+            <p className="note code-easy" role="status">
+              {EASY_CODE_WARNING}
+            </p>
+          )}
           {error && (
             <p className="access-wrong" role="alert">
               {error}

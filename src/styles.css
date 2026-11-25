@@ -309,6 +309,7 @@ small { font-weight: normal; opacity: 0.7; }
 .settings button, .panel section > button { font-size: 16px; padding: 6px 14px; border-radius: 10px; border: 2px solid #f0c98a; background: #fff; }
 .danger { border-color: #e88 !important; color: #a22; }
 .note { font-size: 14px; color: #6a5440; margin: 0; }
+.note.code-easy { color: #9a4300; font-weight: 600; }
 .progress-table { border-collapse: collapse; font-size: 15px; }
 .progress-table th, .progress-table td { border-bottom: 1px solid #eadbc4; padding: 4px 8px; text-align: left; }
 

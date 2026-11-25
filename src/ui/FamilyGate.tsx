@@ -1,5 +1,7 @@
 import { useState, type FormEvent, type ReactNode } from 'react';
 import {
+  easyToGuess,
+  EASY_CODE_WARNING,
   isFamilyCode,
   joinReplacesProgress,
   newFamilyCode,
@@ -195,6 +197,11 @@ export function FamilyGate({ children }: { children: ReactNode }) {
               autoFocus
             />
             <p className="note">Lettres et chiffres, au moins 4. Les espaces deviennent des tirets.</p>
+            {isFamilyCode(normalizeFamilyCode(typed)) && easyToGuess(normalizeFamilyCode(typed)) && (
+              <p className="note code-easy" role="status">
+                {EASY_CODE_WARNING}
+              </p>
+            )}
             {step.error && (
               <p className="access-wrong" role="alert">
                 {step.error}

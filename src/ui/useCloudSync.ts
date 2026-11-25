@@ -25,7 +25,7 @@ export interface CloudInfo {
 
 /**
  * Partie partagée : au démarrage, au retour sur le jeu et toutes les minutes, on regarde la partie de la
- * famille ; quelques secondes après chaque changement, on envoie celle de cet appareil. Sans réseau,
+ * famille ; au plus une fois par minute pendant le jeu, et dès qu'on quitte le jeu, on envoie celle de cet appareil. Sans réseau,
  * rien ne bloque : l'envoi se refait au retour de la connexion.
  */
 export function useCloudSync(state: GameState, setState: (s: GameState) => void, storage: StorageLike): CloudInfo {
@@ -111,13 +111,16 @@ export function useCloudSync(state: GameState, setState: (s: GameState) => void,
     }
   }, [code, push, remember, setState]);
 
-  // chaque changement de la partie : envoi groupé quelques secondes plus tard
+  // changements de la partie : un seul envoi par minute au plus. Le minuteur n'est pas relancé à chaque
+  // changement, sinon une enfant qui joue sans pause n'enverrait jamais rien.
   useEffect(() => {
     if (!code || state === clean.current) return;
     if (!meta.current?.dirty) remember({ dirty: true });
-    if (!ready.current) return;
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => void push(), CLOUD_DELAY_MS);
+    if (!ready.current || timer.current !== undefined) return;
+    timer.current = window.setTimeout(() => {
+      timer.current = undefined;
+      void push();
+    }, CLOUD_DELAY_MS);
   }, [state, code, push, remember]);
 
   useEffect(() => {
@@ -126,6 +129,7 @@ export function useCloudSync(state: GameState, setState: (s: GameState) => void,
     const flush = () => {
       if (ready.current && meta.current?.dirty) {
         window.clearTimeout(timer.current);
+        timer.current = undefined;
         void push(true);
       }
     };
@@ -140,6 +144,7 @@ export function useCloudSync(state: GameState, setState: (s: GameState) => void,
     return () => {
       window.clearInterval(every);
       window.clearTimeout(timer.current);
+      timer.current = undefined;
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('pagehide', flush);
       window.removeEventListener('online', onOnline);
