@@ -74,29 +74,52 @@ interface Props {
   mic?: ReactNode;
 }
 
+/**
+ * Écoutes de la phrase anglaise avant que le bouton FR apparaisse (2026-11-25 : « il faut que l'enfant écoute
+ * au minimum 3 fois le texte en anglais avant que le bouton français apparaisse »). La lecture automatique
+ * compte pour une, puis chaque 🔊 ou 🐢.
+ */
+export const FR_AFTER_LISTENS = 3;
+
+/** Le bouton FR est-il visible après `listens` écoutes ? */
+export function frenchUnlocked(listens: number): boolean {
+  return listens >= FR_AFTER_LISTENS;
+}
+
 /** Bulle de dialogue : texte anglais (lu à voix haute), réécoute, ralenti et aide française facultative. */
 export function DialogueBox({ speaker, line, frenchHelp, onReplay, children, mood, side = 'left', onBack, mic }: Props) {
-  const [showFr, setShowFr] = useState(false);
+  // écoutes et aide française comptées pour CETTE phrase : une nouvelle phrase repart de la lecture automatique
+  const key = line ? `${line.en}|${line.fr}` : '';
+  const [heard, setHeard] = useState({ key, listens: 1, showFr: false });
+  const cur = heard.key === key ? heard : { key, listens: 1, showFr: false };
+  const showFr = cur.showFr;
+  const replay = (slow: boolean) => {
+    setHeard({ ...cur, listens: cur.listens + 1 });
+    onReplay(slow);
+  };
   const drag = useDraggable(side);
   return (
     <div ref={drag.ref} className={`dialogue${side === 'right' ? ' at-right' : ''}${mood ? ` mood-${mood}` : ''}${drag.dragging ? ' dragging' : ''}`} style={drag.style} {...drag.handlers}>
       <span className="drag-grip" aria-hidden />
       <div className="dialogue-row">
         <span className="speaker">{speaker}</span>
-        <p className="en">{line?.en}</p>
+        {/* le français s'affiche juste sous l'anglais */}
+        <div className="dialogue-text">
+          <p className="en">{line?.en}</p>
+          {frenchHelp && showFr && line && <p className="fr-line">{frTypo(line.fr)}</p>}
+        </div>
         <div className="dialogue-tools">
           {onBack && <button className="round back-btn" onClick={onBack} aria-label="Revenir à la question d'avant">⏪</button>}
-          <button className="round" onClick={() => onReplay(false)} aria-label="Réécouter">🔊</button>
-          <button className="round" onClick={() => onReplay(true)} aria-label="Plus lentement">🐢</button>
+          <button className="round" onClick={() => replay(false)} aria-label="Réécouter">🔊</button>
+          <button className="round" onClick={() => replay(true)} aria-label="Plus lentement">🐢</button>
           {mic}
-          {frenchHelp && (
-            <button className={`round fr-btn${showFr ? ' on' : ''}`} onClick={() => setShowFr((v) => !v)} aria-label="Aide en français">
+          {frenchHelp && frenchUnlocked(cur.listens) && (
+            <button className={`round fr-btn${showFr ? ' on' : ''}`} onClick={() => setHeard({ ...cur, showFr: !showFr })} aria-label="Aide en français">
               FR
             </button>
           )}
         </div>
       </div>
-      {frenchHelp && showFr && line && <p className="fr-line">{frTypo(line.fr)}</p>}
       {children}
     </div>
   );
