@@ -18,7 +18,7 @@ import { ambientAt, giftLook, giftStart, groundAt, skyOf } from './giftLook';
 import { fillLine, type Vars } from '../engine/dialogue';
 import { applyQuestOutcome, type OutcomeEvents } from '../engine/events';
 import { nextBabySex } from '../engine/family';
-import { findBaby, hashText, selectActivities, selectAdventures, type AdventureOffer, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
+import { actorGames, findBaby, hashText, selectActivities, selectAdventures, type ActorGame, type AdventureOffer, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
 import { createRng } from '../engine/rng';
 import type { AnswerRecord } from '../engine/skills';
 import { actorId, gameDone, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
@@ -207,8 +207,8 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
   const menu = useMemo(() => {
     if (!menuFor) return null;
     const ctx = ctxFor(menuFor);
-    return { activities: selectActivities(ctx), adventures: selectAdventures(ctx) };
-  }, [menuFor, ctxFor]);
+    return { activities: selectActivities(ctx), adventures: selectAdventures(ctx), progress: actorGames(state, species, menuFor) };
+  }, [menuFor, ctxFor, state, species]);
 
   const curious = useMemo(() => {
     const out = new Set<string>();
@@ -491,6 +491,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             here={biome.id}
             frenchHelp={state.settings.frenchHelp}
             isDone={(id) => gameDone(state, menuFor, id)}
+            progress={menu.progress}
             onClose={() => setMenuFor(null)}
             onTurn={() => {
               const a = menuFor;
@@ -854,6 +855,8 @@ interface MenuProps {
   onPickAdventure: (a: AdventureOffer) => void;
   /** ce jeu a-t-il déjà été réussi avec cet animal ? (carte verte avec une coche) */
   isDone: (archetypeId: string) => boolean;
+  /** tous les jeux possibles avec cet animal, réussis ou non (ligne « ✓ 3 / 15 games with Leo ») */
+  progress: ActorGame[];
   onClose: () => void;
   /** le personnage se retourne (regarde de l'autre côté) */
   onTurn?: () => void;
@@ -862,7 +865,8 @@ interface MenuProps {
 /** petite coche verte des cartes réussies */
 const DoneCheck = () => <span className="done-check" role="img" aria-label="done">✓</span>;
 
-function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, isDone, onClose, onTurn }: MenuProps) {
+function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, isDone, progress, onClose, onTurn }: MenuProps) {
+  const doneCount = progress.filter((g) => g.done).length;
   return (
     <div className="activity-menu" role="dialog" aria-label={`Jouer avec ${name}`}>
       <div className="picker-head">
@@ -874,6 +878,28 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
         )}
         <button className="round" onClick={onClose} aria-label="Fermer">✕</button>
       </div>
+      {progress.length > 0 && (
+        <div className="games-progress">
+          <span className={`gp-count${doneCount === progress.length ? ' all' : ''}`}>
+            <span aria-hidden="true">✓</span> {doneCount} / {progress.length} games with {name}
+            {frenchHelp && <span className="fr"> · jeux réussis avec {name}</span>}
+          </span>
+          <div className="gp-icons">
+            {progress.map((g) => (
+              <button
+                key={g.id}
+                className={`gp-icon${g.done ? ' done' : ''}`}
+                aria-label={`${g.titleEn}${g.done ? ' — done' : ''}`}
+                title={frenchHelp ? `${g.titleEn} · ${g.titleFr}` : g.titleEn}
+                onClick={() => void speech.speak(say.cardTitle(g.titleEn))}
+              >
+                <span aria-hidden="true">{g.icon}</span>
+                {g.done && <span className="gp-check" aria-hidden="true">✓</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       {adventures.some((o) => o.adventure.start === here) && (
         <>
           <h3 className="menu-section">🗺️ Adventure here{frenchHelp && <span className="fr"> · Aventure ici</span>}</h3>

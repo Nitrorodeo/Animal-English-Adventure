@@ -1,11 +1,14 @@
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error -- module Node disponible dans Vitest, sans les types Node dans le projet
 import { readFileSync } from 'node:fs';
-import { getSpecies } from '../content/species';
+import { clipFor } from '../audio/clips';
+import { ARCHETYPES } from '../content/archetypes';
+import { say } from '../content/utterances';
+import { SPECIES, getSpecies } from '../content/species';
 import { getBiome } from '../content/world';
 import type { QuestScript } from '../content/types';
 import { applyQuestOutcome } from './events';
-import { selectActivities, selectAdventures, type QuestContext } from './quests';
+import { actorGames, buildQuest, selectActivities, selectAdventures, type QuestContext } from './quests';
 import { createRng } from './rng';
 import { migrate } from './save';
 import type { AnswerRecord } from './skills';
@@ -74,5 +77,63 @@ describe('menu des jeux', () => {
     expect(src.match(/<DoneCheck \/>/g)).toHaveLength(3);
     expect(css).toMatch(/\.option\.played \.option-main, \.option\.adv\.done \.option-main \{ border-color: #3fae5f;/);
     expect(css).toContain('.done-check {');
+  });
+});
+
+describe('ligne de progression de chaque animal (« ✓ 3 / 15 games with Leo »)', () => {
+  const lion = getSpecies('lion');
+
+  it('liste tous les jeux possibles avec cet animal, sans doublon, aucun encore fait au début', () => {
+    const s0 = newGameState();
+    const games = actorGames(s0, lion, father);
+    expect(games.length).toBeGreaterThanOrEqual(10);
+    expect(new Set(games.map((g) => g.id)).size).toBe(games.length);
+    expect(games.every((g) => !g.done && g.icon && g.titleEn && g.titleFr)).toBe(true);
+    // chaque jeu de la liste peut vraiment être proposé avec ce personnage, dans l'un de ses lieux
+    for (const g of games) {
+      const arch = ARCHETYPES.find((a) => a.id === g.id)!;
+      expect(lion.allowedBiomes.some((b) => buildQuest(arch, { ...ctx(s0, father), biome: getBiome(b) })), g.id).toBe(true);
+    }
+    // Papa et Maman n'ont pas les mêmes jeux
+    expect(actorGames(s0, lion, mother).map((g) => g.id)).not.toEqual(games.map((g) => g.id));
+  });
+
+  it('tous les jeux proposés dans le menu figurent dans la ligne', () => {
+    const s0 = newGameState();
+    const ids = new Set(actorGames(s0, lion, father).map((g) => g.id));
+    for (const b of lion.allowedBiomes) {
+      for (const a of selectActivities({ ...ctx(s0, father), biome: getBiome(b) }, 99)) expect(ids.has(a.archetype.id)).toBe(true);
+    }
+  });
+
+  it('un jeu réussi se coche dans la ligne, pour cet animal seulement ; le compte suit', () => {
+    const s0 = newGameState();
+    const game = selectActivities(ctx(s0, father))[0]!;
+    const s1 = finish(s0, game.script, game.archetype.mechanic, father);
+    const games = actorGames(s1, lion, father);
+    expect(games.filter((g) => g.done).map((g) => g.id)).toEqual([game.archetype.id]);
+    expect(actorGames(s1, lion, mother).some((g) => g.done)).toBe(false);
+    expect(games.length).toBe(actorGames(s0, lion, father).length); // la liste ne bouge pas d'un jeu à l'autre
+  });
+
+  it('chaque espèce a des jeux avec Papa et Maman, et chaque titre est enregistré (🔊 en touchant l’icône)', () => {
+    const s0 = newGameState();
+    for (const sp of SPECIES) {
+      for (const role of ['father', 'mother'] as const) {
+        const games = actorGames(s0, sp, { speciesId: sp.id, kind: 'adult', role });
+        expect(games.length, `${sp.id}/${role}`).toBeGreaterThan(5);
+        for (const g of games) expect(clipFor(say.cardTitle(g.titleEn), undefined, []), g.titleEn).toBeDefined();
+      }
+    }
+  });
+
+  it('le menu affiche la ligne et ses icônes cochées', () => {
+    const src: string = readFileSync(new URL('../ui/Habitat.tsx', import.meta.url), 'utf8');
+    const css: string = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
+    expect(src).toContain('progress: actorGames(state, species, menuFor)');
+    expect(src).toContain('progress={menu.progress}');
+    expect(src).toContain('{doneCount} / {progress.length} games with {name}');
+    expect(src).toContain("className={`gp-icon${g.done ? ' done' : ''}`}");
+    for (const rule of ['.games-progress {', '.gp-count {', '.gp-icon {', '.gp-icon.done {', '.gp-check {']) expect(css).toContain(rule);
   });
 });

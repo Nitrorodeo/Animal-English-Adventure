@@ -14,7 +14,8 @@ import { nextStageGoal } from './family';
 import { createRng, type Rng } from './rng';
 import { endPlaceOf, finalizeSteps, shareSteps, walkSteps } from './script';
 import { chooseTier, itemStatus, scriptItems, statusAtLeast } from './skills';
-import { actorId, getFamily, type ActorRef, type Baby, type GameState } from './state';
+import { actorId, gameDone, getFamily, type ActorRef, type Baby, type GameState } from './state';
+import { getBiome } from '../content/world';
 
 /** Nombre d'activités entre l'enseignement d'un mot et sa révision (espacement). */
 export const RETEST_GAP = 2;
@@ -411,6 +412,29 @@ export function selectActivities(ctx: QuestContext, max = 3): RankedActivity[] {
   if (out.length === 0) {
     // QUE-04 : repli conversation toujours disponible
     out.push({ archetype: CHAT, script: chatScript(ctx.species.id, ctx.biome.id, actorKindOf(ctx.actor)), score: 0 });
+  }
+  return out;
+}
+
+/** Un jeu de la ligne de progression d'un animal (menu : « ✓ 3 / 15 games with Leo »). */
+export interface ActorGame {
+  id: string;
+  icon: string;
+  titleEn: string;
+  titleFr: string;
+  done: boolean;
+}
+
+/**
+ * Tous les jeux possibles avec cet animal, dans l'un de ses lieux, et ceux déjà réussis avec lui
+ * (demande du 2026-11-25 : « qu'elle sache où elle en est dans chaque animal »). Tirage fixe : la liste ne
+ * dépend que de la partie. Elle peut s'allonger quand un bébé grandit (de nouveaux jeux s'ouvrent).
+ */
+export function actorGames(state: GameState, species: SpeciesDef, actor: ActorRef): ActorGame[] {
+  const out: ActorGame[] = [];
+  for (const arch of ARCHETYPES) {
+    const ok = species.allowedBiomes.some((b) => buildQuest(arch, { state, species, biome: getBiome(b), actor, rng: createRng(1) }));
+    if (ok) out.push({ id: arch.id, icon: arch.icon, titleEn: arch.titleEn, titleFr: arch.titleFr, done: gameDone(state, actor, arch.id) });
   }
   return out;
 }
