@@ -684,8 +684,8 @@ export function Habitat({ state, setState, species: baseSpecies, biome, onPlace,
 
 const pause = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
 
-/** Ciel du coucher : lune et étoiles qui scintillent (seulement pour « Bonne nuit », pas dans les scènes). */
-function BedtimeSky() {
+/** Ciel du coucher : lune et étoiles qui scintillent (seulement pour « Bonne nuit », pas dans les scènes ; aussi sur les photos prises la nuit). */
+export function BedtimeSky() {
   return (
     <div className="night-sky bedtime-sky" aria-hidden>
       <span className="bedtime-moon">🌙</span>

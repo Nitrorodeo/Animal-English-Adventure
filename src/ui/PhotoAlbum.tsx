@@ -8,6 +8,7 @@ import { ALBUM_MAX_PER_FAMILY, albumFamilies, deletePhoto, familyPhotos, type Ph
 import type { GameState } from '../engine/state';
 import { rigFor } from '../game/rigs';
 import { giftUrl } from './Gifts';
+import { BedtimeSky } from './Habitat';
 import { assetUrl, background, spriteFor } from './scene';
 
 /** Dessin d'un animal tel qu'il était sur la photo (un bébé garde l'âge qu'il avait ce jour-là). */
@@ -27,6 +28,8 @@ export function PhotoScene({ photo, className = '' }: { photo: Photo; className?
   return (
     <div className={`photo-scene${photo.night ? ' night' : ''} ${className}`}>
       {bg ? <img className="ps-bg" src={assetUrl(bg)} alt="" draggable={false} loading="lazy" /> : <div className="ps-bg" style={{ background: place?.placeholderGradient ?? '#9ccf7a' }} />}
+      {/* prise pendant « Good night » : le même ciel que le décor (bleu nuit, lune, étoiles), pas un décor de jour assombri */}
+      {photo.night && <BedtimeSky />}
       {photo.g.map((g, i) => {
         const def = giftDef(g.id);
         if (!def) return null;

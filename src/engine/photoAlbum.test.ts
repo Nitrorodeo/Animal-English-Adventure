@@ -134,6 +134,13 @@ describe('album photo : interface', () => {
     expect(rule('.photo-btn')).not.toContain('#d93d80');
   });
 
+  it('une photo prise la nuit montre la vraie nuit du décor (ciel bleu nuit, lune, étoiles), pas un décor de jour assombri', () => {
+    expect(album).toContain('{photo.night && <BedtimeSky />}');
+    expect(habitat).toContain('export function BedtimeSky()');
+    expect(css).toContain('.photo-scene .night-sky { opacity: 1;');
+    expect(css).not.toContain('.photo-scene.night .ps-bg');
+  });
+
   it('la photo en grand s’affiche d’un coup, en pleine lumière, avec ses boutons dans l’écran', () => {
     const view = css.slice(css.indexOf('.album-view {'), css.indexOf('}', css.indexOf('.album-view {')));
     expect(view).not.toContain('animation');
