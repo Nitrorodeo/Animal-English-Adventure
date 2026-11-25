@@ -43,6 +43,9 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
   const [back, setBack] = useState<Screen>({ kind: 'map' });
   /** lieu à l'écran (peut différer du lieu de la famille pendant une aventure) */
   const [here, setHere] = useState<PlaceId | null>(null);
+  /** jeu, cadeau ou fête en cours dans le décor : le bandeau est en pause (sinon tout était perdu sans prévenir) */
+  const [busy, setBusy] = useState(false);
+  const paused = busy && screen.kind === 'habitat';
 
   const open = (s: Screen) => {
     if (screen.kind === 'map' || screen.kind === 'habitat') setBack(screen);
@@ -104,8 +107,8 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
 
   return (
     <div className="app">
-      <nav className="topbar">
-        <div className="tb-side">
+      <nav className={`topbar${paused ? ' paused' : ''}`}>
+        <div className="tb-side" inert={paused}>
           <button className="round tb-map" onClick={() => setScreen({ kind: 'map' })} aria-label="Carte du monde">
             <TopIcon name="map" />
           </button>
@@ -125,7 +128,7 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
         {screen.kind === 'map' && <BarTitle text="World Map" onTap={() => void speech.speak('World map!')} />}
         {screen.kind === 'habitat' && <PlaceTitle placeId={here ?? screen.biomeId} />}
         {screen.kind !== 'map' && screen.kind !== 'habitat' && <span />}
-        <div className="tb-side tb-end">
+        <div className="tb-side tb-end" inert={paused}>
         {/* espace perso de la joueuse : son album photo (logo dessiné par le parent, 2026-11-25) */}
         <button className="round tb-album" onClick={() => open({ kind: 'album', speciesId: screen.kind === 'habitat' ? screen.speciesId : undefined })} aria-label="My photos">
           <TopIcon name="album" />
@@ -146,7 +149,7 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
       </nav>
       {screen.kind === 'map' && <WorldMap state={state} onPick={(s, b) => setScreen({ kind: 'habitat', speciesId: s.id, biomeId: b })} onSea={(game) => setScreen({ kind: 'sea', game })} />}
       {screen.kind === 'sea' && <SeaBonus key={screen.game} state={state} setState={setState} game={screen.game} onClose={() => setScreen({ kind: 'map' })} />}
-      {screen.kind === 'habitat' && <Habitat key={screen.speciesId} state={state} setState={setState} species={getSpecies(screen.speciesId)} biome={getBiome(screen.biomeId)} onPlace={(b) => setScreen({ kind: 'habitat', speciesId: screen.speciesId, biomeId: b })} onWhere={setHere} />}
+      {screen.kind === 'habitat' && <Habitat key={screen.speciesId} state={state} setState={setState} species={getSpecies(screen.speciesId)} biome={getBiome(screen.biomeId)} onPlace={(b) => setScreen({ kind: 'habitat', speciesId: screen.speciesId, biomeId: b })} onWhere={setHere} onBusy={setBusy} />}
       {screen.kind === 'passport' && <Passport state={state} onClose={() => setScreen(back)} />}
       {screen.kind === 'album' && <PhotoAlbum state={state} setState={setState} current={screen.speciesId} onClose={() => setScreen(back)} />}
       {screen.kind === 'friends' && <Friends circle={circle} settings={state.settings} onClose={() => setScreen(back)} />}

@@ -15,6 +15,8 @@ export function micAvailable(): boolean {
  * « Listen! It's you! » et sa propre voix, puis la phrase du jeu à nouveau pour comparer.
  * Rien n'est analysé, envoyé ni gardé : l'enregistrement vit dans la mémoire du navigateur le temps de la réécoute,
  * puis il est effacé. Pas de note, pas de « faux » : c'est un miroir, pas une évaluation.
+ * Le jeu le recrée à chaque nouvelle réplique (`key`) : si l'enfant passe à la question suivante pendant
+ * l'enregistrement, la suite s'arrête au lieu de couvrir la nouvelle question (audit du 2026-11-25).
  */
 export function RepeatMic({ onReplay }: { onReplay: () => void }) {
   const [phase, setPhase] = useState<'idle' | 'rec' | 'play' | 'error'>('idle');
@@ -34,6 +36,7 @@ export function RepeatMic({ onReplay }: { onReplay: () => void }) {
     try {
       speech.stop();
       await speech.speak(MIC.turn.en);
+      if (!alive.current) return;
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       if (!alive.current) return;
       const rec = new MediaRecorder(stream);
@@ -53,6 +56,7 @@ export function RepeatMic({ onReplay }: { onReplay: () => void }) {
       setPhase('play');
       url = URL.createObjectURL(new Blob(chunks, { type: rec.mimeType || 'audio/webm' }));
       await speech.speak(MIC.listen.en);
+      if (!alive.current) return;
       const audio = new Audio(url);
       await new Promise<void>((r) => {
         audio.onended = () => r();

@@ -944,3 +944,6 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 /* --- « Répète après moi » 🎤 (option des parents) --- */
 .dialogue .mic-btn.rec { background: #ffdede; box-shadow: 0 0 0 0.3cqw #e53935; animation: pulse 0.8s ease-in-out infinite; }
 .dialogue .mic-btn.play { background: #e3f6e3; }
+
+/* bandeau en pause pendant un jeu, le choix du cadeau ou la fête (audit du 2026-11-25) */
+.topbar.paused .tb-side { opacity: 0.35; filter: grayscale(0.6); transition: opacity 0.2s; }

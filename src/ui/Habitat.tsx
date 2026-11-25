@@ -52,6 +52,8 @@ interface Props {
   onPlace: (id: PlaceId) => void;
   /** lieu affiché à l'écran (bandeau du haut), y compris pendant une aventure qui voyage */
   onWhere?: (id: PlaceId) => void;
+  /** un jeu, le choix du cadeau ou la fête d'anniversaire est en cours : le bandeau du haut se met en pause */
+  onBusy?: (busy: boolean) => void;
 }
 
 /** Ce qui se joue : une activité courte ou une aventure à plusieurs scènes. */
@@ -101,7 +103,7 @@ function rolesOf(state: GameState, species: SpeciesDef, actor: ActorRef): Record
 
 const SPEAKERS: readonly Speaker[] = ['actor', 'father', 'mother', 'baby', 'sibling', 'narrator'];
 
-export function Habitat({ state, setState, species: baseSpecies, biome: baseBiome, onPlace, onWhere }: Props) {
+export function Habitat({ state, setState, species: baseSpecies, biome: baseBiome, onPlace, onWhere, onBusy }: Props) {
   /** le décor avec sa météo du jour (pluie, neige, vent… selon le lieu : engine/weather.ts) ; ses jeux en parlent */
   const today = useMemo(() => dayKey(new Date()), []);
   const biome = useMemo(() => withDayWeather(baseBiome, today), [baseBiome, today]);
@@ -268,6 +270,11 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
   useEffect(() => {
     if (!running) onWhere?.(biome.id);
   }, [running, biome.id, onWhere]);
+
+  // pendant un jeu, le choix du cadeau ou la fête : un doigt sur le bandeau (carte, album…) ne doit pas tout perdre
+  const busy = running !== null || giftPick !== null || grow !== null;
+  useEffect(() => onBusy?.(busy), [busy, onBusy]);
+  useEffect(() => () => onBusy?.(false), [onBusy]);
 
   useEffect(() => {
     if (!firstDone) return;
@@ -1384,7 +1391,7 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
       )}
       {q.finished && <Confetti n={30} wide />}
       {q.bubble && step && step.kind !== 'moveTo' && step.kind !== 'moveBack' && step.kind !== 'props' && (
-        <DialogueBox speaker={cast[q.bubble.who]?.name ?? ''} line={q.bubble.line} frenchHelp={state.settings.frenchHelp} onReplay={q.replay} onBack={q.canBack ? q.back : undefined} mood={run.feedback} side={side} mic={state.settings.micRepeat ? <RepeatMic onReplay={() => q.replay(false)} /> : undefined}>
+        <DialogueBox speaker={cast[q.bubble.who]?.name ?? ''} line={q.bubble.line} frenchHelp={state.settings.frenchHelp} onReplay={q.replay} onBack={q.canBack ? q.back : undefined} mood={run.feedback} side={side} mic={state.settings.micRepeat ? <RepeatMic key={`${q.bubble.who}|${q.bubble.line}`} onReplay={() => q.replay(false)} /> : undefined}>
           {step.kind === 'ask' && run.feedback !== 'ok' && <Options options={step.options.map((o) => ({ ...o, line: q.filled(o.line) }))} biome={place} reveal={q.reveal?.option !== undefined} disabled={false} onChoose={q.choose} listen={step.listen} />}
           {step.kind === 'command' && run.feedback !== 'ok' && (
             <>

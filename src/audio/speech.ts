@@ -74,6 +74,12 @@ function pickVoice(synth: SpeechSynthesis, lang: 'en' | 'fr'): SpeechSynthesisVo
   return undefined;
 }
 
+/** Délai pour qu'un enregistrement commence : passé ce temps, la voix de l'appareil prend le relais. */
+export const CLIP_START_MS = 8000;
+/** Une fois lancé : la durée du fichier plus cette marge (ou CLIP_MAX_MS si la durée est inconnue). */
+export const CLIP_SLACK_MS = 3000;
+export const CLIP_MAX_MS = 30_000;
+
 export function createSpeech(): AudioService {
   const hasWindow = typeof window !== 'undefined';
   const synth = hasWindow && 'speechSynthesis' in window ? window.speechSynthesis : undefined;
@@ -130,13 +136,31 @@ export function createSpeech(): AudioService {
       // Chaque lecture ne retire QUE ses propres écouteurs : une lecture interrompue qui échoue
       // en retard ne doit pas couper la suivante.
       let settled = false;
+      // garde-fou : un mp3 qui cale (réseau coupé pendant le chargement) ne donne ni `ended` ni `error` ;
+      // sans lui, la suite (jeu, micro, album) attendrait indéfiniment. Audit du 2026-11-25.
+      let watchdog: ReturnType<typeof setTimeout> | undefined;
+      const giveUp = () => {
+        if (settled) return;
+        if (finishCurrent === finish) audio.pause();
+        done(false);
+      };
+      const arm = (ms: number) => {
+        clearTimeout(watchdog);
+        watchdog = setTimeout(giveUp, ms);
+      };
+      const onPlaying = () => {
+        applyRate();
+        const d = audio.duration;
+        arm(Number.isFinite(d) && d > 0 ? (d * 1000) / Math.max(audio.playbackRate || 1, 0.25) + CLIP_SLACK_MS : CLIP_MAX_MS);
+      };
       const done = (ok: boolean) => {
         if (settled) return;
         settled = true;
+        clearTimeout(watchdog);
         audio.removeEventListener('ended', onEnded);
         audio.removeEventListener('error', onError);
         audio.removeEventListener('loadedmetadata', applyRate);
-        audio.removeEventListener('playing', applyRate);
+        audio.removeEventListener('playing', onPlaying);
         if (finishCurrent === finish) finishCurrent = undefined;
         resolve(ok);
       };
@@ -149,9 +173,10 @@ export function createSpeech(): AudioService {
       audio.addEventListener('error', onError);
       // Certains navigateurs remettent la vitesse à zéro au chargement : on la réapplique.
       audio.addEventListener('loadedmetadata', applyRate);
-      audio.addEventListener('playing', applyRate);
+      audio.addEventListener('playing', onPlaying);
       audio.src = `${import.meta.env.BASE_URL}${src}`;
       applyRate();
+      arm(CLIP_START_MS);
       audio.play().catch(() => done(false));
     });
 

@@ -11,6 +11,8 @@ const SHELL = 'aea-shell-' + PLAN.version;
 const MEDIA = 'aea-media';
 const BASE = new URL('./', self.location).href;
 const REV_HEADER = 'X-AEA-Rev';
+/** page servie depuis le cache si le réseau ne répond pas dans ce délai */
+const NAV_TIMEOUT_MS = 4000;
 const abs = (p) => BASE + p;
 const MEDIA_REV = new Map(PLAN.media.map(([p, r]) => [abs(p), r]));
 const SHELL_SET = new Set(PLAN.shell.map(([p]) => abs(p)));
@@ -76,9 +78,23 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET' || !req.url.startsWith(BASE)) return;
   const url = req.url.split('#')[0].split('?')[0];
 
-  // page : réseau d'abord (nouvelle version), sinon la page en cache
+  // page : réseau d'abord (nouvelle version), sinon la page en cache. Réseau très lent (wifi faible, tablette
+  // en voiture) : passé NAV_TIMEOUT_MS on sert la page en cache plutôt qu'un écran blanc (audit du 2026-11-25).
   if (req.mode === 'navigate') {
-    event.respondWith(fetch(req).catch(async () => (await caches.match(abs('index.html'), { cacheName: SHELL })) || Response.error()));
+    event.respondWith(
+      (async () => {
+        const cached = () => caches.match(abs('index.html'), { cacheName: SHELL });
+        const net = fetch(req);
+        net.catch(() => undefined);
+        try {
+          const first = await Promise.race([net, new Promise((r) => setTimeout(r, NAV_TIMEOUT_MS, 'slow'))]);
+          if (first !== 'slow') return first;
+          return (await cached()) || (await net);
+        } catch {
+          return (await cached()) || Response.error();
+        }
+      })(),
+    );
     return;
   }
 

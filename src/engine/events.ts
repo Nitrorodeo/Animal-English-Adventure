@@ -130,8 +130,12 @@ export function applyQuestOutcome(state: GameState, o: QuestOutcome): { state: G
       const stage = computeStage(nb);
       if (stage !== nb.stage) {
         const g = { babyId: nb.id, from: nb.stage, to: stage };
-        if (b.id === actorBaby || !events.grew) events.grew = g;
-        else events.grewOthers = [...(events.grewOthers ?? []), g];
+        // l'annonce principale va au bébé du jeu ; celle d'un autre bébé déjà notée passe dans les suivantes
+        // (avant, elle était écrasée et l'enfant ne la voyait jamais : audit du 2026-11-25)
+        if (b.id === actorBaby || !events.grew) {
+          if (events.grew) events.grewOthers = [events.grew, ...(events.grewOthers ?? [])];
+          events.grew = g;
+        } else events.grewOthers = [...(events.grewOthers ?? []), g];
         nb = { ...nb, stage, milestones: addUnique(nb.milestones, `stage:${stage}`) };
       }
       return nb;
