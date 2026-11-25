@@ -33,18 +33,17 @@ small { font-weight: normal; opacity: 0.7; }
 /* trois colonnes : boutons à gauche, titre bien au milieu, boutons à droite */
 .tb-side { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .tb-side.tb-end { justify-content: flex-end; }
-/* boutons : pastilles blanches bombées, une couleur gaie par bouton */
-.topbar .round { width: 50px; height: 50px; border: 3px solid #fff; color: var(--c, #2f8fd0); background: radial-gradient(circle at 40% 30%, #ffffff 0%, #ffffff 55%, #e9f6ff 100%);
-  box-shadow: 0 4px 0 var(--c-deep, #2577b0), 0 6px 10px #1b5f8f40; transition: transform 0.12s ease, box-shadow 0.12s ease; }
-.topbar .round svg { width: 28px; height: 28px; flex: none; stroke-width: 2.3; }
-.topbar .round:hover { filter: none; transform: translateY(-1px); }
-.topbar .round.small { width: 44px; height: 44px; opacity: 1; }
-.topbar .round.small svg { width: 24px; height: 24px; }
-.topbar .round:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--c-deep, #2577b0), 0 2px 4px #1b5f8f40; }
-.topbar .tb-map { --c: #2fa84f; --c-deep: #1f7a38; }
-.topbar .tb-bag { --c: #ff8a2b; --c-deep: #c95f0e; }
-.topbar .tb-friends { --c: #ff5c8a; --c-deep: #c93763; }
-.topbar .tb-gear { --c: #8a6bd8; --c-deep: #5f45a8; }
+/* boutons : logos ronds dessinés par le parent (2026-11-25) ; la pastille est dans l'image, l'ombre suit son contour */
+.topbar .round { width: 54px; height: 54px; padding: 0; border: none; border-radius: 50%; background: none; box-shadow: none;
+  filter: drop-shadow(0 4px 0 var(--c-deep, #2577b0)) drop-shadow(0 6px 6px #1b5f8f40); transition: transform 0.12s ease, filter 0.12s ease; }
+.topbar .round .tb-logo { width: 100%; height: 100%; display: block; pointer-events: none; -webkit-user-drag: none; user-select: none; }
+.topbar .round:hover { transform: translateY(-1px) scale(1.04); }
+.topbar .round:active { transform: translateY(3px); filter: drop-shadow(0 1px 0 var(--c-deep, #2577b0)) drop-shadow(0 2px 3px #1b5f8f40); }
+.topbar .round:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.topbar .tb-map { --c-deep: #1f7a38; }
+.topbar .tb-bag { --c-deep: #c95f0e; }
+.topbar .tb-friends { --c-deep: #c93763; }
+.topbar .tb-gear { --c-deep: #5f45a8; }
 .topbar-title { display: inline-flex; align-items: center; gap: 12px; border: none; background: none; padding: 4px 10px; font-size: 28px; font-weight: bold; letter-spacing: 1.5px; white-space: nowrap; min-width: 0; max-width: 100%;
   color: #fff; text-shadow: 0 3px 0 #2577b0, 0 5px 8px #1b5f8f55; }
 .topbar-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -59,7 +58,8 @@ small { font-weight: normal; opacity: 0.7; }
 .hop-btn.here { width: 56px; height: 56px; border-color: #ffd23f; background: radial-gradient(circle at 50% 35%, #fffbe0 0%, #ffe98a 100%); box-shadow: 0 4px 0 #d9a400, 0 0 0 3px #fff, 0 6px 12px #1b5f8f55; cursor: default; }
 .hop-btn.here:hover { transform: none; }
 @media (max-width: 900px) { .topbar-title { font-size: 22px; letter-spacing: 0.5px; gap: 8px; padding: 4px; } .hop-btn { width: 44px; height: 44px; } .hop-btn.here { width: 50px; height: 50px; } }
-@media (max-width: 640px) { .topbar-orn { display: none; } .topbar-title { font-size: 18px; } }
+/* téléphone : le titre prend la place qui reste (coupé par « … ») au lieu de passer sur les boutons */
+@media (max-width: 640px) { .topbar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 6px; padding: 0 8px; } .topbar-orn { display: none; } .topbar-title { font-size: 18px; justify-content: center; } .topbar .round { width: 46px; height: 46px; } .tb-side { gap: 6px; } }
 
 .screen { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; position: relative; }
 

@@ -13,6 +13,7 @@ import { ParentArea } from './ParentArea';
 import { Passport } from './Passport';
 import { SeaBonus } from './SeaBonus';
 import { assetUrl, background, spriteFor } from './scene';
+import { topbarIconUrl, type TopbarIcon } from './topbarIcons';
 import { useGame } from './useGame';
 import { WorldMap } from './WorldMap';
 
@@ -103,7 +104,7 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
       <nav className="topbar">
         <div className="tb-side">
           <button className="round tb-map" onClick={() => setScreen({ kind: 'map' })} aria-label="Carte du monde">
-            <Icon name="map" />
+            <TopIcon name="map" />
           </button>
           {screen.kind === 'habitat' && (
             <SpeciesHop
@@ -122,16 +123,16 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
         {screen.kind !== 'map' && screen.kind !== 'habitat' && <span />}
         <div className="tb-side tb-end">
         <button className="round tb-bag" onClick={() => open({ kind: 'passport' })} aria-label="Passeport">
-          <Icon name="bag" />
+          <TopIcon name="bag" />
         </button>
         {circle.code && (
           <button className="round tb-friends friends-btn" onClick={() => open({ kind: 'friends' })} aria-label="Mes amis">
-            <Icon name="friends" />
+            <TopIcon name="friends" />
             {circle.fresh.length > 0 && <span className="friends-dot" aria-hidden />}
           </button>
         )}
-        <button className="round small tb-gear" onClick={() => open({ kind: 'parents' })} aria-label="Espace parents">
-          <Icon name="gear" />
+        <button className="round tb-gear" onClick={() => open({ kind: 'parents' })} aria-label="Espace parents">
+          <TopIcon name="gear" />
         </button>
         </div>
       </nav>
@@ -198,36 +199,7 @@ export function SpeciesHop({ current, onPick }: { current: string; onPick: (s: S
   );
 }
 
-/** Icônes du bandeau, dessinées en traits dorés (nettes à toutes les tailles, pas d'émoji). */
-function Icon({ name }: { name: 'map' | 'bag' | 'gear' | 'friends' }) {
-  const common = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
-  if (name === 'map')
-    return (
-      <svg {...common}>
-        <path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z" />
-        <path d="M9 4v13.5M15 6.5V20" />
-      </svg>
-    );
-  if (name === 'friends')
-    return (
-      <svg {...common}>
-        <circle cx="8.5" cy="8" r="3" />
-        <circle cx="16.5" cy="9" r="2.5" />
-        <path d="M3 19.5a5.5 5.5 0 0 1 11 0M14.5 14.2a4.6 4.6 0 0 1 6.5 4.3" />
-      </svg>
-    );
-  if (name === 'bag')
-    return (
-      <svg {...common}>
-        <path d="M6 9a6 6 0 0 1 12 0v9.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 18.5z" />
-        <path d="M9 9V6.5a3 3 0 0 1 6 0V9M8.5 14h7v4h-7z" />
-      </svg>
-    );
-  return (
-    <svg {...common}>
-      <circle cx="12" cy="12" r="3.2" />
-      <path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7" />
-      <circle cx="12" cy="12" r="6.6" />
-    </svg>
-  );
+/** Logo dessiné de la barre du haut (la pastille ronde est dans l'image). */
+function TopIcon({ name }: { name: TopbarIcon }) {
+  return <img className="tb-logo" src={topbarIconUrl(name)} alt="" draggable={false} />;
 }
