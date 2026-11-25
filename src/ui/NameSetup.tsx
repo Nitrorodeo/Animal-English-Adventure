@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { clipPlaybackRate, speech } from '../audio/speech';
-import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
+import { DEFAULT_PLAYER_NAME, paceOf } from '../audio/voiceKey';
 import { NAME_ERRORS, NAME_SCREEN } from '../content/utterances';
 import { sanitizeName } from '../engine/family';
 import { sanitizeSpelling, type NamePron, type NamePronMode } from '../engine/nameVoice';
@@ -69,7 +69,7 @@ export function NameSetup({ initialName, initialPron, speechSpeed, onDone, onCan
     const a = audio.current ?? (audio.current = new Audio());
     a.src = url;
     a.preservesPitch = true;
-    a.playbackRate = a.defaultPlaybackRate = clipPlaybackRate(speechSpeed, false);
+    a.playbackRate = a.defaultPlaybackRate = clipPlaybackRate(speechSpeed, false, paceOf('mother')); // aperçu dit par la maman (PREVIEW_VOICE)
     void a.play().catch(() => undefined);
   };
 

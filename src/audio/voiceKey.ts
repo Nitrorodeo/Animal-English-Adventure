@@ -20,6 +20,27 @@ export const VOICE_OF_ROLE: Readonly<Record<VoiceRole, string>> = {
   boy: 'af_kore+5',
 };
 
+/**
+ * Correction de débit de chaque voix, pour que toutes parlent au débit du narrateur au même réglage
+ * (2026-11-25 : « certaines voix sont trop accélérées… toutes les voix du jeu se règlent sur le même
+ * réglage »). À paramètre de vitesse égal, Kokoro fait parler ses voix américaines bien plus vite.
+ * Débit médian mesuré sur 600 phrases par voix (tools/tts/mesurer_debit.py), en syllabes par seconde :
+ * narrateur 2,83 · maman 3,41 · bébé garçon 3,41 · bébé fille 2,59 · papa 2,40.
+ * Valeur = débit du narrateur ÷ débit de la voix (appliquée à la lecture, hauteur conservée).
+ */
+export const VOICE_PACE: Readonly<Record<string, number>> = {
+  bf_isabella: 1,
+  af_bella: 0.83,
+  'af_kore+5': 0.83,
+  'bf_emma+5': 1.09,
+  bm_daniel: 1.18,
+};
+
+/** Correction de débit d'un rôle (1 si la voix n'a pas été mesurée). */
+export function paceOf(role: VoiceRole | undefined): number {
+  return VOICE_PACE[VOICE_OF_ROLE[role ?? 'narrator']] ?? 1;
+}
+
 /** Voix d'un bébé selon son sexe. */
 export function babyVoice(sex: 'girl' | 'boy'): VoiceRole {
   return sex;

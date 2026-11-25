@@ -9,7 +9,7 @@
  */
 import { nameClipFor, type NameClips } from '../engine/nameVoice';
 import type { clipFor as ClipFor } from './clips';
-import { DEFAULT_PLAYER_NAME, type VoiceRole } from './voiceKey';
+import { DEFAULT_PLAYER_NAME, paceOf, type VoiceRole } from './voiceKey';
 
 export type { VoiceRole };
 
@@ -57,9 +57,12 @@ export const voicesReady: Promise<void> = import('./clips').then(
  */
 export const RECORDED_SPEED = 0.8;
 
-/** Vitesse de lecture d'un enregistrement pour obtenir la vitesse voulue (1 = naturelle). */
-export function clipPlaybackRate(speed: number, slow: boolean): number {
-  return (speed / RECORDED_SPEED) * (slow ? 0.75 : 1);
+/**
+ * Vitesse de lecture d'un enregistrement pour obtenir la vitesse voulue (1 = naturelle).
+ * `pace` : correction propre à la voix (voir VOICE_PACE), pour que toutes parlent au même débit.
+ */
+export function clipPlaybackRate(speed: number, slow: boolean, pace = 1): number {
+  return (speed / RECORDED_SPEED) * (slow ? 0.75 : 1) * pace;
 }
 
 function pickVoice(synth: SpeechSynthesis, lang: 'en' | 'fr'): SpeechSynthesisVoice | undefined {
@@ -88,6 +91,8 @@ export function createSpeech(): AudioService {
   let speed = RECORDED_SPEED;
   /** la phrase en cours est-elle en voix lente (🐢) ? */
   let currentSlow = false;
+  /** correction de débit de la voix en cours (toutes les voix au débit du narrateur) */
+  let currentPace = 1;
   let names: readonly string[] = [];
   let player = DEFAULT_PLAYER_NAME;
   let nameClips: NameClips | null = null;
@@ -124,13 +129,13 @@ export function createSpeech(): AudioService {
   /** vitesse de lecture de l'enregistrement, hauteur conservée */
   const applyRate = () => {
     if (!audio) return;
-    const r = clipPlaybackRate(speed, currentSlow);
+    const r = clipPlaybackRate(speed, currentSlow, currentPace);
     audio.preservesPitch = true;
     audio.defaultPlaybackRate = r;
     if (audio.playbackRate !== r) audio.playbackRate = r;
   };
 
-  const playClip = (src: string, slow: boolean) =>
+  const playClip = (src: string, slow: boolean, pace = 1) =>
     new Promise<boolean>((resolve) => {
       if (!audio) return resolve(false);
       // Chaque lecture ne retire QUE ses propres écouteurs : une lecture interrompue qui échoue
@@ -169,6 +174,7 @@ export function createSpeech(): AudioService {
       const finish = () => done(true);
       finishCurrent = finish;
       currentSlow = slow;
+      currentPace = pace;
       audio.addEventListener('ended', onEnded);
       audio.addEventListener('error', onError);
       // Certains navigateurs remettent la vitesse à zéro au chargement : on la réapplique.
@@ -186,15 +192,16 @@ export function createSpeech(): AudioService {
     if (muted || !text.trim()) return mine;
     const lang = opts.lang ?? 'en';
     const slow = !!opts.slow;
+    const pace = paceOf(opts.role);
     if (lang === 'en') {
       // d'abord la phrase dite avec le prénom de la joueuse, sinon la variante sans prénom
       const named = nameClipFor(text, opts.role, player, nameClips);
-      if (named && (await playClip(named, slow))) return mine;
+      if (named && (await playClip(named, slow, pace))) return mine;
       if (mine !== seq) return mine; // coupée pendant l'essai : ne pas enchaîner sur la variante
       if (!lookup) await voicesReady;
       if (mine !== seq) return mine;
       const src = lookup?.(text, opts.role, opts.names ? [...names, ...opts.names] : names);
-      if (src && (await playClip(src, slow))) return mine;
+      if (src && (await playClip(src, slow, pace))) return mine;
       if (!src && import.meta.env.DEV) console.warn(`[voix] pas d'enregistrement (${opts.role ?? 'narrator'}) : « ${text} » — lancer npm run voices`);
     }
     if (mine === seq) await synthesize(text, lang, slow);

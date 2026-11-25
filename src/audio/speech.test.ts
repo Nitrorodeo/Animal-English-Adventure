@@ -1,3 +1,4 @@
+import { paceOf } from './voiceKey';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { say, SPEED_SAMPLE } from '../content/utterances';
 
@@ -105,7 +106,7 @@ describe('lecture des voix', () => {
       s.setSpeed(speed);
       const p = s.speak(SPEED_SAMPLE.text, { role: SPEED_SAMPLE.role, slow });
       await flush();
-      const r = FakeAudio.last.playbackRate;
+      const r = FakeAudio.last.playbackRate / paceOf(SPEED_SAMPLE.role); // sans la correction propre à la voix
       expect(FakeAudio.last.preservesPitch).toBe(true);
       FakeAudio.last.end();
       await p;
@@ -126,9 +127,10 @@ describe('lecture des voix', () => {
     s.setSpeed(0.8);
     const p = s.speak(SPEED_SAMPLE.text, { role: SPEED_SAMPLE.role });
     await flush();
-    expect(FakeAudio.last.playbackRate).toBeCloseTo(1);
+    const pace = paceOf(SPEED_SAMPLE.role);
+    expect(FakeAudio.last.playbackRate).toBeCloseTo(1 * pace);
     s.setSpeed(1.2);
-    expect(FakeAudio.last.playbackRate).toBeCloseTo(1.5);
+    expect(FakeAudio.last.playbackRate).toBeCloseTo(1.5 * pace);
     expect(FakeAudio.last.played).toHaveLength(1); // pas de redémarrage
     FakeAudio.last.end();
     await p;
