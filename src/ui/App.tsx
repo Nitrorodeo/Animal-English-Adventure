@@ -163,9 +163,7 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
 function BarTitle({ text, onTap }: { text: string; onTap: () => void }) {
   return (
     <button className="topbar-title" onClick={onTap} aria-label={text}>
-      <span className="topbar-orn">✦</span>
       <span className="topbar-text">{text}</span>
-      <span className="topbar-orn">✦</span>
     </button>
   );
 }

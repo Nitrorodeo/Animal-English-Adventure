@@ -1,5 +1,5 @@
 :root {
-  --bar: 64px;
+  --bar: 70px;
   --gold: #f3c766;
   --gold-deep: #b98a45;
   --cream: #fffaf0;
@@ -22,44 +22,58 @@ h1, h2, h3, h4 { margin: 0; }
 small { font-weight: normal; opacity: 0.7; }
 
 .app { height: 100dvh; display: flex; flex-direction: column; }
-.topbar { height: var(--bar); flex: none; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding: 0 14px; color: #fff; position: relative; z-index: 500;
-  background: linear-gradient(180deg, #a6e4ff 0%, #6fcaf6 55%, #4fb6ec 100%);
-  box-shadow: inset 0 2px 0 #ffffff80; }
-/* bord festonné, comme un store de marchand de glaces (demande du parent, 2026-11-24 : plus gai, pour des enfants) */
-.topbar::after { content: ''; position: absolute; left: 0; right: 0; bottom: -9px; height: 10px; pointer-events: none;
-  background: radial-gradient(circle at 50% 0, #4fb6ec 0 9px, transparent 9.5px) 0 0 / 22px 10px repeat-x;
-  filter: drop-shadow(0 3px 2px #1b5f8f40); }
-.topbar .spacer { flex: 1; }
-/* trois colonnes : boutons à gauche, titre bien au milieu, boutons à droite */
-.tb-side { display: flex; align-items: center; gap: 12px; min-width: 0; }
+/* ── Barre du haut : bandeau dessiné par le parent (2026-11-25), découpé par tools/icons/build_topbar_banner.py ──
+   Tout est proportionnel à la hauteur du bandeau (--pill-h) : les boutons tiennent DANS le bandeau, sous son bord,
+   et commencent après les feuilles. Les nombres sont des proportions largeur / hauteur des morceaux du dessin
+   (vérifiées par topbarIcons.test.ts). */
+.topbar { --pill-h: calc(var(--bar) - 6px); --btn: calc(var(--pill-h) - 18px);
+  height: var(--bar); flex: none; display: grid; grid-template-columns: minmax(max-content, 1fr) minmax(0, auto) minmax(max-content, 1fr); align-items: center; gap: 10px;
+  padding: 0 calc(4px + var(--pill-h) * 1.9192); color: #fff; position: relative; z-index: 500;
+  background: linear-gradient(180deg, #f2fbff 0%, #dcf2fd 100%); }
+.topbar::before { content: ''; position: absolute; inset: 3px 4px; z-index: -1; pointer-events: none;
+  background:
+    url('/assets/ui/topbar-left.webp') left center / auto 100% no-repeat,
+    url('/assets/ui/topbar-right.webp') right center / auto 100% no-repeat,
+    url('/assets/ui/topbar-middle.webp') center / calc(100% - var(--pill-h) * 6.4646) 100% no-repeat;
+  filter: drop-shadow(0 2px 3px #1b5f8f40); }
+/* écran étroit : pas la place pour les feuilles ; bouts arrondis seuls, les boutons vont jusqu'au bord */
+@media (max-width: 900px) {
+  .topbar { padding: 0 calc(4px + var(--pill-h) * 0.22); gap: 6px; }
+  .topbar::before { background:
+    url('/assets/ui/topbar-end-left.webp') left center / auto 100% no-repeat,
+    url('/assets/ui/topbar-end-right.webp') right center / auto 100% no-repeat,
+    url('/assets/ui/topbar-middle-narrow.webp') center / calc(100% - var(--pill-h) * 0.8081) 100% no-repeat; }
+}
+.tb-side { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .tb-side.tb-end { justify-content: flex-end; }
-/* boutons : logos ronds dessinés par le parent (2026-11-25) ; la pastille est dans l'image, l'ombre suit son contour */
-.topbar .round { width: 54px; height: 54px; padding: 0; border: none; border-radius: 50%; background: none; box-shadow: none;
-  filter: drop-shadow(0 4px 0 var(--c-deep, #2577b0)) drop-shadow(0 6px 6px #1b5f8f40); transition: transform 0.12s ease, filter 0.12s ease; }
+/* logos ronds dessinés par le parent : la pastille est dans l'image, l'ombre suit son contour */
+.topbar .round { width: var(--btn); height: var(--btn); padding: 0; border: none; border-radius: 50%; background: none; box-shadow: none;
+  filter: drop-shadow(0 2px 0 var(--c-deep, #2577b0)) drop-shadow(0 3px 3px #0b3d6655); transition: transform 0.14s ease, filter 0.14s ease; }
 .topbar .round .tb-logo { width: 100%; height: 100%; display: block; pointer-events: none; -webkit-user-drag: none; user-select: none; }
-.topbar .round:hover { transform: translateY(-1px) scale(1.04); }
-.topbar .round:active { transform: translateY(3px); filter: drop-shadow(0 1px 0 var(--c-deep, #2577b0)) drop-shadow(0 2px 3px #1b5f8f40); }
+.topbar .round:hover { transform: scale(1.06); }
+.topbar .round:active { transform: translateY(2px) scale(0.97); filter: drop-shadow(0 0 0 var(--c-deep, #2577b0)) drop-shadow(0 1px 2px #0b3d6655); }
 .topbar .round:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
 .topbar .tb-map { --c-deep: #1f7a38; }
 .topbar .tb-bag { --c-deep: #c95f0e; }
 .topbar .tb-friends { --c-deep: #c93763; }
 .topbar .tb-gear { --c-deep: #5f45a8; }
-.topbar-title { display: inline-flex; align-items: center; gap: 12px; border: none; background: none; padding: 4px 10px; font-size: 28px; font-weight: bold; letter-spacing: 1.5px; white-space: nowrap; min-width: 0; max-width: 100%;
-  color: #fff; text-shadow: 0 3px 0 #2577b0, 0 5px 8px #1b5f8f55; }
+.topbar-title { display: inline-flex; align-items: center; justify-content: center; border: none; background: none; padding: 2px 8px; font-size: 26px; font-weight: bold; letter-spacing: 1px; white-space: nowrap; min-width: 0; max-width: 100%;
+  color: #fff; text-shadow: 0 2px 0 #1f78b8, 0 0 2px #1f78b8, 0 3px 8px #0b3d6680; }
 .topbar-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.topbar-orn { flex: none; font-size: 18px; color: #ffe14d; text-shadow: 0 2px 0 #c99a00; }
-/* les autres animaux du continent : un toucher pour passer de l'un à l'autre */
-.hop { display: flex; align-items: center; gap: 8px; flex: none; }
-.hop-btn { width: 50px; height: 50px; border-radius: 50%; border: 3px solid #fff; padding: 2px; background: radial-gradient(circle at 50% 35%, #ffffff 0%, #e3f5ff 100%); box-shadow: 0 4px 0 #2577b0, 0 6px 10px #1b5f8f40; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; flex: none; transition: transform 0.15s ease, box-shadow 0.12s ease; }
+/* les autres animaux du continent : même taille que les logos, bord blanc ; celui où l'on est, bord doré */
+.hop { display: flex; align-items: center; gap: 6px; flex: none; }
+.hop-btn { width: var(--btn); height: var(--btn); border-radius: 50%; border: 3px solid #fff; padding: 2px; background: radial-gradient(circle at 50% 35%, #ffffff 0%, #e3f5ff 100%);
+  box-shadow: 0 2px 0 #2577b0, 0 3px 5px #0b3d6655; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; flex: none; transition: transform 0.15s ease, box-shadow 0.12s ease; }
 .hop-btn img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
-.hop-btn span { font-size: 26px; }
-.hop-btn:hover { transform: translateY(-2px) rotate(-4deg); }
-.hop-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #2577b0; }
-.hop-btn.here { width: 56px; height: 56px; border-color: #ffd23f; background: radial-gradient(circle at 50% 35%, #fffbe0 0%, #ffe98a 100%); box-shadow: 0 4px 0 #d9a400, 0 0 0 3px #fff, 0 6px 12px #1b5f8f55; cursor: default; }
+.hop-btn span { font-size: 24px; }
+.hop-btn:hover { transform: scale(1.06) rotate(-4deg); }
+.hop-btn:active { transform: translateY(2px); box-shadow: 0 0 0 #2577b0, 0 1px 2px #0b3d6655; }
+.hop-btn.here { border-color: #ffd23f; background: radial-gradient(circle at 50% 35%, #fffbe0 0%, #ffe98a 100%); box-shadow: 0 2px 0 #d9a400, 0 0 0 2px #fff8, 0 3px 6px #0b3d6655; cursor: default; }
 .hop-btn.here:hover { transform: none; }
-@media (max-width: 900px) { .topbar-title { font-size: 22px; letter-spacing: 0.5px; gap: 8px; padding: 4px; } .hop-btn { width: 44px; height: 44px; } .hop-btn.here { width: 50px; height: 50px; } }
-/* téléphone : le titre prend la place qui reste (coupé par « … ») au lieu de passer sur les boutons */
-@media (max-width: 640px) { .topbar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 6px; padding: 0 8px; } .topbar-orn { display: none; } .topbar-title { font-size: 18px; justify-content: center; } .topbar .round { width: 46px; height: 46px; } .tb-side { gap: 6px; } }
+@media (max-width: 900px) { .topbar-title { font-size: 21px; letter-spacing: 0.5px; padding: 2px 4px; } }
+@media (max-width: 640px) { .topbar { --btn: calc(var(--pill-h) - 22px); gap: 4px; } .tb-side, .hop { gap: 4px; } .topbar-title { font-size: 17px; } }
+/* téléphone avec boutons d'animaux : un titre coupé en « The … » fait bâclé, on le retire (les boutons restent lisibles) */
+@media (max-width: 480px) { .topbar:has(.hop) .topbar-title { display: none; } }
 
 .screen { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; position: relative; }
 
