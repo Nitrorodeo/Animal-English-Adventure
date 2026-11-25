@@ -66,3 +66,21 @@ export function familyMood(phase: FamilyPhase): 'love' | 'mystery' | 'reveal' | 
       return 'calm';
   }
 }
+
+/** Hauteur d'un parent et d'un bébé sur la scène de naissance, en cqw, à l'échelle 1 (mesures du lion). */
+export const FAMILY_PARENT_H = 34;
+export const FAMILY_BABY_H = 12;
+
+/**
+ * Échelle (≤ 1) de toute la famille sur la scène de naissance, pour qu'elle tienne dans la largeur.
+ * Les parents allongés (panthère des neiges : 1,8 fois plus large que haut) dépassaient l'écran
+ * (2026-11-25 : « beaucoup trop grosses et sortent de l'écran »). Parents ET bébés sont réduits
+ * ensemble, pour garder les proportions. `ratios` = largeur / hauteur de chaque dessin.
+ */
+export function familyScale(parents: number[], babies: number[], budget = 90): number {
+  const items = parents.length + (babies.length ? 1 : 0);
+  const gaps = Math.max(0, items - 1) + Math.max(0, babies.length - 1);
+  const w = parents.reduce((s, r) => s + r * FAMILY_PARENT_H, 0) + babies.reduce((s, r) => s + r * FAMILY_BABY_H, 0);
+  if (w <= 0) return 1;
+  return Math.min(1, Math.max(0, budget - gaps) / w);
+}

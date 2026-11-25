@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import type { ClipName } from '../game/puppet';
 import { rigFor } from '../game/rigs';
 import { Puppet } from './Puppet';
@@ -9,7 +9,7 @@ import { assetUrl, type AssetInfo } from './scene';
  * marionnette quand elle existe et que WebGL marche ; sinon l'image fixe reste affichée.
  * Donner une `key` qui change avec le dessin (ex. `sprite.path`) pour repartir proprement.
  */
-export function LiveSprite({ sprite, clip = 'idle', facing = 1, className, label }: { sprite: AssetInfo; clip?: ClipName; facing?: 1 | -1; className?: string; label?: string }) {
+export function LiveSprite({ sprite, clip = 'idle', facing = 1, className, label, style }: { sprite: AssetInfo; clip?: ClipName; facing?: 1 | -1; className?: string; label?: string; style?: CSSProperties }) {
   const rig = rigFor(sprite.path.split('/').pop()?.replace(/\.\w+$/, ''));
   const [ok, setOk] = useState<boolean | null>(null);
   const puppet = !!rig && ok !== false;
@@ -17,7 +17,7 @@ export function LiveSprite({ sprite, clip = 'idle', facing = 1, className, label
   return (
     <span
       className={`live-sprite${className ? ` ${className}` : ''}${puppet && ok ? ' puppeted' : ''}`}
-      style={{ aspectRatio: `${sprite.width} / ${sprite.height}` }}
+      style={{ ...style, aspectRatio: `${sprite.width} / ${sprite.height}` }}
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}

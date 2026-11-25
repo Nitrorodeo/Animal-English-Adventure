@@ -9,7 +9,7 @@ import { createBaby, nextBabySex } from '../engine/family';
 import type { Baby, FamilyState } from '../engine/state';
 import { Confetti } from './Confetti';
 import { DialogueBox } from './DialogueBox';
-import { familyMood, familyTalker, floatingHearts, type FamilyPhase } from './fx';
+import { FAMILY_BABY_H, FAMILY_PARENT_H, familyMood, familyScale, familyTalker, floatingHearts, type FamilyPhase } from './fx';
 import { LiveSprite } from './LiveSprite';
 import { assetUrl, spriteFor } from './scene';
 
@@ -93,6 +93,14 @@ export function FamilyEvent({ species, family, frenchHelp, slowVoice, onDone }: 
   const talker = familyTalker(phase);
   const mood = familyMood(phase);
   const olderBaby = isSecond && sibling ? babySprite(sibling.sex) : undefined;
+  // toute la famille tient dans la largeur (parents allongés comme la panthère des neiges) ; calculée sur la
+  // famille finale, pour que les parents ne changent pas de taille quand le bébé arrive
+  const ratio = (a?: { width: number; height: number }) => (a ? a.width / a.height : 1);
+  const newRatio = sex ? ratio(babySprite(sex)) : Math.max(ratio(babySprite('girl')), ratio(babySprite('boy')));
+  const k = familyScale([father, mother].filter(Boolean).map(ratio), [...(olderBaby ? [ratio(olderBaby)] : []), newRatio]);
+  const parentStyle = { maxHeight: `${FAMILY_PARENT_H * k}cqw` };
+  const babyStyle = { height: `${FAMILY_BABY_H * k}cqw` };
+  const bundleStyle = { width: `${11 * k}cqw`, height: `${11 * k}cqw`, fontSize: `${6 * k}cqw` };
 
   return (
     <div className={`family-event mood-${mood}`} role="dialog" aria-label="La famille">
@@ -110,20 +118,20 @@ export function FamilyEvent({ species, family, frenchHelp, slowVoice, onDone }: 
         {mood === 'reveal' && <div key="burst" className="reveal-burst" aria-hidden />}
         {(mood === 'reveal' || mood === 'party') && <Confetti key={phase} n={28} wide />}
         {phase === 'complete' && <PhotoSnap fr={frenchHelp} />}
-        {father && <LiveSprite className="fam-parent" sprite={father} label={species.father.name} />}
+        {father && <LiveSprite className="fam-parent" style={parentStyle} sprite={father} label={species.father.name} />}
         {babyVisible && (
           <div className="fam-babies">
-            {olderBaby && <LiveSprite key={olderBaby.path} className="fam-baby" sprite={olderBaby} label={sibling!.name} />}
+            {olderBaby && <LiveSprite key={olderBaby.path} className="fam-baby" style={babyStyle} sprite={olderBaby} label={sibling!.name} />}
             {phase === 'surprise' || phase === 'choose' ? (
-              <div className="fam-bundle" aria-hidden><span>❔</span></div>
+              <div className="fam-bundle" style={bundleStyle} aria-hidden><span>❔</span></div>
             ) : shownBaby ? (
-              <LiveSprite key={shownBaby.path} className={`fam-baby new${phase === 'reveal' ? ' hop' : ''}`} sprite={shownBaby} clip={talker === 'newBaby' ? 'talk' : 'idle'} label={result?.baby.name} />
+              <LiveSprite key={shownBaby.path} className={`fam-baby new${phase === 'reveal' ? ' hop' : ''}`} style={babyStyle} sprite={shownBaby} clip={talker === 'newBaby' ? 'talk' : 'idle'} label={result?.baby.name} />
             ) : (
-              <div className="fam-bundle">{species.icon}</div>
+              <div className="fam-bundle" style={bundleStyle}>{species.icon}</div>
             )}
           </div>
         )}
-        {mother && <LiveSprite className="fam-parent" sprite={mother} clip={talker === 'mother' ? 'talk' : 'idle'} label={species.mother.name} />}
+        {mother && <LiveSprite className="fam-parent" style={parentStyle} sprite={mother} clip={talker === 'mother' ? 'talk' : 'idle'} label={species.mother.name} />}
       </div>
 
       <DialogueBox speaker={phase === 'hello' || phase === 'sibling' ? result?.baby.name ?? '' : '✨'} line={line} frenchHelp={frenchHelp} onReplay={(slow) => void speech.speak(line.en, { role, slow: slow ?? slowVoice, names: sceneNames })}>
