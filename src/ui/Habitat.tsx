@@ -22,6 +22,7 @@ import { ambientAt, giftLook, giftStart, groundAt, skyOf } from './giftLook';
 import { fillLine, type Vars } from '../engine/dialogue';
 import { applyQuestOutcome, type OutcomeEvents } from '../engine/events';
 import { nextBabySex } from '../engine/family';
+import { growthStepText, growthView, PATH_MAX, STONE_ICON, type GrowthView, type Stone } from '../engine/growthHint';
 import { actorGames, buildQuest, findBaby, hashText, selectActivities, selectAdventures, type ActorGame, type AdventureOffer, type BuiltQuest, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
 import { nameOf, originalName, renameActor, withParentNames } from '../engine/names';
 import { createRng } from '../engine/rng';
@@ -698,6 +699,14 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
             frenchHelp={state.settings.frenchHelp}
             isDone={(id) => gameDone(state, menuFor, id)}
             progress={menu.progress}
+            growth={(() => {
+              const b = menuFor.kind === 'baby' ? findBaby(state, menuFor) : undefined;
+              const view = b && growthView(b, biome, state.player.activityCounter);
+              if (!b || !view) return undefined;
+              const now = spriteFor(species.id, { sex: b.sex, stage: b.stage });
+              const next = spriteFor(species.id, { sex: b.sex, stage: view.next });
+              return { view, now: now && assetUrl(now), next: next && assetUrl(next) };
+            })()}
             onClose={() => setMenuFor(null)}
             onTurn={() => {
               const a = menuFor;
@@ -1123,6 +1132,8 @@ interface MenuProps {
   isDone: (archetypeId: string) => boolean;
   /** tous les jeux possibles avec cet animal, réussis ou non (ligne « ✓ 3 / 15 games with Leo ») */
   progress: ActorGame[];
+  /** bébé : son chemin pour grandir et ses dessins d'aujourd'hui et de demain (absent pour un parent ou au dernier stade) */
+  growth?: { view: GrowthView; now?: string; next?: string };
   onClose: () => void;
   /** le personnage se retourne (regarde de l'autre côté) */
   onTurn?: () => void;
@@ -1180,10 +1191,49 @@ export const GameTip = ({ en, fr }: { en: string; fr?: string }) => (
   </span>
 );
 
+/**
+ * Chemin pour grandir, sur la carte d'un bébé (demande du parent, 2026-11-25 : « il faut vraiment le parcours pour
+ * faire grandir et évoluer… simple et amusant ») : le bébé d'aujourd'hui, une pierre par jeu à faire, puis le gâteau
+ * et le bébé plus grand. La première pierre sautille ; on touche une pierre et le bon jeu se lance.
+ */
+function GrowthPath({ growth, name, frenchHelp, onStone }: { growth: { view: GrowthView; now?: string; next?: string }; name: string; frenchHelp: boolean; onStone: (s: Stone) => void }) {
+  const { view } = growth;
+  const stage = STAGE_NAMES[view.next]!;
+  const text = growthStepText(view.path, name);
+  const shown = view.path.slice(0, PATH_MAX);
+  const steps = view.path.length;
+  return (
+    <div className="grow-path" role="group" aria-label={`${steps} steps to grow`}>
+      <span className="gp-title">
+        🌱 {steps === 1 ? '1 step to grow!' : `${steps} steps to grow!`}
+        {frenchHelp && <small> {steps === 1 ? 'Encore 1 étape pour grandir' : `Encore ${steps} étapes pour grandir`}</small>}
+      </span>
+      <div className="path-row">
+        <span className="path-baby">{growth.now ? <img src={growth.now} alt="" /> : <span aria-hidden="true">🐣</span>}</span>
+        {shown.map((s, i) => (
+          <button key={i} className={`stone stone-${s.kind}${i === 0 ? ' next' : ''}`} onClick={() => onStone(s)} aria-label={i === 0 ? text.en : s.kind}>
+            <span aria-hidden="true">{STONE_ICON[s.kind]}</span>
+          </button>
+        ))}
+        {steps > shown.length && <span className="path-more" aria-hidden="true">…</span>}
+        <span className="path-goal">
+          <span className="path-cake" aria-hidden="true">🎂</span>
+          {growth.next ? <img src={growth.next} alt="" /> : <span aria-hidden="true">🌟</span>}
+          <em>{stage.en}</em>
+        </span>
+      </div>
+      <span className="gh-step">
+        ➜ {text.en}
+        {frenchHelp && <span className="fr"> {text.fr}</span>}
+      </span>
+    </div>
+  );
+}
+
 /** petite coche verte des cartes réussies */
 const DoneCheck = () => <span className="done-check" role="img" aria-label="done">✓</span>;
 
-function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, isDone, progress, onClose, onTurn, onPickGame, onGoTo, onRename, original }: MenuProps) {
+function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, isDone, progress, growth, onClose, onTurn, onPickGame, onGoTo, onRename, original }: MenuProps) {
   const doneCount = progress.filter((g) => g.done).length;
   const [renaming, setRenaming] = useState(false);
   /** jeu touché dans la ligne de progression qui se joue dans un autre lieu */
@@ -1250,6 +1300,26 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
           )}
         </div>
       )}
+      {growth && (
+        <GrowthPath
+          growth={growth}
+          name={name}
+          frenchHelp={frenchHelp}
+          onStone={(s) => {
+            if (s.kind === 'teach' || s.kind === 'remember' || s.kind === 'otherPlace') {
+              const a = activities.find((x) => x.archetype.id === 'name_object');
+              if (a && s.kind !== 'otherPlace') return onPickActivity(a);
+              const teachGame = progress.find((g) => g.id === 'name_object');
+              if (teachGame) tapGame(teachGame);
+              return;
+            }
+            // 🎲 / ⭐ : un jeu jamais fait avec lui d'abord (il compte aussi comme « jeu différent »)
+            const others = activities.filter((x) => x.archetype.id !== 'name_object');
+            const a = others.find((x) => !isDone(x.archetype.id)) ?? others[0] ?? activities[0];
+            if (a) onPickActivity(a);
+          }}
+        />
+      )}
       {adventures.some((o) => o.adventure.start === here) && (
         <>
           <h3 className="menu-section">🗺️ Adventure here{frenchHelp && <span className="fr"> · Aventure ici</span>}</h3>
@@ -1282,6 +1352,9 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
           <div className={`option${isDone(a.archetype.id) ? ' played' : ''}${a.wish ? ' wish' : ''}`} key={a.archetype.id}>
             {isDone(a.archetype.id) && <DoneCheck />}
             {a.wish && <span className="wish-badge">✨ New!{frenchHelp && <small> Nouveau</small>}</span>}
+            {!a.wish && a.archetype.id === 'name_object' && growth?.view.path[0]?.kind === 'remember' && (
+              <span className="wish-badge remember-badge">💡 Remember!{frenchHelp && <small> Souvenir</small>}</span>
+            )}
             <button className="option-main activity" onClick={() => onPickActivity(a)}>
               <span className="opt-icon">{a.archetype.icon}</span>
               <span className="opt-text">{a.archetype.titleEn}</span>
