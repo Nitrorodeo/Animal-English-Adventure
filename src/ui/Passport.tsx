@@ -171,9 +171,13 @@ export function Passport({ state, onClose }: { state: GameState; onClose: () => 
                         </span>
                         <span className="gp-icons">
                           {games.map((g) => (
-                            <button key={g.id} className={`gp-icon${g.done ? ' done' : ''}`} aria-label={`${g.titleEn}${g.done ? ' — done' : ''}`} title={fr ? `${g.titleEn} · ${g.titleFr}` : g.titleEn} onClick={() => void speech.speak(say.cardTitle(g.titleEn))}>
+                            <button key={g.id} className={`gp-icon${g.done ? ' done' : ''}`} aria-label={`${g.titleEn}${g.done ? ' — done' : ''}`} onClick={() => void speech.speak(say.cardTitle(g.titleEn))}>
                               <span aria-hidden="true">{g.icon}</span>
                               {g.done && <span className="gp-check" aria-hidden="true">✓</span>}
+                              <span className="gp-tip" aria-hidden="true">
+                                {g.titleEn}
+                                {fr && <small>{g.titleFr}</small>}
+                              </span>
                             </button>
                           ))}
                         </span>

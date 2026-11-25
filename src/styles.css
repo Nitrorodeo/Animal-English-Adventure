@@ -478,6 +478,16 @@ small { font-weight: normal; opacity: 0.7; }
 /* icônes de progression jouables ; « ➜ » = ce jeu se joue dans un autre lieu (2026-11-25) */
 .gp-icon { cursor: pointer; }
 .gp-icon:active { scale: 0.92; }
+/* petite fenêtre volante au survol d'une icône : le nom du jeu (2026-11-25) */
+.gp-tip { position: absolute; top: calc(100% + 9px); left: 50%; translate: -50% 0; z-index: 30; display: flex; flex-direction: column; align-items: center; padding: 5px 12px; border-radius: 12px; background: #2b3a4d; color: #fff; font-size: 16px; font-weight: 800; line-height: 1.2; white-space: nowrap; box-shadow: 0 3px 10px #0004; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.12s ease, visibility 0.12s; }
+.gp-tip::before { content: ''; position: absolute; bottom: 100%; left: 50%; translate: -50% 0; border: 7px solid transparent; border-bottom-color: #2b3a4d; }
+.gp-tip small { font-size: 13px; font-weight: 600; opacity: 0.85; }
+.gp-icon:nth-child(-n+2) .gp-tip { left: -4px; translate: none; }
+.gp-icon:nth-child(-n+2) .gp-tip::before { left: 22px; }
+.gp-icon:nth-last-child(-n+2) .gp-tip { left: auto; right: -4px; translate: none; }
+.gp-icon:nth-last-child(-n+2) .gp-tip::before { left: auto; right: 22px; translate: 50% 0; }
+@media (hover: hover) { .gp-icon:hover .gp-tip { opacity: 1; visibility: visible; } }
+.gp-icon:focus-visible .gp-tip { opacity: 1; visibility: visible; }
 .gp-away-dot { position: absolute; left: -5px; top: -5px; width: 16px; height: 16px; display: grid; place-items: center; border: 1.5px solid #fff; border-radius: 50%; background: #4d8fd6; color: #fff; font-size: 9px; font-weight: 900; }
 .gp-away { flex-basis: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 6px 10px; border: 2px solid #b7d7f5; border-radius: 16px; background: linear-gradient(#fff, #eef6ff); animation: rise 0.2s ease-out; }
 .gp-away .opt-icon { font-size: 24px; }

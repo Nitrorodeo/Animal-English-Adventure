@@ -71,10 +71,11 @@ describe('menu des jeux', () => {
   const src: string = readFileSync(new URL('../ui/Habitat.tsx', import.meta.url), 'utf8');
   const css: string = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
 
-  it('les cartes réussies passent en vert avec une coche (jeux, aventures ici et ailleurs)', () => {
+  it('les cartes réussies passent en vert avec une coche (jeux, aventure ici)', () => {
     expect(src).toContain("isDone={(id) => gameDone(state, menuFor, id)}");
     expect(src).toContain("className={`option${isDone(a.archetype.id) ? ' played' : ''}${a.wish ? ' wish' : ''}`}");
-    expect(src.match(/<DoneCheck \/>/g)).toHaveLength(3);
+    // 2 : jeux et aventure ici (la rangée des aventures des autres décors a été retirée le 2026-11-25)
+    expect(src.match(/<DoneCheck \/>/g)).toHaveLength(2);
     expect(css).toMatch(/\.option\.played \.option-main, \.option\.adv\.done \.option-main \{ border-color: #3fae5f;/);
     expect(css).toContain('.done-check {');
   });

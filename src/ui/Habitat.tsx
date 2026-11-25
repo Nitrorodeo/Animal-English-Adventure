@@ -974,6 +974,14 @@ function RenameForm({ name, original, frenchHelp, onRename, onClose }: { name: s
   );
 }
 
+/** Petite fenêtre volante au survol d'une icône de jeu : son nom (et le français si l'aide est active). */
+export const GameTip = ({ en, fr }: { en: string; fr?: string }) => (
+  <span className="gp-tip" aria-hidden="true">
+    {en}
+    {fr && <small>{fr}</small>}
+  </span>
+);
+
 /** petite coche verte des cartes réussies */
 const DoneCheck = () => <span className="done-check" role="img" aria-label="done">✓</span>;
 
@@ -1019,12 +1027,12 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
                 key={g.id}
                 className={`gp-icon${g.done ? ' done' : ''}`}
                 aria-label={`${g.titleEn}${g.done ? ' — done' : ''}`}
-                title={frenchHelp ? `${g.titleEn} · ${g.titleFr}` : g.titleEn}
                 onClick={() => tapGame(g)}
               >
                 <span aria-hidden="true">{g.icon}</span>
                 {g.done && <span className="gp-check" aria-hidden="true">✓</span>}
                 {!g.places.includes(here) && <span className="gp-away-dot" aria-hidden="true">➜</span>}
+                <GameTip en={g.titleEn} fr={frenchHelp ? g.titleFr : undefined} />
               </button>
             ))}
           </div>
@@ -1085,28 +1093,8 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
           </div>
         ))}
       </div>
-      {adventures.some((o) => o.adventure.start !== here) && (
-        <>
-          <h3 className="menu-section small">🧭 Adventures in other places{frenchHelp && <span className="fr"> · Aventures ailleurs</span>}</h3>
-          <div className="adv-elsewhere">
-            {adventures.filter((o) => o.adventure.start !== here).map((o) => {
-              const t = TREASURES[o.adventure.treasure];
-              const place = PLACES[o.adventure.start];
-              return (
-                <button key={o.adventure.id} className={`adv-chip${o.done ? ' done' : ''}`} onClick={() => onPickAdventure(o)} aria-label={`${o.adventure.titleEn}, ${place?.nameEn ?? ''}`}>
-                  {o.done > 0 && <DoneCheck />}
-                  <span className="opt-icon">{o.adventure.icon}</span>
-                  <span className="chip-txt">
-                    <span className="opt-text">{o.adventure.titleEn}</span>
-                    <span className="adv-away">➜ {place?.nameEn}</span>
-                  </span>
-                  {t && <span className={`adv-treasure${o.done ? ' got' : ''}`}>{o.done ? <TreasureIcon t={t} /> : '🎁'}</span>}
-                </button>
-              );
-            })}
-          </div>
-        </>
-      )}
+      {/* rangée des aventures des autres décors retirée (2026-11-25, trop chargé pour 7 ans) : une aventure se trouve
+          dans son propre décor, sous « Adventure here » */}
     </div>
   );
 }

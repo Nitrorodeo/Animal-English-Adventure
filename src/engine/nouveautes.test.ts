@@ -226,3 +226,23 @@ describe('les bébés réclament un jeu nouveau', () => {
     expect(src).toContain('{ text: NEW_GAME_WISH.en, opts: { role } }');
   });
 });
+
+describe('menu d’un animal allégé (demande du 2026-11-25 : « trop chargé, trop d’informations »)', () => {
+  const src: string = readFileSync(new URL('../ui/Habitat.tsx', import.meta.url), 'utf8');
+  const css: string = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
+
+  it('au survol d’une icône de jeu, une petite fenêtre volante donne son nom', () => {
+    expect(src).toContain('<GameTip en={g.titleEn} fr={frenchHelp ? g.titleFr : undefined} />');
+    const passport: string = readFileSync(new URL('../ui/Passport.tsx', import.meta.url), 'utf8');
+    expect(passport).toContain('className="gp-tip"');
+    for (const rule of ['.gp-tip {', '.gp-tip::before {', '.gp-icon:hover .gp-tip { opacity: 1; visibility: visible; }']) expect(css).toContain(rule);
+    // plus d'infobulle native du navigateur en double
+    expect(src).not.toContain('title={frenchHelp ? `${g.titleEn} · ${g.titleFr}` : g.titleEn}');
+  });
+
+  it('la section « Adventures in other places » n’est plus affichée', () => {
+    expect(src).not.toContain('Adventures in other places');
+    expect(src).not.toContain('className="adv-elsewhere"');
+    expect(src).toContain('🗺️ Adventure here');
+  });
+});
