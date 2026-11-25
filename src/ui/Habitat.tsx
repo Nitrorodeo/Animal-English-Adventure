@@ -1009,6 +1009,16 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const toStage = (e: React.PointerEvent, rect: DOMRect) => ({ x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100 });
   const dragProps = onDragTo
     ? {
+        // sans appui long (pendant un jeu), le glisser démarre ici ; sinon c'est holdProps qui le lance
+        ...(onHold
+          ? {}
+          : {
+              onPointerDown: (e: React.PointerEvent<HTMLButtonElement>) => {
+                if (!acceptsDown(drag.current)) return; // déjà tenu par un autre doigt
+                dragged.current = false;
+                startDrag(e);
+              },
+            }),
         onPointerMove: (e: React.PointerEvent<HTMLButtonElement>) => {
           const d = drag.current;
           if (!d || d.pointerId !== e.pointerId) return;
@@ -1086,7 +1096,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
         ['--grab' as string]: `${Math.round(Math.max(0, 0.45 / (place.h / base) - 1) * 50)}%`,
       }}
       onClick={click}
-      disabled={!onTap && !onHold}
+      disabled={!onTap && !onHold && !onDragTo}
       aria-label={name}
       {...holdProps}
       {...dragProps}
@@ -1442,6 +1452,10 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
     return bubbleSide(pts, main);
   }, [run.props, place, step, glow]);
   const treasure = run.treasure ? TREASURES[run.treasure] : undefined;
+  // les animaux se déplacent au doigt AUSSI pendant un jeu (2026-11-25 : « le personnage était devant la réponse…
+  // on ne pouvait pas déplacer les panthères des neiges ») ; seulement le temps du jeu, à cet endroit de la scène
+  const [held, setHeld] = useState<Record<string, Spot>>({});
+  const heldRef = useRef(held);
 
   return (
     <div className={`stage${run.travels ? ' traveling' : ''}${run.night ? ' night' : ''}`}>
@@ -1493,7 +1507,23 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
         const speaking = !!run.bubble && mySpeakers.includes(run.bubble.who) && !move;
         const worn = mySpeakers.flatMap((sp) => run.wearing[sp] ?? []);
         const glowing = !!q.reveal?.actor && mySpeakers.includes(q.reveal.actor);
-        return <Character key={id} actor={a} state={state} species={species} place={pos} baseH={place.seats?.length && !place.groundToo ? natural : home.h} dim={!!run.night} action={acting ?? move?.action} speaking={speaking} hidden={!!hiding && !hiding.found} peek={peek?.side} face={peek?.side} found={!!hiding?.found} wearing={worn} wanted={q.wantsActor} glow={glowing} onTap={peek && hiding && q.wantsAnchor ? () => q.tapAnchor(hiding.at) : q.wantsActor ? () => q.tapActor(mySpeakers) : undefined} />;
+        // posé au doigt : vaut tant que le jeu ne l'emmène pas ailleurs (nouveau lieu, nouvelle chose à aller voir)
+        const holdKey = `${run.place}|${id}|${move?.anchor ?? ''}|${hiding?.found ? hiding.at : ''}`;
+        // caché pour cache-cache : on ne le sort pas de sa cachette
+        const movable = !hideAt;
+        const mine = movable ? held[holdKey] : undefined;
+        const onDragTo = movable
+          ? (pointer: { x: number; y: number }, grabDy: number) => {
+              const hz = horizonOf(place.groundY, place.horizonY);
+              const next = dragSpot(home, pointer, grabDy, placeScale(place, home.y), (x) => farthestY(home.y, hz, place.farY, x), (x, y) => perchAt(place, x, y), place.lane, place.water, place.seats && { list: place.seats, naturalH: natural, groundToo: place.groundToo }, place.floes);
+              const prev: Spot = heldRef.current[holdKey] ?? { x: pos.x, y: pos.y, h: pos.h };
+              const dx = next.x - prev.x;
+              const f = Math.abs(dx) >= 0.4 ? (dx < 0 ? -1 : 1) : prev.f;
+              heldRef.current = { ...heldRef.current, [holdKey]: f ? { ...next, f } : next };
+              setHeld(heldRef.current);
+            }
+          : undefined;
+        return <Character key={id} actor={a} state={state} species={species} place={mine ? { ...pos, ...mine } : pos} baseH={place.seats?.length && !place.groundToo ? natural : home.h} dim={!!run.night} action={acting ?? move?.action} speaking={speaking} hidden={!!hiding && !hiding.found} peek={peek?.side} face={mine?.f ?? peek?.side} found={!!hiding?.found} wearing={worn} wanted={q.wantsActor} glow={glowing} onDragTo={onDragTo} onTap={peek && hiding && q.wantsAnchor ? () => q.tapAnchor(hiding.at) : q.wantsActor ? () => q.tapActor(mySpeakers) : undefined} />;
       })}
       <div className="quest-title">
         {running.icon} {running.title}
