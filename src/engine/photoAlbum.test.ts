@@ -126,6 +126,20 @@ describe('album photo : interface', () => {
     expect(habitat).toContain('<div key={flash} className="photo-flash" aria-hidden />');
   });
 
+  it('le bouton 📷 reste discret : plus petit que la lune, à demi transparent (demande du 2026-11-25)', () => {
+    const rule = (sel: string) => css.slice(css.indexOf(`${sel} {`), css.indexOf('}', css.indexOf(`${sel} {`)));
+    const width = (sel: string) => Number(/width: ([\d.]+)cqw/.exec(rule(sel))![1]);
+    expect(width('.photo-btn')).toBeLessThan(width('.night-btn') * 0.7);
+    expect(rule('.photo-btn')).toMatch(/opacity: 0\.[5-8]/);
+    expect(rule('.photo-btn')).not.toContain('#d93d80');
+  });
+
+  it('la photo en grand s’affiche d’un coup, en pleine lumière, avec ses boutons dans l’écran', () => {
+    const view = css.slice(css.indexOf('.album-view {'), css.indexOf('}', css.indexOf('.album-view {')));
+    expect(view).not.toContain('animation');
+    expect(css).toContain('width: min(94vw, calc((100dvh - 200px) * 16 / 9));');
+  });
+
   it('un bouton de la barre du haut ouvre l’espace perso : l’album, rangé par animal', () => {
     expect(app).toContain("open({ kind: 'album'");
     expect(app).toContain('<PhotoAlbum state={state} setState={setState}');
