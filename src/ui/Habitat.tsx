@@ -37,6 +37,7 @@ import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder,
 import { useQuest, type Cast } from './useQuest';
 import { acceptsDown, dragSpot, endsTrack, isDrag, withoutKey, type Spot } from './drag';
 import { placeActor, spotKey } from '../engine/spots';
+import { takePhoto, type Shot } from '../engine/photoAlbum';
 
 interface Props {
   state: GameState;
@@ -106,6 +107,8 @@ export function Habitat({ state, setState, species: baseSpecies, biome, onPlace,
   const [running, setRunning] = useState<Running | null>(null);
   const [showFamily, setShowFamily] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  /** déclic de l'appareil photo 📷 (flash blanc) */
+  const [flash, setFlash] = useState(0);
   /** moment « Well done! » : premier jeu réussi avec cet animal (grande coche verte) */
   const [firstDone, setFirstDone] = useState<{ icon: string; titleEn: string; titleFr: string; name: string; done: number; total: number } | null>(null);
   const [grow, setGrow] = useState<{ name: string; sex: Sex; to: GrowthStage; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[] } | null>(null);
@@ -376,6 +379,41 @@ export function Habitat({ state, setState, species: baseSpecies, biome, onPlace,
   };
   const sky = pixels ? skyOf(pixels) : null;
 
+  /** 📷 : la scène telle qu'elle est à l'écran (animaux, sens, cadeaux) part dans l'album de la famille */
+  const snap = () => {
+    const shot: Shot = {
+      sp: species.id,
+      p: biome.id,
+      a: actors.map((a) => {
+        const s = spotOf(a) ?? homePlacement(a, family, biome.groundY, biome.lane, biome);
+        const b = findBaby(state, a);
+        const f = spotOf(a)?.f ?? naturalFacing(state, species, a);
+        return a.kind === 'adult' ? { who: a.role, x: s.x, y: s.y, h: s.h, f } : { who: 'baby' as const, birthOrder: b?.birthOrder ?? 1, x: s.x, y: s.y, h: s.h, f, stage: b?.stage, sex: b?.sex };
+      }),
+      g: gifts.map(({ def, spot }, i) => {
+        const s = fitGift(spot ?? dropGift(giftStart(i, papaHome.y), 0));
+        return { id: def.id, x: s.x, y: s.y, h: s.h };
+      }),
+      night: !!night,
+    };
+    const now = Date.now();
+    const tried = takePhoto(state, shot, now);
+    if (!tried.ok) {
+      // rien n'a bougé depuis la photo d'avant : on montre le flash quand même, sans doublon dans l'album
+      if (tried.reason === 'same') {
+        setFlash(now);
+        setToast(state.settings.frenchHelp ? '📷 Déjà dans l’album · bouge un animal !' : '📷 Already in the album!');
+      } else setToast(state.settings.frenchHelp ? '📷 Album plein : retire une photo dans l’album' : '📷 Album full!');
+      return;
+    }
+    setFlash(now);
+    setState((st) => {
+      const r = takePhoto(st, shot, now);
+      return r.ok ? r.state : st;
+    });
+    setToast(state.settings.frenchHelp ? '📷 Photo! · dans l’album' : '📷 Photo!');
+  };
+
   return (
     <div className="screen habitat-screen">
       <div className={`stage${night ? ' night bedtime' : ''}`}>
@@ -466,6 +504,10 @@ export function Habitat({ state, setState, species: baseSpecies, biome, onPlace,
             }}
           />
         ))}
+        <button className={`photo-btn${night || biome.nightImage ? ' alone' : ''}`} onClick={snap} aria-label="Take a photo">
+          📷
+        </button>
+        {flash > 0 && <div key={flash} className="photo-flash" aria-hidden />}
         {!night && !biome.nightImage && (
           <button className="night-btn" onClick={startNight} aria-label="Good night">
             🌙

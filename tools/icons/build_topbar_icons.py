@@ -21,6 +21,7 @@ LOGOS = {
     "-2.png": "gear",
     "-3.png": "bag",
     "-4.png": "map",
+    "-5.png": "album",  # album photo, logo donné le 2026-11-25 après les quatre autres
 }
 SIZE = 192  # assez net à 56 px sur un écran 3x
 QUALITY = 86

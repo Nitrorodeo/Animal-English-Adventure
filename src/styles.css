@@ -57,6 +57,8 @@ small { font-weight: normal; opacity: 0.7; }
 .topbar .tb-bag { --c-deep: #c95f0e; }
 .topbar .tb-friends { --c-deep: #c93763; }
 .topbar .tb-gear { --c-deep: #5f45a8; }
+/* album photo (logo dessiné par le parent, 2026-11-25) */
+.topbar .tb-album { --c-deep: #b0306a; }
 .topbar-title { display: inline-flex; align-items: center; justify-content: center; border: none; background: none; padding: 2px 8px; font-size: 26px; font-weight: bold; letter-spacing: 1px; white-space: nowrap; min-width: 0; max-width: 100%;
   color: #fff; text-shadow: 0 2px 0 #1f78b8, 0 0 2px #1f78b8, 0 3px 8px #0b3d6680; }
 .topbar-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -609,6 +611,44 @@ small { font-weight: normal; opacity: 0.7; }
 
 .night-btn { position: absolute; left: 2%; top: 3%; z-index: 120; width: 7cqw; height: 7cqw; border-radius: 50%; border: 0.25cqw solid #c9d4ff; background: radial-gradient(circle at 35% 30%, #4b5fb8, #1d2a6b); font-size: 3.6cqw; box-shadow: 0 0.4cqw 0 #101a4a, 0 0.8cqw 1.6cqw #0005, inset 0 0.2cqw 0 #fff5; cursor: pointer; }
 .night-btn:active { translate: 0 0.3cqw; box-shadow: 0 0.1cqw 0 #101a4a; }
+/* 📷 : photo de la scène pour l'album (2026-11-25) ; sous la lune, ou à sa place quand elle n'est pas là */
+.photo-btn { position: absolute; left: 2%; top: calc(3% + 8.6cqw); z-index: 120; width: 7cqw; height: 7cqw; border-radius: 50%; border: 0.25cqw solid #ffd1e4; background: radial-gradient(circle at 35% 30%, #ff9cc6, #d93d80); font-size: 3.6cqw; box-shadow: 0 0.4cqw 0 #8a1f4d, 0 0.8cqw 1.6cqw #0005, inset 0 0.2cqw 0 #fff5; cursor: pointer; }
+.photo-btn.alone { top: 3%; }
+.photo-btn:active { translate: 0 0.3cqw; box-shadow: 0 0.1cqw 0 #8a1f4d; }
+/* photo redessinée (album) : même géométrie que le décor (largeur = 100cqw, 16/9) */
+.photo-scene { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; container-type: inline-size; border-radius: inherit; background: #cfe6c0; }
+.photo-scene .ps-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ps-char, .ps-gift { position: absolute; left: 0; top: 0; transform-origin: 50% 100%; pointer-events: none; }
+.ps-char img { height: 100%; width: auto; display: block; filter: drop-shadow(0 0.6cqw 0.4cqw #0005); }
+.ps-gift img { width: 100%; height: 100%; display: block; }
+.ps-icon { font-size: 8cqw; }
+.photo-scene.night .ps-bg, .photo-scene.night .ps-char img, .photo-scene.night .ps-gift img { filter: brightness(0.55) saturate(0.8) hue-rotate(10deg); }
+/* album : onglets par animal, vignettes, photo en grand */
+.album-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+.album-tab { display: flex; align-items: center; gap: 8px; min-height: 56px; padding: 4px 14px 4px 6px; border: 3px solid #e3d3b8; border-radius: 999px; background: #fff; font: inherit; font-size: 18px; font-weight: 800; cursor: pointer; }
+.album-tab img { height: 46px; width: 46px; object-fit: contain; }
+.album-tab.on { border-color: #e04c8c; background: #ffe6f1; }
+.album-tab-name { text-transform: capitalize; }
+.album-tab-count { min-width: 1.8em; padding: 0 6px; border-radius: 999px; background: #e04c8c; color: #fff; font-size: 15px; text-align: center; }
+.album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.album-thumb { padding: 6px 6px 18px; border: none; border-radius: 6px; background: #fff; box-shadow: 0 3px 10px #0003; cursor: pointer; rotate: -1deg; transition: transform 0.15s ease; }
+.album-thumb:nth-child(even) { rotate: 1.2deg; }
+.album-thumb:hover { transform: scale(1.04); }
+.album-thumb .photo-scene { border-radius: 3px; }
+.album-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 30px 10px; font-size: 24px; font-weight: 800; text-align: center; }
+.album-empty-icon { font-size: 64px; }
+.album-empty small { font-size: 17px; font-weight: 600; opacity: 0.8; }
+.album-full { margin: 0; font-size: 16px; opacity: 0.8; }
+.album-view { position: fixed; inset: 0; z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 16px; background: #000c; animation: peek-in 0.2s ease-out; }
+.album-view-frame { position: relative; width: min(94vw, calc((100dvh - 130px) * 16 / 9)); padding: 10px 10px 34px; border-radius: 8px; background: #fff; box-shadow: 0 10px 40px #0008; }
+.album-view-place { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font-size: 18px; font-weight: 800; text-transform: capitalize; color: #6b5235; }
+.album-view-bar { display: flex; align-items: center; gap: 14px; }
+.album-view-bar .round { width: 56px; height: 56px; font-size: 30px; }
+.album-nav:disabled { opacity: 0.35; }
+.album-del { width: 56px; height: 56px; border: 3px solid #fff; border-radius: 50%; background: #fff2f2; font-size: 26px; cursor: pointer; }
+.album-confirm { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-radius: 999px; background: #fff; font-size: 18px; font-weight: 800; }
+.album-yes, .album-no { min-height: 48px; padding: 6px 16px; border: 2px solid #e3d3b8; border-radius: 999px; background: #fff; font: inherit; cursor: pointer; }
+.album-yes { border-color: #d24b4b; color: #b02a2a; }
 .stage.bedtime .night-sky { z-index: 1; }
 .stage.bedtime .anchor { pointer-events: none; }
 .bedtime-moon { position: absolute; right: 8%; top: 6%; font-size: 9cqw; filter: drop-shadow(0 0 2cqw #fff6c0); animation: bob 4s ease-in-out infinite; }

@@ -1,3 +1,4 @@
+import { parseAlbum } from './photoAlbum';
 import { parseNamePron } from './nameVoice';
 import { parseSpots } from './spots';
 import { parseGiftDay, parseGifts } from './gifts';
@@ -169,6 +170,8 @@ export function migrate(raw: unknown): GameState | null {
       gifts: parseGifts(p.gifts),
       giftDay: parseGiftDay(p.gifts, p.giftDay),
       spots: parseSpots(p.spots),
+      // album photo : absent tant qu'aucune photo n'est prise (une partie sans photo reste identique)
+      ...(p.album !== undefined && Object.keys(parseAlbum(p.album)).length ? { album: parseAlbum(p.album) } : {}),
     },
     families: parseFamilies(raw.families),
     settings: migrateSettings(base.settings, raw.settings),

@@ -7,6 +7,7 @@ export const TOPBAR_ICONS = {
   bag: 'assets/ui/topbar-bag.webp',
   friends: 'assets/ui/topbar-friends.webp',
   gear: 'assets/ui/topbar-gear.webp',
+  album: 'assets/ui/topbar-album.webp',
 } as const;
 
 export type TopbarIcon = keyof typeof TOPBAR_ICONS;

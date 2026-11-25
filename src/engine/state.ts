@@ -1,3 +1,4 @@
+import type { AlbumRec } from './photoAlbum';
 import type { NamePron } from './nameVoice';
 import type { ActorSpot } from './spots';
 import type { OwnedGift } from './gifts';
@@ -51,6 +52,8 @@ export interface PlayerState {
   words: Partial<Record<ContinentId, string[]>>;
   /** album photo : « lieu:point du décor » photographiés */
   photos: string[];
+  /** album 📷 de la joueuse : scènes photographiées, rangées par famille (engine/photoAlbum.ts) ; absent = aucune */
+  album?: AlbumRec;
   /** autocollants collés sur la carte du monde (un par jour au plus, voir engine/stickers.ts) */
   stickers: PlacedSticker[];
   /** jour (AAAA-MM-JJ, heure de l'appareil) du dernier autocollant reçu ; null = jamais */
