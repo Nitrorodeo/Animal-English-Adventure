@@ -11,7 +11,7 @@
  * écran du code : src/ui/FamilyGate.tsx.
  */
 import { hasProgress } from './backup';
-import { migrate, type StorageLike } from './save';
+import { fromOldEra, migrate, startOver, type StorageLike } from './save';
 import type { GameState } from './state';
 
 /** Ce que l'appareil retient du partage. */
@@ -121,7 +121,8 @@ export function parseRemote(text: string | null | undefined): RemoteSave | null 
     const { savedAt, state } = raw as { savedAt?: unknown; state?: unknown };
     if (typeof savedAt !== 'number' || !Number.isFinite(savedAt)) return null;
     const s = migrate(state);
-    return s ? { savedAt, state: s } : null;
+    // partie d'avant la remise à zéro générale (envoyée par un appareil resté sur l'ancienne version) : on repart de zéro
+    return s ? { savedAt, state: fromOldEra(s) ? startOver(s) : s } : null;
   } catch {
     return null;
   }

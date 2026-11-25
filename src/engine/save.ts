@@ -3,7 +3,7 @@ import { parseAlbum } from './photoAlbum';
 import { parseNamePron } from './nameVoice';
 import { parseSpots } from './spots';
 import { parseGiftDay, parseGifts } from './gifts';
-import { clampSpeechSpeed, newGameState, SAVE_VERSION, type Baby, type CircleRef, type GameState } from './state';
+import { clampSpeechSpeed, newGameState, SAVE_ERA, SAVE_VERSION, type Baby, type CircleRef, type GameState } from './state';
 import { GROWTH_STAGES } from '../content/types';
 import { sanitizeName } from './family';
 
@@ -16,6 +16,18 @@ export interface StorageLike {
 
 export const SAVE_KEY = 'aea.save';
 export const CORRUPT_KEY = 'aea.save.corrupt';
+/** partie d'avant la remise à zéro générale, gardée sur l'appareil (jamais effacée) */
+export const OLD_ERA_KEY = 'aea.save.avant-remise-a-zero';
+
+/** Partie d'avant la dernière remise à zéro générale (voir SAVE_ERA). */
+export function fromOldEra(state: GameState): boolean {
+  return state.era < SAVE_ERA;
+}
+
+/** Partie neuve qui garde ce qui n'est pas de la progression : le cercle d'amis et les réglages du parent. */
+export function startOver(state: GameState): GameState {
+  return { ...newGameState(), settings: state.settings, ...(state.circle ? { circle: state.circle } : {}) };
+}
 
 export type LoadStatus = 'new' | 'loaded' | 'migrated' | 'corrupt';
 
@@ -159,6 +171,7 @@ export function migrate(raw: unknown): GameState | null {
   const circle = parseCircleRef(raw.circle);
   return {
     version: SAVE_VERSION,
+    era: num(raw.era),
     player: {
       name: typeof p.name === 'string' ? p.name : base.player.name,
       namePron: parseNamePron(p.namePron),
@@ -200,6 +213,16 @@ export function loadGame(storage: StorageLike): { state: GameState; status: Load
     const raw: unknown = JSON.parse(text);
     const state = migrate(raw);
     if (!state) throw new Error('format');
+    if (fromOldEra(state)) {
+      // remise à zéro générale : l'ancienne partie est mise de côté sur l'appareil, le jeu repart de l'accueil
+      try {
+        storage.setItem(OLD_ERA_KEY, text);
+        storage.removeItem(SAVE_KEY);
+      } catch {
+        /* stockage plein : la partie neuve remplacera l'ancienne */
+      }
+      return { state: startOver(state), status: 'new' };
+    }
     return { state, status: isObj(raw) && raw.version === SAVE_VERSION ? 'loaded' : 'migrated' };
   } catch {
     // on garde une copie de la sauvegarde illisible, puis on repart proprement

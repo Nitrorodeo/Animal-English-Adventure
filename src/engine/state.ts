@@ -7,6 +7,13 @@ import type { ContinentId, GrowthStage, ParentRole, PlaceId, Sex, Tier } from '.
 /** v2 (2026-11-19) : trésors, aventures, lieux visités, mots découverts par continent. */
 export const SAVE_VERSION = 2;
 
+/**
+ * Génération des parties. Le 2026-11-25, le parent a demandé de remettre TOUTES les parties à zéro (« on recommence à zéro
+ * avec ma fille ») : une partie d'une génération plus ancienne repart de zéro, sur n'importe quel appareil, à son ouverture
+ * (engine/save.ts, `fromOldEra`). Augmenter ce nombre refait une remise à zéro générale.
+ */
+export const SAVE_ERA = 1;
+
 /** Suivi d'une expression pour la joueuse. */
 export interface ItemProgress {
   /** nombre de fois rencontrée (une fois par quête au plus) */
@@ -144,6 +151,8 @@ export function clampSpeechSpeed(v: unknown): number {
 
 export interface GameState {
   version: number;
+  /** génération de la partie (SAVE_ERA) ; 0 = partie d'avant la remise à zéro du 2026-11-25 */
+  era: number;
   player: PlayerState;
   families: Record<string, FamilyState>;
   settings: Settings;
@@ -165,6 +174,7 @@ export interface CircleRef {
 export function newGameState(): GameState {
   return {
     version: SAVE_VERSION,
+    era: SAVE_ERA,
     player: { name: 'Explorer', namePron: null, items: {}, visitedContinents: [], history: [], activityCounter: 0, treasures: [], adventuresDone: {}, gamesDone: {}, placesVisited: [], words: {}, photos: [], stickers: [], stickerDay: null, gifts: [], giftDay: null, spots: {} },
     families: {},
     settings: { muted: false, slowVoice: false, frenchHelp: true, levelOverride: 'auto', speechSpeed: SPEECH_SPEED.default },

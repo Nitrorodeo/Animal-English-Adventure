@@ -9,7 +9,7 @@
  * Ce fichier ne contient que les décisions (testées). Réseau : `src/ui/useGame.ts` ;
  * côté PC : `tools/save/savePlugin.mjs` (fichiers dans `saves/`).
  */
-import { migrate } from './save';
+import { fromOldEra, migrate } from './save';
 import type { GameState } from './state';
 
 /** Adresse de la copie, relative au jeu (marche aussi dans un sous-dossier). */
@@ -35,7 +35,8 @@ export function parseBackup(text: string | null | undefined): GameState | null {
   if (!text) return null;
   try {
     const state = migrate(JSON.parse(text));
-    return state && hasProgress(state) ? state : null;
+    // une copie d'avant la remise à zéro générale n'est ni reprise ni acceptée par le PC
+    return state && !fromOldEra(state) && hasProgress(state) ? state : null;
   } catch {
     return null;
   }

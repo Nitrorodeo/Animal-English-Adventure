@@ -393,7 +393,7 @@ describe('Sauvegarde locale (SAV-01, SAV-02)', () => {
   });
 
   it('ancienne sauvegarde sans réglages : migration avec valeurs par défaut', () => {
-    const old = { version: 0, player: { name: 'Chloé', items: {}, history: [] }, families: {} };
+    const old = { version: 0, era: 1, player: { name: 'Chloé', items: {}, history: [] }, families: {} };
     const r = loadGame(memoryStorage({ [SAVE_KEY]: JSON.stringify(old) }));
     expect(r.status).toBe('migrated');
     expect(r.state.player.name).toBe('Chloé');
@@ -424,6 +424,6 @@ describe('Sauvegarde locale (SAV-01, SAV-02)', () => {
 
   it('aucun compte, aucun réseau, aucun micro : l’état ne contient que le jeu', () => {
     const keys = Object.keys(newGameState()).sort();
-    expect(keys).toEqual(['families', 'onboarded', 'player', 'settings', 'version']);
+    expect(keys).toEqual(['era', 'families', 'onboarded', 'player', 'settings', 'version']);
   });
 });
