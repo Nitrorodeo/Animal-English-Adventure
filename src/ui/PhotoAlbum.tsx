@@ -7,7 +7,7 @@ import { getSpecies, SPECIES } from '../content/species';
 import { GROWTH_STAGES, type Line } from '../content/types';
 import { say } from '../content/utterances';
 import { giftDef } from '../engine/gifts';
-import { ALBUM_MAX_PER_FAMILY, albumFamilies, birthdayPhoto, deletePhoto, familyPhotos, moveSticker, PHOTO_STICKERS, PHOTO_STICKERS_MAX, resizeSticker, STICKER_SIZES, stickOnPhoto, unstickPhoto, type Photo, type SnapActor } from '../engine/photoAlbum';
+import { ALBUM_MAX_PER_FAMILY, albumFamilies, birthdayPhoto, deletePhoto, familyPhotos, moveSticker, PHOTO_STICKERS, PHOTO_STICKERS_MAX, photoStickerArt, resizeSticker, STICKER_SIZES, stickOnPhoto, unstickPhoto, type Photo, type SnapActor } from '../engine/photoAlbum';
 import { getFamily, type Baby, type GameState } from '../engine/state';
 import { stickerDef } from '../engine/stickers';
 import { rigFor } from '../game/rigs';
@@ -144,12 +144,18 @@ export function PhotoScene({
             }
             onPointerCancel={live ? () => setDrag(null) : undefined}
           >
-            {s.icon}
+            <StickerPic id={s.id} icon={s.icon} />
           </span>
         );
       })}
     </div>
   );
+}
+
+/** Le dessin de l'autocollant, à la taille du texte (1em) : les tailles ➖ ➕ restent celles des emojis. */
+function StickerPic({ id, icon }: { id: string; icon: string }) {
+  const art = photoStickerArt(id);
+  return art ? <img className="sticker-pic" src={`${import.meta.env.BASE_URL}${art}`} alt="" draggable={false} /> : <>{icon}</>;
 }
 
 type Mode = 'story' | 'quiz' | 'stick';
@@ -159,7 +165,9 @@ type Mode = 'story' | 'quiz' | 'stick';
  * l'ouvre en grand et le jeu la raconte en anglais ; on peut y jouer à « Who is in the photo? », y coller des
  * autocollants, ou la retirer. Chaque bébé a aussi son livre 📖 : une page par stade, et les mots appris.
  */
-export function PhotoAlbum({ state, setState, current, onClose }: { state: GameState; setState: (fn: (s: GameState) => GameState) => void; current?: string; onClose: () => void }) {
+export function PhotoAlbum({ state, setState, current, onClose, owner }: { state: GameState; setState: (fn: (s: GameState) => GameState) => void; current?: string; onClose: () => void; owner?: string }) {
+  /** album d'un ami (owner = son prénom) : on regarde, on écoute, on joue à « Who is in the photo? », sans rien changer */
+  const readOnly = owner !== undefined;
   const fr = state.settings.frenchHelp;
   const slow = state.settings.slowVoice;
   const families = useMemo(() => {
@@ -271,7 +279,11 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
     <div className="screen panel-screen">
       <div className="panel album-panel">
         <div className="picker-head">
-          <h2>📷 My photos {fr && <small>· Mes photos</small>}</h2>
+          {readOnly ? (
+            <h2>📷 {owner}’s photos {fr && <small>· Les photos de {owner}</small>}</h2>
+          ) : (
+            <h2>📷 My photos {fr && <small>· Mes photos</small>}</h2>
+          )}
           <button className="round" onClick={onClose} aria-label="Fermer">✕</button>
         </div>
 
@@ -367,10 +379,10 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
               {pickedSticker && picked !== null && (
                 <span className="album-sticker-edit">
                   <button className="album-sticker-tool" onClick={() => setState((s) => resizeSticker(s, big.id, picked, -1))} disabled={pickedSticker.size <= 0} aria-label="Smaller">
-                    <small aria-hidden="true">{pickedSticker.icon}</small>➖
+                    <small aria-hidden="true"><StickerPic id={pickedSticker.id} icon={pickedSticker.icon} /></small>➖
                   </button>
                   <button className="album-sticker-tool" onClick={() => setState((s) => resizeSticker(s, big.id, picked, 1))} disabled={pickedSticker.size >= STICKER_SIZES.length - 1} aria-label="Bigger">
-                    <span aria-hidden="true">{pickedSticker.icon}</span>➕
+                    <span aria-hidden="true"><StickerPic id={pickedSticker.id} icon={pickedSticker.icon} /></span>➕
                   </button>
                   <button
                     className="album-sticker-tool"
@@ -389,7 +401,7 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
                 if (!def) return null;
                 return (
                   <button key={id} role="radio" aria-checked={glue === id} className={`album-sticker${glue === id ? ' on' : ''}`} onClick={() => { setGlue(id); setPicked(null); void speech.speak(say.sticker(def.en), { slow }); }} aria-label={def.en}>
-                    {def.icon}
+                    <StickerPic id={def.id} icon={def.icon} />
                   </button>
                 );
               })}
@@ -412,8 +424,8 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
             {quizTargets(big).length > 0 && (
               <button className={`round album-tool${mode === 'quiz' ? ' on' : ''}`} onClick={() => startQuiz(big)} aria-label="Who is in the photo?">❓</button>
             )}
-            <button className={`round album-tool${mode === 'stick' ? ' on' : ''}`} onClick={() => { stopTalk(); setQuiz(null); setPicked(null); setMode(mode === 'stick' ? 'story' : 'stick'); }} aria-label="Stickers">✨</button>
-            {confirm ? (
+            {!readOnly && <button className={`round album-tool${mode === 'stick' ? ' on' : ''}`} onClick={() => { stopTalk(); setQuiz(null); setPicked(null); setMode(mode === 'stick' ? 'story' : 'stick'); }} aria-label="Stickers">✨</button>}
+            {readOnly ? null : confirm ? (
               <span className="album-confirm">
                 {fr ? 'Retirer cette photo ?' : 'Remove it?'}
                 <button

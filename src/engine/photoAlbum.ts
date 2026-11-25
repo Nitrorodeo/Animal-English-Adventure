@@ -103,6 +103,10 @@ export interface Shot {
 
 /** Autocollants qu'on peut coller sur une photo (ceux de la carte du monde, dits à voix haute par say.sticker). */
 export const PHOTO_STICKERS = ['heart', 'star', 'rainbow', 'flower', 'butterfly', 'crown', 'balloon', 'sun'] as const;
+/** dessin de chaque autocollant des photos (public/, découpés de « Animaux/Autocollant photo.png ») ; sans dessin, l'emoji reste */
+export function photoStickerArt(id: string): string | undefined {
+  return (PHOTO_STICKERS as readonly string[]).includes(id) ? `assets/ui/stickers/${id}.webp` : undefined;
+}
 /** au plus 6 autocollants par photo : la photo reste lisible, et légère */
 export const PHOTO_STICKERS_MAX = 6;
 const STICKER_CODE: Readonly<Record<string, string>> = { heart: 'he', star: 'st', rainbow: 'rb', flower: 'fl', butterfly: 'bf', crown: 'cr', balloon: 'ba', sun: 'su' };

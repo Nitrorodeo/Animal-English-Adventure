@@ -14,7 +14,8 @@ import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
 import { itemStatus, type ItemStatus } from './skills';
 import { isFamilyCode, newFamilyCode } from './cloud';
 import type { StorageLike } from './save';
-import type { GameState } from './state';
+import { parseAlbum, type AlbumRec } from './photoAlbum';
+import { newGameState, type GameState } from './state';
 
 /** Ce que l'appareil retient du cercle. */
 export interface CircleMeta {
@@ -151,4 +152,55 @@ export function summaryKey(s: Summary): string {
 /** Corps envoyé au service. */
 export function circleBody(id: string, s: Summary): string {
   return JSON.stringify({ id, name: s.name, stars: s.stars, adventures: s.adventures });
+}
+
+// --- albums des amis (demande du parent, 2026-11-25) ------------------------------------------------------------
+// « Ils doivent aussi pouvoir voir les albums photos de chacun pour voir ce que les autres ont fait avec leurs photos. »
+// Chaque appareil du cercle y publie son album 📷 (rien d'autre de la partie) ; les amis le regardent sans pouvoir le changer.
+
+/** L'album change par petites touches (autocollants qu'on déplace) : un seul envoi après un moment de calme. */
+export const CIRCLE_ALBUM_DELAY_MS = 30_000;
+/** Taille maximale d'un album partagé (même règle dans cloud/worker.mjs). */
+export const CIRCLE_ALBUM_MAX_BYTES = 900_000;
+/** Ce que l'appareil retient du dernier album envoyé : « code:empreinte » (pas de nouvel envoi s'il n'a pas changé). */
+export const CIRCLE_ALBUM_SENT_KEY = 'aea.circle.album';
+
+/** Empreinte courte d'un texte (FNV-1a 32 bits) : sert seulement à voir si l'album a changé. */
+export function textPrint(text: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return `${text.length.toString(36)}-${h.toString(36)}`;
+}
+
+/** Corps envoyé au service ; null si l'album est trop gros pour être partagé. */
+export function circleAlbumBody(id: string, album: AlbumRec | undefined): string | null {
+  const body = JSON.stringify({ id, album: album ?? {} });
+  return body.length > CIRCLE_ALBUM_MAX_BYTES ? null : body;
+}
+
+/** Album d'un ami tel que le service le rend ; un texte abîmé donne un album vide. */
+export function parseFriendAlbum(text: string | null | undefined): AlbumRec {
+  try {
+    const raw: unknown = JSON.parse(text ?? '');
+    return parseAlbum(typeof raw === 'object' && raw !== null ? (raw as { album?: unknown }).album : null);
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Une partie « vitrine » pour montrer l'album d'un ami avec l'écran de l'album : ses photos, rien de sa partie,
+ * et les réglages de cet appareil (aide en français, voix lente).
+ */
+export function friendAlbumState(album: AlbumRec, settings: GameState['settings']): GameState {
+  const base = newGameState();
+  return { ...base, settings, player: { ...base.player, album } };
+}
+
+/** Nombre de photos d'un album. */
+export function albumCount(album: AlbumRec): number {
+  return Object.values(album).reduce((n, list) => n + list.length, 0);
 }

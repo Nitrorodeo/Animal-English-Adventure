@@ -12,7 +12,7 @@ import { TIERS, type ActivityCtx, type BiomeDef, type Weather } from '../content
 import { BIRTHDAY, CHEESE, MIC, say, WEEK_WORD } from '../content/utterances';
 import { WEEK_WORD_CHOICES, weekWordAnchor, weekWordChoice } from '../content/weekWord';
 import { CLOUD_MAX_BYTES } from './cloud';
-import { ALBUM_MAX_PER_FAMILY, birthdayPhoto, familyPhotos, moveSticker, parseAlbum, PHOTO_STICKERS, PHOTO_STICKERS_MAX, resizeSticker, STICKER_SIZE_DEFAULT, STICKER_SIZES, stickOnPhoto, takePhoto, unstickPhoto, type Shot } from './photoAlbum';
+import { ALBUM_MAX_PER_FAMILY, birthdayPhoto, familyPhotos, moveSticker, parseAlbum, PHOTO_STICKERS, PHOTO_STICKERS_MAX, photoStickerArt, resizeSticker, STICKER_SIZE_DEFAULT, STICKER_SIZES, stickOnPhoto, takePhoto, unstickPhoto, type Shot } from './photoAlbum';
 import { migrate } from './save';
 import { newGameState, type GameState } from './state';
 import { activityOffered, FAMILY_CONFIGS, possibleMemories } from './variants';
@@ -144,6 +144,20 @@ describe('photos : la météo du jour, l’anniversaire, les autocollants', () =
     expect(birthdayPhoto(s, 'elephant', 2, 'newborn')).toBeUndefined();
     // même scène, autre temps : c'est une autre photo
     expect(takePhoto(s, shot({ weather: 'cloudy' }), 4_000).ok).toBe(true);
+  });
+
+  it('chaque autocollant des photos a son dessin (un vrai WebP carré), montré dans l’album', () => {
+    for (const id of PHOTO_STICKERS) {
+      const art = photoStickerArt(id)!;
+      expect(art).toBe(`assets/ui/stickers/${id}.webp`);
+      const bytes: Uint8Array = readFileSync(new URL(`../../public/${art}`, import.meta.url));
+      expect(String.fromCharCode(...bytes.slice(0, 4)) + String.fromCharCode(...bytes.slice(8, 12))).toBe('RIFFWEBP');
+      expect(bytes.length).toBeLessThan(40_000);
+    }
+    expect(photoStickerArt('rocket')).toBeUndefined();
+    const ui: string = readFileSync(new URL('../ui/PhotoAlbum.tsx', import.meta.url), 'utf8');
+    expect(ui.match(/<StickerPic /g)?.length).toBeGreaterThanOrEqual(4);
+    expect(ui).not.toMatch(/>\s*\{(s|def|pickedSticker)\.icon\}/);
   });
 
   it('autocollants : on colle, on retire, 6 au plus ; ils suivent la sauvegarde', () => {

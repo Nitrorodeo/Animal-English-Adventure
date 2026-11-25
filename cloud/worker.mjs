@@ -8,7 +8,11 @@
  * Cercle d'amis (2026-11-24) : un petit résumé par famille, sous un code de cercle, jamais la partie.
  *   GET    /v1/circle  (en-tête x-circle: <code>)  → 200 {members:[{id,name,stars,adventures,at}]} | 404 si aucun cercle
  *   PUT    /v1/circle  (x-circle) corps {id,name,stars,adventures} → 200 {members: n} (crée le cercle au premier envoi)
- *   DELETE /v1/circle?id=<id>  (x-circle) → 204 : la famille quitte le cercle
+ *   DELETE /v1/circle?id=<id>  (x-circle) → 204 : la famille quitte le cercle (son album partagé part avec elle)
+ *
+ * Albums des amis (2026-11-25) : chaque enfant du cercle y montre son album 📷, en lecture seule pour les autres.
+ *   GET /v1/circle/album?id=<id>  (x-circle) → 200 {album} | 404
+ *   PUT /v1/circle/album  (x-circle) corps {id, album} → 200 {ok} ; 403 si cette famille n'est pas dans le cercle
  *
  * - Le code n'est jamais stocké : la clé est son empreinte SHA-256.
  * - Seul le site du jeu (ALLOWED_ORIGINS) peut l'appeler depuis un navigateur.
@@ -16,7 +20,7 @@
  *   (« day:… »), au cas où un appareil enverrait une mauvaise partie.
  * - Rien d'autre n'est gardé : ni adresse IP, ni compte, ni e-mail.
  *
- * Testé dans src/engine/cloudWorker.test.ts. Mise en ligne : cloud/LISEZ_MOI.md.
+ * Testé dans src/engine/cloud.test.ts (partie), circle.test.ts (cercle) et cloudWorker.test.ts (albums des amis). Mise en ligne : cloud/LISEZ_MOI.md.
  */
 
 // même règle que FAMILY_CODE_PATTERN (src/engine/cloud.ts) : code proposé ou choisi par la famille
@@ -28,6 +32,8 @@ const MEMBER_ID = /^[a-z0-9]{8,32}$/;
 const MAX_MEMBERS = 12;
 const MAX_CIRCLE_BYTES = 4_000;
 const CIRCLE_TTL = 400 * 24 * 3600;
+// même règle que CIRCLE_ALBUM_MAX_BYTES (src/engine/circle.ts)
+const MAX_ALBUM_BYTES = 900_000;
 
 async function familyKey(code) {
   const data = new TextEncoder().encode(`aea-family:${code}`);
@@ -76,6 +82,39 @@ const cleanName = (v) => {
   return t === '' ? null : t;
 };
 
+/** Album partagé d'un enfant du cercle : une clé par enfant, à côté du document du cercle. */
+const albumKey = (circleKey, id) => `calbum:${circleKey.slice(7)}:${id}`;
+
+async function handleCircleAlbum(request, env, origin, url, circleKey, members) {
+  if (request.method === 'GET') {
+    const id = url.searchParams.get('id') ?? '';
+    if (!MEMBER_ID.test(id)) return reply(origin, 400, { error: 'member' });
+    // seul un enfant encore dans le cercle montre son album
+    const text = id in members ? await env.SAVES.get(albumKey(circleKey, id)) : null;
+    return text === null ? reply(origin, 404, { error: 'none' }) : reply(origin, 200, text);
+  }
+  if (request.method === 'PUT') {
+    const declared = Number(request.headers.get('Content-Length') ?? '0');
+    if (declared > MAX_ALBUM_BYTES) return reply(origin, 413, { error: 'size' });
+    const body = await request.text();
+    if (body.length > MAX_ALBUM_BYTES) return reply(origin, 413, { error: 'size' });
+    let m;
+    try {
+      m = JSON.parse(body);
+    } catch {
+      return reply(origin, 400, { error: 'json' });
+    }
+    if (typeof m?.id !== 'string' || !MEMBER_ID.test(m.id)) return reply(origin, 400, { error: 'member' });
+    if (!(m.id in members)) return reply(origin, 403, { error: 'member' });
+    const album = m.album;
+    const ok = album && typeof album === 'object' && !Array.isArray(album) && Object.values(album).every((v) => Array.isArray(v));
+    if (!ok) return reply(origin, 400, { error: 'album' });
+    await env.SAVES.put(albumKey(circleKey, m.id), JSON.stringify({ album }), { expirationTtl: CIRCLE_TTL });
+    return reply(origin, 200, { ok: true });
+  }
+  return reply(origin, 405, { error: 'method' });
+}
+
 /** Cercle d'amis : un seul document par cercle ({members: {id: résumé}}), clé = empreinte du code. */
 async function handleCircle(request, env, now, origin, url) {
   const code = (request.headers.get('X-Circle') ?? '').trim();
@@ -92,6 +131,7 @@ async function handleCircle(request, env, now, origin, url) {
     }
   }
   const list = () => Object.entries(doc.members).map(([id, m]) => ({ id, ...m }));
+  if (url.pathname === '/v1/circle/album') return handleCircleAlbum(request, env, origin, url, key, doc.members);
 
   if (request.method === 'GET') return text === null ? reply(origin, 404, { error: 'none' }) : reply(origin, 200, { members: list() });
 
@@ -118,6 +158,7 @@ async function handleCircle(request, env, now, origin, url) {
     if (id in doc.members) {
       delete doc.members[id];
       await env.SAVES.put(key, JSON.stringify(doc), { expirationTtl: CIRCLE_TTL });
+      await env.SAVES.delete(albumKey(key, id));
     }
     return reply(origin, 204);
   }
@@ -131,9 +172,9 @@ export async function handle(request, env, now) {
   if (!origin) return reply(null, 403, { error: 'origin' });
 
   const url = new URL(request.url);
-  if (url.pathname !== '/v1/save' && url.pathname !== '/v1/circle') return reply(origin, 404, { error: 'path' });
+  if (url.pathname !== '/v1/save' && url.pathname !== '/v1/circle' && url.pathname !== '/v1/circle/album') return reply(origin, 404, { error: 'path' });
   if (request.method === 'OPTIONS') return reply(origin, 204);
-  if (url.pathname === '/v1/circle') return handleCircle(request, env, now, origin, url);
+  if (url.pathname !== '/v1/save') return handleCircle(request, env, now, origin, url);
 
   const code = (request.headers.get('X-Family') ?? '').trim();
   if (!CODE.test(code)) return reply(origin, 400, { error: 'code' });

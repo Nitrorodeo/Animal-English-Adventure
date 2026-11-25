@@ -120,6 +120,7 @@ describe('service en ligne (cloud/worker.mjs)', () => {
       data,
       get: async (k) => data.get(k) ?? null,
       put: async (k, v) => void data.set(k, v),
+      delete: async (k) => void data.delete(k),
     };
     return kv;
   };

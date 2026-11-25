@@ -813,6 +813,9 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 .friend-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
 .friend-card { display: flex; flex-direction: column; gap: 10px; background: #fffaf0; border: 3px solid #ffe2a0; border-radius: 22px; padding: 14px 16px; box-shadow: 0 4px 14px #0002; }
 .friend-card.you { background: #eaf7e6; border-color: #a8d99a; }
+.friend-photos { align-self: flex-start; min-height: 48px; padding: 6px 16px; border: 3px solid #ffd23f; border-radius: 99px; background: #fff; font-size: 20px; font-weight: 700; cursor: pointer; }
+.friend-photos small { font-size: 15px; font-weight: 500; }
+.friend-note { color: #7a5a30; font-size: 16px; }
 .friend-name { font-size: clamp(22px, 3.4vw, 30px); font-weight: bold; color: #3a2410; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; overflow-wrap: anywhere; }
 .friend-name small { font-size: 16px; font-weight: normal; color: #7a5a30; }
 .friend-new { font-size: 15px; background: #ff7a3d; color: #fff; border-radius: 99px; padding: 2px 10px; }
@@ -895,6 +898,10 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 .ps-sticker.tappable { pointer-events: auto; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
 .ps-sticker.picked { outline: 0.4cqw dashed #fff; outline-offset: 0.5cqw; border-radius: 1.2cqw; filter: drop-shadow(0 0 0.8cqw #e04c8c); }
 .ps-sticker.dragging { cursor: grabbing; scale: 1.08; }
+.sticker-pic { display: block; width: 1em; height: 1em; object-fit: contain; pointer-events: none; -webkit-user-drag: none; }
+.ps-sticker .sticker-pic { filter: drop-shadow(0 0.25cqw 0.35cqw #0006); }
+.album-sticker .sticker-pic { width: 1.25em; height: 1.25em; margin: auto; }
+.album-sticker-tool .sticker-pic { display: inline-block; vertical-align: middle; }
 .album-caption { position: absolute; left: 0; right: 0; bottom: 4px; display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 20px; font-weight: 800; color: #3d2a14; animation: pop 0.35s ease-out; }
 .album-caption small { font-size: 14px; font-weight: 600; opacity: 0.75; }
 .album-view:has(.album-caption) .album-view-frame { padding-bottom: 48px; }

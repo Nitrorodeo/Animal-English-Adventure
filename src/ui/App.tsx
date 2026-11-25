@@ -149,7 +149,7 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
       {screen.kind === 'habitat' && <Habitat key={screen.speciesId} state={state} setState={setState} species={getSpecies(screen.speciesId)} biome={getBiome(screen.biomeId)} onPlace={(b) => setScreen({ kind: 'habitat', speciesId: screen.speciesId, biomeId: b })} onWhere={setHere} />}
       {screen.kind === 'passport' && <Passport state={state} onClose={() => setScreen(back)} />}
       {screen.kind === 'album' && <PhotoAlbum state={state} setState={setState} current={screen.speciesId} onClose={() => setScreen(back)} />}
-      {screen.kind === 'friends' && <Friends circle={circle} fr={state.settings.frenchHelp} onClose={() => setScreen(back)} />}
+      {screen.kind === 'friends' && <Friends circle={circle} settings={state.settings} onClose={() => setScreen(back)} />}
       {screen.kind === 'parents' && (
         <ParentArea
           state={state}

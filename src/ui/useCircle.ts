@@ -1,7 +1,11 @@
-import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { isFamilyCode, normalizeFamilyCode } from '../engine/cloud';
 import {
+  albumCount,
+  CIRCLE_ALBUM_DELAY_MS,
+  CIRCLE_ALBUM_SENT_KEY,
   CIRCLE_DELAY_MS,
+  circleAlbumBody,
   circleBody,
   friendsList,
   markSeen,
@@ -9,14 +13,17 @@ import {
   newFriendIds,
   newMemberId,
   parseCircle,
+  parseFriendAlbum,
   publishable,
   readCircleMeta,
   summaryKey,
   summaryOf,
+  textPrint,
   writeCircleMeta,
   type CircleMeta,
   type Friend,
 } from '../engine/circle';
+import type { AlbumRec } from '../engine/photoAlbum';
 import type { StorageLike } from '../engine/save';
 import type { GameState } from '../engine/state';
 import { CLOUD_URL } from './useCloudSync';
@@ -45,6 +52,8 @@ export interface CircleInfo {
   leave(): Promise<void>;
   /** l'écran des amis a été ouvert : les cartes ne sont plus « nouvelles » */
   see(): void;
+  /** l'album 📷 d'un ami du cercle (lecture seule) ; 'none' : pas encore de photo partagée */
+  friendAlbum(id: string): Promise<AlbumRec | 'none' | 'offline'>;
 }
 
 const freshMeta = (): CircleMeta => ({ code: null, id: newMemberId(Math.random), seen: [] });
@@ -83,6 +92,12 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
   /** dernier résumé reçu par le service */
   const sent = useRef<string | null>(null);
   const timer = useRef<number | undefined>(undefined);
+  // album 📷 partagé avec les amis : envoyé seulement quand il a changé (empreinte gardée sur l'appareil)
+  const album = state.player.album;
+  const albumPrint = useMemo(() => textPrint(JSON.stringify(album ?? {})), [album]);
+  const albumLatest = useRef({ album, print: albumPrint });
+  albumLatest.current = { album, print: albumPrint };
+  const albumTimer = useRef<number | undefined>(undefined);
 
   const update = useCallback(
     (next: CircleMeta) => {
@@ -126,6 +141,30 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     }
   }, [available]);
 
+  const pushAlbum = useCallback(async (): Promise<void> => {
+    const m = metaRef.current;
+    if (!available || !m.code) return;
+    const { album: a, print } = albumLatest.current;
+    const mark = `${m.code}:${print}`;
+    let last: string | null = null;
+    try {
+      last = storage.getItem(CIRCLE_ALBUM_SENT_KEY);
+    } catch {
+      last = null;
+    }
+    if (last === mark) return;
+    // rien encore à montrer, et rien déjà montré dans ce cercle : pas d'envoi
+    if ((!a || albumCount(a) === 0) && !last?.startsWith(`${m.code}:`)) return;
+    const body = circleAlbumBody(m.id, a);
+    if (!body) return;
+    try {
+      const r = await fetch(`${CLOUD_URL}/v1/circle/album`, { method: 'PUT', headers: { 'X-Circle': m.code, 'Content-Type': 'application/json' }, body, cache: 'no-store' });
+      if (r.ok) storage.setItem(CIRCLE_ALBUM_SENT_KEY, mark);
+    } catch {
+      /* sans réseau : nouvel essai au prochain changement, au retour sur le jeu ou au prochain lancement */
+    }
+  }, [available, storage]);
+
   const pull = useCallback(async () => {
     const m = metaRef.current;
     if (!available || !m.code) return;
@@ -158,12 +197,21 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     return () => window.clearTimeout(timer.current);
   }, [key, meta.code, push, pull]);
 
+  // l'album a changé (photo, autocollant) : un seul envoi après un moment de calme, une fois dans le cercle
+  useEffect(() => {
+    if (!meta.code || status !== 'ok') return;
+    window.clearTimeout(albumTimer.current);
+    albumTimer.current = window.setTimeout(() => void pushAlbum(), CIRCLE_ALBUM_DELAY_MS);
+    return () => window.clearTimeout(albumTimer.current);
+  }, [albumPrint, meta.code, status, pushAlbum]);
+
   // au démarrage, au retour sur le jeu et chaque minute : regarder les amis
   useEffect(() => {
     if (!meta.code) return;
     void pull();
     const flush = () => {
       if (sent.current !== summaryKey(latest.current)) void push(true);
+      void pushAlbum();
     };
     const onVisibility = () => (document.visibilityState === 'hidden' ? flush() : void pull());
     const every = window.setInterval(() => {
@@ -176,7 +224,7 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('pagehide', flush);
     };
-  }, [meta.code, pull, push]);
+  }, [meta.code, pull, push, pushAlbum]);
 
   const enter = useCallback(
     async (code: string): Promise<CircleResult> => {
@@ -251,10 +299,33 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
       }
     }
     sent.current = null;
+    window.clearTimeout(albumTimer.current);
+    try {
+      storage.removeItem(CIRCLE_ALBUM_SENT_KEY);
+    } catch {
+      /* rien à oublier */
+    }
     update({ code: null, id: m.id, seen: [] });
     setMembers([]);
     setStatus('off');
-  }, [available, update]);
+  }, [available, update, storage]);
+
+  const friendAlbum = useCallback(
+    async (id: string): Promise<AlbumRec | 'none' | 'offline'> => {
+      const m = metaRef.current;
+      if (!available || !m.code) return 'offline';
+      try {
+        const r = await fetch(`${CLOUD_URL}/v1/circle/album?id=${encodeURIComponent(id)}`, { headers: { 'X-Circle': m.code }, cache: 'no-store' });
+        if (r.status === 404) return 'none';
+        if (!r.ok) return 'offline';
+        const a = parseFriendAlbum(await r.text());
+        return albumCount(a) > 0 ? a : 'none';
+      } catch {
+        return 'offline';
+      }
+    },
+    [available],
+  );
 
   const see = useCallback(() => {
     const m = metaRef.current;
@@ -275,5 +346,6 @@ export function useCircle(state: GameState, setState: Dispatch<SetStateAction<Ga
     join,
     leave,
     see,
+    friendAlbum,
   };
 }
