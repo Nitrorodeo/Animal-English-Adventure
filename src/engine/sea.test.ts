@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { clipFor } from '../audio/clips';
 import { itemInfo } from '../content/items';
-import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_START, SEA_THINGS, SEA_WIDTH, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
+import { DOLPHIN_FAMILY, DOLPHIN_ZONES, DOLPHINS, SEA_DECOR_NAMES, SEA_DECORS, SEA_FRIENDS, SEA_HD, SEA_START, SEA_THINGS, SEA_WIDTH, seaDecor, TURTLE, WHALE, whaleCount, whaleYes } from '../content/sea';
 import { CONTINENTS } from '../content/world';
 import { currentRound, INTRO, numberChoices, OUTRO, seaChoose, seaDone, seaNext, seaReward, seaRounds, startSea, type SeaState } from './sea';
 import { newGameState } from './state';
@@ -137,19 +137,27 @@ describe('jeux bonus de la mer : contenu', () => {
     for (const name of Object.values(SEA_HD)) expect(SPRITES, name).toContain(`/public/assets/sea/${name}.webp`);
   });
 
-  it('chaque animal marin a ses deux décors sous-marins, différents, qui alternent d’une manche à l’autre', () => {
+  it('chaque animal marin a ses décors sous-marins (au moins deux), tous différents, qui défilent d’une manche à l’autre', () => {
     for (const g of GAMES) {
-      const [a, b] = SEA_DECORS[g];
-      expect(a, g).not.toBe(b);
-      for (const name of [a, b]) expect(SPRITES, name).toContain(`/public/assets/sea/${name}.webp`);
-      expect(seaDecor(g, -1)).toBe(a); // l'introduction
-      expect(seaDecor(g, 0)).toBe(a);
-      expect(seaDecor(g, 1)).toBe(b);
-      expect(seaDecor(g, 2)).toBe(a);
+      const list = SEA_DECORS[g];
+      expect(list.length, g).toBeGreaterThanOrEqual(2);
+      expect(new Set(list).size, g).toBe(list.length);
+      for (const name of list) {
+        expect(SPRITES, name).toContain(`/public/assets/sea/${name}.webp`);
+        expect(SEA_DECOR_NAMES[name], name).toBeTruthy();
+      }
+      expect(seaDecor(g, -1)).toBe(list[0]); // l'introduction
+      list.forEach((name, i) => expect(seaDecor(g, i)).toBe(name));
+      expect(seaDecor(g, list.length)).toBe(list[0]); // on revient au premier
     }
     // aucun fond n'est partagé entre deux animaux
     const all = GAMES.flatMap((g) => [...SEA_DECORS[g]]);
     expect(new Set(all).size).toBe(all.length);
+  });
+
+  it('les baleines ont le décor des aurores polaires en plus (2026-11-25)', () => {
+    expect(SEA_DECORS.whale).toEqual(['bg_whale_1', 'bg_whale_2', 'bg_whale_3']);
+    expect(SEA_DECOR_NAMES.bg_whale_3).toBe('the northern lights');
   });
 
   it('les deux animaux de chaque planche sont utilisés : maman + baleineau ensemble, grande + petite tortue', () => {

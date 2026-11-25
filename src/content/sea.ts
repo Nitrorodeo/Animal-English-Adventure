@@ -42,8 +42,9 @@ export const SEA_HD: Readonly<Record<SeaSprite, string>> = {
  *   baleine : la cathédrale de glace puis le panorama de l'Antarctique ·
  *   dauphins : le paradis lumineux puis le canyon de kelp · tortue : le jardin corallien puis le canyon turquoise.
  */
-export const SEA_DECORS: Readonly<Record<SeaGameId, readonly [string, string]>> = {
-  whale: ['bg_whale_1', 'bg_whale_2'],
+export const SEA_DECORS: Readonly<Record<SeaGameId, readonly [string, string, ...string[]]>> = {
+  // 3e décor des baleines ajouté le 2026-11-25 (« ajoute juste cette image au décor des baleines car elle est magnifique »)
+  whale: ['bg_whale_1', 'bg_whale_2', 'bg_whale_3'],
   dolphins: ['bg_dolphins_1', 'bg_dolphins_2'],
   turtle: ['bg_turtle_1', 'bg_turtle_2'],
 };
@@ -52,6 +53,7 @@ export const SEA_DECORS: Readonly<Record<SeaGameId, readonly [string, string]>> 
 export const SEA_DECOR_NAMES: Readonly<Record<string, string>> = {
   bg_whale_1: 'the ice cathedral',
   bg_whale_2: 'the polar sea',
+  bg_whale_3: 'the northern lights',
   bg_dolphins_1: 'the bright paradise',
   bg_dolphins_2: 'the kelp canyon',
   bg_turtle_1: 'the coral garden',
@@ -59,7 +61,7 @@ export const SEA_DECOR_NAMES: Readonly<Record<string, string>> = {
 };
 
 /** décor de la manche `index` (−1 = l'introduction : le premier décor) : un puis l'autre, en alternance */
-export const seaDecor = (game: SeaGameId, index: number): string => SEA_DECORS[game][Math.max(index, 0) % 2]!;
+export const seaDecor = (game: SeaGameId, index: number): string => SEA_DECORS[game][Math.max(index, 0) % SEA_DECORS[game].length]!;
 
 export interface SeaFriend {
   id: SeaGameId;

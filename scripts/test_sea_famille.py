@@ -34,7 +34,7 @@ class FondVert(unittest.TestCase):
 
 class Sorties(unittest.TestCase):
     def test_les_planches_et_les_fonds_ont_ete_fabriques(self):
-        for name in ("whale_family_hd", "turtle_mother_hd", "turtle_baby_hd", "bg_whale_1", "bg_whale_2", "bg_dolphins_1", "bg_dolphins_2", "bg_turtle_1", "bg_turtle_2"):
+        for name in ("whale_family_hd", "turtle_mother_hd", "turtle_baby_hd", "bg_whale_1", "bg_whale_2", "bg_whale_3", "bg_dolphins_1", "bg_dolphins_2", "bg_turtle_1", "bg_turtle_2"):
             self.assertTrue((s.OUT / f"{name}.webp").exists(), name)
 
     def test_la_petite_tortue_est_plus_petite_que_la_grande(self):

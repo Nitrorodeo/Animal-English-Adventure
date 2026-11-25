@@ -40,7 +40,7 @@ SHEETS = {
     "dolphin": ("Dauphin", "Dauphins joyeux dans l’océan.png"),
 }
 BACKGROUNDS = {
-    "whale": ("Baleine", ["Cathédrale de glace sous-marine-2.png", "Panorama sous-marin de l’Antarctique-1.png"]),
+    "whale": ("Baleine", ["Cathédrale de glace sous-marine-2.png", "Panorama sous-marin de l’Antarctique-1.png", "Aurores polaires sous-marines.webp"]),  # 3e : « elle est magnifique », 2026-11-25
     "dolphins": ("Dauphin", ["Paradis sous-marin lumineux pour dauphins.png", "Canyon sous-marin enchanté aux forêts de kelp.png"]),
     "turtle": ("Tortue", ["Jardin corallien sous-marin éclatant.png", "Canyon sous-marin aux rayons turquoise.png"]),
 }
