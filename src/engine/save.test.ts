@@ -51,3 +51,32 @@ describe('mémoire du navigateur pleine', () => {
     expect(saveGame(memoryStorage(), newGameState())).toBe(true);
   });
 });
+
+describe('sauvegarde abîmée côté joueuse', () => {
+  it('historique, mots, objets et lieux d’un mauvais type sont nettoyés (essai à l’écran du 2026-11-25 : « Oops! »)', () => {
+    const base = newGameState();
+    const raw = {
+      ...base,
+      player: {
+        ...base.player,
+        name: 'Test',
+        history: [null, 5, 'x', { archetypeId: 'greetings', speciesId: 'lion', actorId: 'lion:father', mechanic: 'quiz', at: 3 }],
+        items: { hello: null, cat: 'abc', dog: { seen: 2, correctUnaided: 'x', contexts: [1, 'a'] } },
+        words: { africa: null, asia: ['cat', 3] },
+        placesVisited: [null, 'savanna'],
+        visitedContinents: [42, 'africa'],
+        adventuresDone: { a: 'b', c: 2 },
+        activityCounter: 'beaucoup',
+      },
+    };
+    const s = migrate(raw)!;
+    expect(s.player.name).toBe('Test');
+    expect(s.player.history).toEqual([{ archetypeId: 'greetings', speciesId: 'lion', actorId: 'lion:father', mechanic: 'quiz', at: 3 }]);
+    expect(s.player.items).toEqual({ dog: { seen: 2, correctUnaided: 0, correctAided: 0, contexts: ['a'] } });
+    expect(s.player.words).toEqual({ asia: ['cat'] });
+    expect(s.player.placesVisited).toEqual(['savanna']);
+    expect(s.player.visitedContinents).toEqual(['africa']);
+    expect(s.player.adventuresDone).toEqual({ c: 2 });
+    expect(s.player.activityCounter).toBe(0);
+  });
+});

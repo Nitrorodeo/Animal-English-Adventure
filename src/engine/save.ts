@@ -57,6 +57,35 @@ const counts = (v: unknown): Record<string, number> => {
   return out;
 };
 const PERSONALITIES = ['curious', 'playful', 'gentle', 'funny'] as const;
+const num = (v: unknown): number => (typeof v === 'number' && Number.isFinite(v) ? v : 0);
+
+/**
+ * Champs de la joueuse relus un par un (audit du 2026-11-25, suite) : un historique contenant `null` ou un mot
+ * d'un autre type faisait encore planter l'écran au démarrage (vu à l'écran : écran de secours « Oops! »).
+ */
+function parseItems(v: unknown): GameState['player']['items'] {
+  const out: GameState['player']['items'] = {};
+  if (!isObj(v)) return out;
+  for (const [k, it] of Object.entries(v)) {
+    if (isObj(it)) out[k] = { seen: num(it.seen), correctUnaided: num(it.correctUnaided), correctAided: num(it.correctAided), contexts: strings(it.contexts) };
+  }
+  return out;
+}
+
+function parseHistory(v: unknown): GameState['player']['history'] {
+  if (!Array.isArray(v)) return [];
+  return v.flatMap((h) => {
+    if (!isObj(h) || typeof h.archetypeId !== 'string' || typeof h.speciesId !== 'string' || typeof h.actorId !== 'string' || typeof h.mechanic !== 'string') return [];
+    return [{ archetypeId: h.archetypeId, speciesId: h.speciesId, actorId: h.actorId, mechanic: h.mechanic, at: num(h.at), ...(typeof h.choice === 'string' ? { choice: h.choice } : {}) }];
+  });
+}
+
+function parseWords(v: unknown): GameState['player']['words'] {
+  const out: Record<string, string[]> = {};
+  if (!isObj(v)) return out;
+  for (const [k, w] of Object.entries(v)) if (Array.isArray(w)) out[k] = strings(w);
+  return out as GameState['player']['words'];
+}
 
 /** Bébé relu champ par champ ; sans identifiant ni prénom il est écarté (rien à montrer). */
 function parseBaby(v: unknown, familyId: string): Baby | null {
@@ -110,14 +139,14 @@ export function migrate(raw: unknown): GameState | null {
     player: {
       name: typeof p.name === 'string' ? p.name : base.player.name,
       namePron: parseNamePron(p.namePron),
-      items: isObj(p.items) ? (p.items as GameState['player']['items']) : {},
-      visitedContinents: Array.isArray(p.visitedContinents) ? (p.visitedContinents as GameState['player']['visitedContinents']) : [],
-      history: Array.isArray(p.history) ? (p.history as GameState['player']['history']) : [],
-      activityCounter: typeof p.activityCounter === 'number' ? p.activityCounter : 0,
+      items: parseItems(p.items),
+      visitedContinents: strings(p.visitedContinents) as GameState['player']['visitedContinents'],
+      history: parseHistory(p.history),
+      activityCounter: num(p.activityCounter),
       treasures: Array.isArray(p.treasures) ? (p.treasures as string[]).filter((t) => typeof t === 'string') : [],
-      adventuresDone: isObj(p.adventuresDone) ? (p.adventuresDone as Record<string, number>) : {},
-      placesVisited: Array.isArray(p.placesVisited) ? (p.placesVisited as GameState['player']['placesVisited']) : [],
-      words: isObj(p.words) ? (p.words as GameState['player']['words']) : {},
+      adventuresDone: counts(p.adventuresDone),
+      placesVisited: strings(p.placesVisited) as GameState['player']['placesVisited'],
+      words: parseWords(p.words),
       photos: Array.isArray(p.photos) ? (p.photos as unknown[]).filter((x): x is string => typeof x === 'string') : [],
       // anciens autocollants du jour retirés des parties : le cadeau du soir les remplace (« il reste les anciens stickers », 2026-11-24)
       stickers: [],
