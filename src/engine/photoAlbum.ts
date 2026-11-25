@@ -36,6 +36,8 @@ export interface PhotoRec {
   b?: 1 | 2;
   /** autocollants collés sur la photo : 6 caractères chacun, code + x + y en % (« he5030 » = cœur au milieu) */
   s?: string;
+  /** taille de chaque autocollant, un chiffre par autocollant (rang dans STICKER_SIZES) ; absent = tous à la taille normale */
+  z?: string;
 }
 /** album rangé par famille (espèce) */
 export type AlbumRec = Record<string, PhotoRec[]>;
@@ -84,6 +86,8 @@ export interface PhotoSticker {
   icon: string;
   x: number;
   y: number;
+  /** rang de taille dans STICKER_SIZES (STICKER_SIZE_DEFAULT = taille normale) */
+  size: number;
 }
 
 /** Ce que le décor donne au moment du déclic (positions déjà calculées à l'écran). */
@@ -105,14 +109,44 @@ const STICKER_CODE: Readonly<Record<string, string>> = { heart: 'he', star: 'st'
 const CODE_STICKER: Readonly<Record<string, string>> = Object.fromEntries(Object.entries(STICKER_CODE).map(([k, v]) => [v, k]));
 const pct = (v: number) => String(Math.max(0, Math.min(99, Math.round(v)))).padStart(2, '0');
 
-function decodeStickers(s: string | undefined): PhotoSticker[] {
-  const out: PhotoSticker[] = [];
+/** tailles possibles d'un autocollant (facteur de la taille normale), du plus petit au plus grand */
+export const STICKER_SIZES = [0.5, 0.7, 1, 1.35, 1.8, 2.4] as const;
+export const STICKER_SIZE_DEFAULT = 2;
+
+interface StickRec {
+  code: string;
+  x: string;
+  y: string;
+  z: number;
+}
+
+/** autocollants d'une photo enregistrée (les tailles absentes ou illisibles valent la taille normale) */
+function readStickers(s: string | undefined, z: string | undefined): StickRec[] {
+  const out: StickRec[] = [];
   for (let i = 0; s && i + 6 <= s.length; i += 6) {
-    const id = CODE_STICKER[s.slice(i, i + 2)];
-    const def = id ? stickerDef(id) : undefined;
-    const x = Number(s.slice(i + 2, i + 4));
-    const y = Number(s.slice(i + 4, i + 6));
-    if (def && Number.isInteger(x) && Number.isInteger(y)) out.push({ id: def.id, icon: def.icon, x, y });
+    const code = s.slice(i, i + 2);
+    const x = s.slice(i + 2, i + 4);
+    const y = s.slice(i + 4, i + 6);
+    if (!CODE_STICKER[code] || !/^\d\d$/.test(x) || !/^\d\d$/.test(y)) continue;
+    const k = Number(z?.[i / 6]);
+    out.push({ code, x, y, z: Number.isInteger(k) && k >= 0 && k < STICKER_SIZES.length ? k : STICKER_SIZE_DEFAULT });
+  }
+  return out.slice(0, PHOTO_STICKERS_MAX);
+}
+
+/** réécrit les autocollants d'une photo ; rien n'est gardé quand il n'y en a plus, ni les tailles quand toutes sont normales */
+function withStickers(r: PhotoRec, list: readonly StickRec[]): PhotoRec {
+  const { s: _s, z: _z, ...rest } = r;
+  if (!list.length) return rest;
+  const z = list.some((k) => k.z !== STICKER_SIZE_DEFAULT) ? list.map((k) => k.z).join('') : '';
+  return { ...rest, s: list.map((k) => k.code + k.x + k.y).join(''), ...(z ? { z } : {}) };
+}
+
+function decodeStickers(s: string | undefined, z: string | undefined): PhotoSticker[] {
+  const out: PhotoSticker[] = [];
+  for (const k of readStickers(s, z)) {
+    const def = stickerDef(CODE_STICKER[k.code]!);
+    if (def) out.push({ id: def.id, icon: def.icon, x: Number(k.x), y: Number(k.y), size: k.z });
   }
   return out;
 }
@@ -143,7 +177,7 @@ const decode = (sp: string, r: PhotoRec): Photo => ({
   night: r.n === 1,
   weather: r.w !== undefined ? (WEATHERS[r.w] ?? null) : null,
   birthday: r.b ?? null,
-  stickers: decodeStickers(r.s),
+  stickers: decodeStickers(r.s, r.z),
 });
 
 const albumOf = (state: GameState): AlbumRec => state.player.album ?? {};
@@ -211,17 +245,39 @@ function updatePhoto(state: GameState, id: string, fn: (r: PhotoRec) => PhotoRec
 export function stickOnPhoto(state: GameState, id: string, stickerId: string, x: number, y: number): GameState {
   const code = STICKER_CODE[stickerId];
   if (!code) return state;
-  return updatePhoto(state, id, (r) => ((r.s ?? '').length / 6 >= PHOTO_STICKERS_MAX ? null : { ...r, s: `${r.s ?? ''}${code}${pct(x)}${pct(y)}` }));
+  return updatePhoto(state, id, (r) => {
+    const list = readStickers(r.s, r.z);
+    return list.length >= PHOTO_STICKERS_MAX ? null : withStickers(r, [...list, { code, x: pct(x), y: pct(y), z: STICKER_SIZE_DEFAULT }]);
+  });
+}
+
+/** Déplacer l'autocollant n° `index` (x, y en % de la photo). */
+export function moveSticker(state: GameState, id: string, index: number, x: number, y: number): GameState {
+  return updatePhoto(state, id, (r) => {
+    const list = readStickers(r.s, r.z);
+    const k = list[index];
+    if (!k || (k.x === pct(x) && k.y === pct(y))) return null;
+    return withStickers(r, list.map((o, i) => (i === index ? { ...o, x: pct(x), y: pct(y) } : o)));
+  });
+}
+
+/** Agrandir (+1) ou rapetisser (-1) l'autocollant n° `index`, dans les tailles de STICKER_SIZES. */
+export function resizeSticker(state: GameState, id: string, index: number, step: number): GameState {
+  return updatePhoto(state, id, (r) => {
+    const list = readStickers(r.s, r.z);
+    const k = list[index];
+    const z = k ? Math.max(0, Math.min(STICKER_SIZES.length - 1, k.z + Math.sign(step))) : -1;
+    if (!k || z === k.z) return null;
+    return withStickers(r, list.map((o, i) => (i === index ? { ...o, z } : o)));
+  });
 }
 
 /** Décoller l'autocollant n° `index` d'une photo. */
 export function unstickPhoto(state: GameState, id: string, index: number): GameState {
   return updatePhoto(state, id, (r) => {
-    const s = r.s ?? '';
-    if (index < 0 || index * 6 >= s.length) return null;
-    const left = s.slice(0, index * 6) + s.slice(index * 6 + 6);
-    const { s: _old, ...rest } = r;
-    return left ? { ...rest, s: left } : rest;
+    const list = readStickers(r.s, r.z);
+    if (!list[index]) return null;
+    return withStickers(r, list.filter((_, i) => i !== index));
   });
 }
 
@@ -260,8 +316,7 @@ export function parseAlbum(raw: unknown): AlbumRec {
       if (!num(o.t, 0, 1e14) || !str(o.p) || !Array.isArray(o.a) || kept.some((r) => r.t === o.t)) continue;
       const a = o.a.map(parseActor).filter((x): x is ActorRec => !!x).slice(0, 4);
       const g = (Array.isArray(o.g) ? o.g : []).map(parseGift).filter((x): x is GiftRec => !!x).slice(0, 30);
-      const stickers = typeof o.s === 'string' ? decodeStickers(o.s.slice(0, PHOTO_STICKERS_MAX * 6)) : [];
-      const s = stickers.map((x) => `${STICKER_CODE[x.id]}${pct(x.x)}${pct(x.y)}`).join('');
+      const stickers = typeof o.s === 'string' ? readStickers(o.s.slice(0, PHOTO_STICKERS_MAX * 6), typeof o.z === 'string' ? o.z : undefined) : [];
       kept.push({
         t: o.t,
         p: o.p,
@@ -270,8 +325,8 @@ export function parseAlbum(raw: unknown): AlbumRec {
         ...(o.n === 1 ? { n: 1 as const } : {}),
         ...(num(o.w, 0, WEATHERS.length - 1) && Number.isInteger(o.w) ? { w: o.w } : {}),
         ...(o.b === 1 || o.b === 2 ? { b: o.b } : {}),
-        ...(s ? { s } : {}),
       });
+      kept[kept.length - 1] = withStickers(kept[kept.length - 1]!, stickers);
     }
     if (kept.length) out[sp] = kept;
   }

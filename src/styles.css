@@ -891,7 +891,10 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 .ps-char.tappable { pointer-events: auto; cursor: pointer; }
 .ps-bday { position: absolute; right: 2%; top: 3%; z-index: 120; font-size: 6cqw; line-height: 1; }
 .ps-sticker { position: absolute; z-index: 130; translate: -50% -50%; font-size: 7cqw; line-height: 1; pointer-events: none; }
-.ps-sticker.tappable { pointer-events: auto; cursor: pointer; }
+/* autocollant qu'on fait glisser : le doigt ne fait pas défiler la page ; celui qui est choisi est entouré */
+.ps-sticker.tappable { pointer-events: auto; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.ps-sticker.picked { outline: 0.4cqw dashed #fff; outline-offset: 0.5cqw; border-radius: 1.2cqw; filter: drop-shadow(0 0 0.8cqw #e04c8c); }
+.ps-sticker.dragging { cursor: grabbing; scale: 1.08; }
 .album-caption { position: absolute; left: 0; right: 0; bottom: 4px; display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 20px; font-weight: 800; color: #3d2a14; animation: pop 0.35s ease-out; }
 .album-caption small { font-size: 14px; font-weight: 600; opacity: 0.75; }
 .album-view:has(.album-caption) .album-view-frame { padding-bottom: 48px; }
@@ -900,6 +903,11 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 .album-stickers { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; max-width: 94vw; }
 .album-sticker { width: 52px; height: 52px; border: 3px solid #fff8; border-radius: 50%; background: #fff3; font-size: 28px; cursor: pointer; }
 .album-sticker.on { border-color: #ffd23f; background: #fff; }
+/* l'autocollant choisi sur la photo : plus petit, plus grand, le retirer */
+.album-sticker-edit { display: inline-flex; gap: 8px; padding: 4px 10px; border-radius: 99px; background: #fff3; }
+.album-sticker-tool { display: inline-flex; align-items: center; justify-content: center; gap: 2px; min-width: 60px; height: 52px; border: 3px solid #ffd23f; border-radius: 99px; background: #fff; font-size: 22px; cursor: pointer; }
+.album-sticker-tool small { font-size: 0.65em; }
+.album-sticker-tool:disabled { opacity: 0.4; cursor: default; }
 .album-stickers-hint { color: #fff; font-size: 16px; font-weight: 700; }
 .album-stickers-hint small { font-weight: 500; opacity: 0.85; }
 .album-quiz-score { margin: 0; font-size: 30px; letter-spacing: 6px; }

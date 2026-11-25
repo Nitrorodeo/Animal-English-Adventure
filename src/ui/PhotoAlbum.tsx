@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from 'react';
 import { speech } from '../audio/speech';
 import { FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
 import { photoStory, quizQuestion, quizTargets, actorKey, QUIZ_START } from '../content/photoTalk';
@@ -7,7 +7,7 @@ import { getSpecies, SPECIES } from '../content/species';
 import { GROWTH_STAGES, type Line } from '../content/types';
 import { say } from '../content/utterances';
 import { giftDef } from '../engine/gifts';
-import { ALBUM_MAX_PER_FAMILY, albumFamilies, birthdayPhoto, deletePhoto, familyPhotos, PHOTO_STICKERS, PHOTO_STICKERS_MAX, stickOnPhoto, unstickPhoto, type Photo, type SnapActor } from '../engine/photoAlbum';
+import { ALBUM_MAX_PER_FAMILY, albumFamilies, birthdayPhoto, deletePhoto, familyPhotos, moveSticker, PHOTO_STICKERS, PHOTO_STICKERS_MAX, resizeSticker, STICKER_SIZES, stickOnPhoto, unstickPhoto, type Photo, type SnapActor } from '../engine/photoAlbum';
 import { getFamily, type Baby, type GameState } from '../engine/state';
 import { stickerDef } from '../engine/stickers';
 import { rigFor } from '../game/rigs';
@@ -33,26 +33,40 @@ const pctOf = (e: ReactMouseEvent<HTMLElement>) => {
  * Une photo redessinée : le décor, la météo du jour (figée), puis les cadeaux et les animaux à leur place, dans leur
  * sens, et les autocollants collés dessus. Aucune image n'est stockée (engine/photoAlbum.ts) : ce sont les dessins
  * du jeu, déjà sur l'appareil. Dans la vue en grand, on peut toucher un animal (« Who is in the photo? »), la photo
- * (coller un autocollant) ou un autocollant (le retirer).
+ * (coller un autocollant) ou un autocollant : le toucher le choisit, le faire glisser le déplace (2026-11-25).
  */
 export function PhotoScene({
   photo,
   className = '',
   onTapActor,
   onTapScene,
-  onTapSticker,
+  picked,
+  onPickSticker,
+  onMoveSticker,
 }: {
   photo: Photo;
   className?: string;
   onTapActor?: (key: string) => void;
   onTapScene?: (x: number, y: number) => void;
-  onTapSticker?: (index: number) => void;
+  /** autocollant choisi (entouré) */
+  picked?: number | null;
+  onPickSticker?: (index: number) => void;
+  /** fin du glisser : nouvelle place en % de la photo */
+  onMoveSticker?: (index: number, x: number, y: number) => void;
 }) {
+  const sceneRef = useRef<HTMLDivElement>(null);
+  /** autocollant qu'on fait glisser : sa place suit le doigt, et n'est enregistrée que quand on le lâche */
+  const [drag, setDrag] = useState<{ i: number; x: number; y: number; sx: number; sy: number; moved: boolean } | null>(null);
+  const at = (e: ReactPointerEvent) => {
+    const r = sceneRef.current!.getBoundingClientRect();
+    const clamp = (v: number) => Math.max(1, Math.min(99, v));
+    return { x: clamp(((e.clientX - r.left) / r.width) * 100), y: clamp(((e.clientY - r.top) / r.height) * 100) };
+  };
   const place = PLACES[photo.p];
   const sp = SPECIES.find((s) => s.id === photo.sp);
   const bg = place ? background(place.background) : undefined;
   return (
-    <div className={`photo-scene${photo.night ? ' night' : ''}${onTapScene ? ' sticking' : ''} ${className}`} onClick={onTapScene ? (e) => { const p = pctOf(e); onTapScene(p.x, p.y); } : undefined}>
+    <div ref={sceneRef} className={`photo-scene${photo.night ? ' night' : ''}${onTapScene ? ' sticking' : ''} ${className}`} onClick={onTapScene ? (e) => { const p = pctOf(e); onTapScene(p.x, p.y); } : undefined}>
       {bg ? <img className="ps-bg" src={assetUrl(bg)} alt="" draggable={false} loading="lazy" /> : <div className="ps-bg" style={{ background: place?.placeholderGradient ?? '#9ccf7a' }} />}
       {/* prise pendant « Good night » : le même ciel que le décor (bleu nuit, lune, étoiles), pas un décor de jour assombri */}
       {photo.night && <BedtimeSky />}
@@ -87,16 +101,53 @@ export function PhotoScene({
       {/* la pluie, la neige ou le vent du jour de la photo, figés au moment du déclic */}
       <WeatherLayer weather={photo.weather} still />
       {photo.birthday && <span className="ps-bday" aria-label="Birthday photo">🎂</span>}
-      {photo.stickers.map((s, i) => (
-        <span
-          key={`${s.id}${i}`}
-          className={`ps-sticker${onTapSticker ? ' tappable' : ''}`}
-          style={{ left: `${s.x}%`, top: `${s.y}%` }}
-          onClick={onTapSticker ? (e) => { e.stopPropagation(); onTapSticker(i); } : undefined}
-        >
-          {s.icon}
-        </span>
-      ))}
+      {photo.stickers.map((s, i) => {
+        const here = drag?.i === i ? drag : s;
+        const live = !!onPickSticker;
+        return (
+          <span
+            key={`${s.id}${i}`}
+            className={`ps-sticker${live ? ' tappable' : ''}${live && picked === i ? ' picked' : ''}${drag?.i === i ? ' dragging' : ''}`}
+            style={{ left: `${here.x}%`, top: `${here.y}%`, fontSize: `${7 * (STICKER_SIZES[s.size] ?? 1)}cqw` }}
+            onClick={live ? (e) => e.stopPropagation() : undefined}
+            onPointerDown={
+              live
+                ? (e) => {
+                    e.stopPropagation();
+                    try {
+                      e.currentTarget.setPointerCapture(e.pointerId);
+                    } catch {
+                      // pas de vrai doigt ou de vraie souris derrière (rare) : le choix marche quand même, sans glisser
+                    }
+                    onPickSticker(i);
+                    setDrag({ i, x: s.x, y: s.y, sx: e.clientX, sy: e.clientY, moved: false });
+                  }
+                : undefined
+            }
+            onPointerMove={
+              live
+                ? (e) => {
+                    if (drag?.i !== i) return;
+                    // un petit tremblement du doigt reste un simple toucher (choisir), pas un déplacement
+                    const moved = drag.moved || Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 6;
+                    setDrag({ ...drag, ...(moved ? at(e) : {}), moved });
+                  }
+                : undefined
+            }
+            onPointerUp={
+              live
+                ? () => {
+                    if (drag?.i === i && drag.moved) onMoveSticker?.(i, drag.x, drag.y);
+                    setDrag(null);
+                  }
+                : undefined
+            }
+            onPointerCancel={live ? () => setDrag(null) : undefined}
+          >
+            {s.icon}
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -135,6 +186,8 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
   const [caption, setCaption] = useState<Line | null>(null);
   const [quiz, setQuiz] = useState<{ round: number; score: number; won: boolean } | null>(null);
   const [glue, setGlue] = useState<string>(PHOTO_STICKERS[0]);
+  /** autocollant choisi sur la photo : on peut le faire glisser, le grandir, le rapetisser ou le retirer */
+  const [picked, setPicked] = useState<number | null>(null);
   const talk = useRef(0);
   const stopTalk = () => {
     talk.current++;
@@ -156,6 +209,7 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
   useEffect(() => {
     setMode('story');
     setQuiz(null);
+    setPicked(null);
     if (big) void tell(big);
     else stopTalk();
     // une nouvelle photo ouverte est racontée ; l'album qui change (autocollant) ne la relance pas
@@ -198,14 +252,20 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
     if (next) window.setTimeout(() => setCaption((c) => (c === q.yes ? next.ask : c)), 1600);
   };
   const stick = (p: Photo, x: number, y: number) => {
-    if (p.stickers.length >= PHOTO_STICKERS_MAX) {
-      setCaption({ en: `${PHOTO_STICKERS_MAX} stickers!`, fr: `${PHOTO_STICKERS_MAX} autocollants au plus : touche-en un pour le retirer.` });
+    // un autocollant est choisi : toucher la photo le relâche d'abord, sans en coller un autre par erreur
+    if (picked !== null) {
+      setPicked(null);
       return;
     }
-    const def = stickerDef(glue);
+    if (p.stickers.length >= PHOTO_STICKERS_MAX) {
+      setCaption({ en: `${PHOTO_STICKERS_MAX} stickers!`, fr: `${PHOTO_STICKERS_MAX} autocollants au plus : touches-en un, puis 🗑️ pour le retirer.` });
+      return;
+    }
+    // le nom est dit une seule fois, quand on le choisit dans la palette, pas encore quand on le colle (demande du parent)
     setState((s) => stickOnPhoto(s, p.id, glue, x, y));
-    if (def) void speech.speak(say.sticker(def.en), { slow });
+    setPicked(p.stickers.length);
   };
+  const pickedSticker = big && picked !== null ? big.stickers[picked] : undefined;
 
   return (
     <div className="screen panel-screen">
@@ -288,7 +348,9 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
               className="big"
               onTapActor={mode === 'quiz' ? (k) => tapActor(big, k) : undefined}
               onTapScene={mode === 'stick' ? (x, y) => stick(big, x, y) : undefined}
-              onTapSticker={mode === 'stick' ? (i) => setState((s) => unstickPhoto(s, big.id, i)) : undefined}
+              picked={mode === 'stick' ? picked : null}
+              onPickSticker={mode === 'stick' ? setPicked : undefined}
+              onMoveSticker={mode === 'stick' ? (i, x, y) => setState((s) => moveSticker(s, big.id, i, x, y)) : undefined}
             />
             {quiz?.won && <Confetti n={24} wide />}
             {caption ? (
@@ -302,18 +364,38 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
           </div>
           {mode === 'stick' && (
             <div className="album-stickers" role="radiogroup" aria-label="Stickers">
+              {pickedSticker && picked !== null && (
+                <span className="album-sticker-edit">
+                  <button className="album-sticker-tool" onClick={() => setState((s) => resizeSticker(s, big.id, picked, -1))} disabled={pickedSticker.size <= 0} aria-label="Smaller">
+                    <small aria-hidden="true">{pickedSticker.icon}</small>➖
+                  </button>
+                  <button className="album-sticker-tool" onClick={() => setState((s) => resizeSticker(s, big.id, picked, 1))} disabled={pickedSticker.size >= STICKER_SIZES.length - 1} aria-label="Bigger">
+                    <span aria-hidden="true">{pickedSticker.icon}</span>➕
+                  </button>
+                  <button
+                    className="album-sticker-tool"
+                    onClick={() => {
+                      setState((s) => unstickPhoto(s, big.id, picked));
+                      setPicked(null);
+                    }}
+                    aria-label="Remove the sticker"
+                  >
+                    🗑️
+                  </button>
+                </span>
+              )}
               {PHOTO_STICKERS.map((id) => {
                 const def = stickerDef(id);
                 if (!def) return null;
                 return (
-                  <button key={id} role="radio" aria-checked={glue === id} className={`album-sticker${glue === id ? ' on' : ''}`} onClick={() => { setGlue(id); void speech.speak(say.sticker(def.en), { slow }); }} aria-label={def.en}>
+                  <button key={id} role="radio" aria-checked={glue === id} className={`album-sticker${glue === id ? ' on' : ''}`} onClick={() => { setGlue(id); setPicked(null); void speech.speak(say.sticker(def.en), { slow }); }} aria-label={def.en}>
                     {def.icon}
                   </button>
                 );
               })}
               <span className="album-stickers-hint">
                 👆 {big.stickers.length} / {PHOTO_STICKERS_MAX}
-                {fr && <small> · touche la photo pour coller, touche un autocollant pour le retirer</small>}
+                {fr && <small> · touche la photo pour coller ; fais glisser un autocollant pour le déplacer, ➖ ➕ pour sa taille, 🗑️ pour le retirer</small>}
               </span>
             </div>
           )}
@@ -330,7 +412,7 @@ export function PhotoAlbum({ state, setState, current, onClose }: { state: GameS
             {quizTargets(big).length > 0 && (
               <button className={`round album-tool${mode === 'quiz' ? ' on' : ''}`} onClick={() => startQuiz(big)} aria-label="Who is in the photo?">❓</button>
             )}
-            <button className={`round album-tool${mode === 'stick' ? ' on' : ''}`} onClick={() => { stopTalk(); setQuiz(null); setMode(mode === 'stick' ? 'story' : 'stick'); }} aria-label="Stickers">✨</button>
+            <button className={`round album-tool${mode === 'stick' ? ' on' : ''}`} onClick={() => { stopTalk(); setQuiz(null); setPicked(null); setMode(mode === 'stick' ? 'story' : 'stick'); }} aria-label="Stickers">✨</button>
             {confirm ? (
               <span className="album-confirm">
                 {fr ? 'Retirer cette photo ?' : 'Remove it?'}

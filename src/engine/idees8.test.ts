@@ -12,7 +12,7 @@ import { TIERS, type ActivityCtx, type BiomeDef, type Weather } from '../content
 import { BIRTHDAY, CHEESE, MIC, say, WEEK_WORD } from '../content/utterances';
 import { WEEK_WORD_CHOICES, weekWordAnchor, weekWordChoice } from '../content/weekWord';
 import { CLOUD_MAX_BYTES } from './cloud';
-import { ALBUM_MAX_PER_FAMILY, birthdayPhoto, familyPhotos, parseAlbum, PHOTO_STICKERS, PHOTO_STICKERS_MAX, stickOnPhoto, takePhoto, unstickPhoto, type Shot } from './photoAlbum';
+import { ALBUM_MAX_PER_FAMILY, birthdayPhoto, familyPhotos, moveSticker, parseAlbum, PHOTO_STICKERS, PHOTO_STICKERS_MAX, resizeSticker, STICKER_SIZE_DEFAULT, STICKER_SIZES, stickOnPhoto, takePhoto, unstickPhoto, type Shot } from './photoAlbum';
 import { migrate } from './save';
 import { newGameState, type GameState } from './state';
 import { activityOffered, FAMILY_CONFIGS, possibleMemories } from './variants';
@@ -167,6 +167,67 @@ describe('photos : la météo du jour, l’anniversaire, les autocollants', () =
     expect(JSON.stringify(s.player.album)).not.toContain('"s"');
   });
 
+  it('autocollants : on les déplace et on change leur taille (demande du parent, 2026-11-25)', () => {
+    let s = take(newGameState(), shot(), 1_000);
+    const id = familyPhotos(s, 'elephant')[0]!.id;
+    s = stickOnPhoto(s, id, 'heart', 10, 20);
+    s = stickOnPhoto(s, id, 'star', 30, 40);
+    const sticker = (i: number) => familyPhotos(s, 'elephant')[0]!.stickers[i]!;
+    expect(sticker(0).size).toBe(STICKER_SIZE_DEFAULT);
+    // taille normale partout : aucun champ de taille gardé (les anciennes parties restent identiques)
+    expect(JSON.stringify(s.player.album)).not.toContain('"z"');
+    // déplacer : seul celui-là bouge, et il reste dans la photo
+    s = moveSticker(s, id, 1, 77.6, 12.2);
+    expect(sticker(1)).toMatchObject({ id: 'star', x: 78, y: 12 });
+    expect(sticker(0)).toMatchObject({ x: 10, y: 20 });
+    s = moveSticker(s, id, 1, 140, -20);
+    expect(sticker(1).x).toBeLessThanOrEqual(99);
+    expect(sticker(1).y).toBeGreaterThanOrEqual(0);
+    // rien ne change : même partie (pas de sauvegarde inutile)
+    expect(moveSticker(s, id, 1, sticker(1).x, sticker(1).y)).toBe(s);
+    expect(moveSticker(s, id, 9, 50, 50)).toBe(s);
+    // grandir jusqu'au bout, puis plus rien
+    for (let k = 0; k < 10; k++) s = resizeSticker(s, id, 0, 1);
+    expect(sticker(0).size).toBe(STICKER_SIZES.length - 1);
+    expect(resizeSticker(s, id, 0, 1)).toBe(s);
+    expect(JSON.stringify(s.player.album)).toContain('"z"');
+    // rapetisser jusqu'au plus petit
+    for (let k = 0; k < 10; k++) s = resizeSticker(s, id, 0, -1);
+    expect(sticker(0).size).toBe(0);
+    expect(resizeSticker(s, id, 0, -1)).toBe(s);
+    // la taille et la place suivent la sauvegarde ; retirer garde la taille des autres
+    const back = migrate(JSON.parse(JSON.stringify(s)))!;
+    expect(familyPhotos(back, 'elephant')).toEqual(familyPhotos(s, 'elephant'));
+    s = resizeSticker(s, id, 1, 1);
+    s = unstickPhoto(s, id, 0);
+    expect(sticker(0)).toMatchObject({ id: 'star', size: STICKER_SIZE_DEFAULT + 1 });
+    // revenu à la taille normale : le champ disparaît
+    s = resizeSticker(s, id, 0, -1);
+    expect(JSON.stringify(s.player.album)).not.toContain('"z"');
+  });
+
+  it('une ancienne partie (autocollants sans taille) ou une taille abîmée : les autocollants restent, à la taille normale', () => {
+    const old = parseAlbum({ elephant: [{ t: 5, p: 'africa_pond', a: [['f', 10, 80, 30, 1]], s: 'he1020st3040' }] });
+    expect(old.elephant![0]!.s).toBe('he1020st3040');
+    expect(old.elephant![0]!.z).toBeUndefined();
+    const bad = parseAlbum({ elephant: [{ t: 5, p: 'africa_pond', a: [['f', 10, 80, 30, 1]], s: 'he1020st3040', z: '9x' }] });
+    expect(bad.elephant![0]!.s).toBe('he1020st3040');
+    expect(bad.elephant![0]!.z).toBeUndefined();
+  });
+
+  it('l’album : on fait glisser un autocollant, ➖ ➕ 🗑️ ; le nom n’est dit qu’une fois, quand on le choisit', () => {
+    const ui: string = readFileSync(new URL('../ui/PhotoAlbum.tsx', import.meta.url), 'utf8');
+    const stick = ui.slice(ui.indexOf('const stick = '), ui.indexOf('const pickedSticker'));
+    expect(stick).toContain('stickOnPhoto(s, p.id, glue, x, y)');
+    expect(stick).not.toContain('speech.speak');
+    expect(ui).toContain('onClick={() => { setGlue(id); setPicked(null); void speech.speak(say.sticker(def.en), { slow }); }}');
+    expect(ui).toContain('moveSticker(s, big.id, i, x, y)');
+    expect(ui).toContain('resizeSticker(s, big.id, picked, -1)');
+    expect(ui).toContain('resizeSticker(s, big.id, picked, 1)');
+    expect(ui).toContain('unstickPhoto(s, big.id, picked)');
+    expect(ui).toContain('onPointerMove');
+  });
+
   it('une sauvegarde abîmée garde la photo, sans la météo ni les autocollants illisibles', () => {
     const album = parseAlbum({ elephant: [{ t: 5, p: 'africa_pond', a: [['f', 10, 80, 30, 1]], w: 99, b: 7, s: 'zz1010he2020x' }] });
     const [r] = album.elephant!;
@@ -181,7 +242,7 @@ describe('photos : la météo du jour, l’anniversaire, les autocollants', () =
       for (let i = 0; i < ALBUM_MAX_PER_FAMILY; i++) {
         s = take(s, shot({ sp: sp.id, weather: 'windy', birthday: 2 }, i / 10), 1_795_593_050_008 + i);
         const id = `${sp.id}:${1_795_593_050_008 + i}`;
-        for (let k = 0; k < PHOTO_STICKERS_MAX; k++) s = stickOnPhoto(s, id, 'butterfly', 55, 66);
+        for (let k = 0; k < PHOTO_STICKERS_MAX; k++) s = resizeSticker(stickOnPhoto(s, id, 'butterfly', 55, 66), id, k, 3);
       }
     }
     expect(JSON.stringify(migrate(JSON.parse(JSON.stringify(s)))).length).toBeLessThan(CLOUD_MAX_BYTES * 0.7);
