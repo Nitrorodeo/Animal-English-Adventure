@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useDeferredValue, useMemo, useState } from 'react';
 import { speech } from '../audio/speech';
 import { continentMates, getSpecies, SPECIES } from '../content/species';
 import { say } from '../content/utterances';
 import type { SeaGameId } from '../content/sea';
 import type { BiomeId, PlaceId, SpeciesDef } from '../content/types';
 import { getBiome } from '../content/world';
+import { familyProgress } from '../engine/quests';
+import type { GameState } from '../engine/state';
 import { DEFAULT_PLAYER_NAME } from '../audio/voiceKey';
 import { Friends } from './Friends';
 import { Habitat } from './Habitat';
@@ -109,6 +111,7 @@ function Screens({ game }: { game: ReturnType<typeof useGame> }) {
           {screen.kind === 'habitat' && (
             <SpeciesHop
               current={screen.speciesId}
+              state={state}
               onPick={(s) => {
                 if (s.id === screen.speciesId) return;
                 void speech.speak(say.speciesPick(s));
@@ -179,18 +182,36 @@ function PlaceTitle({ placeId }: { placeId: PlaceId }) {
  * continent, il y ait le logo des autres animaux pour pouvoir passer de l'un à l'autre facilement, sans avoir à
  * ressortir jusqu'à la MAP principale »). L'animal joué est entouré de jaune ; un toucher ouvre l'autre, comme la carte.
  */
-export function SpeciesHop({ current, onPick }: { current: string; onPick: (s: SpeciesDef) => void }) {
+/** Rayon de l'anneau de progression, dans un carré de 100 (svg de la taille du bouton, un peu débordant). */
+const RING_R = 47;
+const RING_LEN = 2 * Math.PI * RING_R;
+
+export function SpeciesHop({ current, state, onPick }: { current: string; state?: GameState; onPick: (s: SpeciesDef) => void }) {
   const list = continentMates(current);
+  // anneau vert : jeux réussis avec toute la famille de chaque animal ; calculé après coup (rendu de faible
+  // priorité) pour ne pas ralentir la fin d'un jeu
+  const calm = useDeferredValue(state);
+  const progress = useMemo(() => (calm ? new Map(continentMates(current).map((s) => [s.id, familyProgress(calm, s)])) : null), [calm, current]);
   if (list.length < 2) return null;
   return (
     <div className="hop" role="group" aria-label="Animals">
       {list.map((s) => {
         const art = spriteFor(s.id, { role: 'father' });
         const here = s.id === current;
+        const p = progress?.get(s.id);
+        const share = p && p.total ? p.done / p.total : 0;
         return (
-          <button key={s.id} className={`hop-btn${here ? ' here' : ''}`} onClick={() => onPick(s)} aria-label={s.nameEn} aria-current={here ? 'true' : undefined} title={s.nameEn}>
-            {art ? <img src={assetUrl(art)} alt="" draggable={false} /> : <span>{s.icon}</span>}
-          </button>
+          <span key={s.id} className={`hop-item${p && p.total && p.done === p.total ? ' all' : ''}`}>
+            <button className={`hop-btn${here ? ' here' : ''}`} onClick={() => onPick(s)} aria-label={p ? `${s.nameEn}, ${p.done} / ${p.total} games` : s.nameEn} aria-current={here ? 'true' : undefined} title={s.nameEn}>
+              {art ? <img src={assetUrl(art)} alt="" draggable={false} /> : <span>{s.icon}</span>}
+            </button>
+            {p && p.total > 0 && (
+              <svg className="hop-ring" viewBox="0 0 100 100" aria-hidden="true">
+                <circle className="hop-ring-track" cx="50" cy="50" r={RING_R} />
+                {p.done > 0 && <circle className="hop-ring-done" cx="50" cy="50" r={RING_R} strokeDasharray={`${RING_LEN * share} ${RING_LEN}`} />}
+              </svg>
+            )}
+          </span>
         );
       })}
     </div>

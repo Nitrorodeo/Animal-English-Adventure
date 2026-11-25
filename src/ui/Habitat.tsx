@@ -7,8 +7,8 @@ import { FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
 import { PROPS } from '../content/props';
 import { NOUNS, PLACES } from '../content/places';
 import type { BiomeDef, GrowthStage, PlaceId, QuestScript, Sex, Speaker, SpeciesDef } from '../content/types';
-import { unlockedAt } from '../content/archetypes';
-import { BEDTIME, BIGGER_NOW, say } from '../content/utterances';
+import { ARCHETYPES, unlockedAt } from '../content/archetypes';
+import { BEDTIME, BIGGER_NOW, NAME_ERRORS, NEW_GAME_WISH, say } from '../content/utterances';
 import { bedtimeLines, type BedtimeLine } from '../engine/bedtime';
 import { cuddleLine, HOLD_MS } from '../engine/cuddles';
 import { dayKey } from '../engine/stickers';
@@ -18,7 +18,8 @@ import { ambientAt, giftLook, giftStart, groundAt, skyOf } from './giftLook';
 import { fillLine, type Vars } from '../engine/dialogue';
 import { applyQuestOutcome, type OutcomeEvents } from '../engine/events';
 import { nextBabySex } from '../engine/family';
-import { actorGames, findBaby, hashText, selectActivities, selectAdventures, type ActorGame, type AdventureOffer, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
+import { actorGames, buildQuest, findBaby, hashText, selectActivities, selectAdventures, type ActorGame, type AdventureOffer, type BuiltQuest, type QuestContext, type RankedActivity, type TeachChoice } from '../engine/quests';
+import { nameOf, originalName, renameActor, withParentNames } from '../engine/names';
 import { createRng } from '../engine/rng';
 import type { AnswerRecord } from '../engine/skills';
 import { actorId, gameDone, getFamily, withFamily, type ActorRef, type GameState } from '../engine/state';
@@ -60,10 +61,8 @@ interface Running {
   key: number;
 }
 
-function actorName(state: GameState, species: SpeciesDef, a: ActorRef): string {
-  if (a.kind === 'adult') return a.role === 'father' ? species.father.name : species.mother.name;
-  return findBaby(state, a)?.name ?? species.babyWord.en;
-}
+/** Nom affiché (les parents peuvent avoir été renommés par la famille : engine/names.ts). */
+const actorName = nameOf;
 
 /** Dessin d'un personnage (parent, ou bébé à son stade). */
 function spriteOf(state: GameState, species: SpeciesDef, actor: ActorRef) {
@@ -97,14 +96,18 @@ function rolesOf(state: GameState, species: SpeciesDef, actor: ActorRef): Record
 
 const SPEAKERS: readonly Speaker[] = ['actor', 'father', 'mother', 'baby', 'sibling', 'narrator'];
 
-export function Habitat({ state, setState, species, biome, onPlace, onWhere }: Props) {
-  const family = getFamily(state, species.id);
+export function Habitat({ state, setState, species: baseSpecies, biome, onPlace, onWhere }: Props) {
+  const family = getFamily(state, baseSpecies.id);
+  /** l'espèce avec les noms choisis par la famille pour Papa et Maman : toutes les scènes les reprennent */
+  const species = useMemo(() => withParentNames(baseSpecies, family.parentNames), [baseSpecies, family.parentNames]);
   /** la maman n'accueille la joueuse qu'une fois par visite */
   const greeted = useRef(false);
   const [menuFor, setMenuFor] = useState<ActorRef | null>(null);
   const [running, setRunning] = useState<Running | null>(null);
   const [showFamily, setShowFamily] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  /** moment « Well done! » : premier jeu réussi avec cet animal (grande coche verte) */
+  const [firstDone, setFirstDone] = useState<{ icon: string; titleEn: string; titleFr: string; name: string; done: number; total: number } | null>(null);
   const [grow, setGrow] = useState<{ name: string; sex: Sex; to: GrowthStage; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[] } | null>(null);
   const [wordBubble, setWordBubble] = useState<{ anchorId: string; text: string } | null>(null);
   const [seed] = useState(() => Math.floor(Math.random() * 1e9));
@@ -235,6 +238,12 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
   }, [running, biome.id, onWhere]);
 
   useEffect(() => {
+    if (!firstDone) return;
+    const t = setTimeout(() => setFirstDone(null), 4200);
+    return () => clearTimeout(t);
+  }, [firstDone]);
+
+  useEffect(() => {
     if (!toast) return;
     const t = setTimeout(() => setToast(null), 3600);
     return () => clearTimeout(t);
@@ -272,9 +281,18 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
       } else if (events.photos?.length) {
         setToast(`📷 ${events.photos.length === 1 ? 'Nouvelle photo dans l’album !' : `${events.photos.length} nouvelles photos dans l’album !`}`);
       }
+      // premier jeu réussi avec cet animal : grande coche verte « Well done! » (pas pendant un bébé qui grandit,
+      // un cadeau à choisir ou un voyage, qui ont déjà leur propre annonce)
+      const calm = !growing && !offer && end === biome.id;
+      const first = calm && events.firstGame ? ARCHETYPES.find((x) => x.id === events.firstGame) : undefined;
+      if (first) {
+        const games = actorGames(r.state, species, actor);
+        setFirstDone({ icon: first.icon, titleEn: first.titleEn, titleFr: first.titleFr, name: actorName(r.state, species, actor), done: games.filter((g) => g.done).length, total: games.length });
+      }
       // l'animal félicite la joueuse par son prénom (sauf pendant l'annonce d'un bébé qui grandit,
-      // d'un cadeau, ou d'un nouveau lieu, qui est annoncé)
-      if (!growing && !offer && end === biome.id && state.player.name !== DEFAULT_PLAYER_NAME) void speech.speak(say.bravo(state.player.name), { role: voiceOf(state, actor) });
+      // d'un cadeau, ou d'un nouveau lieu, qui est annoncé) ; sans prénom, un simple « Well done! » la première fois
+      if (calm && state.player.name !== DEFAULT_PLAYER_NAME) void speech.speak(say.bravo(state.player.name), { role: voiceOf(state, actor) });
+      else if (first) void speech.speak(FAMILY_LINES.wellDone.en, { role: voiceOf(state, actor) });
     },
     [running, setState, biome, state, species, family.babies, onPlace],
   );
@@ -310,6 +328,13 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
     void speech.speak(BEDTIME.wake.en, { role: 'father', slow: state.settings.slowVoice });
   };
   const nightWho = (a: ActorRef) => (a.kind === 'adult' ? a.role : a.babyId);
+
+  /** lance un jeu avec le personnage du menu (carte du menu, ou icône de la ligne de progression) */
+  const launch = (a: BuiltQuest) => {
+    if (!menuFor) return;
+    setRunning({ script: a.script, title: a.archetype.titleEn, icon: a.archetype.icon, mechanic: a.archetype.mechanic, teach: a.teach, choice: a.choice, actor: menuFor, key: Date.now() });
+    setMenuFor(null);
+  };
 
   const canHaveBaby = species.familyReady && nextBabySex(family) !== 'none';
   const otherPlaces = species.allowedBiomes.filter((p) => p !== biome.id && PLACES[p]);
@@ -431,7 +456,13 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
             onTap={night ? undefined : () => {
               setMenuFor(a);
               const b = findBaby(state, a);
-              void speech.speak(b ? say.babyCall(b.name, b.stage) : say.actorCall(actorName(state, species, a)), { role: voiceOf(state, a) });
+              const role = voiceOf(state, a);
+              // un bébé dont le menu propose un jeu jamais fait le réclame (carte « ✨ New! »)
+              const wish = !!b && selectActivities(ctxFor(a)).some((x) => x.wish);
+              void speech.sequence([
+                { text: b ? say.babyCall(b.name, b.stage) : say.actorCall(actorName(state, species, a)), opts: { role } },
+                ...(wish ? [{ text: NEW_GAME_WISH.en, opts: { role } }] : []),
+              ]);
             }}
           />
         ))}
@@ -485,7 +516,30 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
 
         {menuFor && menu && (
           <ActivityMenu
+            key={actorId(menuFor)}
             name={actorName(state, species, menuFor)}
+            original={originalName(menuFor)}
+            onRename={(raw) => {
+              const r = renameActor(state, menuFor, raw);
+              if (!r.ok) return r.error;
+              setState((st) => {
+                const x = renameActor(st, menuFor, raw);
+                return x.ok ? x.state : st;
+              });
+              return null;
+            }}
+            onPickGame={(g) => {
+              const arch = ARCHETYPES.find((x) => x.id === g.id);
+              const built = arch ? buildQuest(arch, ctxFor(menuFor)) : undefined;
+              if (built) launch(built);
+              else void speech.speak(say.cardTitle(g.titleEn));
+            }}
+            onGoTo={(p) => {
+              const place = PLACES[p];
+              setMenuFor(null);
+              if (place) void speech.speak(say.placeName(place));
+              onPlace(p);
+            }}
             activities={menu.activities}
             adventures={menu.adventures}
             here={biome.id}
@@ -501,10 +555,7 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
               setState((st) => placeActor(st, biome.id, actorId(a), { ...spot, f: now === 1 ? -1 : 1 }));
               setMenuFor(null);
             }}
-            onPickActivity={(a) => {
-              setRunning({ script: a.script, title: a.archetype.titleEn, icon: a.archetype.icon, mechanic: a.archetype.mechanic, teach: a.teach, choice: a.choice, actor: menuFor, key: Date.now() });
-              setMenuFor(null);
-            }}
+            onPickActivity={launch}
             onPickAdventure={(o) => {
               setRunning({ script: o.script, title: o.adventure.titleEn, icon: o.adventure.icon, mechanic: 'adventure', choice: o.adventure.id, actor: menuFor, key: Date.now() });
               setMenuFor(null);
@@ -539,6 +590,23 @@ export function Habitat({ state, setState, species, biome, onPlace, onWhere }: P
               setFreshGift(g.id);
             }}
           />
+        )}
+        {firstDone && !grow && !giftPick && (
+          <div className="first-done" onClick={() => setFirstDone(null)} role="status">
+            <Confetti n={18} wide />
+            <div className="first-done-card">
+              <span className="first-done-check" aria-hidden="true">✓</span>
+              <span className="first-done-icon" aria-hidden="true">{firstDone.icon}</span>
+              <p className="en">{FAMILY_LINES.wellDone.en}</p>
+              <p className="first-done-game">
+                {firstDone.titleEn}
+                {state.settings.frenchHelp && <span className="fr"> · {firstDone.titleFr}</span>}
+              </p>
+              <p className="gp-count">
+                <span aria-hidden="true">✓</span> {firstDone.done} / {firstDone.total} games with {firstDone.name}
+              </p>
+            </div>
+          </div>
         )}
         {grow && (
           <div className="grow-overlay" onClick={() => setGrow(null)}>
@@ -860,17 +928,77 @@ interface MenuProps {
   onClose: () => void;
   /** le personnage se retourne (regarde de l'autre côté) */
   onTurn?: () => void;
+  /** icône de la ligne de progression touchée : le jeu se lance ici */
+  onPickGame: (g: ActorGame) => void;
+  /** aller dans un autre lieu (jeu qui ne se joue pas dans ce décor) */
+  onGoTo: (p: PlaceId) => void;
+  /** nouveau nom ; renvoie l'erreur à montrer, ou null si c'est fait */
+  onRename: (raw: string) => string | null;
+  /** nom d'origine d'un parent (bouton « ↺ ») */
+  original?: string;
+}
+
+/** Changer le nom de l'animal (✏️ à côté du nom ; demande du parent, 2026-11-25). */
+function RenameForm({ name, original, frenchHelp, onRename, onClose }: { name: string; original?: string; frenchHelp: boolean; onRename: (raw: string) => string | null; onClose: () => void }) {
+  const [value, setValue] = useState(name);
+  const [error, setError] = useState<string | null>(null);
+  const submit = (raw: string) => {
+    const err = onRename(raw);
+    if (err) {
+      setError(err);
+      const msg = NAME_ERRORS[err];
+      if (msg) void speech.speak(msg.en);
+      return;
+    }
+    onClose();
+  };
+  return (
+    <form
+      className="name-form rename-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit(value);
+      }}
+    >
+      <input autoFocus value={value} maxLength={40} onChange={(e) => setValue(e.target.value)} aria-label="New name" placeholder="Nouveau nom" autoComplete="off" />
+      <button className="big ok" type="submit" aria-label="OK">✓</button>
+      {original && original !== name && (
+        <button type="button" className="rename-reset" onClick={() => submit(original)}>
+          ↺ {original}
+          {frenchHelp && <small> nom d’origine</small>}
+        </button>
+      )}
+      <button type="button" className="rename-cancel" onClick={onClose}>Annuler</button>
+      {error && <p className="name-error">{NAME_ERRORS[error]?.fr ?? 'Ce nom ne peut pas être gardé.'}</p>}
+    </form>
+  );
 }
 
 /** petite coche verte des cartes réussies */
 const DoneCheck = () => <span className="done-check" role="img" aria-label="done">✓</span>;
 
-function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, isDone, progress, onClose, onTurn }: MenuProps) {
+function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickActivity, onPickAdventure, isDone, progress, onClose, onTurn, onPickGame, onGoTo, onRename, original }: MenuProps) {
   const doneCount = progress.filter((g) => g.done).length;
+  const [renaming, setRenaming] = useState(false);
+  /** jeu touché dans la ligne de progression qui se joue dans un autre lieu */
+  const [away, setAway] = useState<ActorGame | null>(null);
+  const tapGame = (g: ActorGame) => {
+    if (g.places.includes(here)) return onPickGame(g);
+    setAway(g);
+    const p = PLACES[g.places[0]!];
+    void speech.sequence([{ text: say.cardTitle(g.titleEn) }, ...(p ? [{ text: say.placeName(p) }] : [])]);
+  };
   return (
     <div className="activity-menu" role="dialog" aria-label={`Jouer avec ${name}`}>
       <div className="picker-head">
-        <h2>{name}</h2>
+        <h2>
+          {name}
+          {!renaming && (
+            <button className="rename-btn" onClick={() => setRenaming(true)} aria-label="Change the name" title={frenchHelp ? 'Changer le nom' : undefined}>
+              ✏️
+            </button>
+          )}
+        </h2>
         {onTurn && (
           <button className="turn-btn" onClick={onTurn} aria-label="Turn around">
             <span aria-hidden="true">⇄</span> Turn around{frenchHelp && <small>Se retourner</small>}
@@ -878,6 +1006,7 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
         )}
         <button className="round" onClick={onClose} aria-label="Fermer">✕</button>
       </div>
+      {renaming && <RenameForm name={name} original={original} frenchHelp={frenchHelp} onRename={onRename} onClose={() => setRenaming(false)} />}
       {progress.length > 0 && (
         <div className="games-progress">
           <span className={`gp-count${doneCount === progress.length ? ' all' : ''}`}>
@@ -891,13 +1020,28 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
                 className={`gp-icon${g.done ? ' done' : ''}`}
                 aria-label={`${g.titleEn}${g.done ? ' — done' : ''}`}
                 title={frenchHelp ? `${g.titleEn} · ${g.titleFr}` : g.titleEn}
-                onClick={() => void speech.speak(say.cardTitle(g.titleEn))}
+                onClick={() => tapGame(g)}
               >
                 <span aria-hidden="true">{g.icon}</span>
                 {g.done && <span className="gp-check" aria-hidden="true">✓</span>}
+                {!g.places.includes(here) && <span className="gp-away-dot" aria-hidden="true">➜</span>}
               </button>
             ))}
           </div>
+          {away && (
+            <div className="gp-away" role="note">
+              <span className="opt-icon" aria-hidden="true">{away.icon}</span>
+              <span className="gp-away-txt">
+                <b>{away.titleEn}</b>
+                {frenchHelp && <span className="fr"> · ce jeu se joue ailleurs</span>}
+              </span>
+              {away.places.map((p) => (
+                <button key={p} className="gp-go" onClick={() => onGoTo(p)}>
+                  ➜ {PLACES[p]?.nameEn ?? p}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
       {adventures.some((o) => o.adventure.start === here) && (
@@ -929,8 +1073,9 @@ function ActivityMenu({ name, activities, adventures, here, frenchHelp, onPickAc
       <h3 className="menu-section">🎲 Games{frenchHelp && <span className="fr"> · Jeux</span>}</h3>
       <div className="activity-cards">
         {activities.map((a) => (
-          <div className={`option${isDone(a.archetype.id) ? ' played' : ''}`} key={a.archetype.id}>
+          <div className={`option${isDone(a.archetype.id) ? ' played' : ''}${a.wish ? ' wish' : ''}`} key={a.archetype.id}>
             {isDone(a.archetype.id) && <DoneCheck />}
+            {a.wish && <span className="wish-badge">✨ New!{frenchHelp && <small> Nouveau</small>}</span>}
             <button className="option-main activity" onClick={() => onPickActivity(a)}>
               <span className="opt-icon">{a.archetype.icon}</span>
               <span className="opt-text">{a.archetype.titleEn}</span>

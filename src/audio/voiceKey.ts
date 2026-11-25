@@ -53,6 +53,8 @@ const NAME_RULES: readonly [RegExp, string][] = [
   [/^(.+), \{name\}([!?.])$/, '$1$2'], // « Thank you, Mia! » → « Thank you! »
   [/^Hello \{name\}!$/, 'Hello!'],
   [/^I'm \{name\}!$/, ''], // le bébé dit son prénom : affiché seulement
+  [/^(.*?)\s*I'm \{name\}\.$/, '$1'], // « Hello… I'm Max. » (parent renommé) → « Hello… »
+  [/^I'm \{name\}, (.+)$/, "I'm $1"], // « I'm Max, the dad! » → « I'm the dad! »
   [/^\{name\}!$/, ''],
   [/^My name is \{name\}\.$/, 'My name is…'], // réponse de la joueuse : elle complète elle-même
   [/^My name is \{name\}!$/, 'Thank you for my name!'], // le bébé qui vient d'être nommé

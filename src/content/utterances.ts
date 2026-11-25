@@ -75,6 +75,8 @@ export const STICKER_OFFER = { en: 'A sticker for you! Pick one!', fr: 'Un autoc
 export const GIFT_OFFER = { en: 'A present for our home! Pick one!', fr: 'Un cadeau pour notre maison ! Choisis-en un !' } as const;
 
 /** Ce que dit le bébé sur la carte « il grandit ». */
+/** le bébé réclame un jeu jamais fait avec lui (sa carte « ✨ New! » est la première du menu) */
+export const NEW_GAME_WISH = { en: "Let's play a new game! We never played it!", fr: 'Jouons à un nouveau jeu ! On n’y a jamais joué !' } as const;
 export const BIGGER_NOW = { en: "Look at me! I'm bigger now!", fr: 'Regarde-moi ! Je suis plus grand maintenant !' } as const;
 
 export const say = {

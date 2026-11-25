@@ -29,6 +29,8 @@ export interface OutcomeEvents {
   photos?: string[];
   /** autres bébés qui ont grandi en participant */
   grewOthers?: { babyId: string; from: GrowthStage; to: GrowthStage }[];
+  /** jeu réussi pour la première fois avec cet animal (sa coche verte apparaît) */
+  firstGame?: string;
 }
 
 /** Bébés qui ont participé à la scène (le personnage joué, plus ceux qui y parlent). */
@@ -81,6 +83,7 @@ export function applyQuestOutcome(state: GameState, o: QuestOutcome): { state: G
   } else {
     // jeu terminé (on ne peut finir un jeu qu'en le réussissant) : sa carte passe en vert pour cet animal
     const key = gameKey(o.actor, o.script.archetypeId);
+    if (!player.gamesDone[key]) events.firstGame = o.script.archetypeId; // moment « Well done! » de la première fois
     player = { ...player, gamesDone: { ...player.gamesDone, [key]: (player.gamesDone[key] ?? 0) + 1 } };
   }
   for (const s of o.script.steps) {

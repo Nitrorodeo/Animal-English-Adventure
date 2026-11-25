@@ -12,7 +12,7 @@ import { chatScript, FAMILY_LINES, STAGE_NAMES } from '../content/dialogues';
 import { itemLabel } from '../content/items';
 import { NOUNS, PLACES } from '../content/places';
 import { SPECIES } from '../content/species';
-import { BEDTIME, BIGGER_NOW, CUDDLES, NAME_ERRORS, NAME_SCREEN, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, STICKER_OFFER, GIFT_OFFER, say } from '../content/utterances';
+import { BEDTIME, BIGGER_NOW, NEW_GAME_WISH, CUDDLES, NAME_ERRORS, NAME_SCREEN, SEX_CHOICE, SPEED_SAMPLE, STAGE_OPENERS, STICKER_OFFER, GIFT_OFFER, say } from '../content/utterances';
 import { STICKERS } from '../engine/stickers';
 import { GIFTS } from '../engine/gifts';
 import { CONTINENTS } from '../content/world';
@@ -59,7 +59,8 @@ export function buildVoiceCatalog(): Catalog {
   const map = new Map<string, CatalogEntry>();
   const unsupported = new Set<string>();
   const playerKeys = new Set<string>();
-  const add = (role: VoiceRole, raw: string) => {
+  /** optional : variante facultative (parents renommés) ; sans forme parlée, la voix de l'appareil la dira */
+  const add = (role: VoiceRole, raw: string, optional = false) => {
     const text = raw.split(PLAYER_TOKEN).join(NAME_TOKEN);
     const normalized = normalizeNames(text, []);
     const voice = VOICE_OF_ROLE[role];
@@ -68,7 +69,7 @@ export function buildVoiceCatalog(): Catalog {
     if (map.has(key)) return;
     const spoken = spokenForm(normalized);
     if (spoken === null) {
-      unsupported.add(normalized);
+      if (!optional) unsupported.add(normalized);
       return;
     }
     if (spoken.trim()) map.set(key, { voice, key, spoken });
@@ -83,7 +84,11 @@ export function buildVoiceCatalog(): Catalog {
         const role = voiceOfSpeaker(u.who, config);
         if (!role) continue;
         const text = fill(u.line.en, vars);
-        add(role, u.retry ? say.tryAgain(text) : text);
+        const line = u.retry ? say.tryAgain(text) : text;
+        add(role, line);
+        // parents renommés par la famille (src/engine/names.ts) : la même phrase, nom du parent remplacé par {name}
+        const sp = SPECIES.find((x) => x.id === script.speciesId);
+        if (sp) add(role, normalizeNames(line, [sp.father.name, sp.mother.name]), true);
       }
     }
     for (const i of scriptItems(script)) items.add(i);
@@ -96,6 +101,7 @@ export function buildVoiceCatalog(): Catalog {
       addScript(chat, config);
       const name = config.actorKind === 'baby' ? NAME_TOKEN : config.role === 'mother' ? sp.mother.name : sp.father.name;
       add(config.role, say.actorCall(name));
+      if (config.actorKind === 'adult') add(config.role, say.actorCall(NAME_TOKEN), true); // parent renommé
     }
     for (const r of ['girl', 'boy'] as const) add(r, say.actorCall(sp.babyWord.en)); // bébé introuvable : repli sur « cub », « calf »…
     for (const r of ['girl', 'boy'] as const) for (const st of Object.keys(STAGE_OPENERS)) add(r, say.babyCall(NAME_TOKEN, st));
@@ -129,6 +135,7 @@ export function buildVoiceCatalog(): Catalog {
   for (const t of Object.values(TREASURES)) add('narrator', say.treasure(t.nameEn));
   add('narrator', 'Chat');
   for (const r of ['girl', 'boy'] as const) add(r, BIGGER_NOW.en);
+  for (const r of ['girl', 'boy'] as const) add(r, NEW_GAME_WISH.en);
   add(SPEED_SAMPLE.role, SPEED_SAMPLE.text); // bouton « Écouter » du réglage de vitesse
   for (const s of Object.values(SEX_CHOICE)) add('narrator', s);
   for (const e of Object.values(NAME_ERRORS)) add('narrator', e.en);

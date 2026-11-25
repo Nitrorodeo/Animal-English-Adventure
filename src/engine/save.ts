@@ -3,6 +3,7 @@ import { parseSpots } from './spots';
 import { parseGiftDay, parseGifts } from './gifts';
 import { clampSpeechSpeed, newGameState, SAVE_VERSION, type Baby, type CircleRef, type GameState } from './state';
 import { GROWTH_STAGES } from '../content/types';
+import { sanitizeName } from './family';
 
 /** Adaptateur de stockage (localStorage dans le navigateur, mémoire en test). */
 export interface StorageLike {
@@ -109,6 +110,18 @@ function parseBaby(v: unknown, familyId: string): Baby | null {
   };
 }
 
+/** Prénoms donnés aux parents : relus avec les mêmes garde-fous que ceux des bébés. */
+function parseParentNames(v: unknown): { parentNames?: GameState['families'][string]['parentNames'] } {
+  if (!isObj(v)) return {};
+  const out: Partial<Record<'father' | 'mother', string>> = {};
+  for (const role of ['father', 'mother'] as const) {
+    const raw = v[role];
+    const r = typeof raw === 'string' ? sanitizeName(raw) : null;
+    if (r?.ok) out[role] = r.name;
+  }
+  return Object.keys(out).length ? { parentNames: out } : {};
+}
+
 /**
  * Familles relues champ par champ : une famille abîmée (bébés absents, souvenirs d'un autre type…)
  * faisait planter l'écran au démarrage, à chaque rechargement (audit du 2026-11-25).
@@ -123,6 +136,7 @@ function parseFamilies(raw: Record<string, unknown>): GameState['families'] {
       babies: (Array.isArray(v.babies) ? v.babies : []).map((b) => parseBaby(b, key)).filter((b): b is Baby => b !== null).slice(0, 2),
       memories: strings(v.memories),
       parentMemory: { father: strings(pm.father), mother: strings(pm.mother) },
+      ...parseParentNames(v.parentNames),
     };
   }
   return out;

@@ -14,8 +14,9 @@ import { nextStageGoal } from './family';
 import { createRng, type Rng } from './rng';
 import { endPlaceOf, finalizeSteps, shareSteps, walkSteps } from './script';
 import { chooseTier, itemStatus, scriptItems, statusAtLeast } from './skills';
-import { actorId, gameDone, getFamily, type ActorRef, type Baby, type GameState } from './state';
+import { actorId, familyActors, gameDone, getFamily, type ActorRef, type Baby, type GameState } from './state';
 import { getBiome } from '../content/world';
+import { SPECIES } from '../content/species';
 
 /** Nombre d'activités entre l'enseignement d'un mot et sa révision (espacement). */
 export const RETEST_GAP = 2;
@@ -258,6 +259,8 @@ export function selectAdventures(ctx: QuestContext): AdventureOffer[] {
 
 export interface RankedActivity extends BuiltQuest {
   score: number;
+  /** jeu jamais fait que le bébé réclame (« Can we play a new game? ») */
+  wish?: boolean;
 }
 
 /** Petit nombre stable tiré d'un texte : chaque personnage a son propre tirage (deux prénoms de même longueur ne tombent plus pareil). */
@@ -409,6 +412,17 @@ export function selectActivities(ctx: QuestContext, max = 3): RankedActivity[] {
     const urgent = out[0]?.archetype.id === 'greeting' || (ctx.need === 'thirsty' && out[0]?.archetype.id === 'find_water');
     out.splice(tired || urgent ? Math.min(1, out.length) : 0, 0, teach);
   }
+  // un bébé dont le menu ne montre aucun jeu encore jamais fait avec lui en réclame un (idée validée le 2026-11-25) :
+  // il prend la place de la dernière carte, jamais celle de « Teach me a word »
+  if (ctx.actor.kind === 'baby' && out.length && !out.some((q) => q.archetype.id !== 'name_object' && !gameDone(ctx.state, ctx.actor, q.archetype.id))) {
+    const fresh = built.filter((q) => q.archetype.id !== 'name_object' && !gameDone(ctx.state, ctx.actor, q.archetype.id));
+    const wish = fresh.find((q) => !sibling.has(q.archetype.id)) ?? fresh[0];
+    if (wish) {
+      const last = [...out].reverse().find((q) => q.archetype.id !== 'name_object');
+      if (out.length >= max && last) out.splice(out.indexOf(last), 1);
+      out.splice(out[0]?.archetype.id === 'name_object' ? 1 : 0, 0, { ...wish, wish: true });
+    }
+  }
   if (out.length === 0) {
     // QUE-04 : repli conversation toujours disponible
     out.push({ archetype: CHAT, script: chatScript(ctx.species.id, ctx.biome.id, actorKindOf(ctx.actor)), score: 0 });
@@ -423,6 +437,8 @@ export interface ActorGame {
   titleEn: string;
   titleFr: string;
   done: boolean;
+  /** lieux de l'espèce où ce jeu peut être proposé avec ce personnage */
+  places: BiomeDef['id'][];
 }
 
 /**
@@ -433,10 +449,28 @@ export interface ActorGame {
 export function actorGames(state: GameState, species: SpeciesDef, actor: ActorRef): ActorGame[] {
   const out: ActorGame[] = [];
   for (const arch of ARCHETYPES) {
-    const ok = species.allowedBiomes.some((b) => buildQuest(arch, { state, species, biome: getBiome(b), actor, rng: createRng(1) }));
-    if (ok) out.push({ id: arch.id, icon: arch.icon, titleEn: arch.titleEn, titleFr: arch.titleFr, done: gameDone(state, actor, arch.id) });
+    const places = species.allowedBiomes.filter((b) => buildQuest(arch, { state, species, biome: getBiome(b), actor, rng: createRng(1) }));
+    if (places.length) out.push({ id: arch.id, icon: arch.icon, titleEn: arch.titleEn, titleFr: arch.titleFr, done: gameDone(state, actor, arch.id), places });
   }
   return out;
+}
+
+/** Jeux réussis avec toute la famille d'une espèce (anneau vert des boutons d'animaux, passeport). */
+export function familyProgress(state: GameState, species: SpeciesDef): { done: number; total: number } {
+  let done = 0;
+  let total = 0;
+  for (const a of familyActors(state, species.id)) {
+    const games = actorGames(state, species, a);
+    total += games.length;
+    done += games.filter((g) => g.done).length;
+  }
+  return { done, total };
+}
+
+/** Espèces déjà rencontrées (passeport « My animals ») : une famille, une activité ou un jeu réussi avec elles. */
+export function metSpecies(state: GameState): SpeciesDef[] {
+  const done = Object.keys(state.player.gamesDone);
+  return SPECIES.filter((s) => state.families[s.id] || state.player.history.some((h) => h.speciesId === s.id) || done.some((k) => k.startsWith(`${s.id}:`)));
 }
 
 export function pushHistory(history: GameState['player']['history'], entry: GameState['player']['history'][number]) {

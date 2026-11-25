@@ -73,7 +73,7 @@ describe('menu des jeux', () => {
 
   it('les cartes réussies passent en vert avec une coche (jeux, aventures ici et ailleurs)', () => {
     expect(src).toContain("isDone={(id) => gameDone(state, menuFor, id)}");
-    expect(src).toContain("className={`option${isDone(a.archetype.id) ? ' played' : ''}`}");
+    expect(src).toContain("className={`option${isDone(a.archetype.id) ? ' played' : ''}${a.wish ? ' wish' : ''}`}");
     expect(src.match(/<DoneCheck \/>/g)).toHaveLength(3);
     expect(css).toMatch(/\.option\.played \.option-main, \.option\.adv\.done \.option-main \{ border-color: #3fae5f;/);
     expect(css).toContain('.done-check {');

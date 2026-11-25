@@ -106,6 +106,8 @@ export interface FamilyState {
   memories: string[];
   /** souvenirs par parent */
   parentMemory: Record<ParentRole, string[]>;
+  /** prénoms donnés aux parents à la place de ceux du jeu (« changer le nom des animaux », 2026-11-25) ; absent = nom d'origine */
+  parentNames?: Partial<Record<ParentRole, string>>;
 }
 
 export interface Settings {
@@ -186,7 +188,16 @@ export function withFamily(state: GameState, family: FamilyState): GameState {
   return { ...state, families: { ...state.families, [family.speciesId]: family } };
 }
 
-/** Prénoms choisis en jeu (joueuse et bébés), pour reconnaître les phrases enregistrées. */
+/** Prénoms choisis en jeu (joueuse, bébés, parents renommés), pour reconnaître les phrases enregistrées. */
 export function variableNames(state: GameState): string[] {
-  return [state.player.name, ...Object.values(state.families).flatMap((f) => f.babies.map((b) => b.name))];
+  return [state.player.name, ...Object.values(state.families).flatMap((f) => [...f.babies.map((b) => b.name), ...Object.values(f.parentNames ?? {}).filter((n): n is string => !!n)])];
+}
+
+/** Toute la famille d'une espèce : Papa, Maman, puis les bébés. */
+export function familyActors(state: GameState, speciesId: string): ActorRef[] {
+  return [
+    { speciesId, kind: 'adult', role: 'father' },
+    { speciesId, kind: 'adult', role: 'mother' },
+    ...getFamily(state, speciesId).babies.map((b): ActorRef => ({ speciesId, kind: 'baby', babyId: b.id })),
+  ];
 }

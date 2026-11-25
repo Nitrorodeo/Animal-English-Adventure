@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { speech } from '../audio/speech';
 import { STAGE_NAMES } from '../content/dialogues';
 import { adventuresOf, TREASURES } from '../content/adventures';
@@ -11,7 +12,9 @@ import { MECHANIC_LABELS } from '../content/archetypes';
 import { familyAlbum, type AlbumPhoto } from '../engine/album';
 import { favouriteMechanics, growthPercent, growthProgress, nextStageGoal } from '../engine/family';
 import { itemStatus, type ItemStatus } from '../engine/skills';
-import type { GameState } from '../engine/state';
+import { nameOf } from '../engine/names';
+import { actorGames, metSpecies } from '../engine/quests';
+import { actorId, familyActors, type GameState } from '../engine/state';
 import { assetUrl, background, spriteFor } from './scene';
 import { TreasureIcon } from './TreasureIcon';
 
@@ -23,6 +26,17 @@ export function Passport({ state, onClose }: { state: GameState; onClose: () => 
   // une famille d'une espèce remplacée depuis (panda roux → panthère des neiges, 2026-11-21) reste dans la sauvegarde, sans carte
   const babies = Object.values(state.families).filter((f) => SPECIES.some((s) => s.id === f.speciesId)).flatMap((f) => f.babies);
   const album = familyAlbum(state);
+  // « My animals » : chaque animal rencontré, Papa, Maman et les bébés, avec les jeux réussis avec chacun
+  const animals = useMemo(
+    () =>
+      metSpecies(state).map((sp) => {
+        const members = familyActors(state, sp.id).map((a) => ({ a, name: nameOf(state, sp, a), games: actorGames(state, sp, a) }));
+        const done = members.reduce((n, m) => n + m.games.filter((g) => g.done).length, 0);
+        const total = members.reduce((n, m) => n + m.games.length, 0);
+        return { sp, members, done, total };
+      }),
+    [state],
+  );
   return (
     <div className="screen panel-screen">
       <div className="panel">
@@ -126,6 +140,48 @@ export function Passport({ state, onClose }: { state: GameState; onClose: () => 
             <h3>📸 {fr ? 'Album de famille' : 'Family album'} <small>{album.length}</small></h3>
             <div className="photo-album">
               {album.map((p) => <MemoryPhoto key={p.key} photo={p} fr={fr} />)}
+            </div>
+          </section>
+        )}
+
+        {animals.length > 0 && (
+          <section>
+            <h3>🐾 {fr ? 'Mes animaux' : 'My animals'}</h3>
+            <div className="my-animals">
+              {animals.map(({ sp, members, done, total }) => (
+                <div key={sp.id} className="animal-card">
+                  <div className="animal-head">
+                    <span className="big-icon" aria-hidden="true">{sp.icon}</span>
+                    <strong>{sp.nameEn}</strong>
+                    {fr && sp.nameFr !== sp.nameEn && <small>{sp.nameFr}</small>}
+                    <span className={`gp-count${total && done === total ? ' all' : ''}`}>
+                      <span aria-hidden="true">✓</span> {done} / {total}
+                    </span>
+                  </div>
+                  {members.map(({ a, name, games }) => {
+                    const b = a.kind === 'baby' ? state.families[sp.id]?.babies.find((x) => x.id === a.babyId) : undefined;
+                    const art = a.kind === 'adult' ? spriteFor(sp.id, { role: a.role }) : b ? spriteFor(sp.id, { sex: b.sex, stage: b.stage }) : undefined;
+                    const n = games.filter((g) => g.done).length;
+                    return (
+                      <div key={actorId(a)} className="animal-member">
+                        {art ? <img src={assetUrl(art)} alt="" /> : <span className="big-icon">{sp.icon}</span>}
+                        <span className="member-name">{name}</span>
+                        <span className={`gp-count${games.length && n === games.length ? ' all' : ''}`}>
+                          <span aria-hidden="true">✓</span> {n} / {games.length}
+                        </span>
+                        <span className="gp-icons">
+                          {games.map((g) => (
+                            <button key={g.id} className={`gp-icon${g.done ? ' done' : ''}`} aria-label={`${g.titleEn}${g.done ? ' — done' : ''}`} title={fr ? `${g.titleEn} · ${g.titleFr}` : g.titleEn} onClick={() => void speech.speak(say.cardTitle(g.titleEn))}>
+                              <span aria-hidden="true">{g.icon}</span>
+                              {g.done && <span className="gp-check" aria-hidden="true">✓</span>}
+                            </button>
+                          ))}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           </section>
         )}
