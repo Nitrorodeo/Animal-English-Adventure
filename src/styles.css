@@ -454,6 +454,9 @@ small { font-weight: normal; opacity: 0.7; }
 .grow-unlocks .fr { flex-basis: 100%; font-size: 1.6cqw; color: #6a5440; margin: 0; }
 .grow-unlock { background: #fff; border-radius: 99px; padding: 0.4cqw 1.3cqw; font-weight: bold; font-size: 1.8cqw; box-shadow: 0 0.2cqw 0 #e8d3a8; }
 .grow-unlock small { font-weight: normal; color: #6a5440; }
+.grow-unlock.more { color: #6a5440; }
+/* croix de la carte de fête, toujours visible en haut à droite, même si la carte défile */
+.grow-close { position: sticky; top: 0; float: right; z-index: 2; margin: 0 -2cqw 0 0; }
 
 /* Menu : aventures des autres lieux, en petites cartes (2026-11-19) */
 .menu-section.small { font-size: 16px; margin-top: 14px; opacity: 0.85; }

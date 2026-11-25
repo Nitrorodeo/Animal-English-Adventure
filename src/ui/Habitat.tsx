@@ -341,7 +341,12 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
       }
       const babyName = growing ? (family.babies.find((b) => b.id === growing.babyId)?.name ?? species.babyWord.en) : actorName(state, species, actor);
       if (growing) {
-        const all = [growing, ...(events.grewOthers ?? [])].map((g) => partyFor(family.babies.find((b) => b.id === g.babyId), g.to, species.babyWord.en));
+        // seulement les jeux nouveaux qu'on peut vraiment jouer avec CE bébé (son espèce, ses décors), pas ceux des autres animaux
+        const canPlay = (babyId: string) => {
+          const ids = new Set(actorGames(r.state, species, { speciesId: species.id, kind: 'baby', babyId }).map((x) => x.id));
+          return (id: string) => ids.has(id);
+        };
+        const all = [growing, ...(events.grewOthers ?? [])].map((g) => partyFor(family.babies.find((b) => b.id === g.babyId), g.to, species.babyWord.en, canPlay(g.babyId)));
         parties.current = all.slice(1);
         openParty(all[0]!);
       } else if (events.treasure) {
@@ -774,6 +779,10 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
             <Confetti n={26} wide />
             {partyDone && <Confetti key="party" n={30} wide />}
             <div className="grow-card">
+              {/* toujours une sortie, même sans souffler les bougies (2026-11-25 : « je ne peux pas fermer ») */}
+              <button className="round grow-close" onClick={closeParty} aria-label="Close">
+                ✕
+              </button>
               <PhotoSnap fr={state.settings.frenchHelp} />
               <GrowPortrait speciesId={species.id} sex={grow.sex} stage={grow.to} />
               <p className="en">{grow.name} is growing up!</p>
@@ -786,12 +795,13 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
               {grow.unlocks.length > 0 && (
                 <div className="grow-unlocks">
                   <p className="fr">Nouveaux jeux avec {grow.name} :</p>
-                  {grow.unlocks.map((u) => (
+                  {grow.unlocks.slice(0, UNLOCKS_SHOWN).map((u) => (
                     <span key={u.en} className="grow-unlock">
                       {u.icon} {u.en}
                       {state.settings.frenchHelp && <small> · {u.fr}</small>}
                     </span>
                   ))}
+                  {grow.unlocks.length > UNLOCKS_SHOWN && <span className="grow-unlock more">+{grow.unlocks.length - UNLOCKS_SHOWN}</span>}
                 </div>
               )}
               {partyDone && <button className="big next">▶</button>}
@@ -803,11 +813,14 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
   );
 }
 
+/** au plus 4 nouveaux jeux nommés sur la carte de fête (sinon « +N ») : la carte doit tenir dans l'écran */
+export const UNLOCKS_SHOWN = 4;
+
 /** Carte « growing up » d'un bébé (une par bébé qui a grandi). */
 type Party = { name: string; sex: Sex; to: GrowthStage; stage: string; stageFr: string; unlocks: { icon: string; en: string; fr: string }[]; birthOrder: 1 | 2; candles: number };
 
 /** Fête d'un bébé qui passe au stade `to` (son nom, ses bougies, les jeux qu'il débloque). */
-export function partyFor(baby: Pick<Baby, 'name' | 'sex' | 'birthOrder'> | undefined, to: GrowthStage, fallbackName: string): Party {
+export function partyFor(baby: Pick<Baby, 'name' | 'sex' | 'birthOrder'> | undefined, to: GrowthStage, fallbackName: string, canPlay: (archetypeId: string) => boolean = () => true): Party {
   const stage = STAGE_NAMES[to]!;
   return {
     name: baby?.name ?? fallbackName,
@@ -815,7 +828,9 @@ export function partyFor(baby: Pick<Baby, 'name' | 'sex' | 'birthOrder'> | undef
     to,
     stage: stage.en,
     stageFr: stage.fr,
-    unlocks: unlockedAt(to).map((x) => ({ icon: x.icon, en: x.titleEn, fr: x.titleFr })),
+    unlocks: unlockedAt(to)
+      .filter((x) => canPlay(x.id))
+      .map((x) => ({ icon: x.icon, en: x.titleEn, fr: x.titleFr })),
     birthOrder: baby?.birthOrder === 2 ? 2 : 1,
     // anniversaire : une bougie par stade franchi (1 à 3), qu'on souffle en les touchant
     candles: Math.max(1, Math.min(3, GROWTH_STAGES.indexOf(to))),
