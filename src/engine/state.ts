@@ -132,6 +132,8 @@ export interface Settings {
   weekWord?: string;
   /** « Répète après moi » : bouton 🎤 qui enregistre sa voix pour la réécouter, sur l'appareil seulement ; absent = coupé */
   micRepeat?: boolean;
+  /** neige qui tombe dans les décors où elle est possible (bouton ❄️ du décor, 2026-11-26) ; absent = éteinte */
+  snow?: boolean;
 }
 
 /**

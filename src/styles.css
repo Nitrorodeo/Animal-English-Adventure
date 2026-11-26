@@ -643,6 +643,11 @@ small { font-weight: normal; opacity: 0.7; }
 .photo-btn { position: absolute; left: 3.3cqw; top: calc(3% + 8cqw); z-index: 120; width: 4.4cqw; height: 4.4cqw; padding: 0; border-radius: 50%; border: 0.15cqw solid #fff9; background: #ffffff40; backdrop-filter: blur(2px); font-size: 2.2cqw; line-height: 1; opacity: 0.7; box-shadow: 0 0.2cqw 0.6cqw #0003; cursor: pointer; transition: opacity 0.2s; }
 .photo-btn:hover { opacity: 1; }
 .photo-btn.alone { left: 2cqw; top: 3%; }
+/* bouton ❄️ : allumer ou éteindre la neige (seulement dans les décors où il peut neiger) */
+.snow-btn { position: absolute; left: 3.3cqw; top: calc(3% + 13.6cqw); z-index: 120; width: 4.4cqw; height: 4.4cqw; padding: 0; border-radius: 50%; border: 0.15cqw solid #fff9; background: #ffffff40; backdrop-filter: blur(2px); font-size: 2.2cqw; line-height: 1; opacity: 0.85; }
+.snow-btn.on { background: #dff0ffd0; border-color: #fff; box-shadow: 0 0 1.2cqw #bfe3ff; opacity: 1; }
+.snow-btn:active { translate: 0 0.2cqw; }
+.snow-btn.alone { left: 2cqw; top: calc(3% + 5.6cqw); }
 .photo-btn:active { translate: 0 0.2cqw; opacity: 1; }
 /* photo redessinée (album) : même géométrie que le décor (largeur = 100cqw, 16/9) */
 .photo-scene { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; container-type: inline-size; border-radius: inherit; background: #cfe6c0; }
@@ -863,35 +868,11 @@ button.link { background: none; border: none; color: #8a4a12; text-decoration: u
 /* bandeau « la partie n'est plus enregistrée » (stockage plein, audit du 2026-11-25) */
 .save-warning { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; margin: 0; padding: 8px 16px; background: #fff3cd; color: #5c4200; border-bottom: 2px solid #e0b100; font-size: 14px; text-align: center; pointer-events: none; }
 
-/* --- Météo du jour dans le décor (src/ui/Weather.tsx, engine/weather.ts) : pluie, neige, vent, brume, nuages --- */
+/* --- Neige dans le décor (src/ui/Weather.tsx, engine/weather.ts) : seulement des flocons, à allumer au bouton ❄️ --- */
 .weather-fx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 105; }
-.weather-fx > span { position: absolute; display: block; }
-.weather-fx.fx-rain { background: linear-gradient(#4a5a7040, #4a5a7020); }
-.weather-fx.fx-clouds { background: linear-gradient(#5d687a30, #5d687a10 60%); }
-.weather-fx.fx-mist { background: linear-gradient(#ffffff10 20%, #ffffff55); }
-.wx-drop { width: 0.18cqw; height: 3.2cqw; border-radius: 0.1cqw; background: linear-gradient(#fff0, #eaf3ffd0); rotate: 4deg; animation: wx-fall 0.9s linear infinite; }
-@keyframes wx-fall { from { transform: translate(0, 0); } to { transform: translate(-4cqw, 65cqw); } }
-.wx-flake { width: 0.9cqw; height: 0.9cqw; border-radius: 50%; background: #fff; opacity: 0.92; box-shadow: 0 0 0.4cqw #fff9; animation: wx-snow 7s linear infinite; }
-.wx-flake:nth-child(3n) { width: 0.55cqw; height: 0.55cqw; }
-.wx-flake:nth-child(4n) { width: 1.2cqw; height: 1.2cqw; }
-@keyframes wx-snow { from { transform: translate(0, 0); } 50% { transform: translate(1.6cqw, 32cqw); } to { transform: translate(-0.8cqw, 65cqw); } }
-.wx-gust { width: 14cqw; height: 0.5cqw; border-radius: 1cqw; background: linear-gradient(90deg, #fff0, #ffffffd0, #fff0); opacity: 0; animation: wx-gust 4.5s ease-in infinite; }
-@keyframes wx-gust { 0% { transform: translateX(0); opacity: 0; } 15% { opacity: 0.8; } 70% { opacity: 0.55; } 100% { transform: translateX(120cqw); opacity: 0; } }
-.wx-fog { width: 90cqw; height: 18cqw; border-radius: 50%; background: radial-gradient(#ffffffb0, #fff0 70%); animation: wx-fog 18s ease-in-out infinite alternate; }
-@keyframes wx-fog { from { transform: translateX(-6cqw); } to { transform: translateX(8cqw); } }
-.wx-cloud { width: 20cqw; height: 6cqw; border-radius: 50%; opacity: 0.72; background: radial-gradient(ellipse at 50% 60%, #f6f8fb, #e3e8ef 50%, #fff0 70%); animation: wx-cloud 30s ease-in-out infinite alternate; }
-@keyframes wx-cloud { from { transform: translateX(-8cqw); } to { transform: translateX(14cqw); } }
-/* photo de l'album : la météo figée, comme au moment du déclic */
-.weather-fx.still > span { animation: none; }
-.weather-fx.still :is(.wx-drop, .wx-flake) { transform: translate(0, var(--y)); }
-.weather-fx.still .wx-gust { opacity: 0.6; }
-@media (prefers-reduced-motion: reduce) {
-  .weather-fx > span { animation: none; }
-  .weather-fx :is(.wx-drop, .wx-flake) { transform: translate(0, var(--y)); }
-  .weather-fx .wx-gust { opacity: 0.6; }
-}
-/* la famille réagit : frisson sous la pluie, la neige ou le vent ; petit saut au « Cheese! » */
-.stage.weather-hello:is(.wx-rainy, .wx-snowy, .wx-windy) .char :is(img, .puppet) { animation: shiver 0.35s ease-in-out 4; }
+.weather-fx > canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* la famille réagit : frisson quand la neige tombe ; petit saut au « Cheese! » */
+.stage.weather-hello.wx-snowy .char :is(img, .puppet) { animation: shiver 0.35s ease-in-out 4; }
 @keyframes shiver { 0%, 100% { translate: 0 0; } 25% { translate: -1.5% 0; } 75% { translate: 1.5% 0; } }
 .stage.cheese .char :is(img, .puppet) { animation: hop 0.6s ease-out; }
 @media (prefers-reduced-motion: reduce) { .stage:is(.weather-hello, .cheese) .char :is(img, .puppet) { animation: none; } }

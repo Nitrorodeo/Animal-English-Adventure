@@ -50,13 +50,15 @@ const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object
 function migrateSettings(base: GameState['settings'], raw: unknown): GameState['settings'] {
   // « voiceSpeed » (essai du 2026-11-18, 1 = vitesse des enregistrements) est abandonné.
   const { voiceSpeed: _old, ...s } = { ...base, ...(isObj(raw) ? (raw as Partial<GameState['settings']> & { voiceSpeed?: unknown }) : {}) };
-  const { weekWord, micRepeat, ...rest } = s;
+  const { weekWord, micRepeat, snow, ...rest } = s;
   return {
     ...rest,
     speechSpeed: clampSpeechSpeed(s.speechSpeed),
     // mot de la semaine : seulement un mot des décors ; micro : seulement s'il a été allumé par le parent
     ...(weekWordChoice(typeof weekWord === 'string' ? weekWord : undefined) ? { weekWord } : {}),
     ...(micRepeat === true ? { micRepeat: true } : {}),
+    // neige allumée au bouton ❄️ du décor ; absente = éteinte
+    ...(snow === true ? { snow: true } : {}),
   };
 }
 

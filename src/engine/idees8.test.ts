@@ -16,7 +16,7 @@ import { ALBUM_MAX_PER_FAMILY, birthdayPhoto, familyPhotos, moveSticker, parseAl
 import { migrate } from './save';
 import { newGameState, type GameState } from './state';
 import { activityOffered, FAMILY_CONFIGS, possibleMemories } from './variants';
-import { dayWeathers, INDOOR_PLACES, placeWeathers, WEATHER_ACTIVITIES, weatherFx, weatherOfDay, withDayWeather } from './weather';
+import { dayWeathers, INDOOR_PLACES, placeWeathers, snowPossible, WEATHER_ACTIVITIES, weatherFx, weatherOfDay, withDayWeather } from './weather';
 
 /**
  * Les 8 idées validées le 2026-11-25 (« tous les 8 ») : photo racontée, « Cheese! » et « Who is in the photo? »,
@@ -50,19 +50,20 @@ describe('météo du jour : toujours plausible dans le lieu', () => {
     }
   });
 
-  it('la même journée donne la même météo ; un mois de savane n’est pas toujours pareil', () => {
-    const p = places.find((x) => x.continentId === 'africa' && x.weather === 'sunny')!;
-    expect(weatherOfDay(p, '2026-11-25')).toBe(weatherOfDay(p, '2026-11-25'));
-    const month = new Set(Array.from({ length: 30 }, (_, i) => weatherOfDay(p, `2026-12-${String(i + 1).padStart(2, '0')}`)));
-    expect(month.size).toBeGreaterThan(1);
-    // le décor du jour ne change que sa météo, et reste le même objet quand il fait le temps dessiné
-    for (let i = 1; i <= 30; i++) {
-      const day = `2026-12-${String(i).padStart(2, '0')}`;
-      const d = withDayWeather(p, day);
-      expect(d.weather).toBe(weatherOfDay(p, day));
+  it('neige à la demande (2026-11-26) : éteinte, chaque décor garde son temps dessiné ; allumée, il neige seulement là où c’est possible', () => {
+    for (const p of places) {
+      expect(weatherOfDay(p, false), p.id).toBe(p.weather);
+      expect(withDayWeather(p, false), p.id).toBe(p);
+      expect(weatherOfDay(p, true), p.id).toBe(snowPossible(p) ? 'snowy' : p.weather);
+      const d = withDayWeather(p, true);
       if (d.weather === p.weather) expect(d).toBe(p);
       else expect({ ...d, weather: p.weather }).toEqual(p);
+      // les jeux ne connaissent que ces deux temps : le dessiné, et la neige quand on peut l’allumer
+      expect(dayWeathers(p), p.id).toEqual(snowPossible(p) && p.weather !== 'snowy' ? [p.weather, 'snowy'] : [p.weather]);
     }
+    // on peut faire neiger chez le manchot et la panthère des neiges, jamais dans la savane
+    expect(places.filter((p) => snowPossible(p) && p.continentId === 'antarctica').length).toBeGreaterThan(0);
+    expect(places.filter((p) => snowPossible(p) && p.continentId === 'africa')).toEqual([]);
   });
 
   it('plus de pluie automatique (2026-11-25) : aucun décor ne la tire, aucune goutte ne tombe', () => {
@@ -70,12 +71,9 @@ describe('météo du jour : toujours plausible dans le lieu', () => {
     expect(weatherFx('rainy')).toBeNull();
   });
 
-  it('ce qui se voit : neige, vent, brume, nuages ; rien quand il fait beau, chaud ou froid', () => {
+  it('ce qui se voit (2026-11-26) : seulement des flocons ; plus de brume, de traits de vent ni de voile de nuages', () => {
     expect(weatherFx('snowy')).toBe('snow');
-    expect(weatherFx('windy')).toBe('wind');
-    expect(weatherFx('misty')).toBe('mist');
-    expect(weatherFx('cloudy')).toBe('clouds');
-    for (const w of ['sunny', 'hot', 'cold'] as const) expect(weatherFx(w)).toBeNull();
+    for (const w of ['sunny', 'hot', 'cold', 'windy', 'misty', 'cloudy', 'rainy'] as const) expect(weatherFx(w), w).toBeNull();
   });
 
   it('contrôle mécanique : une activité hors WEATHER_ACTIVITIES ne dit rien de nouveau un autre jour (ses phrases sont toutes enregistrées)', () => {
@@ -107,7 +105,7 @@ describe('météo du jour : toujours plausible dans le lieu', () => {
   it('les cadeaux du soir suivent le climat dessiné, pas la météo du jour', () => {
     const habitat: string = readFileSync(new URL('../ui/Habitat.tsx', import.meta.url), 'utf8');
     expect(habitat).toContain('giftOffer(r.state, species.id, baseBiome, today)');
-    expect(habitat).toContain('const biome = useMemo(() => withDayWeather(baseBiome, today), [baseBiome, today]);');
+    expect(habitat).toContain('const biome = useMemo(() => withDayWeather(baseBiome, snowOn), [baseBiome, snowOn]);');
   });
 });
 
@@ -367,12 +365,13 @@ describe('les 8 idées dans l’interface', () => {
   const box: string = readFileSync(new URL('../ui/DialogueBox.tsx', import.meta.url), 'utf8');
   const css: string = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
 
-  it('météo : dessinée dans le décor et dans les jeux, figée sur la photo, dite par Papa à l’arrivée', () => {
-    expect(habitat).toContain('<WeatherLayer weather={biome.weather} />');
-    expect(habitat).toContain('weatherOfDay(place, dayKey(new Date()))');
+  it('neige : dans le décor et dans les jeux quand elle est allumée, figée sur la photo, dite par Papa', () => {
+    expect(habitat).toContain('{snowOn && <WeatherLayer weather={biome.weather} />}');
+    expect(habitat).toContain('{state.settings.snow && <WeatherLayer weather={weatherOfDay(place, true)} />}');
     expect(album).toContain('<WeatherLayer weather={photo.weather} still />');
     expect(habitat).toContain("{ text: wx.en, opts: { role: 'father' as const } }");
-    for (const rule of ['.weather-fx {', '.wx-drop {', '.wx-flake {', '.wx-gust {', '.wx-fog {', '.wx-cloud {', '.weather-fx.still > span {']) expect(css).toContain(rule);
+    expect(css).toContain('.weather-fx > canvas {');
+    for (const gone of ['.wx-drop {', '.wx-flake {', '.wx-gust {', '.wx-fog {', '.wx-cloud {']) expect(css).not.toContain(gone);
     // au-dessus des animaux, sous les boutons ; jamais un obstacle au doigt
     const rule = css.slice(css.indexOf('.weather-fx {'), css.indexOf('}', css.indexOf('.weather-fx {')));
     expect(rule).toContain('pointer-events: none');
@@ -381,7 +380,7 @@ describe('les 8 idées dans l’interface', () => {
 
   it('« Cheese! » au déclic ; la photo emporte la météo du jour', () => {
     expect(habitat).toContain('void speech.speak(CHEESE.en, { role: voiceOf(state, cheeser) });');
-    expect(habitat).toContain('weather: biome.weather,');
+    expect(habitat).toContain("weather: snowOn || biome.weather !== 'snowy' ? biome.weather : 'cold',");
   });
 
   it('anniversaire : une bougie par stade, à souffler avant de fermer ; puis la chanson et la photo', () => {

@@ -10,7 +10,7 @@ import { GROWTH_STAGES, type BiomeDef, type GrowthStage, type PlaceId, type Ques
 import { ARCHETYPES, unlockedAt } from '../content/archetypes';
 import { BEDTIME, BIGGER_NOW, BIRTHDAY, CHEESE, NAME_ERRORS, NEW_GAME_WISH, say, WEEK_WORD } from '../content/utterances';
 import { weekWordAnchor } from '../content/weekWord';
-import { weatherFx, weatherOfDay, withDayWeather } from '../engine/weather';
+import { snowPossible, weatherFx, weatherOfDay, withDayWeather } from '../engine/weather';
 import { WeatherLayer } from './Weather';
 import { RepeatMic } from './RepeatMic';
 import { bedtimeLines, type BedtimeLine } from '../engine/bedtime';
@@ -105,9 +105,10 @@ function rolesOf(state: GameState, species: SpeciesDef, actor: ActorRef): Record
 const SPEAKERS: readonly Speaker[] = ['actor', 'father', 'mother', 'baby', 'sibling', 'narrator'];
 
 export function Habitat({ state, setState, species: baseSpecies, biome: baseBiome, onPlace, onWhere, onBusy }: Props) {
-  /** le décor avec sa météo du jour (pluie, neige, vent… selon le lieu : engine/weather.ts) ; ses jeux en parlent */
-  const today = useMemo(() => dayKey(new Date()), []);
-  const biome = useMemo(() => withDayWeather(baseBiome, today), [baseBiome, today]);
+  /** le décor avec le temps qu'il fait : la neige quand elle est allumée (bouton ❄️) et possible ici ; ses jeux en parlent */
+  const snowOn = !!state.settings.snow;
+  const biome = useMemo(() => withDayWeather(baseBiome, snowOn), [baseBiome, snowOn]);
+  const canSnow = snowPossible(baseBiome);
   /** mot de la semaine choisi par le parent : l'objet qui le montre brille jusqu'à ce qu'elle le touche */
   const weekAnchor = weekWordAnchor(biome, state.settings.weekWord);
   const [weekFound, setWeekFound] = useState(false);
@@ -260,7 +261,7 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
   useEffect(() => {
     // en arrivant, la maman accueille la joueuse par son prénom (s'il est donné), puis le lieu est annoncé
     const hello = !greeted.current && state.player.name !== DEFAULT_PLAYER_NAME;
-    // puis Papa dit le temps qu'il fait quand ça se voit (pluie, neige, vent, brume, nuages), et le mot de la semaine
+    // puis Papa dit « It's snowy! » quand la neige tombe, et le mot de la semaine
     // est annoncé si l'objet est dans ce décor
     const wx = weatherFx(biome.weather) ? WEATHER_WORDS[biome.weather] : null;
     const ww = weekAnchor ? biome.anchors.find((a) => a.id === weekAnchor) : undefined;
@@ -281,9 +282,9 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
       void speech.sequence(lines);
     }, 400);
     return () => clearTimeout(t);
-    // l'accueil ne se répète pas quand la partie change pendant la visite
+    // l'accueil ne se répète pas quand la partie change pendant la visite, ni quand on allume la neige
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [biome]);
+  }, [baseBiome]);
 
   // hors aventure, le bandeau montre le lieu de la famille ; pendant une aventure, QuestLayer le tient à jour
   useEffect(() => {
@@ -474,9 +475,19 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
         return { id: def.id, x: s.x, y: s.y, h: s.h };
       }),
       night: !!night,
-      weather: biome.weather,
+      // la photo garde le temps qu'on voit : sans flocons qui tombent, un décor enneigé est un jour de froid
+      weather: snowOn || biome.weather !== 'snowy' ? biome.weather : 'cold',
       ...extra,
   });
+  /** ❄️ : allumer ou éteindre la neige (gardé dans les réglages) ; quand elle se met à tomber, Papa le dit et on frissonne */
+  const toggleSnow = () => {
+    const on = !snowOn;
+    setState((st) => ({ ...st, settings: { ...st.settings, snow: on } }));
+    if (on) {
+      setReact('weather-hello');
+      void speech.speak(WEATHER_WORDS.snowy.en, { role: 'father', slow: state.settings.slowVoice });
+    }
+  };
   /** 📷 : la photo part dans l'album de la famille ; un bébé (ou Papa) dit « Cheese! » */
   const snap = () => {
     const shot = makeShot(state);
@@ -533,7 +544,7 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
     <div className="screen habitat-screen">
       <div className={`stage${night ? ' night bedtime' : ''}${react ? ` ${react} wx-${biome.weather}` : ''}`}>
         <SceneBackground place={biome} />
-        <WeatherLayer weather={biome.weather} />
+        {snowOn && <WeatherLayer weather={biome.weather} />}
         {night && <BedtimeSky />}
         {tapOrder(biome.anchors).map((a) => (
           <button key={a.id} className={`anchor${a.id === weekAnchor && !weekFound && !night ? ' week-word' : ''}`} style={rectStyle(a.hit)} aria-label={a.word} onClick={() => tapAnchorFree(biome, a.id)} />
@@ -623,6 +634,17 @@ export function Habitat({ state, setState, species: baseSpecies, biome: baseBiom
         <button className={`photo-btn${night || biome.nightImage ? ' alone' : ''}`} onClick={snap} aria-label="Take a photo">
           📷
         </button>
+        {canSnow && !night && (
+          <button
+            className={`snow-btn${snowOn ? ' on' : ''}${biome.nightImage ? ' alone' : ''}`}
+            onClick={toggleSnow}
+            aria-pressed={snowOn}
+            aria-label={snowOn ? 'Stop the snow' : 'Make it snow'}
+            title={state.settings.frenchHelp ? (snowOn ? 'Arrêter la neige' : 'Faire neiger') : undefined}
+          >
+            ❄️
+          </button>
+        )}
         {flash > 0 && <div key={flash} className="photo-flash" aria-hidden />}
         {!night && !biome.nightImage && (
           <button className="night-btn" onClick={startNight} aria-label="Good night">
@@ -1460,8 +1482,8 @@ function QuestLayer({ running, state, species, actors, onDone, onQuit, onWord, w
   return (
     <div className={`stage${run.travels ? ' traveling' : ''}${run.night ? ' night' : ''}`}>
       <SceneBackground place={place} />
-      {/* même météo du jour qu'à la maison ; un lieu traversé pendant une aventure garde son temps dessiné */}
-      <WeatherLayer weather={run.place === script.biomeId ? weatherOfDay(place, dayKey(new Date())) : place.weather} />
+      {/* la neige tombe aussi pendant les jeux quand elle est allumée (bouton ❄️), là où elle est possible */}
+      {state.settings.snow && <WeatherLayer weather={weatherOfDay(place, true)} />}
       <div className="night-sky" aria-hidden />
       {run.photos.length > 0 && <div key={`flash${run.photos.length}`} className="photo-flash" aria-hidden />}
       {run.travels > 0 && <div key={run.travels} className="travel-fade" />}
