@@ -37,7 +37,7 @@ import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
 import { TreasureIcon } from './TreasureIcon';
 import { rigFor } from '../game/rigs';
-import { canFly, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, walkMs, WALK_MS } from '../game/staging';
+import { canFly, canHop, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { acceptsDown, dragSpot, endsTrack, isDrag, withoutKey, type Spot } from './drag';
@@ -982,9 +982,10 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const natural: 1 | -1 = rig?.facing ?? 1;
   const rest: 1 | -1 = face ?? natural;
   // durée du trajet selon la distance (vitesse de marche constante), calculée au rendu où la place change
-  const track = useRef({ x: place.x, y: place.y, ms: WALK_MS });
+  // `trip` compte les trajets : un kangourou repart d'un bond à chaque nouveau trajet
+  const track = useRef({ x: place.x, y: place.y, ms: WALK_MS, trip: 0 });
   if (track.current.x !== place.x || track.current.y !== place.y) {
-    track.current = { x: place.x, y: place.y, ms: walkMs(place.x - track.current.x, place.y - track.current.y) };
+    track.current = { x: place.x, y: place.y, ms: walkMs(place.x - track.current.x, place.y - track.current.y), trip: track.current.trip + 1 };
   }
   const prev = useRef({ x: place.x, y: place.y });
   const [walk, setWalk] = useState<{ dir: 1 | -1 } | null>(null);
@@ -1002,8 +1003,11 @@ function Character({ actor, state, species, place, question, action, speaking, h
   useEffect(() => {
     if (!walk) lastDir.current = rest;
   }, [rest, walk]);
-  const flies = canFly(species.mobility, actor.kind === 'baby' ? getFamily(state, actor.speciesId).babies.find((b) => b.id === actor.babyId)?.stage : undefined);
-  const clip = puppetClip({ walking: !!walk, action, speaking, flies });
+  const stage = actor.kind === 'baby' ? getFamily(state, actor.speciesId).babies.find((b) => b.id === actor.babyId)?.stage : undefined;
+  const flies = canFly(species.mobility, stage);
+  // le kangourou bondit au lieu de marcher (2026-11-26) ; tenu au doigt, il bondit à son rythme habituel
+  const hops = canHop(species.mobility, stage);
+  const clip = puppetClip({ walking: !!walk, action, speaking, flies, hops });
   const facing: 1 | -1 = walk ? walk.dir : action ? lastDir.current : rest;
   const puppet = !!rig && !!sprite && puppetOk !== false && !hidden;
   // appui long : chatouilles / câlin ; le simple toucher garde son effet (menu)
@@ -1112,6 +1116,8 @@ function Character({ actor, state, species, place, question, action, speaking, h
         height: `${base}%`,
         transform: `translate(${place.x}cqw, ${(place.y * 9) / 16}cqw) translate(-50%, -100%) scale(${place.h / base})`,
         transitionDuration: `${track.current.ms}ms`,
+        // en bonds : il avance surtout en l'air et se pose pile à l'arrivée
+        transitionTimingFunction: hops && walk && !dragging ? hopTrip(track.current.ms).easing : undefined,
         ['--trip' as string]: `${track.current.ms}ms`,
         zIndex: dragging ? 400 : Math.round(place.y),
         // tout petit au fond du décor : zone de prise agrandie (invisible) pour pouvoir le reprendre au doigt
@@ -1138,7 +1144,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
       ) : (
         <span className="char-icon" style={{ fontSize: `${base * 0.3}cqw` }}>{species.icon}</span>
       )}
-      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} />}
+      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
       {question && <span className="q-bubble">?</span>}
       {wearing?.map((k) => (
         <span key={k} className={`worn worn-${wornSlot(k)}`}>

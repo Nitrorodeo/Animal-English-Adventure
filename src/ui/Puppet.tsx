@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { PAD_X, PAD_Y, blendPose, clipPose, meshFor, drinkPose, easeInOut, skin, skinPoint, type ClipName, type Pose, type RigDef } from '../game/puppet';
+import { HOP_LIFT, HOP_S, PAD_X, PAD_Y, blendPose, clipPose, meshFor, drinkPose, easeInOut, hopLift, skin, skinPoint, type ClipName, type Pose, type RigDef } from '../game/puppet';
 
 /**
  * Affiche un personnage animé : son dessin est posé sur le maillage déformable (`game/puppet.ts`)
@@ -21,6 +21,10 @@ interface Props {
   dim?: boolean;
   /** soulevé au doigt : ombre plus loin et plus marquée */
   lifted?: boolean;
+  /** kangourou : durée d'un bond (s), choisie pour qu'il se pose pile à l'arrivée */
+  hopS?: number;
+  /** kangourou : change à chaque nouveau trajet (les bonds repartent du sol, en même temps que le déplacement) */
+  hopKey?: string | number;
 }
 
 const BLEND_S = 0.35;
@@ -53,7 +57,7 @@ void main() {
   gl_FragColor = c;
 }`;
 
-export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = false, dim = false, lifted = false }: Props) {
+export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = false, dim = false, lifted = false, hopS = HOP_S, hopKey }: Props) {
   const frozen = useRef(frozenAt);
   frozen.current = frozenAt;
   const look = useRef({ paused, dim, lifted });
@@ -62,19 +66,27 @@ export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = fal
   const wake = useRef<() => void>(() => {});
   const ctx = useRef<WebGLRenderingContext | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const anim = useRef<{ clip: ClipName; since: number; from: Pose | null; last: Pose }>({ clip, since: performance.now(), from: null, last: {} });
+  // bonds : `phase` compte les bonds faits (avance au rythme `hopS`), `lift` = élévation affichée
+  const anim = useRef<{ clip: ClipName; since: number; from: Pose | null; last: Pose; phase: number; at: number; lift: number; liftFrom: number }>({ clip, since: performance.now(), from: null, last: {}, phase: 0, at: performance.now(), lift: 0, liftFrom: 0 });
+  const hopRate = useRef(hopS);
+  hopRate.current = hopS;
   const readyRef = useRef(onReady);
   readyRef.current = onReady;
 
-  // changement d'animation : fondu depuis la pose affichée
+  // changement d'animation (ou nouveau trajet en bondissant) : fondu depuis la pose affichée
+  const lastHopKey = useRef(hopKey);
   useEffect(() => {
     const a = anim.current;
-    if (a.clip === clip) return;
+    const newTrip = clip === 'hop' && a.clip === 'hop' && lastHopKey.current !== hopKey;
+    lastHopKey.current = hopKey;
+    if (a.clip === clip && !newTrip) return;
     a.from = a.last;
+    a.liftFrom = a.lift;
     a.clip = clip;
+    a.phase = 0;
     a.since = performance.now();
     wake.current();
-  }, [clip]);
+  }, [clip, hopKey]);
   useEffect(() => wake.current(), [paused, dim, lifted]);
 
   useEffect(() => {
@@ -185,10 +197,22 @@ export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = fal
         }
         gl.viewport(0, 0, w, h);
         const t = frozen.current ?? (now - a.since) / 1000;
-        let pose = clipPose(rig, a.clip, Math.max(0, t));
-        if (a.from && t < BLEND_S) pose = blendPose(a.from, pose, easeInOut(Math.max(0, t) / BLEND_S));
-        else a.from = null;
+        let clipT = Math.max(0, t);
+        if (a.clip === 'hop') {
+          // les bonds avancent à leur rythme (qui dépend de la longueur du trajet), pas à l'horloge
+          a.phase = frozen.current !== undefined ? frozen.current / HOP_S : a.phase + Math.min(0.1, Math.max(0, now - a.at) / 1000) / hopRate.current;
+          clipT = a.phase * HOP_S;
+        }
+        a.at = now;
+        let pose = clipPose(rig, a.clip, clipT);
+        let lift = a.clip === 'hop' ? hopLift(rig, a.phase) : 0;
+        if (a.from && t < BLEND_S) {
+          const k = easeInOut(Math.max(0, t) / BLEND_S);
+          pose = blendPose(a.from, pose, k);
+          lift = a.liftFrom + (lift - a.liftFrom) * k;
+        } else a.from = null;
         a.last = pose;
+        a.lift = lift;
         skin(rig, mesh, pose, deformed);
         gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, deformed);
@@ -196,9 +220,10 @@ export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = fal
         gl.clear(gl.COLOR_BUFFER_BIT);
         // 1) l'ombre, décalée vers le bas ; 2) le dessin par-dessus
         gl.uniform2f(uShift, 0, rig.height * (lk.lifted ? SHADOW.liftDy : SHADOW.dy));
-        gl.uniform1f(uShadow, lk.lifted ? SHADOW.liftAlpha : SHADOW.alpha);
+        // en plein bond, l'ombre reste au sol et pâlit
+        gl.uniform1f(uShadow, (lk.lifted ? SHADOW.liftAlpha : SHADOW.alpha) * (1 - 0.5 * Math.min(1, lift / (rig.height * HOP_LIFT))));
         gl.drawElements(gl.TRIANGLES, mesh.indices.length, gl.UNSIGNED_SHORT, 0);
-        gl.uniform2f(uShift, 0, 0);
+        gl.uniform2f(uShift, 0, -lift);
         gl.uniform1f(uShadow, 0);
         gl.uniform1f(uBright, lk.dim ? 0.75 : lk.lifted ? 1.04 : 1);
         gl.uniform1f(uSat, lk.dim ? 0.85 : 1);

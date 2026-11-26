@@ -1,4 +1,4 @@
-import type { ClipName } from './puppet';
+import { HOP_CONTACT, HOP_S, type ClipName } from './puppet';
 import type { GrowthStage, Mobility, Rect } from '../content/types';
 import { inWater, type Water } from '../content/places/depth';
 
@@ -8,13 +8,36 @@ export { inWater, type Water };
 export const WALK_MS = 1600;
 
 /** Animation de marionnette à jouer selon ce que fait le personnage. */
-export function puppetClip(s: { walking: boolean; action?: string; speaking?: boolean; flies?: boolean }): ClipName {
-  if (s.walking) return s.flies ? 'fly' : 'walk';
-  if (s.action === 'walk' || s.action === 'sniff') return 'walk';
+export function puppetClip(s: { walking: boolean; action?: string; speaking?: boolean; flies?: boolean; hops?: boolean }): ClipName {
+  if (s.walking) return s.flies ? 'fly' : s.hops ? 'hop' : 'walk';
+  if (s.action === 'walk') return s.hops ? 'hop' : 'walk';
+  if (s.action === 'sniff') return 'walk';
   if (s.action === 'drink_lap') return 'drink';
   if (s.speaking) return 'talk';
   return 'idle';
 }
+
+/** Le kangourou se déplace en bondissant ; le nouveau-né, assis, ne bondit pas encore. */
+export function canHop(mobility: Mobility, stage?: GrowthStage): boolean {
+  return mobility === 'jump' && stage !== 'newborn';
+}
+
+/**
+ * Un trajet en bonds : un nombre entier de bonds (≈ HOP_S chacun) pour qu'il se pose pile à l'arrivée.
+ * `easing` règle l'avancée (CSS `linear()`) : peu au sol, l'essentiel en l'air, comme un vrai kangourou.
+ */
+export function hopTrip(ms: number): { count: number; hopS: number; easing: string } {
+  const count = Math.max(1, Math.round(ms / (HOP_S * 1000)));
+  const pts = ['0 0%'];
+  const pct = (x: number) => `${+(x * 100).toFixed(2)}%`;
+  for (let i = 0; i < count; i++) {
+    pts.push(`${+((i + HOP_GROUND_SHARE) / count).toFixed(4)} ${pct((i + HOP_CONTACT) / count)}`);
+    pts.push(`${+((i + 1) / count).toFixed(4)} ${pct((i + 1) / count)}`);
+  }
+  return { count, hopS: ms / 1000 / count, easing: `linear(${pts.join(', ')})` };
+}
+/** part de l'avancée d'un bond faite pendant l'appui au sol */
+export const HOP_GROUND_SHARE = 0.1;
 
 /** Les oiseaux (hibou, toucan) volent pour changer de place ; un oisillon nouveau-né ne vole pas encore. */
 export function canFly(mobility: Mobility, stage?: GrowthStage): boolean {

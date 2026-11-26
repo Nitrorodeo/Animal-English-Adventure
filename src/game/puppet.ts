@@ -212,7 +212,7 @@ export function skinPoint(rig: RigDef, pose: Pose, p: Vec): Vec {
 export const PAD_X = 0.45;
 export const PAD_Y = 0.15;
 
-export type ClipName = 'idle' | 'talk' | 'walk' | 'drink' | 'fly';
+export type ClipName = 'idle' | 'talk' | 'walk' | 'drink' | 'fly' | 'hop';
 
 const has = (rig: RigDef, id: string) => rig.bones.some((b) => b.id === id);
 
@@ -294,13 +294,75 @@ export function flyPose(rig: RigDef, t: number): Record<string, BonePose> {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Saut du kangourou (2026-11-26, Westimmo : « faire sauter les kangourous pour donner un effet de déplacement
+// un peu plus réel… il faut vraiment un rendu réel »). Un kangourou ne marche pas : il bondit, les deux pattes
+// arrière ensemble. Chaque bond suit le vrai mouvement :
+// - au sol (30 % du bond) : il amortit en se tassant, penché en avant, la queue qui s'abaisse ; puis il pousse ;
+// - en l'air : le corps s'étire puis décrit un arc (parabole), les pieds partent en arrière puis reviennent
+//   devant pour se poser, la queue se relève pour équilibrer, la tête reste presque droite (il regarde devant).
+// L'élévation (`hopLift`) est faite à part du dessin : l'ombre reste au sol et pâlit quand il monte.
+
+/** durée d'un bond par défaut (s) : un vrai kangourou bondit environ deux fois par seconde */
+export const HOP_S = 0.56;
+/** part du bond passée au sol */
+export const HOP_CONTACT = 0.3;
+/** hauteur du bond, en fraction de la hauteur du dessin (sous la marge haute du canevas, PAD_Y) */
+export const HOP_LIFT = 0.12;
+
+const smooth = (x: number) => x * x * (3 - 2 * x);
+
+/** où en est le bond : au sol ou en l'air, et l'avancement `s` (0 → 1) dans cette partie */
+export function hopPhase(phase: number): { air: boolean; s: number } {
+  const p = phase - Math.floor(phase);
+  return p < HOP_CONTACT ? { air: false, s: p / HOP_CONTACT } : { air: true, s: (p - HOP_CONTACT) / (1 - HOP_CONTACT) };
+}
+
+/** élévation du personnage (pixels de l'image) : nulle au sol, une parabole en l'air */
+export function hopLift(rig: RigDef, phase: number): number {
+  const { air, s } = hopPhase(phase);
+  return air ? rig.height * HOP_LIFT * 4 * s * (1 - s) : 0;
+}
+
+/** os des pattes arrière (un kangourou de trois quarts en montre une ou deux) */
+const FEET = ['feet', 'feet2'];
+
+/** Pose d'un bond ; `phase` en bonds (1 = un bond complet), la partie entière est ignorée. */
+export function hopPose(rig: RigDef, phase: number): Record<string, BonePose> {
+  const f = rig.facing;
+  const { air, s } = hopPhase(phase);
+  // penché en avant : de plus en plus au sol (il pousse), il se redresse en l'air pour se poser
+  const pitch = air ? 15 - 9 * smooth(s) : 6 + 9 * smooth(s);
+  // tassé au milieu de l'appui, étiré juste après avoir quitté le sol
+  const squash = air ? 0 : Math.sin(Math.PI * s);
+  const stretch = air ? Math.sin(Math.PI * Math.min(1, s / 0.45)) : 0;
+  const tail = (ph: number) => {
+    const q = hopPhase(ph);
+    return q.air ? 11 * Math.sin(Math.PI * q.s) : -7 * Math.sin(Math.PI * q.s);
+  };
+  // pieds : à plat au sol ; en l'air, en arrière (orteils vers le bas) puis devant pour se poser
+  const foot: BonePose = air ? { rot: 13 * Math.sin(2 * Math.PI * s) * f, dy: -rig.height * 0.025 * Math.sin(Math.PI * s) } : {};
+  const pose: Record<string, BonePose> = {
+    body: { rot: pitch * f, sy: 1 - 0.07 * squash + 0.04 * stretch, sx: 1 + 0.03 * squash - 0.015 * stretch },
+    head: { rot: -0.7 * pitch * f, dy: rig.height * 0.006 * squash },
+    tail: { rot: tail(phase) * f },
+    tailTip: { rot: tail(phase - 0.08) * 0.8 * f },
+  };
+  for (const id of FEET) pose[id] = foot;
+  if (!rig.bones.some((b) => FEET.includes(b.id))) {
+    // sans os de pattes (bébé assis) : seulement le corps qui se tasse et s'étire
+    pose.body = { rot: pitch * 0.4 * f, sy: pose.body!.sy, sx: pose.body!.sx };
+  }
+  return pose;
+}
+
 function talk(rig: RigDef, t: number): Record<string, BonePose> {
   const base = idle(rig, t);
   return { ...base, head: { rot: 2.5 * Math.sin(t * 2 * Math.PI * 1.7), dy: -rig.height * 0.004 * Math.abs(Math.sin(t * 2 * Math.PI * 1.7)) } };
 }
 
 export function clipPose(rig: RigDef, clip: ClipName, t: number): Pose {
-  const pose = clip === 'fly' ? flyPose(rig, t) : clip === 'walk' ? walkPose(rig, t) : clip === 'drink' ? drinkPose(rig, t) : clip === 'talk' ? talk(rig, t) : idle(rig, t);
+  const pose = clip === 'hop' ? hopPose(rig, t / HOP_S) : clip === 'fly' ? flyPose(rig, t) : clip === 'walk' ? walkPose(rig, t) : clip === 'drink' ? drinkPose(rig, t) : clip === 'talk' ? talk(rig, t) : idle(rig, t);
   // on ne garde que les os qui existent dans ce squelette
   return Object.fromEntries(Object.entries(pose).filter(([id]) => has(rig, id)));
 }

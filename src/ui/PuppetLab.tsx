@@ -11,7 +11,7 @@ import manifest from '../content/assetManifest.json';
  * Une espèce à la fois (`?lab&sp=bear`, lion par défaut) : chaque personnage ouvre un contexte WebGL
  * et le navigateur n'en garde qu'une quinzaine.
  */
-const CLIPS: ClipName[] = ['idle', 'walk', 'drink', 'talk'];
+const CLIPS: ClipName[] = ['idle', 'walk', 'hop', 'drink', 'talk'];
 
 export function PuppetLab() {
   const [facing, setFacing] = useState<1 | -1>(1);
