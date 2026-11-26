@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
+import type { Frame } from '../game/rigs';
 import { HOP_LIFT, HOP_S, PAD_X, PAD_Y, blendPose, clipPose, meshFor, drinkPose, easeInOut, hopLift, skin, skinPoint, type ClipName, type Pose, type RigDef } from '../game/puppet';
 
 /**
@@ -25,6 +26,10 @@ interface Props {
   hopS?: number;
   /** kangourou : change à chaque nouveau trajet (les bonds repartent du sol, en même temps que le déplacement) */
   hopKey?: string | number;
+  /** dessin en vol d'un oiseau : sa place dans le cadre du dessin posé (sinon il occupe tout le cadre) */
+  frame?: Frame;
+  /** effacé par un fondu (oiseau : le dessin posé pendant le vol, le dessin en vol une fois posé) */
+  off?: boolean;
 }
 
 const BLEND_S = 0.35;
@@ -57,7 +62,7 @@ void main() {
   gl_FragColor = c;
 }`;
 
-export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = false, dim = false, lifted = false, hopS = HOP_S, hopKey }: Props) {
+export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = false, dim = false, lifted = false, hopS = HOP_S, hopKey, frame, off = false }: Props) {
   const frozen = useRef(frozenAt);
   frozen.current = frozenAt;
   const look = useRef({ paused, dim, lifted });
@@ -266,8 +271,10 @@ export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = fal
   // bouche une fois la tête baissée : là où naissent les ronds dans l'eau
   const mouth = useMemo(() => skinPoint(rig, drinkPose(rig, 2), rig.mouth), [rig]);
   const flip = facing !== rig.facing;
+  // le cadre du dessin en vol se retourne avec lui : sa place est symétrique dans le cadre du dessin posé
+  const box = frame && { left: `${(flip ? 1 - frame.x - frame.w : frame.x) * 100}%`, top: `${frame.y * 100}%`, width: `${frame.w * 100}%`, height: `${frame.h * 100}%`, right: 'auto', bottom: 'auto' };
   return (
-    <span className="puppet" style={{ transform: flip ? 'scaleX(-1)' : undefined }}>
+    <span className={`puppet${off ? ' off' : ''}`} style={{ ...box, transform: flip ? 'scaleX(-1)' : undefined }}>
       <canvas
         ref={canvasRef}
         style={{ left: `${-PAD_X * 100}%`, top: `${-PAD_Y * 100}%`, width: `${(1 + 2 * PAD_X) * 100}%`, height: `${(1 + 2 * PAD_Y) * 100}%` }}

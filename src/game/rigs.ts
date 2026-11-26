@@ -106,6 +106,13 @@ function bird(sprite: string, width: number, height: number, facing: 1 | -1, mou
     ],
   };
 }
+/**
+ * Dessins « en vol » (2026-11-26) : un oiseau posé garde son dessin naturel, ailes repliées, et prend pour voler
+ * un second dessin aux deux ailes déployées, dégagées du corps et de la queue (le battement ne déforme alors que
+ * les ailes). Le fichier est à côté du dessin posé, avec le suffixe `_fly`.
+ */
+export const FLY_SPRITES: Readonly<Record<string, string>> = { toucan_father: 'toucan_father_fly' };
+
 const BIRD_RIGS: Record<string, RigDef> = Object.fromEntries(
   [
     // Oscar, le papa hibou (402 × 474), ailes repliées le long du corps
@@ -119,8 +126,10 @@ const BIRD_RIGS: Record<string, RigDef> = Object.fromEntries(
     bird('owl_girl_young', 355, 277, 1, [226, 92], 2.8, { body: [[180, 240], [185, 140]], head: [[185, 140], [190, 25]], near: [[145, 180], [85, 165], [15, 145]], far: [[250, 175], [300, 125], [345, 80]], feet: [[185, 245], [185, 272]], tail: [[130, 213], [72, 232]], crown: [[185, 95], [110, 70]] }),
     bird('owl_boy_little', 198, 250, 1, [108, 81], 3.2, { body: [[115, 215], [115, 125]], head: [[115, 125], [115, 15]], near: [[62, 145], [38, 178], [12, 205]], far: [[172, 145], [182, 170], [188, 198]], feet: [[115, 220], [115, 245]] }),
     bird('owl_girl_little', 197, 271, 1, [105, 90], 3.2, { body: [[110, 235], [110, 140]], head: [[110, 140], [110, 15]], near: [[62, 160], [38, 192], [12, 225]], far: [[168, 165], [180, 190], [185, 213]], feet: [[110, 240], [110, 265]] }),
-    // Tico, le papa toucan (564 × 417), redessiné le 2026-11-26 les deux ailes déployées, dégagées de la queue
-    bird('toucan_father', 564, 417, 1, [320, 120], 3.2, { body: [[280, 330], [285, 170]], head: [[285, 170], [265, 25]], beak: [[300, 60], [440, 120]], near: [[225, 170], [115, 155], [12, 125]], far: [[350, 185], [455, 170], [555, 160]], tail: [[185, 300], [60, 310]], feet: [[205, 345], [195, 405]], feet2: [[300, 345], [320, 400]] }),
+    // Tico, le papa toucan (498 × 417), une aile ouverte à droite, l'autre et la queue à gauche
+    bird('toucan_father', 498, 417, 1, [325, 123], 3.2, { body: [[260, 340], [275, 190]], head: [[275, 190], [290, 40]], beak: [[300, 90], [430, 140]], near: [[210, 185], [140, 225], [70, 270]], far: [[320, 200], [400, 215], [485, 220]], tail: [[170, 320], [20, 355]], feet: [[150, 340], [130, 400]], feet2: [[260, 340], [280, 390]] }),
+    // Tico en vol (564 × 417), redessiné le 2026-11-26 les deux ailes déployées, dégagées de la queue
+    bird('toucan_father_fly', 564, 417, 1, [320, 120], 3.2, { body: [[280, 330], [285, 170]], head: [[285, 170], [265, 25]], beak: [[300, 60], [440, 120]], near: [[225, 170], [115, 155], [12, 125]], far: [[350, 185], [455, 170], [555, 160]], tail: [[185, 300], [60, 310]], feet: [[205, 345], [195, 405]], feet2: [[300, 345], [320, 400]] }),
     // Tina, la maman toucan (336 × 384), regarde vers la gauche
     bird('toucan_mother', 336, 384, -1, [150, 115], 3.2, { body: [[170, 320], [160, 190]], head: [[160, 190], [140, 30]], beak: [[120, 100], [10, 160]], near: [[195, 190], [240, 240], [280, 280]], far: [[90, 200], [70, 250], [65, 290]], tail: [[240, 300], [330, 320]], feet: [[130, 320], [110, 365]], feet2: [[200, 320], [220, 365]] }),
     bird('toucan_boy_companion', 337, 332, 1, [229, 104], 3.6, { body: [[170, 270], [185, 160]], head: [[185, 160], [190, 20]], beak: [[220, 70], [325, 125]], near: [[150, 165], [90, 195], [25, 225]], far: [[235, 175], [275, 195], [320, 205]], tail: [[100, 250], [10, 275]], feet: [[110, 270], [110, 310]], feet2: [[220, 265], [270, 290]] }),
@@ -129,11 +138,38 @@ const BIRD_RIGS: Record<string, RigDef> = Object.fromEntries(
     bird('toucan_girl_young', 263, 314, 1, [169, 102], 3.6, { body: [[140, 255], [155, 160]], head: [[155, 160], [150, 15]], beak: [[180, 70], [255, 110]], near: [[130, 160], [75, 185], [15, 210]], far: [[205, 165], [225, 180], [240, 200]], tail: [[70, 240], [10, 255]], feet: [[95, 265], [100, 300]], feet2: [[175, 255], [225, 265]] }),
     bird('toucan_boy_little', 208, 251, 1, [133, 82], 4, { body: [[105, 210], [115, 125]], head: [[115, 125], [110, 15]], beak: [[140, 55], [200, 85]], near: [[90, 130], [50, 145], [10, 160]], far: [[160, 135], [185, 155], [200, 185]], feet: [[75, 210], [70, 245]], feet2: [[125, 210], [125, 245]] }),
     bird('toucan_girl_little', 228, 287, 1, [129, 95], 4, { body: [[120, 240], [130, 150]], head: [[130, 150], [120, 15]], beak: [[160, 80], [215, 100]], near: [[100, 150], [55, 160], [10, 175]], far: [[180, 160], [200, 180], [205, 210]], feet: [[85, 245], [80, 280]], feet2: [[140, 245], [150, 280]] }),
-  ].map((r) => [r.sprite, r]),
+  ].map((r) => [r.sprite, FLY_SPRITES[r.sprite] ? { ...r, flutter: false as const } : r]),
 );
 
 export const RIGS: Readonly<Record<string, RigDef>> = { ...(autoRigs as unknown as Record<string, RigDef>), ...KANGAROO_RIGS, ...BIRD_RIGS, ...HAND_RIGS };
 
 export function rigFor(sprite: string | undefined): RigDef | undefined {
   return sprite ? RIGS[sprite] : undefined;
+}
+
+export function flyRigFor(sprite: string | undefined): RigDef | undefined {
+  const fly = sprite ? FLY_SPRITES[sprite] : undefined;
+  return fly ? RIGS[fly] : undefined;
+}
+
+/** cadre du dessin en vol, en fractions du cadre du dessin posé */
+export interface Frame { x: number; y: number; w: number; h: number }
+
+/**
+ * Place le dessin en vol sur le dessin posé : même point d'attache du corps (au-dessus des pattes) et même
+ * taille d'oiseau (longueur du corps à la pointe de la tête), pour que le fondu ne fasse ni sauter ni grandir.
+ */
+export function flyFrame(rest: RigDef, fly: RigDef): Frame {
+  const reach = (r: RigDef) => {
+    const body = r.bones.find((b) => b.id === 'body')!, head = r.bones.find((b) => b.id === 'head')!;
+    return { at: body.pivot, len: Math.hypot(head.tip[0] - body.pivot[0], head.tip[1] - body.pivot[1]) };
+  };
+  const a = reach(rest), b = reach(fly);
+  const s = a.len / b.len; // pixels du dessin posé par pixel du dessin en vol
+  return {
+    x: (a.at[0] - b.at[0] * s) / rest.width,
+    y: (a.at[1] - b.at[1] * s) / rest.height,
+    w: (fly.width * s) / rest.width,
+    h: (fly.height * s) / rest.height,
+  };
 }

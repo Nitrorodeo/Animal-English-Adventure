@@ -40,6 +40,8 @@ export interface RigDef {
   drinkDip?: number;
   /** oiseaux : battements d'ailes par seconde en vol (défaut 3) */
   flapRate?: number;
+  /** oiseau posé qui a un dessin à part pour voler : il respire seulement, sans secouer les ailes */
+  flutter?: false;
 }
 
 export interface BonePose {
@@ -230,9 +232,10 @@ function idle(rig: RigDef, t: number): Record<string, BonePose> {
   for (const [w, tip] of WINGS) {
     const rest = wingRest(rig, w, tip);
     if (!rest) continue;
-    const up = 1.5 * (breath + 1) + idleFlutter(t);
+    const shake = rig.flutter === false ? 0 : 1;
+    const up = 1.5 * (breath + 1) + shake * idleFlutter(t);
     pose[w] = { rot: -rest.out * up };
-    pose[tip] = { rot: -rest.out * 0.6 * idleFlutter(t - 0.06) };
+    pose[tip] = { rot: -rest.out * 0.6 * shake * idleFlutter(t - 0.06) };
   }
   return pose;
 }

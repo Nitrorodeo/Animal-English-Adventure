@@ -36,7 +36,7 @@ import { LiveSprite } from './LiveSprite';
 import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
 import { TreasureIcon } from './TreasureIcon';
-import { rigFor } from '../game/rigs';
+import { flyFrame, flyRigFor, rigFor } from '../game/rigs';
 import { canFly, canHop, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
@@ -976,8 +976,12 @@ interface CharacterProps {
 function Character({ actor, state, species, place, question, action, speaking, hidden, peek, found, onTap, wearing, wanted, glow, cuddle, onHold, onDragTo, onDragEnd, baseH, face, dim, paused }: CharacterProps) {
   const sprite = spriteOf(state, species, actor);
   const name = actorName(state, species, actor);
-  const rig = rigFor(sprite?.path.split('/').pop()?.replace(/\.\w+$/, ''));
+  const spriteKey = sprite?.path.split('/').pop()?.replace(/\.\w+$/, '');
+  const rig = rigFor(spriteKey);
   const [puppetOk, setPuppetOk] = useState<boolean | null>(null);
+  // oiseau qui a un dessin à part pour voler (ailes déployées) : il le prend au décollage, par un fondu
+  const flyRig = flyRigFor(spriteKey);
+  const [flyOk, setFlyOk] = useState<boolean | null>(null);
   // marche : le personnage change de place → il marche le temps du trajet, tourné vers où il va
   const natural: 1 | -1 = rig?.facing ?? 1;
   const rest: 1 | -1 = face ?? natural;
@@ -1010,6 +1014,8 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const clip = puppetClip({ walking: !!walk, action, speaking, flies, hops });
   const facing: 1 | -1 = walk ? walk.dir : action ? lastDir.current : rest;
   const puppet = !!rig && !!sprite && puppetOk !== false && !hidden;
+  const winged = puppet && !!flyRig && flyOk !== false;
+  const airborne = winged && clip === 'fly';
   // appui long : chatouilles / câlin ; le simple toucher garde son effet (menu)
   const hold = useRef<{ timer: number; fired: boolean } | null>(null);
   const cancelHold = () => {
@@ -1144,7 +1150,8 @@ function Character({ actor, state, species, place, question, action, speaking, h
       ) : (
         <span className="char-icon" style={{ fontSize: `${base * 0.3}cqw` }}>{species.icon}</span>
       )}
-      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
+      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={airborne ? 'idle' : clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} off={airborne} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
+      {winged && <Puppet rig={flyRig} src={assetUrl({ ...sprite!, path: sprite!.path.replace(/(\.\w+)$/, '_fly$1') })} clip="fly" facing={facing} onReady={setFlyOk} dim={dim} paused={paused || !airborne} lifted={dragging} frame={flyFrame(rig!, flyRig)} off={!airborne} />}
       {question && <span className="q-bubble">?</span>}
       {wearing?.map((k) => (
         <span key={k} className={`worn worn-${wornSlot(k)}`}>

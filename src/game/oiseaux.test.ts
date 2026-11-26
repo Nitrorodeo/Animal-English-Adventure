@@ -3,7 +3,9 @@ import {
   FLAP_DOWN, IDLE_FLUTTER_EVERY, IDLE_FLUTTER_S, PAD_X, PAD_Y, WINGS, WING_DOWN, WING_UP,
   clipPose, flapRise, flyPose, idleFlutter, skinPoint, validateRig, wingBend, wingElevation, wingRest,
 } from './puppet';
-import { RIGS } from './rigs';
+// @ts-expect-error -- module Node disponible dans Vitest, sans les types Node dans le projet
+import { existsSync } from 'node:fs';
+import { FLY_SPRITES, RIGS, flyFrame, flyRigFor } from './rigs';
 import { canFly, puppetClip } from './staging';
 
 /**
@@ -32,8 +34,9 @@ describe('le squelette des oiseaux', () => {
     expect(RIGS.toucan_boy_little!.flapRate!).toBeGreaterThan(RIGS.toucan_father!.flapRate!);
   });
 
-  it('le papa toucan, redessiné ailes déployées : ses deux ailes s’écartent du corps, et la queue ne bat pas avec l’aile', () => {
-    const rig = RIGS.toucan_father!;
+  it('Tico vole avec son dessin aux ailes déployées : ses deux ailes s’écartent du corps, et la queue ne bat pas avec l’aile', () => {
+    const rig = flyRigFor('toucan_father')!;
+    expect(rig.sprite).toBe('toucan_father_fly');
     expect([rig.width, rig.height]).toEqual([564, 417]);
     for (const [w, tip] of WINGS) {
       const rest = wingRest(rig, w, tip)!;
@@ -51,6 +54,39 @@ describe('le squelette des oiseaux', () => {
         const a = skinPoint(rig, pose, pt), b = skinPoint(rig, still, pt);
         expect(Math.hypot(a[0] - b[0], a[1] - b[1]), `à ${p}`).toBeLessThan(rig.height * 0.01);
       }
+    }
+  });
+
+  it('un oiseau qui a un dessin en vol garde son dessin naturel une fois posé', () => {
+    for (const [rest, fly] of Object.entries(FLY_SPRITES)) {
+      expect(existsSync(`public/assets/characters/${fly}.webp`), fly).toBe(true);
+      expect(validateRig(RIGS[fly]!), fly).toEqual([]);
+      expect(RIGS[fly]!.facing, fly).toBe(RIGS[rest]!.facing);
+      // posé, il respire seulement : il ne secoue pas les ailes de son dessin naturel
+      const still = RIGS[rest]!;
+      for (let t = 0; t < 2 * IDLE_FLUTTER_EVERY; t += 0.05) {
+        expect(Math.abs(clipPose(still, 'idle', t).wing!.rot!), `${rest} à ${t.toFixed(2)}`).toBeLessThan(3.1);
+      }
+    }
+    // Tico posé : l'ancien dessin (une aile ouverte, l'autre contre la queue)
+    expect([RIGS.toucan_father!.width, RIGS.toucan_father!.height]).toEqual([498, 417]);
+    // les oiseaux sans dessin en vol volent avec leur dessin habituel
+    expect(flyRigFor('toucan_mother')).toBeUndefined();
+  });
+
+  it('au décollage, le dessin en vol se pose pile sur le dessin posé : même corps, même taille, sans saut', () => {
+    for (const rest of Object.keys(FLY_SPRITES)) {
+      const a = RIGS[rest]!, b = flyRigFor(rest)!;
+      const f = flyFrame(a, b);
+      // un point du dessin en vol, ramené dans le cadre du dessin posé (pixels du dessin posé)
+      const onRest = ([x, y]: readonly [number, number]): [number, number] => [(f.x + (x / b.width) * f.w) * a.width, (f.y + (y / b.height) * f.h) * a.height];
+      const bone = (r: typeof a, id: string) => r.bones.find((x) => x.id === id)!;
+      const [px, py] = onRest(bone(b, 'body').pivot);
+      expect(Math.hypot(px - bone(a, 'body').pivot[0], py - bone(a, 'body').pivot[1]), rest).toBeLessThan(0.5);
+      // le bout de la tête arrive à la même hauteur, à quelques pixels près
+      expect(Math.abs(onRest(bone(b, 'head').tip)[1] - bone(a, 'head').tip[1]), rest).toBeLessThan(a.height * 0.03);
+      // même échelle dans les deux sens : le dessin n'est ni écrasé ni étiré
+      expect((f.w * a.width) / b.width).toBeCloseTo((f.h * a.height) / b.height, 6);
     }
   });
 
@@ -123,7 +159,7 @@ describe('un vrai battement d’ailes', () => {
   });
 
   it('chaque oiseau reste dans le cadre du canevas pendant tout le battement', () => {
-    for (const k of BIRDS) {
+    for (const k of [...BIRDS, ...Object.values(FLY_SPRITES)]) {
       const rig = RIGS[k]!;
       // articulations, bec, et le contour des ailes : de part et d'autre de chaque os d'aile, sur 30 % de sa longueur
       const feathers = rig.bones.filter((b) => b.id.startsWith('wing')).flatMap((b) => {

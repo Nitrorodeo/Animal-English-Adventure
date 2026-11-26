@@ -549,7 +549,9 @@ small { font-weight: normal; opacity: 0.7; }
 .adv-chip .adv-treasure { font-size: 18px; }
 
 /* Marionnettes animées (src/ui/Puppet.tsx) : le dessin déformé remplace l'image, qui garde la place et la zone à toucher */
-.puppet { position: absolute; inset: 0; pointer-events: none; }
+.puppet { position: absolute; inset: 0; pointer-events: none; transition: opacity 0.18s ease; }
+/* oiseau : le dessin posé et le dessin en vol passent de l'un à l'autre par un fondu */
+.puppet.off { opacity: 0; }
 /* aucune ombre ni filtre CSS sur le canevas : il est redessiné à chaque image, le flou serait recalculé
    à chaque fois (saccades sur tablette). L'ombre est dessinée par Puppet ; le halo est un calque fixe. */
 .puppet canvas { position: absolute; display: block; }

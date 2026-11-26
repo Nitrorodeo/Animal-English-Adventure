@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { PAD_X, PAD_Y, blendPose, buildMesh, clipPose, meshFor, drinkPose, localMatrix, apply, skin, skinPoint, validateRig, walkPose, weightsAt, type Pose } from './puppet';
-import { RIGS } from './rigs';
+// @ts-expect-error -- module Node disponible dans Vitest, sans les types Node dans le projet
+import { readFileSync } from 'node:fs';
+import { FLY_SPRITES, RIGS } from './rigs';
 import assetManifest from '../content/assetManifest.json';
 
 const leo = RIGS.lion_father!;
@@ -12,7 +14,15 @@ describe('marionnette déformable', () => {
 
   it('chaque squelette correspond à une image de personnage existante, de la bonne taille', () => {
     const manifest = assetManifest as { characters: Record<string, { width: number; height: number }> };
+    // dessin « en vol » d'un oiseau : il n'est pas au manifeste (ce n'est pas un personnage à part), on lit sa taille dans le fichier
+    const flying = new Set(Object.values(FLY_SPRITES));
     for (const rig of Object.values(RIGS)) {
+      if (flying.has(rig.sprite)) {
+        const f = readFileSync(`public/assets/characters/${rig.sprite}.webp`);
+        expect(f.toString('ascii', 12, 16), rig.sprite).toBe('VP8X');
+        expect([f.readUIntLE(24, 3) + 1, f.readUIntLE(27, 3) + 1], rig.sprite).toEqual([rig.width, rig.height]);
+        continue;
+      }
       const info = manifest.characters[rig.sprite];
       expect(info, rig.sprite).toBeTruthy();
       const w = info!.width, h = info!.height;
