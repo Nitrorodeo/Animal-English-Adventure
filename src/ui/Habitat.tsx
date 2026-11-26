@@ -37,7 +37,7 @@ import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
 import { TreasureIcon } from './TreasureIcon';
 import { flyFrame, flyRigFor, rigFor } from '../game/rigs';
-import { canFly, canHop, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
+import { canFly, canHop, LANDING_MS, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { acceptsDown, dragSpot, endsTrack, isDrag, withoutKey, type Spot } from './drag';
@@ -1016,6 +1016,17 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const puppet = !!rig && !!sprite && puppetOk !== false && !hidden;
   const winged = puppet && !!flyRig && flyOk !== false;
   const airborne = winged && clip === 'fly';
+  // à l'atterrissage, le dessin en vol continue de s'animer le temps de se poser et de s'effacer (pas d'image figée)
+  const [settling, setSettling] = useState(false);
+  const wasAirborne = useRef(false);
+  useEffect(() => {
+    if (airborne) { wasAirborne.current = true; setSettling(false); return; }
+    if (!wasAirborne.current) return;
+    wasAirborne.current = false;
+    setSettling(true);
+    const t = window.setTimeout(() => setSettling(false), LANDING_MS);
+    return () => window.clearTimeout(t);
+  }, [airborne]);
   // appui long : chatouilles / câlin ; le simple toucher garde son effet (menu)
   const hold = useRef<{ timer: number; fired: boolean } | null>(null);
   const cancelHold = () => {
@@ -1150,8 +1161,8 @@ function Character({ actor, state, species, place, question, action, speaking, h
       ) : (
         <span className="char-icon" style={{ fontSize: `${base * 0.3}cqw` }}>{species.icon}</span>
       )}
-      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={airborne ? 'idle' : clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} off={airborne} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
-      {winged && <Puppet rig={flyRig} src={assetUrl({ ...sprite!, path: sprite!.path.replace(/(\.\w+)$/, '_fly$1') })} clip="fly" facing={facing} onReady={setFlyOk} dim={dim} paused={paused || !airborne} lifted={dragging} frame={flyFrame(rig!, flyRig)} off={!airborne} />}
+      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={airborne ? 'idle' : clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} off={airborne} layer={winged ? 'under' : undefined} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
+      {winged && <Puppet rig={flyRig} src={assetUrl({ ...sprite!, path: sprite!.path.replace(/(\.\w+)$/, '_fly$1') })} clip={airborne ? 'fly' : 'idle'} facing={facing} onReady={setFlyOk} dim={dim} paused={paused || !(airborne || settling)} lifted={dragging} frame={flyFrame(rig!, flyRig)} off={!airborne} layer="over" />}
       {question && <span className="q-bubble">?</span>}
       {wearing?.map((k) => (
         <span key={k} className={`worn worn-${wornSlot(k)}`}>

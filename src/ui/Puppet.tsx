@@ -30,6 +30,8 @@ interface Props {
   frame?: Frame;
   /** effacé par un fondu (oiseau : le dessin posé pendant le vol, le dessin en vol une fois posé) */
   off?: boolean;
+  /** oiseau à deux dessins : `under` = le dessin posé (dessous), `over` = le dessin en vol, qui se fond par-dessus */
+  layer?: 'under' | 'over';
 }
 
 const BLEND_S = 0.35;
@@ -62,7 +64,7 @@ void main() {
   gl_FragColor = c;
 }`;
 
-export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = false, dim = false, lifted = false, hopS = HOP_S, hopKey, frame, off = false }: Props) {
+export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = false, dim = false, lifted = false, hopS = HOP_S, hopKey, frame, off = false, layer }: Props) {
   const frozen = useRef(frozenAt);
   frozen.current = frozenAt;
   const look = useRef({ paused, dim, lifted });
@@ -274,7 +276,7 @@ export function Puppet({ rig, src, clip, facing, onReady, frozenAt, paused = fal
   // le cadre du dessin en vol se retourne avec lui : sa place est symétrique dans le cadre du dessin posé
   const box = frame && { left: `${(flip ? 1 - frame.x - frame.w : frame.x) * 100}%`, top: `${frame.y * 100}%`, width: `${frame.w * 100}%`, height: `${frame.h * 100}%`, right: 'auto', bottom: 'auto' };
   return (
-    <span className={`puppet${off ? ' off' : ''}`} style={{ ...box, transform: flip ? 'scaleX(-1)' : undefined }}>
+    <span className={`puppet${layer ? ` ${layer}` : ''}${off ? ' off' : ''}`} style={{ ...box, transform: flip ? 'scaleX(-1)' : undefined }}>
       <canvas
         ref={canvasRef}
         style={{ left: `${-PAD_X * 100}%`, top: `${-PAD_Y * 100}%`, width: `${(1 + 2 * PAD_X) * 100}%`, height: `${(1 + 2 * PAD_Y) * 100}%` }}

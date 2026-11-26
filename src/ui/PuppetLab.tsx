@@ -20,7 +20,9 @@ export function PuppetLab() {
   const [clip, setClip] = useState<ClipName>(clipQ && CLIPS.includes(clipQ) ? clipQ : 'walk');
   const frozenAt = tQ !== null ? Number(tQ) : undefined;
   const sp = q.get('sp') ?? 'lion';
-  const rigs = Object.values(RIGS).filter((r) => r.sprite.startsWith(`${sp}_`)).slice(0, 12);
+  // `&fly` : les dessins en vol des oiseaux (ils ne sont pas au manifeste, leur fichier suit le nom du squelette)
+  const fly = q.has('fly');
+  const rigs = Object.values(RIGS).filter((r) => r.sprite.startsWith(`${sp}_`) && r.sprite.endsWith('_fly') === fly).slice(0, 12);
   const chars = (manifest as { characters: Record<string, { path: string; width: number; height: number }> }).characters;
   return (
     <div className="puppet-lab">
@@ -32,7 +34,7 @@ export function PuppetLab() {
       </div>
       <div className={rigs.length > 2 ? 'lab-row many' : 'lab-row'}>
         {rigs.map((rig) => {
-          const info = chars[rig.sprite];
+          const info = chars[rig.sprite] ?? (fly ? { path: `assets/characters/${rig.sprite}.webp`, width: rig.width, height: rig.height } : undefined);
           if (!info) return null;
           return (
             <div key={rig.sprite} className="lab-cell" data-sprite={rig.sprite}>

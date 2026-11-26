@@ -4,9 +4,9 @@ import {
   clipPose, flapRise, flyPose, idleFlutter, skinPoint, validateRig, wingBend, wingElevation, wingRest,
 } from './puppet';
 // @ts-expect-error -- module Node disponible dans Vitest, sans les types Node dans le projet
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { FLY_SPRITES, RIGS, flyFrame, flyRigFor } from './rigs';
-import { canFly, puppetClip } from './staging';
+import { canFly, LANDING_MS, puppetClip } from './staging';
 
 /**
  * Les oiseaux battent des ailes (2026-11-26, Westimmo : « qu'on les voit battre des ailes et que l'animation
@@ -70,8 +70,12 @@ describe('le squelette des oiseaux', () => {
     }
     // Tico posé : l'ancien dessin (une aile ouverte, l'autre contre la queue)
     expect([RIGS.toucan_father!.width, RIGS.toucan_father!.height]).toEqual([498, 417]);
-    // les oiseaux sans dessin en vol volent avec leur dessin habituel
-    expect(flyRigFor('toucan_mother')).toBeUndefined();
+    // les toucans et les hiboux (sauf les nouveau-nés, qui ne volent pas) ont leur dessin en vol
+    expect(Object.keys(FLY_SPRITES)).toHaveLength(16);
+    expect(flyRigFor('owl_father')?.sprite).toBe('owl_father_fly');
+    expect(flyRigFor('owl_boy_newborn')).toBeUndefined();
+    // les autres animaux n'en ont pas
+    expect(flyRigFor('lion_father')).toBeUndefined();
   });
 
   it('au décollage, le dessin en vol se pose pile sur le dessin posé : même corps, même taille, sans saut', () => {
@@ -211,5 +215,29 @@ describe('voler pendant un jeu', () => {
     expect(puppetClip({ walking: false, action: 'fly', flies: true })).toBe('fly');
     // un animal qui ne vole pas ne bat pas des ailes
     expect(puppetClip({ walking: false, action: 'fly' })).not.toBe('fly');
+  });
+});
+
+describe('le décollage et l’atterrissage', () => {
+  const css = readFileSync('src/styles.css', 'utf-8');
+  const rule = (sel: string) => {
+    const m = css.match(new RegExp(sel.replace(/\./g, '\\.') + '\\s*\\{([^}]*)\\}'));
+    expect(m, sel).toBeTruthy();
+    return m![1];
+  };
+  const secs = (s: string): number[] => [...s.matchAll(/([\d.]+)s/g)].map((m) => Number(m[1]));
+
+  it('le dessin posé reste plein dessous : seul le dessin en vol change d’opacité (aucun creux pendant le fondu)', () => {
+    expect(rule('.puppet.under')).toMatch(/transition:\s*none/);
+    // au décollage, il ne disparaît qu’une fois recouvert par le dessin en vol
+    const [inS = NaN] = secs(rule('.puppet.over'));
+    const [, hideDelay = NaN] = secs(rule('.puppet.under.off'));
+    expect(hideDelay).toBeGreaterThanOrEqual(inS);
+  });
+
+  it('à l’atterrissage, l’oiseau en vol reste animé jusqu’à la fin de son effacement (pas d’image figée)', () => {
+    const [dur = NaN, delay = 0] = secs(rule('.puppet.over.off'));
+    expect((dur + delay) * 1000).toBeLessThanOrEqual(LANDING_MS);
+    expect(dur).toBeGreaterThan(0.2); // il se pose doucement, pas d’un coup
   });
 });

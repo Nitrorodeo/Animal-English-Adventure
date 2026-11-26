@@ -20,6 +20,9 @@ export function puppetClip(s: { walking: boolean; action?: string; speaking?: bo
 }
 
 /** Le kangourou se déplace en bondissant ; le nouveau-né, assis, ne bondit pas encore. */
+/** temps pendant lequel l'oiseau qui atterrit reste animé : il se pose en s'effaçant (voir `.puppet.over.off`) */
+export const LANDING_MS = 600;
+
 export function canHop(mobility: Mobility, stage?: GrowthStage): boolean {
   return mobility === 'jump' && stage !== 'newborn';
 }
