@@ -9,8 +9,12 @@ import type { BiomeDef, Weather } from '../content/types';
  * (le manchot, la panthère des neiges ; jamais la savane, le désert, ni l'intérieur d'une grotte de glace).
  */
 
-/** décors vus de l'intérieur : la météo du dehors n'y entre pas */
-export const INDOOR_PLACES: ReadonlySet<string> = new Set(['an_ice_cave']);
+/**
+ * Décors vus de l'intérieur, où la météo du dehors n'entre pas. Vide depuis le 2026-11-26 : la grotte de glace,
+ * ouverte sur le ciel et enneigée, reçoit la neige comme tous les décors enneigés d'Antarctique (Westimmo : « on peut
+ * le mettre sur tous les décors où il y a de la neige, Antarctique et pour les panthères des neiges »).
+ */
+export const INDOOR_PLACES: ReadonlySet<string> = new Set<string>();
 
 /**
  * Activités dont le texte dépend de la météo du décor : le catalogue des voix les décline pour chaque météo

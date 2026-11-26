@@ -16,7 +16,7 @@ import { ALBUM_MAX_PER_FAMILY, birthdayPhoto, familyPhotos, moveSticker, parseAl
 import { migrate } from './save';
 import { newGameState, type GameState } from './state';
 import { activityOffered, FAMILY_CONFIGS, possibleMemories } from './variants';
-import { dayWeathers, INDOOR_PLACES, placeWeathers, snowPossible, WEATHER_ACTIVITIES, weatherFx, weatherOfDay, withDayWeather } from './weather';
+import { dayWeathers, placeWeathers, snowPossible, WEATHER_ACTIVITIES, weatherFx, weatherOfDay, withDayWeather } from './weather';
 
 /**
  * Les 8 idées validées le 2026-11-25 (« tous les 8 ») : photo racontée, « Cheese! » et « Who is in the photo? »,
@@ -42,12 +42,16 @@ describe('météo du jour : toujours plausible dans le lieu', () => {
     for (const p of places.filter((x) => x.continentId === 'antarctica' || ['cold', 'snowy', 'windy', 'hot'].includes(x.weather))) expect(dayWeathers(p), p.id).not.toContain('rainy');
   });
 
-  it('rien ne tombe dans la grotte de glace (vue de l’intérieur)', () => {
-    for (const id of INDOOR_PLACES) {
-      const p = PLACES[id]!;
-      expect(p, id).toBeDefined();
-      expect(dayWeathers(p)).toEqual([p.weather]);
+  it('la neige à allumer partout où le décor est enneigé (2026-11-26) : tout l’Antarctique, grotte de glace comprise, et les décors enneigés de la panthère des neiges', () => {
+    for (const p of places.filter((x) => x.continentId === 'antarctica')) expect(snowPossible(p), p.id).toBe(true);
+    expect(snowPossible(PLACES['an_ice_cave']!)).toBe(true);
+    const leopard = SPECIES.find((s) => s.id === 'snow_leopard')!;
+    for (const id of ['asia_snow_den', 'asia_snow_cave']) {
+      expect(leopard.allowedBiomes, id).toContain(id);
+      expect(snowPossible(PLACES[id]!), id).toBe(true);
     }
+    // l’arche de pierre est dessinée verte et fleurie : pas de neige
+    expect(snowPossible(PLACES['asia_arch']!)).toBe(false);
   });
 
   it('neige à la demande (2026-11-26) : éteinte, chaque décor garde son temps dessiné ; allumée, il neige seulement là où c’est possible', () => {
