@@ -107,7 +107,9 @@ describe('marionnette déformable', () => {
     for (const rig of Object.values(RIGS)) {
       const mesh = buildMesh(rig, 14, 18);
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
-      const clips = /^(owl|toucan)_/.test(rig.sprite) ? (['walk', 'drink', 'talk', 'idle', 'fly'] as const) : (['walk', 'drink', 'talk', 'idle'] as const);
+      // le vol des oiseaux est contrôlé dans oiseaux.test.ts : une aile levée emporte les coins vides de l'image
+      // hors du cadre, sans conséquence ; on y vérifie les plumes elles-mêmes
+      const clips = ['walk', 'drink', 'talk', 'idle'] as const;
       for (const clip of clips) {
         for (let t = 0; t < 2.5; t += 0.15) {
           const out = skin(rig, mesh, clipPose(rig, clip, t));

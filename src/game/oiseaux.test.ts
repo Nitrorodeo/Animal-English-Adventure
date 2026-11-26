@@ -32,6 +32,28 @@ describe('le squelette des oiseaux', () => {
     expect(RIGS.toucan_boy_little!.flapRate!).toBeGreaterThan(RIGS.toucan_father!.flapRate!);
   });
 
+  it('le papa toucan, redessiné ailes déployées : ses deux ailes s’écartent du corps, et la queue ne bat pas avec l’aile', () => {
+    const rig = RIGS.toucan_father!;
+    expect([rig.width, rig.height]).toEqual([564, 417]);
+    for (const [w, tip] of WINGS) {
+      const rest = wingRest(rig, w, tip)!;
+      // aile ouverte presque à l'horizontale, loin du corps
+      expect(Math.abs(rest.elev), w).toBeLessThan(20);
+      const end = rig.bones.find((b) => b.id === tip)!.tip;
+      expect(Math.abs(end[0] - rig.width / 2), w).toBeGreaterThan(rig.width * 0.4);
+    }
+    // la queue garde son propre os : elle suit le corps qui se penche, mais pas l'aile qui bat
+    const tail = rig.bones.find((b) => b.id === 'tail')!;
+    for (const p of [0, 0.3, FLAP_DOWN, 0.8]) {
+      const pose = flyPose(rig, p / rig.flapRate!);
+      const still = { ...pose, wing: {}, wingTip: {}, wing2: {}, wing2Tip: {} };
+      for (const pt of [tail.pivot, tail.tip]) {
+        const a = skinPoint(rig, pose, pt), b = skinPoint(rig, still, pt);
+        expect(Math.hypot(a[0] - b[0], a[1] - b[1]), `à ${p}`).toBeLessThan(rig.height * 0.01);
+      }
+    }
+  });
+
   it('le nouveau-né ne vole pas encore ; les autres oiseaux volent', () => {
     expect(canFly('fly', 'newborn')).toBe(false);
     expect(canFly('fly', 'little')).toBe(true);
@@ -103,7 +125,12 @@ describe('un vrai battement d’ailes', () => {
   it('chaque oiseau reste dans le cadre du canevas pendant tout le battement', () => {
     for (const k of BIRDS) {
       const rig = RIGS[k]!;
-      const visible = [...rig.bones.flatMap((b) => [b.pivot, b.tip]), rig.mouth];
+      // articulations, bec, et le contour des ailes : de part et d'autre de chaque os d'aile, sur 30 % de sa longueur
+      const feathers = rig.bones.filter((b) => b.id.startsWith('wing')).flatMap((b) => {
+        const dx = b.tip[0] - b.pivot[0], dy = b.tip[1] - b.pivot[1];
+        return [1, -1].map((s) => [b.tip[0] - s * 0.3 * dy, b.tip[1] + s * 0.3 * dx] as [number, number]);
+      });
+      const visible = [...rig.bones.flatMap((b) => [b.pivot, b.tip]), rig.mouth, ...feathers];
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
       for (let p = 0; p < 1; p += 0.02) {
         const pose = clipPose(rig, 'fly', p / rig.flapRate!);
