@@ -37,7 +37,7 @@ import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
 import { TreasureIcon } from './TreasureIcon';
 import { flyFrame, flyRigFor, rigFor } from '../game/rigs';
-import { canFly, canHop, LANDING_MS, landingAt, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
+import { canFly, canHop, DROP_HOLD_MS, LANDING_MS, landingAt, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { acceptsDown, dragSpot, endsTrack, isDrag, withoutKey, type Spot } from './drag';
@@ -1015,7 +1015,17 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const facing: 1 | -1 = walk ? walk.dir : action ? lastDir.current : rest;
   const puppet = !!rig && !!sprite && puppetOk !== false && !hidden;
   const winged = puppet && !!flyRig && flyOk !== false;
-  const airborne = winged && clip === 'fly';
+  const flying = winged && clip === 'fly';
+  // lâché au doigt, l'oiseau qui replie ses ailes garde un instant son dessin en vol (ailes repliées) : s'il repart
+  // aussitôt vers sa vraie place, on ne voit pas son dessin posé clignoter entre les deux vols
+  const [dropHold, setDropHold] = useState(false);
+  useEffect(() => {
+    if (!dropHold) return;
+    const t = window.setTimeout(() => setDropHold(false), DROP_HOLD_MS);
+    return () => window.clearTimeout(t);
+  }, [dropHold]);
+  useEffect(() => { if (flying) setDropHold(false); }, [flying]);
+  const airborne = flying || (winged && dropHold);
   // à l'atterrissage, le dessin en vol continue de s'animer le temps de se poser et de s'effacer (pas d'image figée)
   const [settling, setSettling] = useState(false);
   const wasAirborne = useRef(false);
@@ -1047,7 +1057,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
     const t = window.setTimeout(() => setLanding(true), landingAt(track.current.ms));
     return () => window.clearTimeout(t);
   }, [walk, folds]);
-  const flyClip = airborne ? (folds && landing && !dragging ? 'land' : 'fly') : folds ? 'land' : 'idle';
+  const flyClip = flying ? (folds && landing && !dragging ? 'land' : 'fly') : folds ? 'land' : 'idle';
   // un doigt ou une souris envoient 120 à 240 mouvements par seconde : on n'en garde qu'un par image
   const pendingMove = useRef<{ x: number; y: number; grabDy: number } | null>(null);
   const moveRaf = useRef(0);
@@ -1098,6 +1108,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
     if (!endsTrack(drag.current, e.pointerId)) return; // un autre doigt : ce glisser continue
     if (drag.current?.on) {
       flushMove(); // dernière position du doigt avant de poser
+      if (folds && flying) setDropHold(true);
       setDragging(false);
       setWalk(null); // posé : il s'arrête net
       onDragEnd?.();

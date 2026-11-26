@@ -24,6 +24,8 @@ export function puppetClip(s: { walking: boolean; action?: string; speaking?: bo
 export const LANDING_MS = 600;
 /** l'oiseau qui replie ses ailes pour se poser (`landFold`) commence à les replier ce temps-là avant de toucher le sol */
 export const LAND_LEAD_MS = 320;
+/** lâché au doigt : temps où l'oiseau garde son dessin en vol, ailes repliées, avant de se poser (ms) */
+export const DROP_HOLD_MS = 160;
 /** à quel moment du trajet (ms) l'oiseau commence à replier ses ailes : peu avant l'arrivée, après au moins un peu de vol */
 export function landingAt(tripMs: number): number {
   return Math.max(tripMs * 0.6, tripMs - LAND_LEAD_MS);

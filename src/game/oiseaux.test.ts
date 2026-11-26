@@ -6,7 +6,7 @@ import {
 // @ts-expect-error -- module Node disponible dans Vitest, sans les types Node dans le projet
 import { existsSync, readFileSync } from 'node:fs';
 import { FLY_SPRITES, RIGS, flyFrame, flyRigFor } from './rigs';
-import { canFly, LANDING_MS, LAND_LEAD_MS, landingAt, puppetClip } from './staging';
+import { canFly, DROP_HOLD_MS, LANDING_MS, LAND_LEAD_MS, landingAt, puppetClip } from './staging';
 
 /**
  * Les oiseaux battent des ailes (2026-11-26, Westimmo : « qu'on les voit battre des ailes et que l'animation
@@ -242,16 +242,18 @@ describe('le décollage et l’atterrissage', () => {
   });
 });
 
-describe('Oscar se pose les ailes repliées (2026-11-26 : « Chez les hiboux il y a un gros lag, quand le hibou arrête de voler »)', () => {
-  const rig = RIGS.owl_father_fly!;
+describe('les oiseaux se posent les ailes repliées (2026-11-26 : essai sur Oscar validé, « tu peux faire pareil pour les toucan »)', () => {
+  const flyers = Object.values(FLY_SPRITES);
 
-  it('seul Oscar replie ses ailes pour se poser, en essai ; les toucans gardent leur atterrissage validé', () => {
-    expect(rig.landFold).toBe(true);
-    expect(flyRigFor('owl_mother')?.landFold).toBeUndefined();
-    expect(flyRigFor('toucan_father')?.landFold).toBeUndefined();
+  it('tous les toucans et tous les hiboux replient leurs ailes pour se poser', () => {
+    expect(flyers).toHaveLength(16);
+    for (const k of flyers) expect(RIGS[k]!.landFold, k).toBe(true);
+    expect(flyRigFor('owl_mother')?.landFold).toBe(true);
+    expect(flyRigFor('toucan_father')?.landFold).toBe(true);
   });
 
-  it('ailes repliées le long du corps : le bout des ailes descend sous l’épaule et se rapproche du corps, sans dépasser sous les pattes', () => {
+  it.each(Object.values(FLY_SPRITES))('%s : ailes repliées le long du corps, le bout des ailes sous l’épaule, plus près du corps, sans dépasser sous les pattes', (k) => {
+    const rig = RIGS[k]!;
     const pose = clipPose(rig, 'land', 0);
     expect(pose).toEqual(clipPose(rig, 'land', 5)); // pose tenue, sans mouvement parasite
     const bone = (id: string) => rig.bones.find((b) => b.id === id)!;
@@ -268,6 +270,15 @@ describe('Oscar se pose les ailes repliées (2026-11-26 : « Chez les hiboux il 
     // corps et tête droits
     expect(landPose(rig).body!.rot).toBe(0);
     expect(landPose(rig).head!.rot).toBe(0);
+  });
+
+  it('lâché au doigt puis replacé, il ne fait pas clignoter son dessin posé entre les deux vols', () => {
+    // mesuré dans le jeu : il repart vers sa place environ 64 ms après le lâcher
+    expect(DROP_HOLD_MS).toBeGreaterThan(100);
+    expect(DROP_HOLD_MS).toBeLessThanOrEqual(200); // s'il reste où on l'a lâché, il se pose sans traîner
+    const src = readFileSync('src/ui/Habitat.tsx', 'utf-8');
+    expect(src).toContain('if (folds && flying) setDropHold(true);');
+    expect(src).toContain('const airborne = flying || (winged && dropHold);');
   });
 
   it('il commence à replier ses ailes peu avant de toucher le sol, après avoir un peu volé', () => {
