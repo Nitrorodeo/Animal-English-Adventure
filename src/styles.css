@@ -559,8 +559,12 @@ small { font-weight: normal; opacity: 0.7; }
 .puppet.under.off { transition: opacity 0s linear 0.2s; }
 .puppet.over { transition: opacity 0.16s ease-out; }
 .puppet.over.off { transition: opacity 0.34s ease-in-out 0.08s; }
-/* hibou : il arrive au sol les ailes déjà repliées, le passage à son dessin posé est bref */
-.puppet.over.quick.off { transition: opacity 0.14s ease-in 0.03s; }
+/* hibou : son dessin en vol (de face, ailes ouvertes) est trop différent de son dessin posé pour un fondu, qui
+   montrerait les deux hiboux l'un sur l'autre. Il replie ses ailes avant de toucher le sol, et on passe d'un dessin
+   à l'autre d'un coup, sur la même image ; un petit tassement à l'arrivée masque le changement. */
+.puppet.under.quick, .puppet.under.quick.off, .puppet.over.quick, .puppet.over.quick.off { transition: none; }
+.char.landed .puppet.under { animation: touchdown 0.3s ease-out; transform-origin: 50% 100%; }
+@keyframes touchdown { 0% { scale: 1.05 0.93; } 55% { scale: 0.98 1.03; } 100% { scale: 1 1; } }
 /* aucune ombre ni filtre CSS sur le canevas : il est redessiné à chaque image, le flou serait recalculé
    à chaque fois (saccades sur tablette). L'ombre est dessinée par Puppet ; le halo est un calque fixe. */
 .puppet canvas { position: absolute; display: block; }

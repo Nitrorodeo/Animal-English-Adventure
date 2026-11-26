@@ -31,7 +31,7 @@ interface Props {
   /** effacé par un fondu (oiseau : le dessin posé pendant le vol, le dessin en vol une fois posé) */
   off?: boolean;
   /** oiseau à deux dessins : `under` = le dessin posé (dessous), `over` = le dessin en vol, qui se fond par-dessus */
-  layer?: 'under' | 'over' | 'over quick';
+  layer?: 'under' | 'over' | 'under quick' | 'over quick';
 }
 
 const BLEND_S = 0.35;

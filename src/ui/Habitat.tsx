@@ -1137,7 +1137,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const base = baseH ?? place.h;
   return (
     <button
-      className={`char${action ? ` act-${action}` : ''}${speaking ? ' speaking' : ''}${hidden ? ' hidden' : ''}${hidden && peek ? ` peek peek-${peek === 1 ? 'r' : 'l'}` : ''}${found ? ' found' : ''}${puppet && puppetOk ? ' puppeted' : ''}${puppet && walk ? ' walking' : ''}${flies && walk && !dragging ? ' flying' : ''}${wanted ? ' wanted' : ''}${glow ? ' glow' : ''}${cuddle ? (actor.kind === 'baby' ? ' tickled' : ' hugged') : ''}${onDragTo ? ' movable' : ''}${dragging ? ' dragging' : ''}${nameInside(place.y) ? ' low' : ''}`}
+      className={`char${action ? ` act-${action}` : ''}${speaking ? ' speaking' : ''}${hidden ? ' hidden' : ''}${hidden && peek ? ` peek peek-${peek === 1 ? 'r' : 'l'}` : ''}${found ? ' found' : ''}${puppet && puppetOk ? ' puppeted' : ''}${puppet && walk ? ' walking' : ''}${flies && walk && !dragging ? ' flying' : ''}${wanted ? ' wanted' : ''}${glow ? ' glow' : ''}${cuddle ? (actor.kind === 'baby' ? ' tickled' : ' hugged') : ''}${onDragTo ? ' movable' : ''}${dragging ? ' dragging' : ''}${folds && settling ? ' landed' : ''}${nameInside(place.y) ? ' low' : ''}`}
       style={{
         // déplacé par transform (calculé par la carte graphique, sans recalcul de mise en page) : marche fluide
         height: `${base}%`,
@@ -1171,7 +1171,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
       ) : (
         <span className="char-icon" style={{ fontSize: `${base * 0.3}cqw` }}>{species.icon}</span>
       )}
-      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={airborne ? 'idle' : clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} off={airborne} layer={winged ? 'under' : undefined} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
+      {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={airborne ? 'idle' : clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} off={airborne} layer={winged ? (folds ? 'under quick' : 'under') : undefined} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
       {winged && <Puppet rig={flyRig} src={assetUrl({ ...sprite!, path: sprite!.path.replace(/(\.\w+)$/, '_fly$1') })} clip={flyClip} facing={facing} onReady={setFlyOk} dim={dim} paused={paused || !(airborne || settling)} lifted={dragging} frame={flyFrame(rig!, flyRig)} off={!airborne} layer={folds ? 'over quick' : 'over'} />}
       {question && <span className="q-bubble">?</span>}
       {wearing?.map((k) => (

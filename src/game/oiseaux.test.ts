@@ -276,12 +276,17 @@ describe('Oscar se pose les ailes repliées (2026-11-26 : « Chez les hiboux il 
     for (const ms of [300, 800, 2500]) expect(landingAt(ms)).toBeLessThan(ms);
   });
 
-  it('arrivé au sol les ailes déjà repliées, le passage à son dessin posé est bref', () => {
+  it('jamais les deux hiboux l’un sur l’autre : on passe d’un dessin à l’autre d’un coup, sans fondu (« toujours l’image qui se dédouble »)', () => {
     const css = readFileSync('src/styles.css', 'utf-8');
-    const m = css.match(/\.puppet\.over\.quick\.off\s*\{([^}]*)\}/);
+    const m = css.match(/([^{}]*)\{\s*transition:\s*none;\s*\}/g)?.find((r: string) => r.includes('.puppet.over.quick.off'));
     expect(m).toBeTruthy();
-    const [dur = NaN, delay = 0] = [...m![1]!.matchAll(/([\d.]+)s/g)].map((x) => Number(x[1]));
-    expect(dur + delay).toBeLessThanOrEqual(0.2);
-    expect((dur + delay) * 1000).toBeLessThanOrEqual(LANDING_MS);
+    for (const sel of ['.puppet.under.quick,', '.puppet.under.quick.off,', '.puppet.over.quick,', '.puppet.over.quick.off']) expect(m).toContain(sel);
+    // ces règles viennent après les fondus des toucans, qu’elles remplacent
+    expect(css.indexOf('.puppet.over.quick.off')).toBeGreaterThan(css.indexOf('.puppet.over.off {'));
+    expect(css.indexOf('.puppet.under.quick.off')).toBeGreaterThan(css.indexOf('.puppet.under.off {'));
+    // un petit tassement à l’arrivée, plus court que le temps où l’oiseau se pose
+    const td = css.match(/\.char\.landed \.puppet\.under\s*\{[^}]*animation:\s*touchdown ([\d.]+)s/);
+    expect(td).toBeTruthy();
+    expect(Number(td![1]) * 1000).toBeLessThanOrEqual(LANDING_MS);
   });
 });
