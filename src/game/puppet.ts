@@ -38,6 +38,8 @@ export interface RigDef {
   stepRate?: number;
   /** profondeur où la tête descend pour boire (fraction de la hauteur) ; 0,11 par défaut */
   drinkDip?: number;
+  /** oiseaux : battements d'ailes par seconde en vol (défaut 3) */
+  flapRate?: number;
 }
 
 export interface BonePose {
@@ -224,8 +226,26 @@ function idle(rig: RigDef, t: number): Record<string, BonePose> {
   };
   if (has(rig, 'tail')) pose.tail = { rot: 7 * Math.sin((t * 2 * Math.PI) / 2.6) };
   if (has(rig, 'tailTip')) pose.tailTip = { rot: 10 * Math.sin((t * 2 * Math.PI) / 2.6 - 0.9) };
+  // oiseau posé : les ailes respirent avec lui, et de temps en temps il les secoue (deux petits battements)
+  for (const [w, tip] of WINGS) {
+    const rest = wingRest(rig, w, tip);
+    if (!rest) continue;
+    const up = 1.5 * (breath + 1) + idleFlutter(t);
+    pose[w] = { rot: -rest.out * up };
+    pose[tip] = { rot: -rest.out * 0.6 * idleFlutter(t - 0.06) };
+  }
   return pose;
 }
+
+/** petit secouement d'ailes d'un oiseau posé (degrés d'élévation) : deux battements toutes les 6,5 s */
+export function idleFlutter(t: number): number {
+  const tau = t - Math.floor(t / IDLE_FLUTTER_EVERY) * IDLE_FLUTTER_EVERY - (IDLE_FLUTTER_EVERY - IDLE_FLUTTER_S);
+  if (tau <= 0 || tau >= IDLE_FLUTTER_S) return 0;
+  const env = Math.sin((Math.PI * tau) / IDLE_FLUTTER_S);
+  return 16 * env * env * Math.sin((2 * Math.PI * 2 * tau) / IDLE_FLUTTER_S) ** 2;
+}
+export const IDLE_FLUTTER_EVERY = 6.5;
+export const IDLE_FLUTTER_S = 0.7;
 
 /** Pattes avant et arrière opposées en diagonale ; la patte qui avance se lève. */
 export function walkPose(rig: RigDef, t: number): Record<string, BonePose> {
@@ -279,19 +299,115 @@ export function drinkPose(rig: RigDef, t: number): Record<string, BonePose> {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Vol des oiseaux (2026-11-26, Westimmo : « qu'on les voit battre des ailes et que l'animation soit haut de
+// gamme »). Chaque aile est articulée à l'épaule (`wing`, `wing2` pour l'aile du fond), avec son bout (`wingTip`).
+// Le battement suit le vrai mouvement d'un oiseau :
+// - abaissement puissant (55 % du battement), ailes grandes ouvertes ; l'air relève un peu le bout des ailes ;
+// - remontée plus rapide, le bout de l'aile replié vers le bas (l'aile se plie pour moins freiner) ;
+// - le corps monte pendant l'abaissement et redescend à la remontée ; la tête reste stable (comme un vrai
+//   oiseau, elle compense les secousses du corps) ; les pattes sont repliées en arrière ; la queue gouverne.
+// Les ailes visent la même élévation quelle que soit leur position sur le dessin (repliées le long du corps
+// chez le hibou, entrouvertes chez le toucan) : on part de l'angle de l'aile au repos.
+// La montée et la descente du trajet sont faites en CSS (`.flying`).
+
+/** part du battement passée à abaisser les ailes */
+export const FLAP_DOWN = 0.55;
+/** élévation des ailes tout en haut et tout en bas (degrés au-dessus de l'horizontale, vers l'extérieur) */
+export const WING_UP = 42;
+export const WING_DOWN = -36;
+/** les deux ailes : l'os de l'épaule et celui du bout */
+export const WINGS = [['wing', 'wingTip'], ['wing2', 'wing2Tip']] as const;
+
 /**
- * Voler (hibou, toucan ; demande du parent : le hibou ne se dandine plus pour se déplacer, il vole) :
- * corps penché vers l'avant, battements d'ailes rapides (le corps se gonfle et monte à chaque battement),
- * tête qui reste droite pour regarder où il va. La montée et la descente du trajet sont faites en CSS (`.flying`).
+ * Aile au repos sur le dessin : son élévation (degrés au-dessus de l'horizontale, de l'épaule au bout de l'aile)
+ * et le côté vers lequel elle s'ouvre (-1 à gauche, 1 à droite). `null` si le squelette n'a pas cette aile.
  */
+export function wingRest(rig: RigDef, wing: string, tip: string): { elev: number; out: 1 | -1 } | null {
+  const w = rig.bones.find((b) => b.id === wing);
+  if (!w) return null;
+  const end = (rig.bones.find((b) => b.id === tip) ?? w).tip;
+  const dx = end[0] - w.pivot[0], dy = end[1] - w.pivot[1];
+  const out = dx < 0 ? -1 : 1;
+  return { elev: (Math.atan2(-dy, out * dx) * 180) / Math.PI, out };
+}
+
+/** où en est le battement : en train d'abaisser ou de remonter les ailes, et l'avancement `u` (0 → 1) */
+export function flapPhase(p: number): { down: boolean; u: number } {
+  const q = p - Math.floor(p);
+  return q < FLAP_DOWN ? { down: true, u: q / FLAP_DOWN } : { down: false, u: (q - FLAP_DOWN) / (1 - FLAP_DOWN) };
+}
+
+/** élévation des ailes à l'instant `p` du battement (1 = un battement) : vitesse nulle en haut et en bas, sans à-coup */
+export function wingElevation(p: number): number {
+  const { down, u } = flapPhase(p);
+  const mid = (WING_UP + WING_DOWN) / 2, amp = (WING_UP - WING_DOWN) / 2;
+  return down ? mid + amp * Math.cos(Math.PI * u) : mid - amp * Math.cos(Math.PI * u);
+}
+
+/** une aile ne tourne pas de plus de WING_REACH degrés depuis son dessin (au-delà, le dessin se déchirerait) */
+export const WING_REACH = 75;
+/** aile repliée le long du corps (dessinée plus bas que FOLDED_BELOW degrés) : elle s'écarte du corps de FOLDED_REACH au plus */
+export const FOLDED_BELOW = -45;
+export const FOLDED_REACH = 40;
+/** une aile ouverte ne descend pas de plus de WING_DROP degrés sous son dessin */
+export const WING_DROP = 50;
+
+/**
+ * Élévation réellement donnée à une aile dessinée à l'élévation `rest` quand le battement vise `elev` : le même
+ * battement, ramené dans ce que permet le dessin. Une aile repliée le long du corps (hibou) bat entre « presque
+ * fermée » et « ouverte à l'horizontale » ; une aile déjà ouverte (toucan, jeune hibou) fait le grand battement.
+ */
+export function wingSpan(rest: number, elev: number): number {
+  const folded = rest < FOLDED_BELOW;
+  // une aile dessinée déjà levée (jeune hibou) monte encore un peu, et ne descend pas de plus de WING_DROP
+  const hi = folded ? rest + FOLDED_REACH : Math.min(Math.max(WING_UP, rest + 15), rest + WING_REACH);
+  const lo = folded ? rest + 3 : Math.max(WING_DOWN, rest - WING_DROP);
+  return lo + ((elev - WING_DOWN) / (WING_UP - WING_DOWN)) * (hi - lo);
+}
+
+/** pli du bout de l'aile (degrés, + = relevé) : poussé vers le haut en abaissant, replié vers le bas en remontant */
+export function wingBend(p: number): number {
+  const { down, u } = flapPhase(p);
+  return down ? 16 * Math.sin(Math.PI * u) : -30 * Math.sin(Math.PI * u);
+}
+
+/** position du corps (-0,5 = au plus bas quand les ailes sont en haut, 0,5 = au plus haut quand elles sont en bas) */
+export function flapRise(p: number): number {
+  const { down, u } = flapPhase(p);
+  return (down ? 1 - Math.cos(Math.PI * u) : 1 + Math.cos(Math.PI * u)) / 2 - 0.5;
+}
+
+/** Voler : battements d'ailes (oiseaux au squelette ailé), sinon corps qui se gonfle à chaque battement. */
 export function flyPose(rig: RigDef, t: number): Record<string, BonePose> {
-  const beat = Math.sin(t * 2 * Math.PI * 4.5);
   const f = rig.facing;
-  return {
-    body: { rot: 9 * f, sx: 1 + 0.05 * beat, sy: 1 - 0.06 * beat, dy: -rig.height * 0.04 * (0.6 + 0.4 * beat) },
-    head: { rot: -7 * f, dy: rig.height * 0.008 * beat },
-    tail: { rot: 6 * Math.sin(t * 2 * Math.PI * 4.5 + 1) },
+  if (!has(rig, 'wing')) {
+    const beat = Math.sin(t * 2 * Math.PI * 4.5);
+    return {
+      body: { rot: 9 * f, sx: 1 + 0.05 * beat, sy: 1 - 0.06 * beat, dy: -rig.height * 0.04 * (0.6 + 0.4 * beat) },
+      head: { rot: -7 * f, dy: rig.height * 0.008 * beat },
+      tail: { rot: 6 * Math.sin(t * 2 * Math.PI * 4.5 + 1) },
+    };
+  }
+  const p = t * (rig.flapRate ?? 3);
+  const rise = flapRise(p);
+  const lift = -rig.height * 0.035 * rise;
+  const pose: Record<string, BonePose> = {
+    // penché vers l'avant, le corps monte à chaque abaissement des ailes et s'allonge un peu
+    body: { rot: (9 + 2 * rise) * f, dy: lift, sy: 1 + 0.02 * rise, sx: 1 - 0.01 * rise },
+    // la tête compense : elle reste droite et bouge beaucoup moins que le corps
+    head: { rot: -(8 + 2 * rise) * f, dy: -lift * 0.6 },
+    tail: { rot: 6 * Math.sin(2 * Math.PI * p + 1.2) * f },
   };
+  for (const [w, tip] of WINGS) {
+    const rest = wingRest(rig, w, tip);
+    if (!rest) continue;
+    pose[w] = { rot: -rest.out * (wingSpan(rest.elev, wingElevation(p)) - rest.elev) };
+    pose[tip] = { rot: -rest.out * wingBend(p) };
+  }
+  // pattes repliées en arrière, sous le corps
+  for (const id of ['feet', 'feet2']) pose[id] = { rot: 25 * f, dy: lift - rig.height * 0.02 };
+  return pose;
 }
 
 // ---------------------------------------------------------------------------

@@ -11,6 +11,8 @@ export const WALK_MS = 1600;
 export function puppetClip(s: { walking: boolean; action?: string; speaking?: boolean; flies?: boolean; hops?: boolean }): ClipName {
   if (s.walking) return s.flies ? 'fly' : s.hops ? 'hop' : 'walk';
   if (s.action === 'walk') return s.hops ? 'hop' : 'walk';
+  // « fly » demandé pendant un jeu : l'oiseau bat des ailes sur place (le CSS `.act-fly` le fait planer)
+  if (s.action === 'fly' && s.flies) return 'fly';
   if (s.action === 'sniff') return 'walk';
   if (s.action === 'drink_lap') return 'drink';
   if (s.speaking) return 'talk';
