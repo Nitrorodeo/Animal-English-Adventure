@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
   FLAP_DOWN, IDLE_FLUTTER_EVERY, IDLE_FLUTTER_S, PAD_X, PAD_Y, WINGS, WING_DOWN, WING_UP,
-  clipPose, flapRise, flyPose, idleFlutter, skinPoint, validateRig, wingBend, wingElevation, wingRest,
+  clipPose, landPose, flapRise, flyPose, idleFlutter, skinPoint, validateRig, wingBend, wingElevation, wingRest,
 } from './puppet';
 // @ts-expect-error -- module Node disponible dans Vitest, sans les types Node dans le projet
 import { existsSync, readFileSync } from 'node:fs';
 import { FLY_SPRITES, RIGS, flyFrame, flyRigFor } from './rigs';
-import { canFly, LANDING_MS, puppetClip } from './staging';
+import { canFly, LANDING_MS, LAND_LEAD_MS, landingAt, puppetClip } from './staging';
 
 /**
  * Les oiseaux battent des ailes (2026-11-26, Westimmo : « qu'on les voit battre des ailes et que l'animation
@@ -239,5 +239,49 @@ describe('le décollage et l’atterrissage', () => {
     const [dur = NaN, delay = 0] = secs(rule('.puppet.over.off'));
     expect((dur + delay) * 1000).toBeLessThanOrEqual(LANDING_MS);
     expect(dur).toBeGreaterThan(0.2); // il se pose doucement, pas d’un coup
+  });
+});
+
+describe('Oscar se pose les ailes repliées (2026-11-26 : « Chez les hiboux il y a un gros lag, quand le hibou arrête de voler »)', () => {
+  const rig = RIGS.owl_father_fly!;
+
+  it('seul Oscar replie ses ailes pour se poser, en essai ; les toucans gardent leur atterrissage validé', () => {
+    expect(rig.landFold).toBe(true);
+    expect(flyRigFor('owl_mother')?.landFold).toBeUndefined();
+    expect(flyRigFor('toucan_father')?.landFold).toBeUndefined();
+  });
+
+  it('ailes repliées le long du corps : le bout des ailes descend sous l’épaule et se rapproche du corps, sans dépasser sous les pattes', () => {
+    const pose = clipPose(rig, 'land', 0);
+    expect(pose).toEqual(clipPose(rig, 'land', 5)); // pose tenue, sans mouvement parasite
+    const bone = (id: string) => rig.bones.find((b) => b.id === id)!;
+    const feetY = Math.max(bone('feet').tip[1], bone('feet2').tip[1]);
+    const body = bone('body').pivot[0];
+    for (const [w, tip] of [['wing', 'wingTip'], ['wing2', 'wing2Tip']] as const) {
+      const shoulder = skinPoint(rig, pose, bone(w).pivot);
+      const end = skinPoint(rig, pose, bone(tip).tip);
+      expect(end[1], w).toBeGreaterThan(shoulder[1] + 40);
+      expect(end[1], w).toBeLessThan(feetY + 10);
+      // repliée : bien plus près du corps que l’aile grande ouverte du dessin
+      expect(Math.abs(end[0] - body), w).toBeLessThan(Math.abs(bone(tip).tip[0] - body) * 0.75);
+    }
+    // corps et tête droits
+    expect(landPose(rig).body!.rot).toBe(0);
+    expect(landPose(rig).head!.rot).toBe(0);
+  });
+
+  it('il commence à replier ses ailes peu avant de toucher le sol, après avoir un peu volé', () => {
+    expect(landingAt(1600)).toBe(1600 - LAND_LEAD_MS);
+    expect(landingAt(400)).toBeCloseTo(240, 6); // vol court : il bat d’abord des ailes
+    for (const ms of [300, 800, 2500]) expect(landingAt(ms)).toBeLessThan(ms);
+  });
+
+  it('arrivé au sol les ailes déjà repliées, le passage à son dessin posé est bref', () => {
+    const css = readFileSync('src/styles.css', 'utf-8');
+    const m = css.match(/\.puppet\.over\.quick\.off\s*\{([^}]*)\}/);
+    expect(m).toBeTruthy();
+    const [dur = NaN, delay = 0] = [...m![1]!.matchAll(/([\d.]+)s/g)].map((x) => Number(x[1]));
+    expect(dur + delay).toBeLessThanOrEqual(0.2);
+    expect((dur + delay) * 1000).toBeLessThanOrEqual(LANDING_MS);
   });
 });

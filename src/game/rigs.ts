@@ -81,8 +81,9 @@ type Wing = readonly [P, P, P];
  * au bout en deux parties (`near` = l'aile devant le corps, `far` = celle du fond), les pattes et la queue.
  * Les pattes n'ont pas de parent : elles restent au sol quand l'oiseau posé respire.
  */
-function bird(sprite: string, width: number, height: number, facing: 1 | -1, mouth: P, flapRate: number, b: { body: [P, P]; head: [P, P]; beak?: [P, P]; crown?: [P, P]; near: Wing; far: Wing; feet: [P, P]; feet2?: [P, P]; tail?: [P, P]; wingLayer?: number; cheeks?: [P, P][] }): RigDef {
+function bird(sprite: string, width: number, height: number, facing: 1 | -1, mouth: P, flapRate: number, b: { body: [P, P]; head: [P, P]; beak?: [P, P]; crown?: [P, P]; near: Wing; far: Wing; feet: [P, P]; feet2?: [P, P]; tail?: [P, P]; wingLayer?: number; cheeks?: [P, P][]; landFold?: true }): RigDef {
   return {
+    ...(b.landFold ? { landFold: true as const } : {}),
     sprite,
     width,
     height,
@@ -134,7 +135,7 @@ const BIRD_RIGS: Record<string, RigDef> = Object.fromEntries(
     bird('owl_boy_little', 198, 250, 1, [108, 81], 3.2, { body: [[115, 215], [115, 125]], head: [[115, 125], [115, 15]], near: [[62, 145], [38, 178], [12, 205]], far: [[172, 145], [182, 170], [188, 198]], feet: [[115, 220], [115, 245]] }),
     bird('owl_girl_little', 197, 271, 1, [105, 90], 3.2, { body: [[110, 235], [110, 140]], head: [[110, 140], [110, 15]], near: [[62, 160], [38, 192], [12, 225]], far: [[168, 165], [180, 190], [185, 213]], feet: [[110, 240], [110, 265]] }),
     // les hiboux en vol, découpés dans la planche de Westimmo du 2026-11-26 (« Famille de hiboux aux ailes déployées »), vus de face
-    bird('owl_father_fly', 645, 455, 1, [440, 140], 2.4, { body: [[385, 390], [390, 185]], head: [[390, 185], [385, 10]], near: [[310, 262], [160, 190], [15, 165]], far: [[470, 262], [570, 200], [625, 120]], tail: [[290, 340], [190, 410]], feet: [[340, 400], [330, 440]], feet2: [[440, 400], [460, 440]], wingLayer: 3.5, cheeks: [[[300, 200], [280, 120]], [[480, 200], [515, 120]]] }),
+    bird('owl_father_fly', 645, 455, 1, [440, 140], 2.4, { body: [[385, 390], [390, 185]], head: [[390, 185], [385, 10]], near: [[310, 262], [160, 190], [15, 165]], far: [[470, 262], [570, 200], [625, 120]], tail: [[290, 340], [190, 410]], feet: [[340, 400], [330, 440]], feet2: [[440, 400], [460, 440]], wingLayer: 3.5, cheeks: [[[300, 200], [280, 120]], [[480, 200], [515, 120]]], landFold: true }),
     bird('owl_mother_fly', 582, 444, -1, [185, 145], 2.4, { body: [[210, 380], [205, 180]], head: [[205, 180], [200, 10]], crown: [[240, 80], [330, 70]], near: [[285, 258], [420, 180], [565, 140]], far: [[140, 258], [65, 190], [15, 150]], tail: [[330, 350], [390, 405]], feet: [[170, 390], [155, 425]], feet2: [[245, 390], [260, 425]], wingLayer: 3.5, cheeks: [[[140, 200], [118, 120]], [[300, 200], [325, 120]]] }),
     bird('owl_boy_companion_fly', 418, 289, 1, [230, 90], 2.8, { body: [[210, 250], [215, 130]], head: [[215, 130], [225, 8]], near: [[150, 172], [75, 130], [8, 100]], far: [[275, 172], [345, 120], [410, 85]], tail: [[150, 240], [95, 258]], feet: [[180, 260], [165, 275]], feet2: [[240, 260], [265, 272]], wingLayer: 3.5, cheeks: [[[150, 140], [128, 80]], [[255, 140], [272, 80]]] }),
     bird('owl_girl_companion_fly', 413, 307, 1, [235, 105], 2.8, { body: [[215, 265], [220, 140]], head: [[220, 140], [230, 10]], crown: [[180, 60], [115, 50]], near: [[160, 185], [75, 135], [8, 105]], far: [[275, 185], [340, 130], [405, 70]], tail: [[150, 250], [90, 272]], feet: [[180, 275], [165, 292]], feet2: [[245, 275], [265, 290]], wingLayer: 3.5, cheeks: [[[155, 160], [130, 95]], [[270, 160], [280, 95]]] }),

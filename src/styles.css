@@ -559,6 +559,8 @@ small { font-weight: normal; opacity: 0.7; }
 .puppet.under.off { transition: opacity 0s linear 0.2s; }
 .puppet.over { transition: opacity 0.16s ease-out; }
 .puppet.over.off { transition: opacity 0.34s ease-in-out 0.08s; }
+/* hibou : il arrive au sol les ailes déjà repliées, le passage à son dessin posé est bref */
+.puppet.over.quick.off { transition: opacity 0.14s ease-in 0.03s; }
 /* aucune ombre ni filtre CSS sur le canevas : il est redessiné à chaque image, le flou serait recalculé
    à chaque fois (saccades sur tablette). L'ombre est dessinée par Puppet ; le halo est un calque fixe. */
 .puppet canvas { position: absolute; display: block; }

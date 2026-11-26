@@ -37,7 +37,7 @@ import { PropLayer, propPos } from './PropLayer';
 import { Puppet } from './Puppet';
 import { TreasureIcon } from './TreasureIcon';
 import { flyFrame, flyRigFor, rigFor } from '../game/rigs';
-import { canFly, canHop, LANDING_MS, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
+import { canFly, canHop, LANDING_MS, landingAt, farAt, farthestY, horizonOf, nearSeat, perchAt, placeScale, puppetClip, SEAT_REACH, snapToLane, snapToSeats, hopTrip, walkMs, WALK_MS } from '../game/staging';
 import { assetUrl, background, homePlacement, spriteFor, tappedAnchor, tapOrder, type Placement } from './scene';
 import { useQuest, type Cast } from './useQuest';
 import { acceptsDown, dragSpot, endsTrack, isDrag, withoutKey, type Spot } from './drag';
@@ -1038,6 +1038,16 @@ function Character({ actor, state, species, place, question, action, speaking, h
   const drag = useRef<{ pointerId: number; sx: number; sy: number; grabDy: number; on: boolean; rect: DOMRect } | null>(null);
   const dragged = useRef(false);
   const [dragging, setDragging] = useState(false);
+  // l'oiseau dont le dessin en vol est très différent (hibou de face) replie ses ailes juste avant de toucher le sol
+  const folds = !!flyRig?.landFold;
+  const [landing, setLanding] = useState(false);
+  useEffect(() => {
+    setLanding(false);
+    if (!walk || !folds) return;
+    const t = window.setTimeout(() => setLanding(true), landingAt(track.current.ms));
+    return () => window.clearTimeout(t);
+  }, [walk, folds]);
+  const flyClip = airborne ? (folds && landing && !dragging ? 'land' : 'fly') : folds ? 'land' : 'idle';
   // un doigt ou une souris envoient 120 à 240 mouvements par seconde : on n'en garde qu'un par image
   const pendingMove = useRef<{ x: number; y: number; grabDy: number } | null>(null);
   const moveRaf = useRef(0);
@@ -1162,7 +1172,7 @@ function Character({ actor, state, species, place, question, action, speaking, h
         <span className="char-icon" style={{ fontSize: `${base * 0.3}cqw` }}>{species.icon}</span>
       )}
       {puppet && <Puppet rig={rig!} src={assetUrl(sprite!)} clip={airborne ? 'idle' : clip} facing={facing} onReady={setPuppetOk} dim={dim} paused={paused} lifted={dragging} off={airborne} layer={winged ? 'under' : undefined} {...(hops && !dragging ? { hopS: hopTrip(track.current.ms).hopS, hopKey: track.current.trip } : { hopKey: 'drag' })} />}
-      {winged && <Puppet rig={flyRig} src={assetUrl({ ...sprite!, path: sprite!.path.replace(/(\.\w+)$/, '_fly$1') })} clip={airborne ? 'fly' : 'idle'} facing={facing} onReady={setFlyOk} dim={dim} paused={paused || !(airborne || settling)} lifted={dragging} frame={flyFrame(rig!, flyRig)} off={!airborne} layer="over" />}
+      {winged && <Puppet rig={flyRig} src={assetUrl({ ...sprite!, path: sprite!.path.replace(/(\.\w+)$/, '_fly$1') })} clip={flyClip} facing={facing} onReady={setFlyOk} dim={dim} paused={paused || !(airborne || settling)} lifted={dragging} frame={flyFrame(rig!, flyRig)} off={!airborne} layer={folds ? 'over quick' : 'over'} />}
       {question && <span className="q-bubble">?</span>}
       {wearing?.map((k) => (
         <span key={k} className={`worn worn-${wornSlot(k)}`}>

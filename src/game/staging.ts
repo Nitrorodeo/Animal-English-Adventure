@@ -22,6 +22,12 @@ export function puppetClip(s: { walking: boolean; action?: string; speaking?: bo
 /** Le kangourou se déplace en bondissant ; le nouveau-né, assis, ne bondit pas encore. */
 /** temps pendant lequel l'oiseau qui atterrit reste animé : il se pose en s'effaçant (voir `.puppet.over.off`) */
 export const LANDING_MS = 600;
+/** l'oiseau qui replie ses ailes pour se poser (`landFold`) commence à les replier ce temps-là avant de toucher le sol */
+export const LAND_LEAD_MS = 320;
+/** à quel moment du trajet (ms) l'oiseau commence à replier ses ailes : peu avant l'arrivée, après au moins un peu de vol */
+export function landingAt(tripMs: number): number {
+  return Math.max(tripMs * 0.6, tripMs - LAND_LEAD_MS);
+}
 
 export function canHop(mobility: Mobility, stage?: GrowthStage): boolean {
   return mobility === 'jump' && stage !== 'newborn';

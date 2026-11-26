@@ -42,6 +42,8 @@ export interface RigDef {
   flapRate?: number;
   /** oiseau posé qui a un dessin à part pour voler : il respire seulement, sans secouer les ailes */
   flutter?: false;
+  /** dessin en vol très différent du dessin posé (hibou de face, ailes grandes ouvertes) : il replie ses ailes en se posant */
+  landFold?: true;
 }
 
 export interface BonePose {
@@ -216,7 +218,7 @@ export function skinPoint(rig: RigDef, pose: Pose, p: Vec): Vec {
 export const PAD_X = 0.45;
 export const PAD_Y = 0.15;
 
-export type ClipName = 'idle' | 'talk' | 'walk' | 'drink' | 'fly' | 'hop';
+export type ClipName = 'idle' | 'talk' | 'walk' | 'drink' | 'fly' | 'hop' | 'land';
 
 const has = (rig: RigDef, id: string) => rig.bones.some((b) => b.id === id);
 
@@ -381,6 +383,26 @@ export function flapRise(p: number): number {
   return (down ? 1 - Math.cos(Math.PI * u) : 1 + Math.cos(Math.PI * u)) / 2 - 0.5;
 }
 
+/** élévation des ailes repliées pour se poser (degrés : vers le bas, le long du corps) et pli de leur bout */
+export const WING_FOLD = -30;
+export const WING_FOLD_TIP = -100;
+
+/**
+ * Se poser (oiseau dont le dessin en vol est très différent du dessin posé) : ailes repliées le long du corps,
+ * corps et tête droits, pattes tendues vers le sol. Il arrive ainsi au sol dans une pose proche de son dessin
+ * posé, et le fondu entre les deux dessins est court et ne se voit pas.
+ */
+export function landPose(rig: RigDef): Record<string, BonePose> {
+  const pose: Record<string, BonePose> = { body: { rot: 0 }, head: { rot: 0 }, tail: { rot: 0 }, feet: { rot: 0 }, feet2: { rot: 0 } };
+  for (const [w, tip] of WINGS) {
+    const rest = wingRest(rig, w, tip);
+    if (!rest) continue;
+    pose[w] = { rot: -rest.out * (WING_FOLD - rest.elev) };
+    pose[tip] = { rot: -rest.out * WING_FOLD_TIP };
+  }
+  return pose;
+}
+
 /** Voler : battements d'ailes (oiseaux au squelette ailé), sinon corps qui se gonfle à chaque battement. */
 export function flyPose(rig: RigDef, t: number): Record<string, BonePose> {
   const f = rig.facing;
@@ -481,7 +503,7 @@ function talk(rig: RigDef, t: number): Record<string, BonePose> {
 }
 
 export function clipPose(rig: RigDef, clip: ClipName, t: number): Pose {
-  const pose = clip === 'hop' ? hopPose(rig, t / HOP_S) : clip === 'fly' ? flyPose(rig, t) : clip === 'walk' ? walkPose(rig, t) : clip === 'drink' ? drinkPose(rig, t) : clip === 'talk' ? talk(rig, t) : idle(rig, t);
+  const pose = clip === 'hop' ? hopPose(rig, t / HOP_S) : clip === 'fly' ? flyPose(rig, t) : clip === 'land' ? landPose(rig) : clip === 'walk' ? walkPose(rig, t) : clip === 'drink' ? drinkPose(rig, t) : clip === 'talk' ? talk(rig, t) : idle(rig, t);
   // on ne garde que les os qui existent dans ce squelette
   return Object.fromEntries(Object.entries(pose).filter(([id]) => has(rig, id)));
 }
